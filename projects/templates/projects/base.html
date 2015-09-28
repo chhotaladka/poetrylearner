@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+
+	<article>
+	    <div class="container">
+	    		
+	    			<!-- messages -->
+				    {% if messages %}
+	    			<div class="flashMessages">
+	    			<div class="row">
+	    			<div class="col-lg-12 col-md-12 col-sm-12">
+    			    		
+						<ul class="messages">
+		    			{% for message in messages %}
+		    				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		    			{% endfor %}
+						</ul>
+						
+					</div> <!-- /col-lg -->
+					</div> <!-- /row -->
+					</div> <!-- /flashMessages -->
+					{% endif %}				
+		    		
+		    		
+	    			<div class="contentHeader mdl-shadow--2dp">    
+	    			<div class="row">	    						
+	    			<div class="col-lg-2 col-md-2 col-sm-12 reduce-right-padding">	    
+	    					    					    						    	
+	    				<div class="cH-image">	
+	    				{% block ContentHeaderImage %}		    				    							    		
+			    		{% endblock %}		    					 
+		    			</div>
+		    		
+	    			</div> <!-- /col-lg -->    			
+	    			<div class="col-lg-10 col-md-10 col-sm-12">    			
+	    			
+		    			<span class="edit-section">
+		    				<span class="edit-section-bracket">[</span>
+		    					<a title={% block EditButtonTitle %}"Edit: name"{% endblock %} href={% block EditButtonURL %}"#"{%endblock%}>edit</a>
+		    				<span class="edit-section-bracket">]</span>
+		    			</span>
+		    			
+		    			<div class="cH-titles">
+		    			{% block ContentHeaderTitles %}s		    				
+		    			{% endblock %}			    			
+		    			</div>
+		    			
+		    			<div class="cH-extra-info">
+		    			{% block ContentHeaderExtraInfo %}
+		    										
+						{% endblock %}
+		    			</div>
+
+	    			</div> <!-- /col-lg -->	
+		    		</div> <!-- /row -->				    				    				    		
+	    			</div> <!-- /contentHeader -->
+	    			
+	    			
+	    			
+	    			<div class="contentBody mdl-shadow--2dp">
+	    			<div class="row">
+	    			{% block ContentBody %}
+	    			
+	    			<div class="col-lg-6 col-md-6 col-sm-12">		    				    								
+						<div class="cB-main-text">
+						{% block ContentBodyMainText %}									
+						{% endblock %}
+						</div> <!-- /cB-main-text -->					
+					</div> <!-- /col-lg -->
+					<div class="col-lg-6 col-md-6 col-sm-12">					
+						<div class="cB-features">
+						{% block ContentBodyFeatures %}																															
+						{% endblock %}
+						</div> <!-- /cB-features -->						
+					</div> <!-- /col-lg -->
+					
+					{% endblock %}
+					</div> <!-- /row -->
+					</div> <!-- /contentBody -->
+					
+							
+					<div class="contentShare">
+					<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12">
+					
+						<div class="clearfix center">
+							<div class="">
+								<a title="Bookmark" href="#"> 
+								<span class="glyphicon glyphicon-bookmark"></span>	
+								<span>bookmark</span>
+								</a>
+							</div>
+							
+							<div class="">
+								<a title="Share" href="#"> 
+								<span class="glyphicon glyphicon-share img-circle"></span>	
+								<span>share</span>
+								</a>
+							</div>
+							<!--
+							<div class="">
+								<span class="glyphicon glyphicon-bookmark"></span>	
+								<h5> BOOKMARK </h5>
+							</div>
+							-->
+							
+						</div>
+					</div> <!-- /col-lg -->
+					</div> <!-- /row -->
+					</div> <!-- /contentShare -->
+					
+
+					<div class="contentFooter">
+					<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12">
+					
+				    	<div class="edit-info text-right">
+			    			<div>
+			    				<span>Last edited by</span> 
+			    				<a title="Go to the profile page of user" href={% block ModifiedByHref %}#{% endblock %}>
+			    					{% block ModifiedBy %}
+			    					obj.modified_by
+			    					{% endblock %}
+			    				</a>
+			    			</div>
+			    			<div>
+			    				<small>
+			    					{% block DateModified %}
+			    					obj.date_modified
+			    					{% endblock %}
+			    				</small>
+			    			</div>
+		    			
+		    			</div>
+
+		    		</div> <!-- /col-lg --> 
+		    		</div> <!-- /row -->
+	    			</div> <!-- /contentFooter -->	    			   			    		    		
+
+	    </div> <!-- /container -->
+	</article>
+
+	
+{% endblock %}

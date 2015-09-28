@@ -1,0 +1,131 @@
+{% extends "projects/project-base.html" %}
+{% load staticfiles %}
+
+{% block meta %}
+	<meta name="description" content="">
+	<meta name="author" content="" >
+
+{% endblock %}
+
+{% block title %}
+	{% firstof author.sobriquet author.name %}
+{% endblock %}
+
+
+{% block main %}
+
+		{% if messages %}
+		<section id="FlashMsg" class="pT-8 pB-8">
+			<div class="mdl-poetry__post mdl-grid">			
+				<div class="mdl-cell mdl-cell--12-col">
+					<div class="flash-msg mdl-color-text--grey-600">
+		    			{% for message in messages %}
+	    				<div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+	    					<i class="material-icons">info</i>
+	    					{{ message }}
+	    				</div>
+		    			{% endfor %}
+		    		</div>
+				</div>			
+			</div>	
+		</section>	
+		{% endif %}
+		
+    	<section id="AuthorDetails" class="pT-8 pB-48">
+			<div class="mdl-poetry__post mdl-grid">		
+		
+				<div class="mdl-card mdl-cell mdl-cell--8-col">
+					<div class="mdl-card__title tAc mdl-card--expand mdl-color--teal-300 mdl-color-text--white">
+						<div class="title">
+							<a title="Image: {{ author.name }}" href="{{ author.get_image_url }}">
+								<img class="author-avatar" src="{{ author.get_image_url }}" alt="Image: {{ author.name }}">
+							</a>
+							<h2 class="mdl-card__title-text">
+								{{ author.name }}										
+								{% if author.sobriquet %}
+								({{ author.sobriquet }})
+								{% endif %}	
+							</h2>
+							<div class="title__extras">
+							{% if author.date_birth %}
+								<span title="Birth">{{ author.date_birth }}</span> 
+							{% endif %}
+							{% if author.date_death %}					
+								<span title="Death">- {{ author.date_death }}</span>
+							{% endif %}
+							</div>
+						</div>	
+					</div>					
+					<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+					{% if info %}					
+						<p>{{ info.description }}</p>
+						<p>Source: <a title="Click here to know more" href="{{ author.source_url }}" target="_blank">
+							{{ info.source }}
+						</a></p>							    							
+					{% else %}					
+						<p>{{ author.summary }}</p>					
+					{% endif %}
+					</div>
+					<div class="mdl-card__actions mdl-card--border">
+						<div class="meta-edit mdl-color-text--grey-600">
+		    				<div>
+		    					<span>Last edited by</span>
+		    					<span> 
+				    				<a title="Go to the profile page of user" href=#>{{ author.modified_by }}</a>
+		    					</span>
+		    				</div>
+		    				<div>
+		    					<span>{{ author.date_modified }}</span>
+		    				</div>
+		    			</div>
+		    			<div class="mdl-layout-spacer"></div>
+						<a href="#" class="mdl-button mdl-button mdl-button--colored">Read our features</a>								    			
+					</div>
+					<div class="mdl-card__menu">
+						<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn1">
+			              <i class="material-icons mdl-color-text--white">more_vert</i>
+						</button>
+			            <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">
+			              <li class="mdl-menu__item">Lorem</li>
+			              <li class="mdl-menu__item" disabled>Ipsum</li>
+			              <li class="mdl-menu__item">
+			              	<a href="?edit=True">Edit</a>
+			              </li>
+			            </ul>
+					</div>
+				</div> <!-- /mdl-card -->
+				
+				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid">				
+					<div class="section-title mdl-cell mdl-cell--12-col">
+						<h3>x y z</h3>	
+					</div>
+					
+				</div> <!-- /mdl-card -->							
+				
+			</div>		
+    	</section> <!-- /AuthorDetails -->  
+
+    	<section id="AuthorBooks" class="pB-48">
+			<div class="mdl-poetry__post mdl-grid">
+			
+				<div class="section-title mdl-cell mdl-cell--12-col">
+					<h3>Recently added books</h3>	
+				</div>
+
+				{% for book in author.get_recent_books %}
+				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
+					<div class="mdl-card__media mdl-color--yellow-600 mdl-color-text--grey-800">
+						<h4>
+							<a href="{{book.get_absolute_url}}">{{ book.name }}</a>
+						</h4>
+					</div>					
+					<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
+					</div>				
+				</div>
+				{% endfor %}
+
+			</div>		
+    	</section> <!-- /AuthorBooks --> 
+    	
+{% endblock %}		    				    																

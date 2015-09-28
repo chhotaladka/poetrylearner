@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block meta %}
+	<meta name="description" content="">
+	<meta name="author" content="" >
+
+{% endblock %}
+
+{% block title %}
+	Create a project
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+    	<div class="row">
+		 	<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+	    	{% crispy wizard.form %}
+			
+		</div>
+	</div>
+
+	
+{% endblock %}

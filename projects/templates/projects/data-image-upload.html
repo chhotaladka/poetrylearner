@@ -1,0 +1,10 @@
+<form id="imgUploadForm" method="post" enctype="multipart/form-data" class="tAc">
+	{% csrf_token %}
+	<div>
+		<label for="id_image" class="hidden">File input</label>
+		<input id="id_image" type="file"></input>		
+	</div>
+	<div class="mT-8 mB-8">Select the scanned image from your system.</div>
+	
+	<button class="mT-8 mdl-button mdl-js-button" id="imgUploadBtn" name="submit" value="submit">Submit</button>
+</form>

@@ -1,0 +1,320 @@
+
+html, body {
+  font-family:'Roboto','Helvetica','Arial',sans-serif!important;
+  margin: 0;
+  padding: 0;
+}
+
+.mdl-poetry .mdl-layout > .mdl-layout__content > section {
+ /*   padding-top: 16px;
+    padding-bottom: 48px; */
+}
+
+.mdl-poetry .mdl-poetry__post {
+    max-width: 900px;
+    padding: 0px;
+    display: flex;
+    width: 100%;
+    margin: 0px auto;
+    flex-shrink: 0;
+}
+
+.mdl-poetry .flash-msg > * {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+}
+.mdl-poetry .flash-msg i {
+    margin-right: 8px;
+}
+
+.mdl-poetry .table--large .mdl-data-table {
+	width: -moz-available;
+}
+
+.mdl-poetry .wide-card .mdl-card__title {
+  height: 128px;
+}
+
+.mdl-poetry .book-card .mdl-card__title {
+  height: 176px;
+/*  background: url('../img/header2.jpg') center / cover;*/
+}
+.mdl-poetry .book-card .title-divider {
+	height: 75%;
+	max-width: 40%;
+	text-align: center;	
+	padding: 8px;
+	margin: 8px;
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+.mdl-poetry .book-card .book-id {
+	text-transform: uppercase;
+}
+
+.mdl-poetry .mdl-card .mdl-card__supporting-text {
+	width: -moz-available;
+}
+
+
+.mdl-poetry .mdl-card__supporting-text p {
+	max-width: 512px;
+	margin: 16px auto;
+	font-size: 14px;
+	line-height: 24px;
+	
+}
+.mdl-poetry .author-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+.mdl-poetry__post .author-avatar-small {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+.mdl-poetry__post .book-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+.mdl-poetry__post .book-avatar-small {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+.mdl-poetry .title .title__extras,
+.mdl-poetry .title__extras {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.mdl-poetry .title__extras .mdl-button {
+	color: inherit;
+	border-radius: 24px;
+	text-transform: none;
+	background: none repeat scroll 0px 0px rgba(255, 255, 255, 0.4);
+}
+.mdl-poetry .title__extras .mdl-button:hover {
+	background: rgba(255, 255, 255, 0.6);
+}
+
+.mdl-poetry .section-title h3 {
+    text-transform: none;
+    margin: 0px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+.mdl-poetry .mdl-card__actions {    
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.mdl-poetry .mdl-menu__item > a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.poetry-card .mdl-card__title {
+  /*height: 176px;*/
+height: 120px;
+background: url('../img/header6.jpg') top / cover;
+}
+
+
+.mdl-poetry .meta {
+    box-sizing: border-box;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: auto;
+}
+.mdl-poetry .meta > * {
+    display: flex;
+    flex-direction: column;
+}
+
+.mdl-poetry .meta > .meta__favorites,
+.mdl-poetry .meta > .meta__bookmarks,
+.mdl-poetry .meta > .meta__share,
+.mdl-poetry .meta > .meta__views {
+    flex-direction: row;
+    margin: 0px 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.mdl-poetry .meta-edit {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 300;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.mdl-poetry .meta-edit a {
+    text-decoration: none;
+}
+
+.mdl-poetry .mdl-card > a {
+  
+  text-decoration: none;
+  font-weight: inherit;
+}
+
+.mdl-poetry .mdl-card h4 {
+  margin: 0;
+}
+
+.mdl-poetry .mdl-card h4 a {
+  text-decoration: none;
+}
+.mdl-poetry .mdl-card h4.quote:before, .mdl-poetry .mdl-card h4.quote:after {
+  display: block;
+  font-size: 3em;
+  margin-top: 0.5em;
+}
+.mdl-poetry .mdl-card h4.quote:before {
+  content: '“';
+}
+.mdl-poetry .mdl-card h4.quote:after {
+  content: '”';
+}
+
+.mdl-poetry .mdl-card__media {
+    box-sizing: border-box;
+    background-size: cover;
+    padding: 24px;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: flex-end;
+    cursor: pointer;
+}
+
+.mdl-poetry .mdl-card__media a,
+.mdl-poetry .mdl-card__title a {
+  color: inherit;
+}
+
+
+/* Shortcut styles */
+.wFull { width: 100%; }
+.tAc {
+    text-align: center;
+}
+.tAl {
+    text-align: left;
+}
+.tAr {
+    text-align: right;
+}
+.pA-0 { padding: 0px; }
+.pT-8 { padding-top: 8px; }
+.pT-16 { padding-top: 16px; }
+.pT-48 { padding-top: 48px; }
+.pB-8 { padding-bottom: 8px; }
+.pB-16 { padding-bottom: 16px; }
+.pB-48 { padding-bottom: 48px; }
+
+.wSn { white-space: normal; }
+
+.mR-8 { margin-right: 8px; }
+.mL-8 { margin-left: 8px; }
+.mT-8 { margin-top: 8px; }
+.mB-8 { margin-bottom: 8px; }
+
+.mR-4 { margin-right: 4px; }
+
+.bC-grey { background-color: #EEE; }
+.bC-inherit { background-color: inherit; }
+
+.mH-auto { min-height: auto; }
+
+/* Common style */
+a {
+    text-decoration: none;
+}
+
+/*
+ * Material icons
+ */
+/* Rules for sizing the icon */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+/*
+ * Pagination
+ */
+.pagination {
+	padding-left: 0px;
+}
+.pagination li {
+	float: left;
+	font-size: 1.2rem;
+	padding: 0 10px;
+	line-height: 30px;
+	border-radius: 2px;
+	text-align: center;
+	list-style-type: none;
+}
+.pagination li a {
+    color: #444; 
+}
+.pagination li.active a {
+    color: #fff; 
+}
+.pagination li.active {
+    background-color: #ee6e73; 
+}
+.pagination li.disabled a {
+    cursor: default;
+    color: #999;
+}
+.pagination li i {
+    font-size: 2rem;
+}
+.pagination li.pages ul li {
+  display: inline-block;
+  float: none;
+}
+.pagination li.pages ul {
+  padding: 0px;
+}
+
+.pagination .waves-effect {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    -moz-user-select: none;
+    vertical-align: middle;
+    z-index: 1;
+    transition: all 0.3s ease-out 0s;
+}
+
+/* Alerts */
+.alert-danger {
+	color: #f44336;	
+}
+.alert-success {
+	color: #8bc34a;
+}
+

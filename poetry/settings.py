@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'articles',
     'crawlers',
     'projects',
+    'snippets',
 )
 
 TEMPLATE_LOADERS = (

@@ -4,9 +4,12 @@ from . import views
 
 urlpatterns = [
     
+    url(r'^book/(?P<pk>\d+)/page/(?P<page_num>\d+)/?$', views.book_page_details, name='book-page-details'),
     url(r'^book/(?P<pk>\d+)/(?P<slug>[\w.@+-]+)?/?$', views.book_details, name='book-details'),
+    
     url(r'^author/(?P<pk>\d+)/(?P<slug>[\w.@+-]+)?/?$', views.author_details, name='author-details'),
     url(r'^project/(?P<pk>\d+)/(?P<slug>[\w.@+-]+)?/?$', views.project_details, name='project-details'),
+    
     url(r'^project/data/(?P<pk>\d+)/?$', views.project_data, name='project-data'),
     url(r'^project/?$', views.project_list, name='project-list'),
     
@@ -20,5 +23,5 @@ urlpatterns = [
     
     # To view scanned pages' OCR data of a book(i.e. project) 
     url(r'^data/ocr/(?P<pk>\d*)/?$', views.data_ocr_details, name='data_ocr'),
-    
+       
 ]

@@ -325,14 +325,70 @@ class ImageSource(models.Model):
     Image Source Model for scanned images
     """
     page_num = models.PositiveIntegerField(_('page number'), default=0)
-    url = models.URLField(max_length=1000)
+    url = models.URLField(max_length=1000, null=True, blank=True)
+    note = models.CharField(max_length=140, null=True, blank=True)
     project = models.ForeignKey(Project, related_name='image_source')
     
     def save(self, *args, **kwargs):
         print "Model ImageSource save called"
           
         super(ImageSource, self).save(*args, **kwargs)
-               
- 
+                   
+
+                     
+class Page(models.Model):
+    """
+    Pages of a Book
+    """
+    
+    body = models.TextField(null=False)
+    
+    book = models.ForeignKey(Book, related_name="pages")
+    page_num = models.PositiveIntegerField('page number', default=0)
+    author = models.ForeignKey(Author, related_name='pages')
+    
+    added_by = models.ForeignKey(auth.models.User, related_name='added_pages')
+    added_at = models.DateTimeField(auto_now_add=True)
+    
+    updated_by = models.ForeignKey(auth.models.User, related_name='updated_pages')
+    updated_at = models.DateTimeField(auto_now=True)  
+
+    proofread_level = models.PositiveIntegerField(default=0)
+        
+    verified = models.BooleanField(default=False)
+    verified_at = models.DateTimeField(null=True, blank=True)
+    
+    is_active = models.BooleanField(default=False); # True, if currently being held by a user for editing
     
 
+    def __str__(self):          # on Python 3
+        return self.page_num
+    
+    def __unicode__(self):      # on Python 2
+        return self.page_num
+
+
+    def get_author(self):
+        return self.author
+    
+    def get_book(self):
+        return self.book
+    
+    def get_absolute_url(self):     
+        kwargs = {'page_num': str(self.page_num), 'pk': str(self.book.id)}
+        return reverse('projects:book-page', kwargs=kwargs)  
+       
+    def save(self, *args, **kwargs):
+        print "DEBUG:: Model Page save called"  
+        super(Page, self).save()
+        
+        # If proof-reading has been finished by the user,
+        # increase the proofread_level by ONE        
+        if kwargs.get('submit', False):
+            self.proofread_level = m.proofread_level + 1                      
+        
+        if self.verified == True:
+            self.verified_at = timezone.now()
+        
+        # Save    
+        super(Page, self).save()

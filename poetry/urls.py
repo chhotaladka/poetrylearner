@@ -25,6 +25,7 @@ urlpatterns = i18n_patterns('',
     url(r'^select2/', include('django_select2.urls')),
     url(r'^c/', include('crawlers.urls', namespace='crawlers')),
     url(r'^p/', include('projects.urls', namespace='projects')),
+    url(r'^s/', include('snippets.urls', namespace='snippets')),
     url(r'^', include('articles.urls', namespace="articles")),
 )
 

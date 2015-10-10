@@ -11,7 +11,7 @@ html, body {
 }
 
 .mdl-poetry .mdl-poetry__post {
-    max-width: 900px;
+    max-width: 1080px;
     padding: 0px;
     display: flex;
     width: 100%;
@@ -29,7 +29,9 @@ html, body {
 }
 
 .mdl-poetry .table--large .mdl-data-table {
-	width: -moz-available;
+  width: 100%;
+  width: -moz-available;          /* WebKit-based browsers will ignore this. */
+  width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
 }
 
 .mdl-poetry .wide-card .mdl-card__title {
@@ -43,7 +45,7 @@ html, body {
 .mdl-poetry .book-card .title-divider {
 	height: 75%;
 	max-width: 40%;
-	text-align: center;	
+	text-align: center;
 	padding: 8px;
 	margin: 8px;
 	border-right: 1px solid rgba(0, 0, 0, 0.2);
@@ -62,7 +64,7 @@ html, body {
 	margin: 16px auto;
 	font-size: 14px;
 	line-height: 24px;
-	
+
 }
 .mdl-poetry .author-avatar {
     width: 120px;
@@ -109,7 +111,7 @@ html, body {
 }
 
 
-.mdl-poetry .mdl-card__actions {    
+.mdl-poetry .mdl-card__actions {
     display: flex;
     box-sizing: border-box;
     align-items: center;
@@ -123,7 +125,7 @@ html, body {
 .poetry-card .mdl-card__title {
   /*height: 176px;*/
 height: 128px;
-background: url('../img/header6.jpg') top / cover;
+/*background: url('../img/header6.jpg') top / cover;*/
 }
 
 
@@ -151,6 +153,23 @@ background: url('../img/header6.jpg') top / cover;
     font-weight: 500;
 }
 
+.mdl-poetry .meta__views .meta__text {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+.mdl-poetry .meta .material-icons {	
+	color: #919191;
+}
+
+.mdl-poetry .meta .material-icons:hover {	
+	color: #616161;
+}
+
+.mdl-poetry .meta .material-icons.color-used { 
+	color: #ED4255;
+}
+
 .mdl-poetry .meta-edit {
     font-size: 13px;
     line-height: 18px;
@@ -164,7 +183,7 @@ background: url('../img/header6.jpg') top / cover;
 }
 
 .mdl-poetry .mdl-card > a {
-  
+
   text-decoration: none;
   font-weight: inherit;
 }
@@ -238,6 +257,8 @@ background: url('../img/header6.jpg') top / cover;
 
 .mH-auto { min-height: auto; }
 
+
+
 /* Common style */
 a {
     text-decoration: none;
@@ -276,13 +297,13 @@ a {
 	list-style-type: none;
 }
 .pagination li a {
-    color: #444; 
+    color: #444;
 }
 .pagination li.active a {
-    color: #fff; 
+    color: #fff;
 }
 .pagination li.active {
-    background-color: #ee6e73; 
+    background-color: #ee6e73;
 }
 .pagination li.disabled a {
     cursor: default;
@@ -312,9 +333,8 @@ a {
 
 /* Alerts */
 .alert-danger {
-	color: #f44336;	
+	color: #f44336;
 }
 .alert-success {
 	color: #8bc34a;
 }
-

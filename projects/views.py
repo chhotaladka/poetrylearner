@@ -98,6 +98,10 @@ def book_details(request, slug, pk):
     return render(request, template, context)
 
 
+def book_page_details(request, pk, page_num):
+    pass
+
+
 #@login_required
 def project_list(request):    
     """

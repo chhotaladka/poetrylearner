@@ -6,9 +6,7 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 
-from wiki_spider import WikiSpider
-from kavitakosh_spider import KavitakoshSpider
-
+from crawlers.spiders.wiki import WikiSpider
 
 process = CrawlerProcess({
     'BOT_NAME': 'majdoor',
@@ -21,7 +19,6 @@ process = CrawlerProcess({
 })
 
 
-#process.crawl(WikiSpider)
-process.crawl(KavitakoshSpider)
+process.crawl(WikiSpider)
 #process.crawl('wikipedia', urls='https://en.wikipedia.org/wiki/Gulzar')
 process.start() # the script will block here until the crawling is finished

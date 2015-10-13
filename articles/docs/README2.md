@@ -1,3 +1,9 @@
+# Creating Database
+
+mysql> CREATE DATABASE poetry
+    -> DEFAULT CHARACTER set utf8
+    -> DEFAULT COLLATE utf8_general_ci;
+
 #Requirement for crawler
 
 pip install requests

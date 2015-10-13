@@ -66,6 +66,11 @@ html, body {
 	line-height: 24px;
 
 }
+.mdl-poetry .mdl-card__supporting-text.article-content {
+	font-size: 14px;
+	line-height: 20px;
+}
+
 .mdl-poetry .author-avatar {
     width: 120px;
     height: 120px;
@@ -128,64 +133,147 @@ height: 128px;
 /*background: url('../img/header6.jpg') top / cover;*/
 }
 
-
-.mdl-poetry .meta {
+.mdl-poetry .article-info {
     box-sizing: border-box;
-    padding: 16px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     height: auto;
 }
-.mdl-poetry .meta > * {
+.mdl-poetry .article-info > * {
     display: flex;
     flex-direction: column;
 }
-
-.mdl-poetry .meta > .meta__favorites,
-.mdl-poetry .meta > .meta__bookmarks,
-.mdl-poetry .meta > .meta__share,
-.mdl-poetry .meta > .meta__views {
-    flex-direction: row;
-    margin: 0px 8px;
-    font-size: 13px;
-    font-weight: 500;
+.mdl-poetry .article-info.mdl-card__supporting-text {
+	padding: 0px 16px;
 }
 
-.mdl-poetry .meta__views .meta__text {
-	font-size: 20px;
-	font-weight: 500;
-}
-
-.mdl-poetry .meta .material-icons {	
+.mdl-poetry .meta-name {
+	font-size: 12px;
+	font-weight: 400;
 	color: #919191;
 }
-
-.mdl-poetry .meta .material-icons:hover {	
+.mdl-poetry .meta-val--bignum {
+	font-size: 14px;
+	font-weight: 400;
 	color: #616161;
 }
 
-.mdl-poetry .meta .material-icons.color-used { 
+
+.mdl-poetry .mdl-card__actions.action-pannel {
+	padding: 4px;
+}
+.mdl-poetry .action-pannel .material-icons {
+	font-size: 20px;
+}
+.mdl-poetry .action-pannel .material-icons.color-used { 
 	color: #ED4255;
 }
-
-.mdl-poetry .meta-edit {
-    font-size: 13px;
-    line-height: 18px;
-    font-weight: 300;
-    padding-left: 16px;
-    padding-right: 16px;
+.mdl-poetry .action-button {
+    background: none repeat scroll 0px 0px transparent;
+    border: medium none;
+    border-radius: 2px;
+    color: #919191;
+    position: relative;
+    height: 36px;
+    min-width: 64px;
+    padding: 0px 8px;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    overflow: hidden;
+    outline: medium none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    line-height: 36px;
+    vertical-align: middle;
+}
+.mdl-poetry .action-button .action-button__text {
+	vertical-align: middle;
+	padding-bottom: 14px;
+}
+.mdl-poetry .action-button:hover {
+	color: #616161;
+}
+.mdl-poetry .action-button--small {
+    background: none repeat scroll 0px 0px transparent;
+    border: medium none;
+    cursor: pointer;
+	padding: 2px;
+    text-align: left;
+	color: #919191;
+	font-size: 10px;
+}
+.mdl-poetry .action-button--small:hover {
+	color: #616161;
 }
 
+.mdl-poetry .share-pannel {
+	padding: 4px 16px 4px 16px;
+}
+.mdl-poetry .share-button {
+    background: none repeat scroll 0px 0px transparent;
+    border: medium none;
+    cursor: pointer;
+	padding: 2px;
+    text-align: left;
+	color: #919191;
+	font-size: 12px;
+}
+.mdl-poetry .share-button:hover {
+	color: #616161;
+}
+.mdl-poetry .share-button .share-icon-twitter {
+	background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -348px;
+    width: 32px;
+    height: 32px;
+	display: inline-block;
+}
+.mdl-poetry .share-button .share-icon-fb {
+    background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -861px;
+    width: 32px;
+    height: 32px;
+	display: inline-block;
+}
+.mdl-poetry .share-button .share-icon-google {
+    background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -276px;
+    width: 32px;
+    height: 32px;
+	display: inline-block;
+}
+.mdl-poetry .share-button .share-icon-mail {
+    background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -144px;
+    width: 32px;
+    height: 32px;
+	display: inline-block;
+}
+
+.mdl-poetry .meta-pannel {
+	padding: 8px 16px;
+}
+.mdl-poetry .meta-edit {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 300;
+}
 .mdl-poetry .meta-edit a {
     text-decoration: none;
 }
 
-.mdl-poetry .mdl-card > a {
+.mdl-poetry .mdl-card a {
+	text-decoration: none;
+	font-weight: inherit;
+	color: #ED4255;	
+}
 
-  text-decoration: none;
-  font-weight: inherit;
+.mdl-poetry .mdl-card__menu a {
+	color: #919191;
+}
+.mdl-poetry .mdl-card__menu a:hover {
+	color: #616161;
 }
 
 .mdl-poetry .mdl-card h4 {
@@ -242,6 +330,8 @@ height: 128px;
 .pB-8 { padding-bottom: 8px; }
 .pB-16 { padding-bottom: 16px; }
 .pB-48 { padding-bottom: 48px; }
+.pL-8 { padding-left: 8px;}
+.pR-8 { padding-right: 8px;}
 
 .wSn { white-space: normal; }
 

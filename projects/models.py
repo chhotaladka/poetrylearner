@@ -91,8 +91,8 @@ class Author(models.Model):
         if self.image:
             return '{0}{1}'.format(settings.MEDIA_URL, self.image)            
         else:
-            default_img = 'defaults/author.jpg'
-            return '{0}{1}'.format(settings.MEDIA_URL, default_img)  
+            default_img = 'img/author.jpg'
+            return '{0}{1}'.format(settings.STATIC_URL, default_img)  
     
     def clean(self):
         print "DBG:: Model Auhtor clean called"

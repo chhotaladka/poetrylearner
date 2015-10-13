@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.contrib import auth
-from articles.models import Article
+from snippets.models.snippet import Snippet
 
 # Create your models here.
 
@@ -12,9 +12,9 @@ class RawArticle(models.Model):
             
     source_url = models.URLField(null=False, max_length=1000)
     content = models.TextField(null=False)
-    date_added = models.DateTimeField("added on", auto_now_add=True)
-    is_valid = models.BooleanField("valid", default=False)
-    article = models.ForeignKey(Article, related_name='ref_crawled', null=True, blank=True, verbose_name="related entry in article table")
+    added_at = models.DateTimeField(auto_now_add=True)
+    valid = models.BooleanField(default=False)
+    snippet = models.ForeignKey(Snippet, related_name='ref_articles', null=True, blank=True, verbose_name="related entry in article table")
     
 
     def __str__(self):          # on Python 3

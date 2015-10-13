@@ -6,10 +6,11 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 
-from crawlers.wiki_spider import WikiSpider
-from crawlers.kk_spider import KavitakoshSpider
-from crawlers.kk_author_spider import KavitakoshAuthorSpider
-from crawlers.urdupoetry_spider import UrdupoetrySpider
+from crawlers.spiders.wiki import WikiSpider
+
+from crawlers.spiders.secret.kk import KavitakoshSpider
+from crawlers.spiders.secret.kk_author import KavitakoshAuthorSpider
+from crawlers.spiders.secret.urdupoetry import UrdupoetrySpider
 
 
 

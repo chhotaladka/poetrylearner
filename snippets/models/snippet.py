@@ -43,6 +43,10 @@ class Snippet(models.Model):
   
     def get_title(self):
         return self.title
+    
+    def get_language(self):
+        tmp = dict(LANGUAGES)
+        return tmp[self.language]
 
     def get_slug(self):
         """
@@ -54,7 +58,13 @@ class Snippet(models.Model):
     def get_absolute_url(self):     
         kwargs = {'pk': str(self.id), 'slug': self.get_slug()}
         return reverse('snippets:view', kwargs=kwargs)    
-    
+
+    def get_description(self):
+        """
+        Content to share on social media sites
+        """
+        #TODO return first stanza
+        return self.body
     
 #     def get_dirty_fields(self):
 #         return [f.name for f in self._meta.fields if self._original_state[f.attname] != self.__dict__[f.attname]]

@@ -6,8 +6,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic.base import View
 
+from meta_tags.views import Meta
 from snippets.models import Snippet
 from snippets.forms import SnippetForm
+from snippets.utils import truncatewords
 
 # Create your views here.
 
@@ -36,11 +38,22 @@ def snippet_details(request, slug, pk):
         print "DBG:: Redirecting to correct URL"
         return redirect(obj)
     
+    # Instantiate the Meta class
+    title_for_meta = obj.get_title() + ' by ' + obj.author.get_name()    
+    meta = Meta(title = title_for_meta, 
+                description = truncatewords(obj.body, 120), 
+                section= 'poetry', 
+                url = obj.get_absolute_url(),                
+                author = obj.author, 
+                date_time = obj.updated_at,
+                object_type = 'article'
+                #TODO keywords = [ tags.name for tags in obj.tags.all()]
+            )
     
     ##
     # Make the context and render
   
-    context = {'snippet': obj,}
+    context = {'snippet': obj, 'meta': meta}
     template = 'snippets/view.html'
     
     #return render_to_response(template, context , context_instance=RequestContext(request))

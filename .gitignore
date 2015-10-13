@@ -42,7 +42,6 @@ coverage.xml
 .project
 .pydevproject
 .settings/
-*/migrations/
 
 # Rope
 .ropeproject

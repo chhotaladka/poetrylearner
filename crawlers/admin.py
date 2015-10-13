@@ -4,18 +4,18 @@ from django.contrib import admin
 from crawlers.models import RawArticle
 
 class RawArticleAdmin(admin.ModelAdmin):
-    list_display = ('source_url', 'content', 'date_added', 
-                    'is_valid', 'article')
+    list_display = ('source_url', 'content', 'added_at', 
+                    'valid', 'snippet')
     
     fieldsets = [
         (None,               {'fields': ['source_url', 'content', 
-                                         'is_valid', 'article']
+                                         'valid', 'snippet']
                               
                               }
          ),
         
     ]
-    list_filter = ['date_added']
+    list_filter = ['added_at']
     search_fields = ['content']
     
 

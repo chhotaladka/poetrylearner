@@ -25,6 +25,20 @@ SECRET_KEY = '3@#m-+t6-o@#&jd4^(waj9m=$lrs8d4r!zqy*e))l*(dxtsymy'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ADMINS = (
+    # ('Your Name', 'your_email@example.com'),
+     ('Chhota Ladka','chhotaladka02@gmail.com')
+)
+
+MANAGERS = ADMINS
+
+#SITE_ID = 1
+
+# Hosts/domain names that are valid for this site; required if DEBUG is False
+# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+#ALLOWED_HOSTS = ['sitename.com']
+
+
 ALLOWED_HOSTS = []
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -49,6 +63,7 @@ INSTALLED_APPS = (
     'crawlers',
     'projects',
     'snippets',
+    'meta_tags',
 )
 
 TEMPLATE_LOADERS = (
@@ -107,7 +122,7 @@ WSGI_APPLICATION = 'poetry.wsgi.application'
 
 DATABASES = {
     'default':
-        {'ENGINE': 'django.db.backends.mysql', 'NAME': 'poetry', 'HOST': '127.0.0.1', 'USER': 'root', 'PASSWORD': 'root', 'PORT': '3306'}
+        {'ENGINE': 'django.db.backends.mysql', 'NAME': 'poetry3', 'HOST': '127.0.0.1', 'USER': 'root', 'PASSWORD': 'root', 'PORT': '3306'}
 }
 
 
@@ -184,3 +199,21 @@ AUTO_RENDER_SELECT2_STATICS = True
 # Reference: 
 # http://django-select2.readthedocs.org/en/latest/get_started.html#select2-bootstrap-default-false
 SELECT2_BOOTSTRAP = True
+
+
+#
+# Meta data
+META_SITE_PROTOCOL = 'http'
+META_SITE_DOMAIN = 'sitename.com' #using META_USE_SITE SETTING
+META_SITE_TYPE = 'article' # override when passed in __init__
+META_SITE_NAME = 'Site Name' #TODO
+#META_INCLUDE_KEYWORDS = [] # keyword will be included in every article
+#META_DEFAULT_KEYWORDS = [] # default when no keyword is provided in __init__
+#META_IMAGE_URL = '' # Use STATIC_URL 
+META_USE_OG_PROPERTIES = True
+META_USE_TWITTER_PROPERTIES = True
+META_USE_GOOGLEPLUS_PROPERTIES = True
+META_USE_SITES = False #TODO check
+META_PUBLISHER_FB_ID = 'https://www.facebook.com/SiteName' #TODO can use PAGE URL or Publisher id ID
+META_PUBLISHER_GOOGLE_ID = 'https://plus.google.com/111112222333344444' #TODO Google+ ID 
+META_FB_APP_ID = '' #TODO

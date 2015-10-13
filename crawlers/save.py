@@ -4,6 +4,7 @@ import traceback
 from crawlers.models import RawArticle
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+import json
 
 def validate_source_url(url):
     validate = URLValidator()
@@ -31,15 +32,11 @@ def save_to_db(data):
     print "-----------------------------------------"
     
     try:        
-        # Insert Raw Article information
-        c = "Title : "+ data['title']+ \
-            "<br />Author : "+ data['author']+ \
-            "<br />Article : <br />"+ data['poem']
-        
+        # Insert Raw Article information        
         raw = RawArticle()
         if validate_source_url(data['url']):
             raw.source_url = data['url']
-            raw.content = c
+            raw.content = json.dumps(data)
             raw.save()
         else:
             print "ERROR: URL IS NOT VALID ", data['url']

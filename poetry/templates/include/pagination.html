@@ -1,7 +1,7 @@
 <ul class="pagination">	
-{% if book_pages.has_previous %}				
+{% if obj_list.has_previous %}				
 	<li class="prev waves-effect">
-		<a href="?page={{ book_pages.previous_page_number }}">
+		<a href="?page={{ obj_list.previous_page_number }}">
 {% else %}    
 	<li class="prev disabled">
 		<a href="#">
@@ -10,21 +10,21 @@
         </a>					        
 	</li>			
 	<li class="pages">
-		<ul>
-			{% for p in book_pages.paginator.page_range %}
-				{% if p == book_pages.number %}
-		    <li class="active mdl-color--teal-300">
-		        {% else %}
+		<ul><li>{{ obj_list.paginator.num_pages}}</li>
+		{% for p in obj_list.paginator.page_range %}
+			{% if p == obj_list.number %}
+		    <li class="active mdl-color--teal-A300">
+		    {% else %}
 		    <li class="waves-effect">
-		        {% endif %}
+		    {% endif %}
 		        <a href="?page={{ p }}">{{ p }}</a>
 		    </li>
-	        {% endfor %}
+		{% endfor %}
         </ul>
     </li>
-    {% if book_pages.has_next %}
+    {% if obj_list.has_next %}
 	<li class="next waves-effect">						        
-        <a href="?page={{ book_pages.next_page_number }}" aria-label="Next">
+        <a href="?page={{ obj_list.next_page_number }}" aria-label="Next">
     {% else %}
     <li class="next disabled">
     	<a href="#">

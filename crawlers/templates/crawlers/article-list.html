@@ -1,0 +1,65 @@
+{% extends "crawlers/base.html" %}
+
+{% block title %}
+	List - raw article
+{% endblock %}
+
+{% block main %}
+
+	<section id="msgPannel" class="pT-8 pB-8">
+		<div class="mdl-poetry__post mdl-grid">
+			<div class="mdl-card poetry-card mdl-cell mdl-cell--12-col">
+			
+				<div class="mdl-card__supporting-text stats-text">		            
+					Displaying 20 of {{ articles.paginator.count }} raw articles.
+				</div>
+				<div class="mdl-card__supporting-text mdl-color-text--grey-600">		            
+					{% include "include/pagination.html" with obj_list=articles only %}
+				</div>
+
+				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+					<div class="table--large">
+					<table class="mdl-data-table mdl-js-data-table wSn">
+						<thead>
+							<tr>
+						    	<th>ID</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Title</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Author</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Source</th>
+						    	<th>Added at</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Valid</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Snippet</th>
+						    </tr>
+						</thead>						
+						<tbody>
+							{% for article in articles %}
+							<tr>
+								<td>{{ forloop.counter }}</td>
+								<td class="mdl-data-table__cell--non-numeric">
+									<a href="{{article.get_absolute_url}}" title="View article" target="_blank">{{ article.get_title }}</a>
+								</td>
+								<td class="mdl-data-table__cell--non-numeric">{{ article.get_author }}</td>
+								<td class="mdl-data-table__cell--non-numeric">
+									<a href="{{ article.get_source_url }}" title="Visit source" target="_blank">{{ article.get_source_url | truncatechars:30}}</a>
+								</td>
+								<td title="{{article.added_at}}">{{ article.added_at | date }}</td>
+								<td class="mdl-data-table__cell--non-numeric">{{ article.get_validity }}</td>
+								<td class="mdl-data-table__cell--non-numeric">
+									<a href="{{article.snippet.get_absolute_url}}" title="View snippet" target="_blank">{{ article.snippet.id }}</a>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					</div>
+				</div>
+				
+				<div class="mdl-card__supporting-text mdl-color-text--grey-600">		            
+					{% include "include/pagination.html" with obj_list=articles only %}
+				</div>
+					
+			</div>					
+		</div>	
+	</section>
+
+{% endblock %}

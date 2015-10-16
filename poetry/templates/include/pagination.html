@@ -1,3 +1,7 @@
+{% load custom_tags %}
+
+{% with total_pages=obj_list.paginator.num_pages current_page=obj_list.number%}	
+
 <ul class="pagination">	
 {% if obj_list.has_previous %}				
 	<li class="prev waves-effect">
@@ -6,30 +10,96 @@
 	<li class="prev disabled">
 		<a href="#">
 {% endif %}
-        	<i class="material-icons">chevron_left</i>
-        </a>					        
+    	<i class="material-icons">chevron_left</i>
+		</a>					        
 	</li>			
 	<li class="pages">
-		<ul><li>{{ obj_list.paginator.num_pages}}</li>
-		{% for p in obj_list.paginator.page_range %}
-			{% if p == obj_list.number %}
-		    <li class="active mdl-color--teal-A300">
-		    {% else %}
-		    <li class="waves-effect">
-		    {% endif %}
-		        <a href="?page={{ p }}">{{ p }}</a>
-		    </li>
+		<ul>
+{% if total_pages < 11 %}
+	{% for p in obj_list.paginator.page_range %}
+		{% if p == current_page %}
+			<li class="active mdl-color--teal-A300">
+		{% else %}
+			<li class="waves-effect">
+		{% endif %}
+				<a href="?page={{ p }}">{{ p }}</a>
+			</li>		    	
+	{% endfor %}
+{% else %}
+	{% if current_page <= 4 %}
+		{% for p in 1|make_range:"4" %}
+			{% if p == current_page %}
+				<li class="active mdl-color--teal-A300">
+			{% else %}
+				<li class="waves-effect">
+			{% endif %}
+					<a href="?page={{ p }}">{{ p }}</a>
+				</li>
 		{% endfor %}
-        </ul>
-    </li>
-    {% if obj_list.has_next %}
+		{% if current_page == 4 %}
+			<li class="waves-effect">			    	
+				<a href="?page={{ 5 }}">{{ 5 }}</a>
+			</li>
+		{% endif %}
+			<li>...</li>
+			<li class="waves-effect">						        
+				<a href="?page={{ total_pages}}">{{ total_pages }}</a>
+			</li>							
+	{% elif current_page >= total_pages|add:"-3" %}
+			<li class="waves-effect">						        
+				<a href="?page={{ 1 }}">{{ 1 }}</a>
+			</li>
+			<li>...</li>
+		{% if current_page == total_pages|add:"-3" %}
+			<li class="waves-effect">			    	
+				<a href="?page={{ total_pages|add:"-4" }}">{{ total_pages|add:"-4" }}</a>
+			</li>
+		{% endif %}
+		{% with x=total_pages|add:"-3" %}
+		{% for p in x|make_range:"4" %}
+			{% if p == current_page %}
+				<li class="active mdl-color--teal-A300">
+			{% else %}
+				<li class="waves-effect">
+			{% endif %}
+					<a href="?page={{ p }}">{{ p }}</a>
+				</li>
+		{% endfor %}
+		{% endwith %}
+			
+	{% else %}
+		<li class="waves-effect">		    
+			<a href="?page={{ 1 }}">{{ 1 }}</a>
+		</li>		    
+		<li>...</li>				    
+		<li class="waves-effect">
+			<a href="?page={{ obj_list.previous_page_number }}">{{ obj_list.previous_page_number }}</a>
+		</li>
+		<li class="active mdl-color--teal-A300">		    
+			<a href="?page={{ current_page }}">{{ current_page }}</a>
+		</li>
+		<li class="waves-effect">						        
+			<a href="?page={{ obj_list.next_page_number }}">{{ obj_list.next_page_number }}</a>
+		</li>		    		    
+		<li>...</li>		    
+		<li class="waves-effect">		    
+			<a href="?page={{ total_pages }}">{{ total_pages }}</a>
+		</li>
+	{% endif %}
+		
+{% endif %}
+		</ul>
+	</li>
+{% if obj_list.has_next %}
 	<li class="next waves-effect">						        
-        <a href="?page={{ obj_list.next_page_number }}" aria-label="Next">
-    {% else %}
-    <li class="next disabled">
-    	<a href="#">
-    {% endif %}
-        	<i class="material-icons">chevron_right</i>
-        </a>
-    </li>			        	        			   
+		<a href="?page={{ obj_list.next_page_number }}" aria-label="Next">
+{% else %}
+	<li class="next disabled">
+		<a href="#">
+{% endif %}
+			<i class="material-icons">chevron_right</i>
+		</a>
+	</li>			        	        			   
 </ul>
+
+{% endwith %}

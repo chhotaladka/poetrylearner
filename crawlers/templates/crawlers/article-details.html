@@ -1,45 +1,37 @@
 {% extends "crawlers/base.html" %}
-{% load staticfiles %}
-
-{% block meta %}
-	<meta name="description" content="">
-	<meta name="author" content="" >
-
-{% endblock %}
 
 {% block title %}
-	raw article
+	{{ data.title }} - raw article
 {% endblock %}
 
-{% block body %}
+{% block main %}
 
-    <div class="container">
-    	<div class="row">
-    		<div class="col-lg-12 col-md-12 col-sm-12">
-	    		
-			<h2> ID {{ article.id }} </h2>
-				
-			<p>Reference : <a title="Go to the source" href={{ article.source_url }} target="_blank">URL</a>
-			
-			<br /> Date Added : {{ article.date_added }}
-			
-			<br /> Validity : {{ article.is_valid }}
-			
-			<br /> Related entry in article table : {{ article.article_entry.get_title }} 
-			</p>
-			<hr />
-			
-			<h6>---start of the content---</h6>
-			<span class="content-text">
-			{% autoescape off %}
-			{{ article.content }}	
-			{% endautoescape %}
-			</span>
-			<h6>---end of the content---</h6>
+	<section id="msgPannel" class="pT-8 pB-8">
+		<div class="mdl-poetry__post mdl-grid">
+			<div class="mdl-card poetry-card mdl-cell mdl-cell--12-col">
 
-			</div>
-		</div>
-	</div>
+				<div class="article-info mdl-card__supporting-text mdl-color-text--grey-500 mT-16">
+					<div>
+						<span>ID <b>{{article.id}}</b></span>
+						<span id="cTitleId">Title: {{ data.title }}</span>
+						<span id="cAuthorId">Author: {{ data.author }}</span>						
+						<span>Reference
+							<a id="cUrlId" title="Go to the source" href={{ article.source_url }} target="_blank">URL</a>
+						</span>	
+						<span id="cDateId">Added at {{ article.added_at }}</span>													
+						<span id="cValidId">Validity {{ article.valid }}</span>	
+						<span>Related snippet {{ article.snippet.get_title }}</span>	    				
+					</div>						
+				</div>
+				<hr />					
+				<div id="cPoemId" class="article-content mdl-card__supporting-text mdl-color-text--grey-700">											
+					{% autoescape off %}					
+					{{ data.poem }}
+					{% endautoescape %}
+				</div>
 
-	
+			</div>					
+		</div>	
+	</section>
+
 {% endblock %}

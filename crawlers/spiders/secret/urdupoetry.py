@@ -1,7 +1,7 @@
 import scrapy
 import re
 import json
-from crawlers.save import save_to_db
+from crawlers.save import save_to_db_poem
 
 
 class UrdupoetrySpider(scrapy.Spider):
@@ -91,7 +91,7 @@ class UrdupoetrySpider(scrapy.Spider):
                 data['url'] = response.url.encode('utf-8')
                 
                 # Store these information in DB
-                save_to_db(data)
+                save_to_db_poem(data)
                 
             else:
                 print "First method failed trying another xpath"
@@ -111,7 +111,7 @@ class UrdupoetrySpider(scrapy.Spider):
                     data['url'] = response.url.encode('utf-8')
                     
                     # Store these information in DB
-                    save_to_db(data)
+                    save_to_db_poem(data)
                 
                 else:
                     print "Both method failed write it in file for further processing"

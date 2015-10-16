@@ -1,7 +1,7 @@
 import scrapy
 import re
 from datetime import datetime
-from crawlers.save import save_to_db
+from crawlers.save import save_to_db_poem
 
 class KavitakoshAuthorSpider(scrapy.Spider):
     """
@@ -115,7 +115,7 @@ class KavitakoshAuthorSpider(scrapy.Spider):
                 data['url'] = response.url.encode('utf-8')
                 
                 # Store these information in DB
-                save_to_db(data)
+                save_to_db_poem(data)
                 
             except:
                 print "Title not found"

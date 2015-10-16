@@ -55,3 +55,48 @@ class RawArticle(models.Model):
               
         super(RawArticle, self).save(*args, **kwargs)
                
+#
+# Crawled authors from accros the web by web spiders (scrapy)
+#
+class RawAuthor(models.Model):
+            
+    source_url = models.URLField(null=False, max_length=1000)
+    name = models.CharField(max_length=200)
+    birth = models.CharField(max_length=100, null=True, blank=True)
+    death = models.CharField(max_length=100, null=True, blank=True)    
+    added_at = models.DateTimeField(auto_now_add=True)
+    valid = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['-added_at']
+             
+    def __str__(self):          # on Python 3
+        return self.name
+    
+    def __unicode__(self):      # on Python 2
+        return self.name
+      
+    def get_absolute_url(self):
+        kwargs = {'pk': str(self.id)}
+        return reverse('crawlers:author-details', kwargs=kwargs)
+    
+    def get_source_url(self):
+        return self.source_url
+    
+    def get_validity(self):
+        return self.valid
+           
+    def get_name(self):    
+        return self.name
+    
+    def get_birth_date(self):
+        #self.birth_year = self.birth_year.split()[-1]
+        return self.birth
+
+    def get_death_date(self):
+        return self.death
+            
+    def save(self, *args, **kwargs):
+        print "Model RawAuthor save called"
+              
+        super(RawAuthor, self).save(*args, **kwargs)

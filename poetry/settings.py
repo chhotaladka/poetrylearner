@@ -64,6 +64,7 @@ INSTALLED_APPS = (
     'projects',
     'snippets',
     'meta_tags',
+    'common',
 )
 
 TEMPLATE_LOADERS = (
@@ -92,27 +93,21 @@ TEMPLATES = [
         'DIRS': [os.path.join(PROJECT_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
+            'context_processors': [                
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.debug",
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                'django.core.context_processors.csrf',
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                'common.context_processors.getvars',
             ],
         },
     },
 ]
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.request',
-    'django.core.context_processors.media',
-    'django.core.context_processors.csrf',
-    'django.core.context_processors.tz',
-    'django.core.context_processors.static',
-)
 
 WSGI_APPLICATION = 'poetry.wsgi.application'
 

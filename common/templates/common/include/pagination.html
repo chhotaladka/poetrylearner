@@ -1,11 +1,11 @@
 {% load custom_tags %}
-
+{# getvars context contains the queryset passed in url #}
 {% with total_pages=obj_list.paginator.num_pages current_page=obj_list.number%}	
 
 <ul class="pagination">	
 {% if obj_list.has_previous %}				
 	<li class="prev waves-effect">
-		<a href="?page={{ obj_list.previous_page_number }}">
+		<a href="?page={{ obj_list.previous_page_number }}{{getvars}}">
 {% else %}    
 	<li class="prev disabled">
 		<a href="#">
@@ -22,7 +22,7 @@
 		{% else %}
 			<li class="waves-effect">
 		{% endif %}
-				<a href="?page={{ p }}">{{ p }}</a>
+				<a href="?page={{ p }}{{getvars}}">{{ p }}</a>
 			</li>		    	
 	{% endfor %}
 {% else %}
@@ -33,26 +33,26 @@
 			{% else %}
 				<li class="waves-effect">
 			{% endif %}
-					<a href="?page={{ p }}">{{ p }}</a>
+					<a href="?page={{ p }}{{getvars}}">{{ p }}</a>
 				</li>
 		{% endfor %}
 		{% if current_page == 4 %}
 			<li class="waves-effect">			    	
-				<a href="?page={{ 5 }}">{{ 5 }}</a>
+				<a href="?page={{ 5 }}{{getvars}}">{{ 5 }}</a>
 			</li>
 		{% endif %}
 			<li>...</li>
 			<li class="waves-effect">						        
-				<a href="?page={{ total_pages}}">{{ total_pages }}</a>
+				<a href="?page={{ total_pages}}{{getvars}}">{{ total_pages }}</a>
 			</li>							
 	{% elif current_page >= total_pages|add:"-3" %}
 			<li class="waves-effect">						        
-				<a href="?page={{ 1 }}">{{ 1 }}</a>
+				<a href="?page={{ 1 }}{{getvars}}">{{ 1 }}</a>
 			</li>
 			<li>...</li>
 		{% if current_page == total_pages|add:"-3" %}
 			<li class="waves-effect">			    	
-				<a href="?page={{ total_pages|add:"-4" }}">{{ total_pages|add:"-4" }}</a>
+				<a href="?page={{ total_pages|add:"-4" }}{{getvars}}">{{ total_pages|add:"-4" }}</a>
 			</li>
 		{% endif %}
 		{% with x=total_pages|add:"-3" %}
@@ -62,28 +62,28 @@
 			{% else %}
 				<li class="waves-effect">
 			{% endif %}
-					<a href="?page={{ p }}">{{ p }}</a>
+					<a href="?page={{ p }}{{getvars}}">{{ p }}</a>
 				</li>
 		{% endfor %}
 		{% endwith %}
 			
 	{% else %}
 		<li class="waves-effect">		    
-			<a href="?page={{ 1 }}">{{ 1 }}</a>
+			<a href="?page={{ 1 }}{{getvars}}">{{ 1 }}</a>
 		</li>		    
 		<li>...</li>				    
 		<li class="waves-effect">
-			<a href="?page={{ obj_list.previous_page_number }}">{{ obj_list.previous_page_number }}</a>
+			<a href="?page={{ obj_list.previous_page_number }}{{getvars}}">{{ obj_list.previous_page_number }}</a>
 		</li>
 		<li class="active mdl-color--teal-A300">		    
-			<a href="?page={{ current_page }}">{{ current_page }}</a>
+			<a href="?page={{ current_page }}{{getvars}}">{{ current_page }}</a>
 		</li>
 		<li class="waves-effect">						        
-			<a href="?page={{ obj_list.next_page_number }}">{{ obj_list.next_page_number }}</a>
+			<a href="?page={{ obj_list.next_page_number }}{{getvars}}">{{ obj_list.next_page_number }}</a>
 		</li>		    		    
 		<li>...</li>		    
 		<li class="waves-effect">		    
-			<a href="?page={{ total_pages }}">{{ total_pages }}</a>
+			<a href="?page={{ total_pages }}{{getvars}}">{{ total_pages }}</a>
 		</li>
 	{% endif %}
 		
@@ -92,7 +92,7 @@
 	</li>
 {% if obj_list.has_next %}
 	<li class="next waves-effect">						        
-		<a href="?page={{ obj_list.next_page_number }}" aria-label="Next">
+		<a href="?page={{ obj_list.next_page_number }}{{getvars}}" aria-label="Next">
 {% else %}
 	<li class="next disabled">
 		<a href="#">

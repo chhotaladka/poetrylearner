@@ -26,10 +26,10 @@ def save_to_db_poem(data):
     data['url']
     """
   
-    print "-----------------------------------------"
-    print data['index']
-    print data
-    print "-----------------------------------------"
+#     print "-----------------------------------------"
+#     print data['index']
+#     print data
+#     print "-----------------------------------------"
     
     try:        
         # Insert Raw Article information        
@@ -51,10 +51,10 @@ def save_to_db_author(data):
     """
     Save Author info to db
     """
-    print "-----------------------------------------"
-    print data['index']
-    print data
-    print "-----------------------------------------"
+#     print "-----------------------------------------"
+#     print data['index']
+#     print data
+#     print "-----------------------------------------"
 
     try:        
         # Insert Raw Author information        

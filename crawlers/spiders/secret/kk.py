@@ -87,6 +87,7 @@ class KavitakoshSpider(scrapy.Spider):
         data['url'] = response.url.encode('utf-8')
         
         # Store these information in DB
+        print "> Saving author ", self.count_parse_author, "to DB."
         save_to_db_author(data)
 
         ##
@@ -133,6 +134,7 @@ class KavitakoshSpider(scrapy.Spider):
                 data['url'] = response.url.encode('utf-8')
                 
                 # Store these information in DB
+                print "> Saving article ", self.count_articles, "to DB."
                 save_to_db_poem(data)
 
             except:

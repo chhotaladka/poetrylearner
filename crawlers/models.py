@@ -7,6 +7,30 @@ from snippets.models.snippet import Snippet
 
 # Create your models here.
 
+class ArticleManager(models.Manager):
+
+    def get_queryset(self):
+        qs = super(ArticleManager, self).get_queryset()
+        return qs
+    
+    def valid(self):
+        qs = self.get_queryset()
+        qs = qs.filter(valid=True)
+        return qs
+    
+    def invalid(self):
+        qs = self.get_queryset().filter(valid=False)
+        return qs
+    
+    def withsnippet(self):
+        qs = self.get_queryset().exclude(snippet=None)
+        return qs        
+ 
+    def withoutsnippet(self):
+        qs = self.get_queryset().filter(snippet=None)
+        return qs    
+    
+       
 #
 # Crawled articles from accros the web by web spiders (scrapy)
 #
@@ -17,6 +41,8 @@ class RawArticle(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
     valid = models.BooleanField(default=False)
     snippet = models.ForeignKey(Snippet, related_name='ref_articles', null=True, blank=True, verbose_name="related entry in article table")
+    
+    objects = ArticleManager()
     
     class Meta:
         ordering = ['-added_at']
@@ -54,7 +80,35 @@ class RawArticle(models.Model):
         print "Model RawArticle save called"
               
         super(RawArticle, self).save(*args, **kwargs)
-               
+
+
+class AuthorManager(models.Manager):
+
+    def get_queryset(self):
+        qs = super(AuthorManager, self).get_queryset()
+        return qs
+    
+    def valid(self):
+        qs = super(AuthorManager, self).get_queryset()
+        qs = qs.filter(valid=True)
+        return qs
+    
+    def invalid(self):
+        qs = super(AuthorManager, self).get_queryset().filter(valid=False)
+        return qs
+    
+    def nobirth(self):
+        qs = super(AuthorManager, self).get_queryset().filter(birth=None)
+        return qs
+    
+    def nodeath(self):
+        qs = super(AuthorManager, self).get_queryset().filter(death=None)
+        return qs        
+
+    def nodate(self):
+        qs = super(AuthorManager, self).get_queryset().filter(birth=None, death=None)
+        return qs 
+                       
 #
 # Crawled authors from accros the web by web spiders (scrapy)
 #
@@ -66,6 +120,8 @@ class RawAuthor(models.Model):
     death = models.CharField(max_length=100, null=True, blank=True)    
     added_at = models.DateTimeField(auto_now_add=True)
     valid = models.BooleanField(default=False)
+    
+    objects = AuthorManager()
     
     class Meta:
         ordering = ['-added_at']

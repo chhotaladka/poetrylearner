@@ -1,7 +1,7 @@
 {% extends "crawlers/base.html" %}
 
 {% block title %}
-	List - raw article
+	List - raw author
 {% endblock %}
 
 {% block main %}
@@ -9,12 +9,12 @@
 	<section id="msgPannel" class="pT-8 pB-8">
 		<div class="mdl-poetry__post mdl-grid">
 			<div class="mdl-card poetry-card mdl-cell mdl-cell--12-col">
-{% if articles %} {% comment %} Display the list {% endcomment %}
+{% if authors %} {% comment %} Display the list {% endcomment %}			
 				<div class="mdl-card__supporting-text stats-text">		            
-					Displaying {{ articles|length }} of {{ articles.paginator.count }} raw articles.
+					Displaying {{ authors|length }} of {{ authors.paginator.count }} raw authors.
 				</div>
 				<div class="mdl-card__supporting-text mdl-color-text--grey-600">		            
-					{% include "common/include/pagination.html" with obj_list=articles getvars=getvars only %}
+					{% include "common/include/pagination.html" with obj_list=authors getvars=getvars only %}
 				</div>
 
 				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
@@ -23,30 +23,28 @@
 						<thead>
 							<tr>
 						    	<th>ID</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Title</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Author</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Name</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Birth</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Death</th>
 						    	<th class="mdl-data-table__cell--non-numeric">Source</th>
 						    	<th>Added at</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Valid</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Snippet</th>
+						    	<th class="mdl-data-table__cell--non-numeric" title="Whether the author has been updated in main db?">Valid</th>						    	
 						    </tr>
 						</thead>						
 						<tbody>
-							{% for article in articles %}
+							{% for author in authors %}
 							<tr>
 								<td>{{ forloop.counter }}</td>
 								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{article.get_absolute_url}}" title="View article" target="_blank">{{ article.get_title }}</a>
+									<a href="{{author.get_absolute_url}}" title="View author" target="_blank">{{ author.get_name }}</a>
 								</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ article.get_author }}</td>
+								<td class="mdl-data-table__cell--non-numeric">{{ author.get_birth_date }}</td>
+								<td class="mdl-data-table__cell--non-numeric">{{ author.get_death_date }}</td>
 								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{ article.get_source_url }}" title="Visit source" target="_blank">{{ article.get_source_url | truncatechars:30}}</a>
+									<a href="{{ author.get_source_url }}" title="Visit source" target="_blank">{{ author.get_source_url | truncatechars:30}}</a>
 								</td>
-								<td title="{{article.added_at}}">{{ article.added_at | date }}</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ article.get_validity }}</td>
-								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{article.snippet.get_absolute_url}}" title="View snippet" target="_blank">{{ article.snippet.id }}</a>
-								</td>
+								<td title="{{author.added_at}}">{{ author.added_at | date }}</td>
+								<td class="mdl-data-table__cell--non-numeric">{{ author.get_validity }}</td>
 							</tr>
 							{% endfor %}
 						</tbody>
@@ -55,14 +53,14 @@
 				</div>
 				
 				<div class="mdl-card__supporting-text mdl-color-text--grey-600">		            
-					{% include "common/include/pagination.html" with obj_list=articles getvars=getvars only %}
+					{% include "common/include/pagination.html" with obj_list=authors getvars=getvars only %}
 				</div>
 {% else %}  {% comment %} Display the notification {% endcomment %}
 				<div class="mdl-card__supporting-text oops-message">
 					<i class="material-icons md-48">error_outline</i>	            
 					<h6>Oops!! No data found for this query.</h6>
 				</div>
-{% endif %}					
+{% endif %}						
 			</div>					
 		</div>	
 	</section>

@@ -1,0 +1,42 @@
+{% extends "crawlers/base.html" %}
+
+{% block title %}
+	Dashboard of raw articles
+{% endblock %}
+
+{% block main %}
+
+	<section id="msgPannel" class="pT-8 pB-8">
+		<div class="mdl-poetry__post mdl-grid">
+		
+			<div class="mdl-card poetry-card mdl-cell mdl-cell--4-col">
+
+				<div class="article-info mdl-card__supporting-text stats-text mT-16">
+					<div>
+						<span><a href="article/">Articles</a> statistics</span>
+						<span>Total <b>{{article.total}}</b></span>
+						<span>Valid <b>{{article.valid}}</b></span>
+						<span>Have snippet <b>{{article.withsnippet}}</b></span>
+	    				
+					</div>						
+				</div>
+
+			</div>	
+			<div class="mdl-card poetry-card mdl-cell mdl-cell--4-col">
+
+				<div class="article-info mdl-card__supporting-text stats-text mT-16">
+					<div>
+						<span><a href="author/">Authors</a> statistics</span>
+						<span>Total <b>{{author.total}}</b></span>
+						<span>Birth date not available <b>{{author.nobirth}}</b></span>
+						<span>Death date not available <b>{{author.nodeath}}</b></span>
+						<span>Both dates not available <b>{{author.nodate}}</b></span>
+	    				
+					</div>						
+				</div>				
+
+			</div>							
+		</div>	
+	</section>
+
+{% endblock %}

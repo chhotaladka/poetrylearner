@@ -1,0 +1,63 @@
+{% extends "crawlers/base.html" %}
+
+{% block title %}
+	{{ author.get_name }} - raw author
+{% endblock %}
+
+{% block main %}
+
+	<section id="msgPannel" class="pT-8 pB-8">
+		<div class="mdl-poetry__post mdl-grid">
+			<div class="mdl-card poetry-card mdl-cell mdl-cell--12-col">
+
+				<div class="info-list mdl-card__supporting-text mdl-color-text--grey-500 mT-16">					
+						<div>ID <b>{{author.id}}</b></div>
+						<div>Name: <span id="cName">{{ author.get_name }}</span></div>
+						<div>Birth: <span id="cBirth">{{ author.get_birth_date }}</span></div>
+						<div>Death: <span id="cDeath">{{ author.get_death_date }}</span></div>						
+						<div>Reference
+							<a id="cUrl" title="Go to the source" href={{ author.source_url }} target="_blank">URL</a>
+						</div>
+						<div>Added at <span id="cDate">{{ author.added_at }}</span></div>					
+						<div>Validity <span id="cValid">{{ author.valid }}</span></div>										
+				</div>
+				<div class="action-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
+					<button id="shareBtn" class="action-button" title="Share">
+		                <i class="material-icons" role="presentation">share</i>
+		                <span class="action-button__text">Share</span>	                
+					</button>
+					
+					<button id="bookmarkBtn" class="action-button" title="Send to my Bookmarks">
+		                <i class="material-icons color-used" role="presentation">bookmark</i>
+		                <span class="action-button__text">Bookmark</span>			                
+					</button>
+											
+					<button id="favBtn" class="action-button" title="I love this">							
+		                <i class="material-icons" role="presentation">favorite</i>
+		                <span class="action-button__text">Favorite</span>			                            
+					</button>
+					
+					<button id="copyBtn" class="action-button" title="Copy to clipboard">							
+		                <i class="material-icons" role="presentation">content_copy</i>
+		                <span class="action-button__text">Copy</span>			                            
+					</button>					
+					
+					<button id="moreBtn" class="action-button" title="Show meta data">							
+		                <i class="material-icons" role="presentation">more_horiz</i>
+		                <span class="action-button__text">More</span>			                            
+					</button>
+															
+					<div class="mdl-layout-spacer"></div>
+
+					<div class="mR-8" title="Views">
+						<span class="meta-val--bignum mR-4">12,234,002</span>
+		                <span class="meta-name">views</span>
+		                <!--<span class="visuallyhidden">views</span>-->	                
+					</div>						
+				</div>
+
+			</div>					
+		</div>	
+	</section>
+
+{% endblock %}

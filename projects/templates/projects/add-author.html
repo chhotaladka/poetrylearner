@@ -1,35 +1,12 @@
-{% extends "base.html" %}
+{% extends "mdl-base.html" %}
 {% load staticfiles %}
-{% load crispy_forms_tags %}
-
-{% block meta %}
-	<meta name="description" content="">
-	<meta name="author" content="" >
-
-{% endblock %}
 
 {% block title %}
 	Add an author
 {% endblock %}
 
-{% block body %}
-
-    <div class="container">
-    	<div class="row">
-    	
-			{% crispy form %}
-			
-			<!-- messages -->
-			{% if messages %}
-				<ul class="messages">
-    			{% for message in messages %}
-    				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    			{% endfor %}
-				</ul>
-			{% endif %}
-			
-		</div>
-	</div>
-
-	
+{% block main %}
+	{% include "projects/include/form-author.html" %}	
 {% endblock %}
+
+{% block search %}{% endblock %}

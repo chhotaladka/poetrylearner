@@ -1,0 +1,106 @@
+{% comment %}
+	Info:       Author form (full)
+	Requires:   css and js of static/mdl/*
+	Note:       Don't forget to load staticfiles #}
+{% endcomment %}
+
+<form method="post" enctype="multipart/form-data" class="a-mdl-form">
+	{% csrf_token %} 
+	{{ form.non_field_errors }}
+	<fieldset>
+		<div id="div_id_name" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<label for="id_name" class="mdl-textfield__label">
+				{{form.name.label}}{% if form.name.help_text %} ({{ form.name.help_text|safe }}){% endif %}
+			</label>
+			<input id="id_name" class="mdl-textfield__input" name="name" type="text" autocomplete="off" maxlength="200" value="{{ form.name.value|default_if_none:'' }}" required/>
+		{% if form.name.errors %}
+		    {% for error in form.name.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}				
+		</div>		
+	
+		<div id="div_id_sobriquet" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<label for="id_sobriquet" class="mdl-textfield__label">
+				{{form.sobriquet.label}}{% if form.sobriquet.help_text %} ({{ form.sobriquet.help_text|safe }}){% endif %}
+			</label>
+			<input id="id_sobriquet" class="mdl-textfield__input" name="sobriquet" type="text" autocomplete="off" maxlength="200" value="{{ form.sobriquet.value|default_if_none:'' }}"/>
+		{% if form.sobriquet.errors %}
+		    {% for error in form.sobriquet.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}								
+		</div>		
+	
+		<div id="div_id_name_en" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<label for="id_name_en" class="mdl-textfield__label">
+				{{form.name_en.label}}{#{% if form.name_en.help_text %} ({{ form.name_en.help_text|safe }}){% endif %}#}
+			</label>
+			<input id="id_name_en" class="mdl-textfield__input" name="name_en" type="text" autocomplete="off" maxlength="200" value="{{ form.name_en.value|default_if_none:'' }}" required/>
+		{% if form.name_en.errors %}
+		    {% for error in form.name_en.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}					
+		</div>		
+	
+		<div id="div_id_date_birth" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	
+			<label for="id_date_birth" class="mdl-textfield__label">
+				{{form.date_birth.label}}{% if form.date_birth.help_text %} ({{ form.date_birth.help_text|safe }}){% endif %}
+			</label>
+			<input id="id_date_birth" class="mdl-textfield__input" name="date_birth" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value="{{ form.date_birth.value|default_if_none:'' }}"/>
+			<span class="mdl-textfield__error">Wrong format</span>
+		{% if form.date_birth.errors %}
+		    {% for error in form.date_birth.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}					
+		</div>		
+		
+		<div id="div_id_date_death" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	
+			<label for="id_date_death" class="mdl-textfield__label">
+				{{form.date_death.label}}{% if form.date_death.help_text %} ({{ form.date_death.help_text|safe }}){% endif %}
+				</label>		
+			<input id="id_date_death" class="mdl-textfield__input" name="date_death" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value="{{ form.date_death.value|default_if_none:'' }}"/>
+			<span class="mdl-textfield__error">Wrong format</span>
+		{% if form.date_death.errors %}
+		    {% for error in form.date_death.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}					
+		</div>
+		
+		
+		<div id="div_id_image" class="">
+			<label for="id_image" class="">
+				{{form.image.label}}{% if form.image.help_text %} ({{ form.image.help_text|safe }}){% endif %}
+			</label>
+			{% if form.image.value %}
+				<br />
+				<img id="preview" class="author-avatar-small mL-8" src="/media/{{ form.image.value }}"></img>
+				<input id="image-clear_id" name="image-clear" type="checkbox" /> 
+				<label for="image-clear_id">Clear</label>
+				<br />Change:
+			{% endif %}
+			<input id="id_image" name="image" type="file" value="{{ form.image.value|default_if_none:'' }}"/>
+		{% if form.image.errors %}
+		    {% for error in form.image.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}			
+		</div>		
+		
+		<div id="div_id_summary" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	
+			<label for="id_summary" class="mdl-textfield__label">
+				{{form.summary.label}}{% if form.summary.help_text %} ({{ form.summary.help_text|safe }}){% endif %}
+			</label>
+			<textarea id="id_summary" class="mdl-textfield__input" name="summary" rows="2" value="{{ form.summary.value|default_if_none:'' }}"></textarea>
+		{% if form.summary.errors %}
+		    {% for error in form.summary.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}					
+		</div>		
+		
+		<div id="div_id_source_url" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	
+			<label for="id_source_url" class="mdl-textfield__label">
+				{{form.source_url.label}}{% if form.source_url.help_text %} ({{ form.source_url.help_text|safe }}){% endif %}
+			</label>	
+			<input autocomplete="off" class="mdl-textfield__input" id="id_source_url" maxlength="200" name="source_url" type="url" value="{{ form.source_url.value|default_if_none:'' }}"/>
+		{% if form.source_url.errors %}
+		    {% for error in form.source_url.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}					 	
+		</div>		
+		
+	</fieldset>
+	<div class="tAr">
+		<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="submit" value="Save changes" id="id-submit"/> 
+		<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" name="cancel" value="Cancel" id="id-cancel" onclick="location.href=&#39;/&#39;"/>
+	</div>
+</form>

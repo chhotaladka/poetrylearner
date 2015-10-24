@@ -32,16 +32,16 @@ class ImageSourceAdmin(admin.ModelAdmin):
     
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sobriquet', 'date_birth', 'date_death', 
+    list_display = ('name', 'sobriquet', 'name_en', 'date_birth', 'date_death', 
                     'image', 'summary', 'source_url', 'date_modified', 'modified_by')
     fieldsets = [
-        (None,   {'fields': ['name', 'sobriquet', 'date_birth', 'date_death', 
+        (None,   {'fields': ['name', 'sobriquet', 'name_en', 'date_birth', 'date_death', 
                              'image', 'summary', 'source_url']
                 }
         ),
         
     ]
-    search_fields = ['name', 'summary']
+    search_fields = ['name', 'name_en', 'summary']
     
 
 class BookAdmin(admin.ModelAdmin):

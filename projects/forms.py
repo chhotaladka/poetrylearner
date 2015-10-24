@@ -24,49 +24,17 @@ class AuthorForm(ModelForm):
        
     class Meta:
         model = Author
-        fields = ['name', 'sobriquet', 'date_birth', 'date_death', 'image', 'summary', 'source_url']                  
+        fields = ['name', 'name_en', 'sobriquet', 'date_birth', 'date_death', 'image', 'summary', 'source_url']                  
         
-        help_texts = {
+        help_texts = {            
+            'name': 'Full name',
+            'sobriquet': 'Penname or Nickname',
+            'name_en': 'Name in English would help to optimize the search.',
+            'date_birth': 'yyyy-mm-dd',
+            'date_death': 'yyyy-mm-dd',
             'source_url': 'e.g. https://en.wikipedia.org/wiki/Kahlil_Gibran',
         }
-        
-        
-    def __init__(self, *args, **kwargs):
-        super(AuthorForm, self).__init__(*args, **kwargs)
-        
-        # get the address to redirect, used by CANCEL button
-        # Default is redirect to Home Page
-        previous = "/"
-        try:
-            previous = kwargs.pop('previous')          
-        except:
-            pass
-            
-        self.helper = FormHelper()
-        self.helper.form_method = 'POST'
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-2'
-        self.helper.field_class = 'col-lg-8'
 
-        self.helper.layout = Layout(
-            Fieldset(
-                'Add an author',
-                Field('name', autocomplete='off', placeholder='Full name', css_class='input-sm'),
-                Field('sobriquet', autocomplete='off', placeholder='Penname or Nickname', css_class='input-sm'),
-                Field('date_birth', autocomplete='off', placeholder='yyyy-mm-dd', css_class='input-sm'),
-                Field('date_death', autocomplete='off', placeholder='yyyy-mm-dd', css_class='input-sm'),
-                Field('image', css_class='button'),
-                Field('summary', css_class='input-sm'),
-                Field('source_url', autocomplete='off', placeholder='https://', css_class='input-sm'),
-            ),
-        
-            FormActions(
-                Submit('submit', 'Save changes', css_class='col-lg-offset-2'),
-                Button('cancel', 'Cancel', onclick="location.href='{0}'".format(previous))
-            ),
-        
-        )
-                
     def save(self, owner, commit=True, *args, **kwargs):
         obj = super(AuthorForm, self).save(commit=False, *args, **kwargs)
         obj.modified_by = owner
@@ -95,7 +63,7 @@ class AuthorChoices(AutoModelSelect2TagField):
     """
     
     queryset = Author.objects.all()
-    search_fields = ['name__icontains', 'sobriquet__icontains']
+    search_fields = ['name_en__icontains', 'name__icontains', 'sobriquet__icontains']
     max_results = 6
     
     def get_model_field_values(self, value):

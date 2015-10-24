@@ -32,6 +32,7 @@ def user_directory_path(instance, filename):
 class Author(models.Model):
     
     name = models.CharField(_('name'), max_length=200)
+    name_en = models.CharField(_('name in English'), max_length=200, null=True, blank=True)
     sobriquet = models.CharField(_('also known as'), max_length=200, null=True, blank=True)
     date_birth = models.DateField(_('date of birth'), null=True, blank=True)
     date_death = models.DateField(_('date of death'), null=True, blank=True)
@@ -59,7 +60,10 @@ class Author(models.Model):
     
     def get_name(self):
         return self.name
-    
+
+    def get_name_in_english(self):
+        return self.name_en
+        
     def get_sobriquet(self):
         return self.sobriquet
             
@@ -69,6 +73,8 @@ class Author(models.Model):
         """
         if self.sobriquet:
             return self.sobriquet
+        elif self.name_en:
+            return self.name_en
         else:
             return self.name
         
@@ -111,6 +117,8 @@ class Author(models.Model):
             # This filed `sobriquet` is optional, so it needs to be checked whether it is passed or not
             # (In case you have called save without using any Form)
             self.sobriquet = self.sobriquet.title()
+        if self.name_en:
+            self.name_en = self.name_en.title()
         
         super(Author, self).save(*args, **kwargs)
       

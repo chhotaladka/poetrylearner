@@ -36,7 +36,9 @@ def save_to_db_poem(data):
         raw = RawArticle()
         if validate_source_url(data['url']):
             raw.source_url = data['url']
-            raw.content = json.dumps(data)
+            raw.title = data['title']
+            raw.author = data['author']
+            raw.content = data['poem']
             raw.save()
         else:
             print "ERROR: URL IS NOT VALID ", data['url']

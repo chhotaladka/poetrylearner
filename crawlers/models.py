@@ -37,6 +37,8 @@ class ArticleManager(models.Manager):
 class RawArticle(models.Model):
             
     source_url = models.URLField(null=False, max_length=1000)
+    title = models.CharField(max_length=200, null=True, blank=True)
+    author = models.CharField(max_length=100, null=True, blank=True)
     content = models.TextField(null=False)
     added_at = models.DateTimeField(auto_now_add=True)
     valid = models.BooleanField(default=False)
@@ -64,17 +66,14 @@ class RawArticle(models.Model):
     def get_validity(self):
         return self.valid
            
-    def get_title(self):       
-        # return title extracted from self.content
-        return json.loads(self.content)['title']
+    def get_title(self):               
+        return self.title
     
-    def get_author(self):
-        # return author extracted from self.content
-        return json.loads(self.content)['author']
+    def get_author(self):        
+        return self.author
     
-    def get_poem(self):
-        # return poem extracted from self.content
-        return json.loads(self.content)['poem']
+    def get_poem(self):        
+        return self.content
     
     def save(self, *args, **kwargs):
         print "Model RawArticle save called"

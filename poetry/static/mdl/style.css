@@ -78,6 +78,7 @@ html, body {
     height: 120px;
     border-radius: 50%;
 }
+.author-avatar-small,
 .mdl-poetry__post .author-avatar-small {
     width: 64px;
     height: 64px;
@@ -328,6 +329,22 @@ height: 128px;
 	text-align: center;
 }
 
+/* forms */
+.mdl-poetry .a-mdl-form {
+	margin: 16px;
+}
+.mdl-poetry .a-mdl-form .mdl-textfield {
+	width: 100%;
+	display: block;
+}
+.mdl-poetry .a-mdl-form .error-text {
+  color: rgb(222, 50, 38);
+  position: relative;
+  font-size: 12px;
+  margin-top: 3px;
+  display: block;
+}
+
 /* Shortcut styles */
 .wFull { width: 100%; }
 .tAc {
@@ -340,6 +357,8 @@ height: 128px;
     text-align: right;
 }
 .pA-0 { padding: 0px; }
+.pTB-0 { padding-top: 0px;padding-bottom: 0px;}
+.pLR-0 { padding-left: 0px;padding-right: 0px;}
 .pT-8 { padding-top: 8px; }
 .pT-16 { padding-top: 16px; }
 .pT-48 { padding-top: 48px; }
@@ -366,6 +385,11 @@ height: 128px;
 .bC-inherit { background-color: inherit; }
 
 .mH-auto { min-height: auto; }
+.mxH-36 { max-height: 36px; }
+.bC-none { background-color: transparent;}
+
+.position-rel { position: relative;}
+.position-abs { position: absolute;}
 
 
 /* Common style */

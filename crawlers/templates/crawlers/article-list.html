@@ -1,19 +1,20 @@
 {% extends "crawlers/base.html" %}
 
 {% block title %}
-	List - raw article
+	List of crawled article
 {% endblock %}
 
 {% block main %}
 
 	<section id="msgPannel" class="pT-8 pB-8">
 		<div class="mdl-poetry__post mdl-grid">
-			<div class="mdl-card poetry-card mdl-cell mdl-cell--12-col">
-{% if articles %} {% comment %} Display the list {% endcomment %}
+			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">							
+
+{% if articles %} {% comment %} Display the list {% endcomment %}				
 				<div class="mdl-card__supporting-text stats-text">		            
-					Displaying {{ articles|length }} of {{ articles.paginator.count }} raw articles.
+					Displaying {{ articles|length }} of {{ articles.paginator.count }} crawled articles.
 				</div>
-				<div class="mdl-card__supporting-text mdl-color-text--grey-600">		            
+				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
 					{% include "common/include/pagination.html" with obj_list=articles getvars=getvars only %}
 				</div>
 
@@ -38,7 +39,9 @@
 								<td class="mdl-data-table__cell--non-numeric">
 									<a href="{{article.get_absolute_url}}" title="View article" target="_blank">{{ article.get_title }}</a>
 								</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ article.get_author }}</td>
+								<td class="mdl-data-table__cell--non-numeric">
+									<a href="{% url 'crawlers:author-list'%}/?q={{ article.get_author }}" title="Search in crawled authors">{{ article.get_author }}</a>
+								</td>
 								<td class="mdl-data-table__cell--non-numeric">
 									<a href="{{ article.get_source_url }}" title="Visit source" target="_blank">{{ article.get_source_url | truncatechars:30}}</a>
 								</td>
@@ -54,7 +57,7 @@
 					</div>
 				</div>
 				
-				<div class="mdl-card__supporting-text mdl-color-text--grey-600">		            
+				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
 					{% include "common/include/pagination.html" with obj_list=articles getvars=getvars only %}
 				</div>
 {% else %}  {% comment %} Display the notification {% endcomment %}
@@ -68,3 +71,19 @@
 	</section>
 
 {% endblock %}
+
+{% block search %}
+			<form action="" method="get">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+			                  mdl-textfield--floating-label mdl-textfield--align-right">
+			        <label class="mdl-button mdl-js-button mdl-button--icon"
+			               for="search-keyword" title="Search title, author, poetry and source in the crawled articles">
+			          <i class="material-icons">search</i>
+			        </label>
+			        <div class="mdl-textfield__expandable-holder">
+			          <input class="mdl-textfield__input" type="text" name="q"
+			                 id="search-keyword" placeholder="Search in the crawled articles" />
+					</div>
+				</div>
+			</form>
+{% endblock %}				

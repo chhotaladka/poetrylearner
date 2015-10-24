@@ -4,26 +4,18 @@ import json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from crawlers.models import RawArticle, RawAuthor
+from django.utils.http import urlencode
 
 # Create your views here.
 
-def make_cond(name, value):
-    """
-    Convert normal name, value to json key:value pair
-    """     
-    cond = json.dumps({name:value})[1:-1] # remove '{' and '}'
-    return ' ' + cond # avoid '\"'
 
 """
 Details of the RawArticle
 """
 def raw_article_details(request, pk):
-    obj = get_object_or_404(RawArticle, pk=pk)
-    
-    data = json.loads(obj.content)
-    # data contains ['index', 'title', 'author', 'poem', 'url']
+    obj = get_object_or_404(RawArticle, pk=pk)    
         
-    context = {'article': obj, 'data': data}
+    context = {'article': obj}
     template = "crawlers/article-details.html"
 
     return render(request, template, context)
@@ -39,8 +31,8 @@ def raw_article_list(request):
     # Check the parameters passed in the URL and process accordingly
     view_type = request.GET.get('view', None)
     source = request.GET.get('source', None)
-    title = request.GET.get('title', None)
     author = request.GET.get('author', None)
+    q = request.GET.get('q', None)
     filters = request.GET.get('filters', None)
     
     if filters:
@@ -58,18 +50,22 @@ def raw_article_list(request):
     
     
     if source:
+        source = source.strip()
         # filter the source_url
         q_objects &= Q(source_url__icontains=source)
-    
-    if title:
-        pass
-    
+
     if author:
-        pass
+        author = author.strip()
+        # filter the source_url
+        q_objects &= Q(author__icontains=author)
     
-    # Get all articles           
-    obj_list = RawArticle.objects.all().filter(q_objects)      
-    
+    if q:
+        q = q.strip()
+        # TODO make it more perfect 
+        q_objects &= Q(source_url__icontains=q) | Q(author__icontains=q) | Q(title__icontains=q)      
+        
+    # Get all articles              
+    obj_list = RawArticle.objects.all().filter(q_objects)
        
     ##
     # Check for permissions and render the list of articles
@@ -111,7 +107,7 @@ def raw_author_list(request):
     ##
     # Check the parameters passed in the URL and process accordingly    
     source = request.GET.get('source', None)
-    name = request.GET.get('name', None)    
+    q = request.GET.get('q', None)    
     filters = request.GET.get('filters', None)
     
     if filters:
@@ -134,13 +130,15 @@ def raw_author_list(request):
             # get the authors whom death info is not known
             q_objects &= Q(death=None)            
 
-    if source:        
+    if source:
+        source = source.strip()  
         # filter with source_url
         q_objects &= Q(source_url__icontains=source)
 
-    if name:        
+    if q:
+        q = q.strip()      
         # get the authors with 'name'        
-        q_objects &= Q(name__icontains=name)        
+        q_objects &= Q(name__icontains=q) | Q(source_url__icontains=q)      
                 
     # Get all authors           
     obj_list = RawAuthor.objects.all().filter(q_objects)

@@ -8,11 +8,7 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	    
-		{% block meta %}
-		<meta name="description" content="">
-		<meta name="author" content="" >
-		
-		{% endblock %}
+		{% block meta %}{# Write down all meta here #}{% endblock %}
 		
 	    <title>{% block title %} Home {% endblock title %}- siteName.org </title>
 	    
@@ -21,9 +17,7 @@
 	    <link rel="stylesheet" href="{% static "mdl/style.css" %}">
 	    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-	    {% block extra-style %}
-	    
-		{% endblock %}
+	    {% block extra-style %}{# Include here extra css style #}{% endblock %} 
 	
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     	<script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
@@ -37,10 +31,12 @@
 	  even in small screens. -->
 	<div class="mdl-layout mdl-js-layout
 	            mdl-layout--fixed-header">
+	            <!--mdl-layout--fixed-drawer">-->
 	  <header class="mdl-layout__header">
 	    <div class="mdl-layout__header-row ">
 	      <span class="mdl-layout-title">Title</span>
 	      <div class="mdl-layout-spacer"></div>
+	      {% block search %}{# Modify the search block as per the current page #}
 	      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
 	                  mdl-textfield--floating-label mdl-textfield--align-right">
 	        <label class="mdl-button mdl-js-button mdl-button--icon"
@@ -52,6 +48,7 @@
 	                 id="fixed-header-drawer-exp" />
 	        </div>
 	      </div>
+	      {% endblock %}{# end of search #}
 	    </div>
 	  </header>
 	  <div class="mdl-layout__drawer mdl-color-text--teal-300">
@@ -64,18 +61,25 @@
 	    </nav>
 	  </div>
 		<main class="mdl-layout__content">
-		{% block main %}
+		{% block main %}{# Put the main content in this block #}{% endblock %}
 		   	
-		    	
-		{% endblock %}
+		{% block footer %}{# write down footer code in this block #}<!--
+		<footer class="mdl-mini-footer">
+		  <div class="mdl-mini-footer__left-section">
+		    <div class="mdl-logo">Title</div>
+		    <ul class="mdl-mini-footer__link-list">
+		      <li><a href="#">Help</a></li>
+		      <li><a href="#">Privacy & Terms</a></li>
+		    </ul>
+		  </div>
+		</footer>-->
+		{% endblock %}{# end of footer #}
 		</main>
 	</div>
-	{% endblock %}	
+	{% endblock %} {# end of body #}
 	
- 	{% block modal %}    
-	{% endblock %}		
-	
-	{% block scripts %}	    
-	{% endblock %}
+ 	{% block modal %}{# Modal code #}{% endblock %}	
+	{% block scripts %}{# extra scripts #}{% endblock %}
+		
 	</body>
 </html>

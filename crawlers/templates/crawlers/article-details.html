@@ -1,7 +1,7 @@
 {% extends "crawlers/base.html" %}
 
 {% block title %}
-	{{ data.title }} - raw article
+	{{ article.get_title }} - raw article
 {% endblock %}
 
 {% block main %}
@@ -13,20 +13,20 @@
 				<div class="article-info mdl-card__supporting-text mdl-color-text--grey-500 mT-16">
 					<div>
 						<span>ID <b>{{article.id}}</b></span>
-						<span id="cTitleId">Title: {{ data.title }}</span>
-						<span id="cAuthorId">Author: {{ data.author }}</span>						
+						<span id="cTitleId">Title: {{ article.get_title }}</span>
+						<span id="cAuthorId">Author: {{ article.get_author }}</span>						
 						<span>Reference
 							<a id="cUrlId" title="Go to the source" href={{ article.source_url }} target="_blank">URL</a>
 						</span>	
 						<span id="cDateId">Added at {{ article.added_at }}</span>													
-						<span id="cValidId">Validity {{ article.valid }}</span>	
+						<span id="cValidId">Validity {{ article.get_validity }}</span>	
 						<span>Related snippet {{ article.snippet.get_title }}</span>	    				
 					</div>						
 				</div>
 				<hr />					
 				<div id="cPoemId" class="article-content mdl-card__supporting-text mdl-color-text--grey-700">											
 					{% autoescape off %}					
-					{{ data.poem }}
+					{{ article.get_poem }}
 					{% endautoescape %}
 				</div>
 

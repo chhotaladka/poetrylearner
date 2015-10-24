@@ -1,19 +1,19 @@
 {% extends "crawlers/base.html" %}
 
 {% block title %}
-	List - raw author
+	List of crawled author
 {% endblock %}
 
 {% block main %}
 
 	<section id="msgPannel" class="pT-8 pB-8">
 		<div class="mdl-poetry__post mdl-grid">
-			<div class="mdl-card poetry-card mdl-cell mdl-cell--12-col">
+			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">
 {% if authors %} {% comment %} Display the list {% endcomment %}			
 				<div class="mdl-card__supporting-text stats-text">		            
-					Displaying {{ authors|length }} of {{ authors.paginator.count }} raw authors.
+					Displaying {{ authors|length }} of {{ authors.paginator.count }} crawled authors.
 				</div>
-				<div class="mdl-card__supporting-text mdl-color-text--grey-600">		            
+				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
 					{% include "common/include/pagination.html" with obj_list=authors getvars=getvars only %}
 				</div>
 
@@ -36,7 +36,7 @@
 							<tr>
 								<td>{{ forloop.counter }}</td>
 								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{author.get_absolute_url}}" title="View author" target="_blank">{{ author.get_name }}</a>
+									<a href="{{author.get_absolute_url}}" title="View author">{{ author.get_name }}</a>
 								</td>
 								<td class="mdl-data-table__cell--non-numeric">{{ author.get_birth_date }}</td>
 								<td class="mdl-data-table__cell--non-numeric">{{ author.get_death_date }}</td>
@@ -44,7 +44,11 @@
 									<a href="{{ author.get_source_url }}" title="Visit source" target="_blank">{{ author.get_source_url | truncatechars:30}}</a>
 								</td>
 								<td title="{{author.added_at}}">{{ author.added_at | date }}</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ author.get_validity }}</td>
+								<td class="mdl-data-table__cell--non-numeric" title="{{author.get_validity}}">
+								{% if author.get_validity %}<i class="material-icons" role="presentation">done</i>
+								{% else %}False
+								{% endif %}
+								</td>
 							</tr>
 							{% endfor %}
 						</tbody>
@@ -52,7 +56,7 @@
 					</div>
 				</div>
 				
-				<div class="mdl-card__supporting-text mdl-color-text--grey-600">		            
+				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
 					{% include "common/include/pagination.html" with obj_list=authors getvars=getvars only %}
 				</div>
 {% else %}  {% comment %} Display the notification {% endcomment %}
@@ -65,4 +69,20 @@
 		</div>	
 	</section>
 
+{% endblock %}
+
+{% block search %}
+			<form action="" method="get">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+			                  mdl-textfield--floating-label mdl-textfield--align-right">
+			        <label class="mdl-button mdl-js-button mdl-button--icon"
+			               for="search-keyword" title="Search name in the crawled authors">
+			          <i class="material-icons">search</i>
+			        </label>
+			        <div class="mdl-textfield__expandable-holder">
+			          <input class="mdl-textfield__input" type="text" name="q"
+			                 id="search-keyword" placeholder="Search in the crawled authors" />
+					</div>
+				</div>
+			</form>
 {% endblock %}

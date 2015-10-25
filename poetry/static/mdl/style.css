@@ -172,6 +172,9 @@ height: 128px;
 	color: #616161;
 }
 
+.mdl-poetry .mdl-card__actions.nav-pannel {
+	padding: 4px;
+}
 
 .mdl-poetry .mdl-card__actions.action-pannel {
 	padding: 4px;

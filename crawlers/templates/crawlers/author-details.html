@@ -1,4 +1,5 @@
 {% extends "crawlers/base.html" %}
+{% load staticfiles %}
 
 {% block title %}
 	{{ author.get_name }} - crawled author
@@ -8,37 +9,62 @@
 
 	<section id="msgPannel" class="pT-8 pB-8">
 		<div class="mdl-poetry__post mdl-grid">
-			<div class="mdl-card poetry-card mdl-cell mdl-cell--12-col">
-
-				<div class="info-list mdl-card__supporting-text mdl-color-text--grey-500 mT-16">					
+		
+			<div id="id-author-card" class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top wFull">
+				<div class="nav-pannel mdl-card__actions">
+					<a href="{% url 'crawlers:author-details' pk=author.id %}">
+						<button id="id-prev-btn" class="action-button" title="Previous Author">
+			                <i class="material-icons md-36" role="presentation">arrow_back</i>			                
+						</button>
+					</a>																		
+					<div class="mdl-layout-spacer"></div>
+					<a href="{% url 'crawlers:author-details' pk=author.id %}">
+						<button id="id-next-btn" class="action-button" title="Next Author">							
+			                <i class="material-icons md-36" role="presentation">arrow_forward</i>			                
+						</button>
+					</a>
+					
+				</div>	
+				<div class="info-list mdl-card__supporting-text mdl-color-text--grey-500">					
 						<div>ID <b>{{author.id}}</b></div>
-						<div>Name: <span id="cName">{{ author.get_name }}</span></div>
-						<div>Birth: <span id="cBirth">{{ author.get_birth_date }}</span></div>
-						<div>Death: <span id="cDeath">{{ author.get_death_date }}</span></div>						
+						<div>Name: <span id="id-author-name">{{ author.get_name }}</span></div>
+						<div>Birth: <span>{{ author.get_birth_date }}</span></div>
+						<div>Death: <span>{{ author.get_death_date }}</span></div>						
 						<div>Reference
-							<a id="cUrl" title="Go to the source" href={{ author.source_url }} target="_blank">URL</a>
+							<a title="Go to the source" href={{ author.source_url }} target="_blank">URL</a>
 						</div>
-						<div>Added at <span id="cDate">{{ author.added_at }}</span></div>					
-						<div>Validity <span id="cValid">{{ author.valid }}</span></div>										
+						<div>Added at <span>{{ author.added_at }}</span></div>					
+						<div>Validity <span id="id-validity">{{ author.valid }}</span></div>										
 				</div>
 				<div class="action-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
 					<a href="{% url 'crawlers:article-list' %}?author={{ author.get_name }}">
-						<button id="listBtn" class="action-button" title="List crawled articles by {{ author.get_name }}">
+						<button id="id-list-btn" class="action-button" title="List crawled articles by {{ author.get_name }}">
 			                <i class="material-icons" role="presentation">list</i>
 			                <span class="action-button__text">List crawled articles</span>
 						</button>
 					</a>																		
 					<div class="mdl-layout-spacer"></div>
 					{% if not author.get_validity %}					
-					<button id="addBtn" class="action-button" title="Add {{ author.get_name }} to main db">						
+					<button id="id-add-btn" class="action-button" title="Add {{ author.get_name }} to main db">						
 		                <i class="material-icons" role="presentation">person_add</i>
 		                <span class="action-button__text">Add author to main db</span>		                
 					</button>					
 					{% endif %}
 					
 				</div>
+			</div>
 
-			</div>					
+			<div id="id-div-form" class="mdl-card mdl-cell mdl-cell--8-col hidden">
+			{# update the AJAX response of add-author request here #}			
+				<div id="id-div-form-body" class="mdl-card__supporting-text">			
+				</div>
+				<div class="mdl-card__menu">
+					<button class="mdl-button mdl-js-button mdl-button--icon" id="id-dismiss" title="Dismiss the form">
+		              <i class="material-icons mdl-color-text--grey-600">close</i>
+					</button>
+				</div>		
+			</div>
+										
 		</div>	
 	</section>
 
@@ -57,4 +83,11 @@
 					</div>
 				</div>
 			</form>
+{% endblock %}
+
+{% block scripts %}
+	{{ block.super }}
+	{% if not author.get_validity %}
+	<script type="text/javascript" src="{% static 'js/crawlers/author.js' %}"></script>
+	{% endif %}
 {% endblock %}

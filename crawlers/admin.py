@@ -23,14 +23,14 @@ class RawAuthorAdmin(admin.ModelAdmin):
                     'added_at', 'valid')
     
     fieldsets = [
-        (None,               {'fields': ['name', 'birth', 'death', 'source_url', 
+        (None,               {'fields': ['name', 'birth', 'death', 'source_url', 'valid', 
                                          ]
                               
                               }
          ),
         
     ]
-    list_filter = ['added_at']
+    list_filter = ['added_at', 'valid']
     search_fields = ['name']    
     
 

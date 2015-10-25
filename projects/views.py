@@ -17,6 +17,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from projects.helper import archives, uploads
 from projects.forms import UploadScannedImageForm
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 #import json
 
 # Create your views here.
@@ -327,6 +328,9 @@ class AddAuthor(View):
     
     #@login_required(function, redirect_field_name, login_url)
     def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            self.template_name = 'projects/include/form-author.html'
+            
         if len(kwargs.get('pk', None)) is 0:
             # Create
             form = self.form_class(initial=None)
@@ -338,6 +342,9 @@ class AddAuthor(View):
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            self.template_name = 'projects/include/form-author.html'
+                    
         if len(kwargs.get('pk', None)) is not 0:
             # Update
             author = Author.objects.get(id=kwargs.get('pk', None))
@@ -348,13 +355,30 @@ class AddAuthor(View):
         form = self.form_class(request.POST, request.FILES, instance=author)
         
         if form.is_valid():          
-            obj = form.save(self.request.user, commit=True)    
+            obj = form.save(self.request.user, commit=True)
+            if request.is_ajax():
+                # Create JSON response and send
+                res = {}
+                res['result'] = 'success'
+                res['url'] = obj.get_absolute_url()
+                return JsonResponse(res)
+               
             messages.success(request, 'Changes on author %s is successful! '%obj.name)        
             return HttpResponseRedirect(obj.get_absolute_url())
-        
-        return render(request, self.template_name, {'form': form})    
-
- 
+        try:
+            if request.is_ajax():
+                # Create JSON response alongwith the rendered form and send
+                res = {}
+                res['result'] = 'failure'
+                res['data'] = render_to_string(self.template_name, {'form': form})                
+                return JsonResponse(res)
+        except:
+            print ("Error: Unexpected error:", sys.exc_info()[0])
+            for frame in traceback.extract_tb(sys.exc_info()[2]):
+                fname,lineno,fn,text = frame
+                print ("DBG:: Error in %s on line %d" % (fname, lineno))          
+                
+        return render(request, self.template_name, {'form': form})
 
 
   

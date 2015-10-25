@@ -10,19 +10,23 @@
 	<section id="msgPannel" class="pT-8 pB-8">
 		<div class="mdl-poetry__post mdl-grid">
 		
-			<div id="id-author-card" class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top wFull">
+			<div id="id-author-card" class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top mdl-shadow--2dp wFull">
 				<div class="nav-pannel mdl-card__actions">
-					<a href="{% url 'crawlers:author-details' pk=author.id %}">
-						<button id="id-prev-btn" class="action-button" title="Previous Author">
+					{% with prev_author=author.get_previous %}
+					<a href="{% url 'crawlers:author-details' pk=prev_author.id %}">
+						<button id="id-prev-btn" class="action-button" title="Previous Author {{prev_author.get_name}}">
 			                <i class="material-icons md-36" role="presentation">arrow_back</i>			                
 						</button>
-					</a>																		
+					</a>
+					{% endwith %}																		
 					<div class="mdl-layout-spacer"></div>
-					<a href="{% url 'crawlers:author-details' pk=author.id %}">
-						<button id="id-next-btn" class="action-button" title="Next Author">							
+					{% with next_author=author.get_next%}
+					<a href="{% url 'crawlers:author-details' pk=next_author.id %}">
+						<button id="id-next-btn" class="action-button" title="Next Author {{next_author.get_name}}">							
 			                <i class="material-icons md-36" role="presentation">arrow_forward</i>			                
 						</button>
 					</a>
+					{% endwith %}
 					
 				</div>	
 				<div class="info-list mdl-card__supporting-text mdl-color-text--grey-500">					

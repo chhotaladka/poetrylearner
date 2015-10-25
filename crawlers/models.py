@@ -150,6 +150,22 @@ class RawAuthor(models.Model):
 
     def get_death_date(self):
         return self.death
+    
+    def get_next(self):
+        next_issue = RawAuthor.objects.filter(id__gt=self.id).order_by('id')[0:1]
+        if next_issue:
+            return next_issue[0]
+        else:
+            # end of the table reached. Return first entry
+            return RawAuthor.objects.all().order_by('id')[0]
+
+    def get_previous(self):
+        prev_issue = RawAuthor.objects.filter(id__lt=self.id).order_by('-id')[0:1]
+        if prev_issue:
+            return prev_issue[0]
+        else:
+            # end of the table reached. Return last entry
+            return RawAuthor.objects.all().order_by('-id')[0]
             
     def save(self, *args, **kwargs):
         print "Model RawAuthor save called"

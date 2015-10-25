@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from crawlers.models import RawArticle, RawAuthor
 from django.utils.http import urlencode
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -91,7 +92,22 @@ def raw_article_list(request):
 
 def raw_author_details(request, pk):
     obj = get_object_or_404(RawAuthor, pk=pk)
-        
+    
+    if request.is_ajax():
+        # To set the validity
+        valid = request.GET.get('valid', None)
+        if valid is not None:
+            obj.valid = bool(valid)
+            obj.save()
+            res = {}
+            res['result'] = 'success'
+            res['data'] = str(valid)             
+            return JsonResponse(res)
+        else:
+            res = {}
+            res['result'] = 'failure'                    
+            return JsonResponse(res)
+         
     context = {'author': obj}
     template = "crawlers/author-details.html"
 

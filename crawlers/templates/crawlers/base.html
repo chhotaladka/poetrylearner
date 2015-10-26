@@ -1,1 +1,5 @@
-{% extends "mdl-base.html" %}
+{# Only Views related to dashboard will have to extend this template #}
+{% extends "dashboard-base.html" %}
+
+{% comment %} To set the main nav link active throughout the views of this app {% endcomment %}
+{% block is-crawlers-active %}active{% endblock %}

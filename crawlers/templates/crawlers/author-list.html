@@ -6,7 +6,7 @@
 
 {% block main %}
 
-	<section id="msgPannel" class="pT-8 pB-8">
+	<section id="id-section-main" class="p-8">
 		<div class="mdl-poetry__post mdl-grid">
 			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">
 {% if authors %} {% comment %} Display the list {% endcomment %}			
@@ -41,7 +41,7 @@
 								<td class="mdl-data-table__cell--non-numeric">{{ author.get_birth_date }}</td>
 								<td class="mdl-data-table__cell--non-numeric">{{ author.get_death_date }}</td>
 								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{ author.get_source_url }}" title="Visit source" target="_blank">{{ author.get_source_url | truncatechars:30}}</a>
+									<a href="{{ author.get_source_url }}" title="Visit source" target="_blank">{{ author.get_source_name }}</a>
 								</td>
 								<td title="{{author.added_at}}">{{ author.added_at | date }}</td>
 								<td class="mdl-data-table__cell--non-numeric" title="{{author.get_validity}}">
@@ -71,18 +71,4 @@
 
 {% endblock %}
 
-{% block search %}
-			<form action="" method="get">
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-			                  mdl-textfield--floating-label mdl-textfield--align-right">
-			        <label class="mdl-button mdl-js-button mdl-button--icon"
-			               for="search-keyword" title="Search name in the crawled authors">
-			          <i class="material-icons">search</i>
-			        </label>
-			        <div class="mdl-textfield__expandable-holder">
-			          <input class="mdl-textfield__input" type="text" name="q"
-			                 id="search-keyword" placeholder="Search in the crawled authors" />
-					</div>
-				</div>
-			</form>
-{% endblock %}
+{% block page-title %}Authors{% endblock %}

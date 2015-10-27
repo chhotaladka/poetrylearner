@@ -1,27 +1,25 @@
 {% extends "crawlers/base.html" %}
 
 {% block title %}
-	{{ article.get_title }} - raw article
+	{{ article.get_title }} - crawled article
 {% endblock %}
 
 {% block main %}
 
-	<section id="msgPannel" class="pT-8 pB-8">
+	<section id="id-section-main" class="p-8">
 		<div class="mdl-poetry__post mdl-grid">
 			<div class="mdl-card poetry-card mdl-cell mdl-cell--12-col">
 
 				<div class="article-info mdl-card__supporting-text mdl-color-text--grey-500 mT-16">
-					<div>
-						<span>ID <b>{{article.id}}</b></span>
-						<span id="cTitleId">Title: {{ article.get_title }}</span>
-						<span id="cAuthorId">Author: {{ article.get_author }}</span>						
-						<span>Reference
-							<a id="cUrlId" title="Go to the source" href={{ article.source_url }} target="_blank">URL</a>
-						</span>	
-						<span id="cDateId">Added at {{ article.added_at }}</span>													
-						<span id="cValidId">Validity {{ article.get_validity }}</span>	
-						<span>Related snippet {{ article.snippet.get_title }}</span>	    				
-					</div>						
+					<span>ID <b>{{article.id}}</b></span>
+					<span id="cTitleId">Title: {{ article.get_title }}</span>
+					<span id="cAuthorId">Author: {{ article.get_author }}</span>						
+					<span>Reference
+						<a id="cUrlId" title="Go to the source" href={{ article.source_url }} target="_blank">URL</a>
+					</span>	
+					<span id="cDateId">Added at {{ article.added_at }}</span>													
+					<span id="cValidId">Validity {{ article.get_validity }}</span>	
+					<span>Related snippet {{ article.snippet.get_title }}</span>					
 				</div>
 				<hr />					
 				<div id="cPoemId" class="article-content mdl-card__supporting-text mdl-color-text--grey-700">											
@@ -35,3 +33,9 @@
 	</section>
 
 {% endblock %}
+
+{% block search-form-action %}
+	{% url 'crawlers:article-list' %}
+{% endblock %}
+
+{% block page-title %}Article / {{ article.get_title }}{% endblock %}

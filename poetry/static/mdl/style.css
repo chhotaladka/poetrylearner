@@ -148,14 +148,10 @@ height: 128px;
 .mdl-poetry .article-info {
     box-sizing: border-box;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: left;
     justify-content: flex-start;
     height: auto;
-}
-.mdl-poetry .article-info > * {
-    display: flex;
-    flex-direction: column;
 }
 .mdl-poetry .article-info.mdl-card__supporting-text {
 	padding: 0px 16px;
@@ -348,6 +344,57 @@ height: 128px;
   display: block;
 }
 
+/* Layouts: drawer/search/header related */
+.dashboard-layout .mdl-layout__drawer-button {
+	/*position: relative;*/
+}
+.dashboard-layout .mdl-layout__drawer {
+	box-shadow: none;
+	background-color: transparent;
+}
+.dashboard-layout .mdl-layout__drawer > .search-box {
+	padding: 8px 0px;
+	border-top: 1px solid #E0E0E0;
+	border-bottom: 1px solid #E0E0E0;
+	display: flex;
+}
+.dashboard-layout .mdl-layout__drawer > .search-box .mdl-textfield__input {
+	border-width: 0px;	
+}
+
+.dashboard-navigation.mdl-navigation > .mdl-navigation__link {
+	font-weight: 500;
+	font-size: 14px;
+	color: inherit;
+}
+.dashboard-navigation.mdl-navigation .mdl-navigation__link:hover {
+    background-color: transparent;
+	color: inherit;
+}
+.dashboard-navigation > a:hover {
+	text-decoration: none;
+}
+.dashboard-navigation.mdl-navigation .active,
+.dashboard-navigation.mdl-navigation .active:hover {
+    background-color: rgb(149, 54, 140);
+    color: rgb(255,255,255);
+}
+
+.page-header.mdl-layout__header {
+	/*background: url('../img/header2.jpg') top / cover;*/
+}
+.page-header--nav.mdl-navigation > .mdl-navigation__link {
+	font-weight: 500;
+	font-size: 12px;
+	color: inherit;
+}
+.page-header--nav > a:hover {
+	text-decoration: none;
+}
+.page-header--row.mdl-layout__header-row > * {
+    flex-shrink: 1;
+}
+
 /* Shortcut styles */
 .wFull { width: 100%; }
 .tAc {
@@ -362,6 +409,8 @@ height: 128px;
 .pA-0 { padding: 0px; }
 .pTB-0 { padding-top: 0px;padding-bottom: 0px;}
 .pLR-0 { padding-left: 0px;padding-right: 0px;}
+.pLR-8 { padding-left: 8px;padding-right:8px;}
+.p-8 { padding:8px;}
 .pT-8 { padding-top: 8px; }
 .pT-16 { padding-top: 16px; }
 .pT-48 { padding-top: 48px; }

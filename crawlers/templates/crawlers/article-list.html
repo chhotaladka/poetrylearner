@@ -6,7 +6,7 @@
 
 {% block main %}
 
-	<section id="msgPannel" class="pT-8 pB-8">
+	<section id="id-section-main" class="p-8">
 		<div class="mdl-poetry__post mdl-grid">
 			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">							
 
@@ -37,13 +37,13 @@
 							<tr>
 								<td>{{ forloop.counter }}</td>
 								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{article.get_absolute_url}}" title="View article" target="_blank">{{ article.get_title }}</a>
+									<a href="{{article.get_absolute_url}}" title="View article">{{ article.get_title }}</a>
 								</td>
 								<td class="mdl-data-table__cell--non-numeric">
 									<a href="{% url 'crawlers:author-list'%}/?q={{ article.get_author }}" title="Search in crawled authors">{{ article.get_author }}</a>
 								</td>
 								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{ article.get_source_url }}" title="Visit source" target="_blank">{{ article.get_source_url | truncatechars:30}}</a>
+									<a href="{{ article.get_source_url }}" title="Visit source" target="_blank">{{ article.get_source_name }}</a>
 								</td>
 								<td title="{{article.added_at}}">{{ article.added_at | date }}</td>
 								<td class="mdl-data-table__cell--non-numeric">{{ article.get_validity }}</td>
@@ -72,18 +72,4 @@
 
 {% endblock %}
 
-{% block search %}
-			<form action="" method="get">
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-			                  mdl-textfield--floating-label mdl-textfield--align-right">
-			        <label class="mdl-button mdl-js-button mdl-button--icon"
-			               for="search-keyword" title="Search title, author, poetry and source in the crawled articles">
-			          <i class="material-icons">search</i>
-			        </label>
-			        <div class="mdl-textfield__expandable-holder">
-			          <input class="mdl-textfield__input" type="text" name="q"
-			                 id="search-keyword" placeholder="Search in the crawled articles" />
-					</div>
-				</div>
-			</form>
-{% endblock %}				
+{% block page-title %}Articles{% endblock %}

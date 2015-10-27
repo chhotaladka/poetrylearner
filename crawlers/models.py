@@ -3,6 +3,7 @@ from datetime import datetime
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 import json
+from urlparse import urlparse
 from snippets.models.snippet import Snippet
 
 # Create your models here.
@@ -62,6 +63,10 @@ class RawArticle(models.Model):
     
     def get_source_url(self):
         return self.source_url
+    
+    def get_source_name(self):
+        # Returns domain name from the `source_url` 
+        return urlparse(self.source_url).netloc
     
     def get_validity(self):
         return self.valid
@@ -138,6 +143,10 @@ class RawAuthor(models.Model):
     def get_source_url(self):
         return self.source_url
     
+    def get_source_name(self):
+        # Returns domain name from the `source_url` 
+        return urlparse(self.source_url).netloc
+        
     def get_validity(self):
         return self.valid
            

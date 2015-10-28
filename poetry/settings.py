@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Added 
     'formtools',
+    'django.contrib.humanize',
     # pip installed
     'django_select2',
     'crispy_forms',

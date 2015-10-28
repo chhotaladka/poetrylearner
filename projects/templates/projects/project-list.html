@@ -1,267 +1,72 @@
-{% extends "projects/mdl-base.html" %}
+{% extends "projects/base.html" %}
 
-{% block body %}
-
-<!-- The drawer is always open in large screens. The header is always shown,
-  even in small screens. -->
-<div class="mdl-layout mdl-js-layout
-            mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title">Title</span>
-      <div class="mdl-layout-spacer"></div>
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                  mdl-textfield--floating-label mdl-textfield--align-right">
-        <label class="mdl-button mdl-js-button mdl-button--icon"
-               for="fixed-header-drawer-exp">
-          <i class="material-icons">search</i>
-        </label>
-        <div class="mdl-textfield__expandable-holder">
-          <input class="mdl-textfield__input" type="text" name="sample"
-                 id="fixed-header-drawer-exp" />
-        </div>
-      </div>
-    </div>
-  </header>
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Title</span>
-    <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-    </nav>
-  </div>
-	<main class="mdl-layout__content">
-{% block main %}
-    	<section id="CardsMedia" class="">
-			<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-grid">		
-		
-				<div class="mdl-card mdl-cell mdl-cell--12-col mdl-grid mdl-color--white mdl-shadow--2dp">														
-						<!-- Simple progress bar -->
-						<div id="p1" class="mdl-cell mdl-cell--12-col mdl-progress mdl-js-progress"></div>
-						<script>
-						  document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
-						    this.MaterialProgress.setProgress(44);
-						  });
-						</script>	
-						<div id="p2" class="mdl-cell mdl-cell--12-col mdl-progress mdl-js-progress"></div>
-						<script>
-						  document.querySelector('#p2').addEventListener('mdl-componentupgraded', function() {
-						    this.MaterialProgress.setProgress(44);
-						  });
-						</script>																
-				</div>
-			
-			
-			</div>		
-    	</section> <!-- /CardsMedia --> 
-    		
-		<section id="CardsText" class="">
-			<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-grid">				
-						
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
-					<div class="mdl-card__supporting-text">
-						<h4>Features</h4>
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>
-					<div class="mdl-card__actions">
-						<a href="#" class="mdl-button">Read our features</a>
-					</div>
-				</div>
-				
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
-					<div class="mdl-card__supporting-text">
-						<h4>Features</h4>
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>
-					<div class="mdl-card__actions">
-						<a href="#" class="mdl-button">Read our features</a>
-					</div>
-				</div>
-								
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
-					<div class="mdl-card__supporting-text">
-						<h4>Features</h4>
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>
-					<div class="mdl-card__actions">
-						<a href="#" class="mdl-button">Read our features</a>
-					</div>
-				</div>				
-			
-			</div>		
-    	</section> <!-- /CardsText --> 	
-    	
-    	<section id="CardsMedia" class="">
-			<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-grid">		
-		
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
-					<div class="mdl-card__supporting-text">
-						<h4>Features</h4>
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>
-					<div class="mdl-card__actions">
-						<a href="#" class="mdl-button">Read our features</a>
-					</div>
-				</div>
-				
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
-					<div class="mdl-card__supporting-text">
-						<h4>Features</h4>
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>
-					<div class="mdl-card__actions">
-						<a href="#" class="mdl-button">Read our features</a>
-					</div>
-				</div>
-								
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
-					<div class="mdl-card__supporting-text">
-						<h4>Features</h4>
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>
-					<div class="mdl-card__actions">
-						<a href="#" class="mdl-button">Read our features</a>
-					</div>
-				</div>				
-			
-			</div>		
-    	</section> <!-- /CardsMedia --> 
-    	
-    	<section id="CardsWide" class="">
-			<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-grid">		
-		
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
-					<div class="mdl-card__title mdl-card--expand mdl-color--teal-300 mdl-color-text--white">
-						<h2 class="mdl-card__title-text">
-							Features
-						</h2>
-					</div>
-					<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>
-					<div class="mdl-card__actions mdl-card--border">
-						<a id="MetaS" href="#" class="mdl-button mdl-button mdl-button--colored">Read our features</a>
-						<div class="mdl-tooltip mdl-tooltip--large" for="MetaS">
-								Share
-						</div>
-					</div>
-					<div class="mdl-card__menu">
-						<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn1">
-			              <i class="material-icons mdl-color-text--white">more_vert</i>
-						</button>
-			            <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">
-			              <li class="mdl-menu__item">Lorem</li>
-			              <li class="mdl-menu__item" disabled>Ipsum</li>
-			              <li class="mdl-menu__item">Dolor</li>
-			            </ul>
-					</div>
-				</div>
-				
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
-					<div class="mdl-card__title mdl-card--expand mdl-color-text--grey-700">
-						<h2 class="mdl-card__title-text">
-							Features
-						</h2>
-					</div>					
-					<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>
-					<div class="mdl-card__actions mdl-card--border">
-		                <a href="#" class="mdl-button mdl-button mdl-button--colored">Read our features</a>
-		                <div class="mdl-layout-spacer"></div>
-		                <i class="material-icons">location_on</i>              
-					</div>
-					<div class="mdl-card__menu">
-						<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn12">
-			              <i class="material-icons">more_vert</i>
-						</button>
-			            <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn12">
-			              <li class="mdl-menu__item">Lorem</li>
-			              <li class="mdl-menu__item" disabled>Ipsum</li>
-			              <li class="mdl-menu__item">Dolor</li>
-			            </ul>
-					</div>					
-				</div>
-				
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
-					<div class="mdl-card__title mdl-card--expand mdl-color-text--grey-700">
-						<h2 class="mdl-card__title-text">
-							Features
-						</h2>
-					</div>					
-					<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>
-					<div class="mdl-card__actions">
-						<a href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Read our features</a>
-					</div>
-					<div class="mdl-card__menu">
-					    <button data-upgraded=",MaterialButton,MaterialRipple" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-							<i class="material-icons">share</i>
-						    <span class="mdl-button__ripple-container">
-						    	<span style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(12px, 16px);" class="mdl-ripple is-animating">
-						    	</span>
-						    </span>
-					    </button>					  
-					</div>					
-				</div>				
-								
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--8-col-desktop">
-					<div class="mdl-card__supporting-text">
-						<h4>Features</h4>
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>
-					<div class="mdl-card__supporting-text">
-						<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-						  <thead>
-						    <tr>
-						      <th class="mdl-data-table__cell--non-numeric">Material</th>
-						      <th>Quantity</th>
-						      <th>Unit price</th>
-						    </tr>
-						  </thead>
-						  <tbody>
-						    <tr>
-						      <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-						      <td>25</td>
-						      <td>$2.90</td>
-						    </tr>
-						    <tr>
-						      <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-						      <td>50</td>
-						      <td>$1.25</td>
-						    </tr>
-						    <tr>
-						      <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
-						      <td>10</td>
-						      <td>$2.35</td>
-						    </tr>
-						  </tbody>
-						</table>
-					</div>					
-					<div class="mdl-card__actions mdl-card--border">
-						<a href="#" class="mdl-button">Read our features</a>
-					</div>
-				</div>
-				
-												
-			
-			</div>		
-    	</section> <!-- /CardsWide -->  
-    	
-    	
-    	
+{% block title %}
+	List of projects
 {% endblock %}
-	</main>
-</div>
 
+{% block main %}
 
+	<section id="id-section-main" class="p-8">
+		<div class="mdl-poetry__post mdl-grid">
+			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">							
 
+{% if projects %} {% comment %} Display the list {% endcomment %}				
+				<div class="mdl-card__supporting-text stats-text">		            
+					Displaying {{ projects|length }} of {{ projects.paginator.count }} projects.
+				</div>
+				{% if projects.paginator.num_pages > 1 %}
+				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
+					{% include "common/include/pagination.html" with obj_list=projects getvars=getvars only %}
+				</div>
+				{% endif %}
 
+				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+					<div class="table--large">
+					<table class="mdl-data-table mdl-js-data-table wSn">
+						<thead>
+							<tr>
+						    	<th>ID</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Book</th>
+						    	<th class="mdl-data-table__cell--non-numeric">State</th>
+						    	<th>Pages</th>
+						    	<th>Start</th>
+						    	<th>End</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Note</th>						    	
+						    </tr>
+						</thead>						
+						<tbody>
+							{% for project in projects %}
+							<tr>
+								<td>{{ forloop.counter }}</td>
+								<td class="mdl-data-table__cell--non-numeric">
+									<a href="{{project.get_absolute_url}}" title="View project">{{ project.book.get_title }}</a>
+								</td>
+								<td class="mdl-data-table__cell--non-numeric" title="Current state">{{ project.get_state_name }}</td>
+								<td title="Total pages">{{ project.get_pages_num }}</td>
+								<td title="{{project.get_start_date}}">{{ project.get_start_date | date }}</td>
+								<td title="{{project.get_end_date}}">{{ project.get_end_date | date }}</td>
+								<td class="mdl-data-table__cell--non-numeric">{{ project.get_note }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					</div>
+				</div>
+				{% if projects.paginator.num_pages > 1 %}
+				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
+					{% include "common/include/pagination.html" with obj_list=projects getvars=getvars only %}
+				</div>
+				{% endif %}
+{% else %}  {% comment %} Display the notification {% endcomment %}
+				<div class="mdl-card__supporting-text oops-message">
+					<i class="material-icons md-48">error_outline</i>	            
+					<h6>Oops!! No data found for this query.</h6>
+				</div>
+{% endif %}					
+			</div>					
+		</div>	
+	</section>
 
+{% endblock %}
 
-
-
-{% endblock %}	
+{% block page-title %}Projects{% endblock %}

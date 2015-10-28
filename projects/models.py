@@ -11,6 +11,7 @@ from projects.helper.logs import print_log
 from django.conf import settings
 import os
 import json
+from urlparse import urlparse
 
 
 # Create your models here.
@@ -66,15 +67,37 @@ class Author(models.Model):
         
     def get_sobriquet(self):
         return self.sobriquet
-            
+    
+    def get_date_birth(self):
+        return self.date_birth
+    
+    def get_date_death(self):
+        return self.date_death
+    
+    def get_summary(self):
+        return self.summary
+    
+    def get_source_url(self):
+        return self.source_url
+    
+    def get_source_name(self):
+        # Returns domain name from the `source_url` 
+        return urlparse(self.source_url).netloc    
+    
+    def get_last_edit_time(self):
+        return self.date_modified
+    
+    def get_last_edit_user(self):
+        return self.modified_by
+        
     def get_display_name(self):
         """
         Returns display name of Author
         """
         if self.sobriquet:
-            return self.sobriquet
+            return self.sobriquet         
         elif self.name_en:
-            return self.name_en
+            return self.name_en       
         else:
             return self.name
         
@@ -83,7 +106,13 @@ class Author(models.Model):
         Returns the slugified display name of the Author
         It can be used in the URL of Author related page
         """
-        name = self.get_display_name()
+        if self.name_en:
+            name = self.name_en
+        elif self.sobriquet:
+            name = self.sobriquet
+        else:
+            name = self.name
+        
         return str(slugify(name))
         
     def get_absolute_url(self):     
@@ -163,6 +192,12 @@ class Book(models.Model):
     
     def get_publisher(self):
         return self.publisher
+    
+    def get_last_edit_time(self):
+        return self.date_modified
+    
+    def get_last_edit_user(self):
+        return self.modified_by
             
     def get_slug(self):
         """
@@ -251,6 +286,27 @@ class Project(models.Model):
         Returns all states
         """
         return cls.PROJECT_STATES 
+    
+    def get_start_date(self):
+        return self.start_date
+    
+    def get_end_date(self):
+        return self.end_date
+    
+    def get_pages_num(self):
+        return self.pages
+    
+    def get_scanned_pages_num(self):
+        return self.scanned_pages
+    
+    def get_note(self):
+        return self.note
+    
+    def get_last_edit_time(self):
+        return self.date_modified
+    
+    def get_last_edit_user(self):
+        return self.manager    
     
     def get_pages(self):
         """

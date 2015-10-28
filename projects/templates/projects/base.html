@@ -3,3 +3,11 @@
 
 {% comment %} To set the main nav link active throughout the views of this app {% endcomment %}
 {% block is-projects-active %}active{% endblock %}
+
+{% block header-nav-links %}
+    <a class="mdl-navigation__link" href="{% url 'projects:dashboard' %}" title="Projects Home">Home</a>
+    <a class="mdl-navigation__link" href="{% url 'projects:author-list' %}" title="Browse authors">Authors</a>
+    <a class="mdl-navigation__link" href="{% url 'projects:project-list' %}" title="Browse projects">Projects</a>
+    <a class="mdl-navigation__link" href="{% url 'projects:book-list' %}" title="Browse books">Books</a>
+    <a class="mdl-navigation__link" href="" title="Help me to figure out">Help</a>
+{% endblock %}

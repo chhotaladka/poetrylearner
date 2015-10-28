@@ -1,0 +1,75 @@
+{% extends "projects/base.html" %}
+
+{% block title %}
+	List of books
+{% endblock %}
+
+{% block main %}
+
+	<section id="id-section-main" class="p-8">
+		<div class="mdl-poetry__post mdl-grid">
+			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">							
+
+{% if books %} {% comment %} Display the list {% endcomment %}				
+				<div class="mdl-card__supporting-text stats-text">		            
+					Displaying {{ books|length }} of {{ books.paginator.count }} books.
+				</div>
+				{% if books.paginator.num_pages > 1 %}
+				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
+					{% include "common/include/pagination.html" with obj_list=books getvars=getvars only %}
+				</div>
+				{% endif %}
+
+				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+					<div class="table--large">
+					<table class="mdl-data-table mdl-js-data-table wSn">
+						<thead>
+							<tr>
+						    	<th>ID</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Title</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Author(s)</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Language</th>
+						    	<th class="mdl-data-table__cell--non-numeric" title="Publication info">Publication</th>						    							    
+						    </tr>
+						</thead>						
+						<tbody>
+							{% for book in books %}
+							<tr>
+								<td>{{ forloop.counter }}</td>
+								<td class="mdl-data-table__cell--non-numeric">
+									<a href="{{ book.get_absolute_url }}" title="View book">{{ book.get_title }}</a>
+								</td>
+								<td class="mdl-data-table__cell--non-numeric">
+								{% for author in book.authors.all %}
+						 			<a title="View author" href="{{ author.get_absolute_url }}">
+										{{ author.get_display_name }}</a>{% if not forloop.last %}&#44;{% endif %}
+								{% endfor %}
+								</td>
+								<td class="mdl-data-table__cell--non-numeric">{{ book.get_language }}</td>
+								<td class="mdl-data-table__cell--non-numeric">
+									{{ book.year_published}}, {{ book.publisher }}
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					</div>
+				</div>
+				{% if books.paginator.num_pages > 1 %}
+				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
+					{% include "common/include/pagination.html" with obj_list=books getvars=getvars only %}
+				</div>
+				{% endif %}
+{% else %}  {% comment %} Display the notification {% endcomment %}
+				<div class="mdl-card__supporting-text oops-message">
+					<i class="material-icons md-48">error_outline</i>	            
+					<h6>Oops!! No data found for this query.</h6>
+				</div>
+{% endif %}					
+			</div>					
+		</div>	
+	</section>
+
+{% endblock %}
+
+{% block page-title %}Books{% endblock %}

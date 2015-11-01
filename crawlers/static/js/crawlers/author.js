@@ -186,6 +186,7 @@ $(document).ready(function(){
 		body.children().remove();
 		$('#id-div-form').addClass('hidden');
 		$('#id-author-card').addClass('wFull');
+		$('#id-add-btn').toggleClass('hidden');
 	};
 	
 	/**
@@ -210,10 +211,13 @@ $(document).ready(function(){
 			return false;
 		});
 		$('#id-form-cancel').prop( "onclick", null );
+		$('#id-form-cancel').off('click');
 		$('#id-form-cancel').on('click', dismissForm);
-		$('#id-dismiss').on('click', dismissForm);		
+		$('#id-dismiss').off('click');
+		$('#id-dismiss').on('click', dismissForm);
 
 		$('#id-author-card').removeClass('wFull');
+		$('#id-add-btn').toggleClass('hidden');
 		$('#id-div-form').removeClass('hidden');
 	};
 

@@ -5,7 +5,8 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic.base import View
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from meta_tags.views import Meta
 from snippets.models import Snippet
 from snippets.forms import SnippetForm
@@ -101,3 +102,78 @@ class AddSnippet(View):
             return HttpResponseRedirect(obj.get_absolute_url())
         
         return render(request, self.template_name, {'form': form})    
+
+
+def snippet_list(request):
+    """
+    List Snippet
+    """    
+    q_objects = Q()
+    
+    ##
+    # Check the parameters passed in the URL and process accordingly    
+    author = request.GET.get('author', None)
+    q = request.GET.get('q', None)
+    filters = request.GET.get('filters', None)
+    
+    if filters:
+        filters = filters.split(',')
+        print filters
+        # Supported filters are: pub(published), unpub(unpublished)
+        if 'pub' in filters:
+            q_objects &= Q(published=True)
+        elif 'unpub' in filters:
+            q_objects &= Q(published=False)        
+        
+    if author:
+        author = author.strip()
+        # filter the source_url
+        q_objects &= Q(author__icontains=author)
+    
+    if q:
+        q = q.strip()
+        # TODO make it more perfect 
+        q_objects &= Q(title__icontains=q) | Q(author__icontains=q)      
+        
+    # Get all articles              
+    obj_list = Snippet.objects.all().filter(q_objects)
+       
+    ##
+    # Check for permissions and render the list of articles
+    
+    
+    # Pagination
+    paginator = Paginator(obj_list, 20) # Show 20 entries per page    
+    page = request.GET.get('page')
+    try:
+        objs = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        objs = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        objs = paginator.page(paginator.num_pages)
+            
+    context = {'snippets': objs}
+    template = 'snippets/snippet-list.html'    
+
+    return render(request, template, context)
+
+
+def tag_list(request):
+    objs = {}
+    context = {'tags': objs}
+    template = 'snippets/tag-list.html'    
+
+    return render(request, template, context)
+
+
+def dashboard(request):
+    snippet = {}
+    snippet['total'] = Snippet.objects.all().count()
+    snippet['published'] = Snippet.objects.all().filter(published=True).count()
+        
+    context = {'snippet': snippet,}
+    template = "snippets/dashboard.html"
+
+    return render(request, template, context)

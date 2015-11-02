@@ -104,30 +104,35 @@ class AddAuthor(View):
             
         form = self.form_class(request.POST, request.FILES, instance=author)
         
-        if form.is_valid():          
-            obj = form.save(self.request.user, commit=True)
-            if request.is_ajax():
-                # Create JSON response and send
-                res = {}
-                res['result'] = 'success'
-                res['url'] = obj.get_absolute_url()
-                return JsonResponse(res)
-               
-            messages.success(request, 'Changes on author %s is successful! '%obj.name)        
-            return HttpResponseRedirect(obj.get_absolute_url())
-        try:
-            if request.is_ajax():
-                # Create JSON response alongwith the rendered form and send
-                res = {}
-                res['result'] = 'failure'
-                res['data'] = render_to_string(self.template_name, {'form': form})                
-                return JsonResponse(res)
-        except:
-            print ("Error: Unexpected error:", sys.exc_info()[0])
-            for frame in traceback.extract_tb(sys.exc_info()[2]):
-                fname,lineno,fn,text = frame
-                print ("DBG:: Error in %s on line %d" % (fname, lineno))          
-                
+        if form.is_valid():
+            try:          
+                obj = form.save(self.request.user, commit=True)
+                        
+                if request.is_ajax():
+                    # Create JSON response and send
+                    res = {}
+                    res['result'] = 'success'
+                    res['url'] = obj.get_absolute_url()
+                    return JsonResponse(res)
+
+                messages.success(request, 'Changes on author %s is successful! '%obj.name)        
+                return HttpResponseRedirect(obj.get_absolute_url())
+                            
+            except:
+                print ("Error: Unexpected error:", sys.exc_info()[0])
+                for frame in traceback.extract_tb(sys.exc_info()[2]):
+                    fname,lineno,fn,text = frame
+                    print ("DBG:: Error in %s on line %d" % (fname, lineno))
+                # Add non_field_errors to the form to convey the message    
+                form.add_error(None, "Unexpected error occured! Checking the fields may help.")                 
+                               
+        if request.is_ajax():
+            # Create JSON response alongwith the rendered form and send
+            res = {}
+            res['result'] = 'failure'
+            res['data'] = render_to_string(self.template_name, {'form': form})                
+            return JsonResponse(res)
+                        
         return render(request, self.template_name, {'form': form})
 
 

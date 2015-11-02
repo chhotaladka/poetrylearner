@@ -1,5 +1,6 @@
-{% extends "snippets/base.html" %}
+{% extends "snippets/snippet-base.html" %}
 {% load staticfiles %}
+{% load humanize %} 
 
 {% block meta %}
 {% include "meta.html" with meta=meta only %}
@@ -46,27 +47,21 @@
 	
 					</div>		
 					<div class="mdl-card__supporting-text mdl-color-text--grey-500 article-info">
-						<div>
-							<span>By
-								<a title="View the author {{snippet.author.name}}" href="{{ snippet.author.get_absolute_url }}">
-									<span itemprop="creator">{{ snippet.author.get_display_name }}</span>
-								</a>
-							</span>	
-							<span>In 
-								<a title="Explore in {{snippet.get_language}}" href="#">
-									<span itemprop="inLanguage">{{ snippet.get_language }}</span>
-								</a>
-							</span>						
-							<span>This article was published in 
-								<a title="Explore the book {{ snippet.page}}" href="{{ snippet.page.get_absolute_url }}">
-		    					The Prophet
-		    					</a>
-		    				</span>		    				
-						</div>
-						
-						<div class="mdl-layout-spacer"></div>
-						<span>x y z</span>
-						
+						<span>By
+							<a title="View the author {{snippet.author.name}}" href="{{ snippet.author.get_absolute_url }}">
+								<span itemprop="creator">{{ snippet.author.get_display_name }}</span>
+							</a>
+						</span>	
+						<span>In 
+							<a title="Explore in {{snippet.get_language}}" href="#">
+								<span itemprop="inLanguage">{{ snippet.get_language }}</span>
+							</a>
+						</span>						
+						<span>This article was published in 
+							<a title="Explore the book {{ snippet.page}}" href="{{ snippet.page.get_absolute_url }}">
+	    					The Prophet
+	    					</a>
+	    				</span>						
 					</div>
 			
 					<div id="articleContent" itemprop="articleBody" class="article-content mdl-card__supporting-text mdl-color-text--grey-700">											
@@ -100,11 +95,9 @@
 						<button id="moreBtn" class="action-button" title="Show meta data">							
 			                <i class="material-icons" role="presentation">more_horiz</i>
 			                <span class="action-button__text">More</span>			                            
-						</button>
-																
-						<div class="mdl-layout-spacer"></div>
+						</button>															
 
-						<div class="mR-8" title="Views">
+						<div class="meta" title="Views">
 							<span class="meta-val--bignum mR-4">12,234,002</span>
 			                <span class="meta-name">views</span>
 			                <!--<span class="visuallyhidden">views</span>-->	                
@@ -141,7 +134,7 @@
 		    					</span>
 		    				</div>
 		    				<div>
-		    					<span>{{ snippet.updated_at | timesince }}</span>
+		    					<span>{{ snippet.updated_at |naturaltime }}</span>
 		    				</div>
 		    			</div>
 		    			<div class="mdl-layout-spacer"></div>
@@ -163,7 +156,7 @@
 				</div> <!-- /mdl-card -->
 
 								
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid">				
+				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top mdl-grid">				
 					<div class="section-title mdl-cell mdl-cell--12-col">
 						<h3>More from {{snippet.author.name}}</h3>	
 					</div>

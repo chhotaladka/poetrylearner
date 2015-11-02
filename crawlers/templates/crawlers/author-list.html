@@ -13,10 +13,11 @@
 				<div class="mdl-card__supporting-text stats-text">		            
 					Displaying {{ authors|length }} of {{ authors.paginator.count }} crawled authors.
 				</div>
+				{% if authors.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
 					{% include "common/include/pagination.html" with obj_list=authors getvars=getvars only %}
 				</div>
-
+				{% endif %}
 				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
 					<div class="table--large">
 					<table class="mdl-data-table mdl-js-data-table wSn">
@@ -55,10 +56,11 @@
 					</table>
 					</div>
 				</div>
-				
+				{% if authors.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
 					{% include "common/include/pagination.html" with obj_list=authors getvars=getvars only %}
 				</div>
+				{% endif %}
 {% else %}  {% comment %} Display the notification {% endcomment %}
 				<div class="mdl-card__supporting-text oops-message">
 					<i class="material-icons md-48">error_outline</i>	            

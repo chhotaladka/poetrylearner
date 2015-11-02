@@ -30,15 +30,36 @@
 	<!-- The drawer is always open in large screens. The header is always shown,
 	  even in small screens. -->
 	<div class="mdl-layout mdl-js-layout dashboard-layout
-	            mdl-layout--fixed-drawer">  
-	  {% comment %}  
-	  <header class="mdl-layout__header">
-	    <div class="mdl-layout__header-row ">
-	      <span class="mdl-layout-title">Title</span>
-	      <div class="mdl-layout-spacer"></div>
+	            mdl-layout--fixed-drawer mdl-layout--fixed-header">  
+	  {% block header %}{# header of a section/app. Modify in the base template of the app #}
+	  <header class="mdl-layout__header page-header mdl-layout__header--waterfall mdl-color-text--grey-700 mdl-layout__header--transparent">
+	    <div class="mdl-layout__header-row page-header--row">
+	      <span class="mdl-layout-title">{% block page-title %}Page Title{% endblock %}{# Define at each page to set its title #}</span>
+	      {% comment %}  
+	      <div class="mdl-layout-spacer"></div>      
+	      <nav class="mdl-navigation page-header--nav">
+	      {% block header-nav-links %}{# Modify the links as per the current Section (App) #}
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	       {% endblock %}{# end of header-nav-links block #}
+	      </nav>{% endcomment %}
 	    </div>
+	    <div class="mdl-layout__header-row page-header--row">
+	      <div class="mdl-layout-spacer"></div>      
+	      <nav class="mdl-navigation page-header--nav">
+	      {% block header-nav-links %}{# Modify the links as per the current Section (App) #}
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	       {% endblock %}{# end of header-nav-links block #}
+	      </nav>
+	    </div>	    
+   
 	  </header>
-	  {% endcomment %}
+	  {% endblock %}{# end of header block #}
 	  
 	  <div class="mdl-layout__drawer mdl-color--white mdl-color-text--grey-700">
 	    <span class="mdl-layout-title">Title</span>
@@ -57,11 +78,12 @@
 	    {% endblock %}{# end of search block #}
 	    
 	    <nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800">
-	      <a class="mdl-navigation__link {% block is-snippets-active %}{% endblock %}" href="{% url 'snippets:dashboard' %}">Snippets</a>
-	      <a class="mdl-navigation__link {% block is-crawlers-active %}{% endblock %}" href="{% url 'crawlers:dashboard' %}">Crawlers</a>
-	      <a class="mdl-navigation__link {% block is-projects-active %}{% endblock %}" href="{% url 'projects:dashboard' %}">Projects</a>
-	      <a class="mdl-navigation__link {% block is-users-active %}{% endblock %}" href="">Users</a>
+	    	<a class="mdl-navigation__link {% block is-crawlers-active %}{% endblock %}" href="{% url 'crawlers:dashboard' %}">Crawlers</a>
+	    	<a class="mdl-navigation__link {% block is-snippets-active %}{% endblock %}" href="{% url 'snippets:dashboard' %}">Snippets</a>	      	    	
+	    	<a class="mdl-navigation__link {% block is-projects-active %}{% endblock %}" href="{% url 'projects:dashboard' %}">Projects</a>
+	    	<a class="mdl-navigation__link {% block is-users-active %}{% endblock %}" href="">Users</a>
 	    </nav>
+    
 	  </div>
 		<main class="mdl-layout__content">
 		{% block main %}

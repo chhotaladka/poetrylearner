@@ -157,12 +157,15 @@ height: 128px;
 	padding: 0px 16px;
 }
 
-.mdl-poetry .meta-name {
+.meta {
+	margin: 4px 16px;
+}
+.meta .meta-name {
 	font-size: 12px;
 	font-weight: 400;
 	color: #919191;
 }
-.mdl-poetry .meta-val--bignum {
+.meta .meta-val--bignum {
 	font-size: 14px;
 	font-weight: 400;
 	color: #616161;
@@ -171,9 +174,18 @@ height: 128px;
 .mdl-poetry .mdl-card__actions.nav-pannel {
 	padding: 4px;
 }
-
-.mdl-poetry .mdl-card__actions.action-pannel {
-	padding: 4px;
+.mdl-poetry .mdl-card__actions.loading-bar {
+	padding: 0px;
+}
+.mdl-poetry .mdl-card__actions.status-pannel {
+	padding: 8px;
+	font-size: 14px;
+}
+.mdl-poetry .mdl-card__actions.action-pannel {	
+	font-size: 14px;
+	display: flex;
+	flex-wrap: wrap-reverse;
+	justify-content: space-between;
 }
 .mdl-poetry .action-pannel .material-icons {
 	font-size: 20px;
@@ -220,6 +232,10 @@ height: 128px;
 }
 .mdl-poetry .action-button--small:hover {
 	color: #616161;
+}
+@media (max-width: 839px) {
+	.action-button__text {
+		display: none !important; }
 }
 
 .mdl-poetry .share-pannel {
@@ -328,6 +344,13 @@ height: 128px;
 	text-align: center;
 }
 
+.mdl-card.stats-card {
+	background-color: transparent;
+}
+.mdl-card.stats-card:hover {
+	background-color: white;
+}
+
 /* forms */
 .mdl-poetry .a-mdl-form {
 	margin: 16px;
@@ -376,8 +399,9 @@ height: 128px;
 }
 .dashboard-navigation.mdl-navigation .active,
 .dashboard-navigation.mdl-navigation .active:hover {
-    background-color: rgb(149, 54, 140);
-    color: rgb(255,255,255);
+/*    background-color: rgb(149, 54, 140);*/
+	background-color: rgb(221,221,221);
+    
 }
 
 .page-header.mdl-layout__header {
@@ -393,6 +417,83 @@ height: 128px;
 }
 .page-header--row.mdl-layout__header-row > * {
     flex-shrink: 1;
+}
+
+/* Popup/overlay/info-box etc */
+.info-overlay.mdl-menu {
+	min-width: 120px;
+}
+.info-overlay > .action {
+	text-align: right;
+	margin: 8px;
+}
+.info-overlay > .text.mdl-menu__item {
+	white-space: nowrap;
+	min-width: 240px;
+	cursor: default;
+	color: inherit;
+
+}
+.info-overlay > .text.mdl-menu__item:hover {
+	background-color: transparent;
+
+}
+
+/* Angled edge */
+.quote, .quote-a, .quote-b {
+	z-index: 1;
+	position: relative;
+}
+.quote:before, .quote-b:before {
+  background: inherit;
+  content: '';
+  display: block;
+  height: 50%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: -1;
+}
+.quote:after, .quote-a:after {
+  background: inherit;
+  content: '';
+  display: block;
+  height: 50%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: -1;
+}
+.quote:before, .quote-b:before {
+  top: 0;
+  -webkit-transform: skewY(1.5deg);
+      -ms-transform: skewY(1.5deg);
+          transform: skewY(1.5deg);
+  -webkit-transform-origin: 100% 0;
+      -ms-transform-origin: 100% 0;
+          transform-origin: 100% 0;
+}
+.quote:after, .quote-a:after {
+  bottom: 0;
+  -webkit-transform: skewY(-1.5deg);
+      -ms-transform: skewY(-1.5deg);
+          transform: skewY(-1.5deg);
+  -webkit-transform-origin: 100%;
+      -ms-transform-origin: 100%;
+          transform-origin: 100%;
+}
+
+/* Notifications/warning etc */
+
+.notice {
+	/*background-color: #EEE;*/
+	background-color: #EFF2DF;
+	color: #616161;
+	border-radius: 2px;
+	margin: 8px 4px;
+	padding: 8px;
+
+
 }
 
 /* Shortcut styles */
@@ -525,10 +626,22 @@ a:visited {
     transition: all 0.3s ease-out 0s;
 }
 
-/* Alerts */
+/* Alerts, status */
 .alert-danger {
 	color: #f44336;
 }
 .alert-success {
 	color: #8bc34a;
+}
+.status-success {
+	background-color: #8bc34a;/*light-green-500*/
+	color: white;	
+}
+.status-failure {
+	background-color: #d50000 !important;/*red-A700*/
+	color: white;	
+}
+.status-warning {
+	background-color: #ff5722 !important;/*deep-orange-500*/
+	color: white;	
 }

@@ -1,7 +1,7 @@
-{% extends "crawlers/base.html" %}
+{% extends "snippets/base.html" %}
 
 {% block title %}
-	List of crawled article
+	List of snippets
 {% endblock %}
 
 {% block main %}
@@ -10,15 +10,16 @@
 		<div class="mdl-poetry__post mdl-grid">
 			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">							
 
-{% if articles %} {% comment %} Display the list {% endcomment %}				
+{% if snippets %} {% comment %} Display the list {% endcomment %}				
 				<div class="mdl-card__supporting-text stats-text">		            
-					Displaying {{ articles|length }} of {{ articles.paginator.count }} crawled articles.
+					Displaying {{ snippets|length }} of {{ snippets.paginator.count }} snippets.
 				</div>
-				{% if articles.paginator.num_pages > 1 %}
+				{% if snippets.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
-					{% include "common/include/pagination.html" with obj_list=articles getvars=getvars only %}
+					{% include "common/include/pagination.html" with obj_list=snippets getvars=getvars only %}
 				</div>
 				{% endif %}
+
 				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
 					<div class="table--large">
 					<table class="mdl-data-table mdl-js-data-table wSn">
@@ -27,39 +28,41 @@
 						    	<th>ID</th>
 						    	<th class="mdl-data-table__cell--non-numeric">Title</th>
 						    	<th class="mdl-data-table__cell--non-numeric">Author</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Source</th>
-						    	<th>Added at</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Valid</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Snippet</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Last edited</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Added</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Published</th>						    							    
 						    </tr>
 						</thead>						
 						<tbody>
-							{% for article in articles %}
+							{% for s in snippets %}
 							<tr>
 								<td>{{ forloop.counter }}</td>
 								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{article.get_absolute_url}}" title="View article">{{ article.get_title }}</a>
+									<a href="{{s.get_absolute_url}}" title="View full article">{{ s.get_title }}</a>
 								</td>
 								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{% url 'crawlers:author-list'%}/?q={{ article.get_author }}" title="Search in crawled authors">{{ article.get_author }}</a>
+									<a href="{{s.author.get_absolute_url}}" title="View author">{{ s.author.get_display_name }}</a>
+								</td>								
+								<td class="mdl-data-table__cell--non-numeric">
+									<span title="{{ s.get_last_edit_time }}">{{ s.get_last_edit_time|date }}</span>
+									<span>by</span> 
+									<a href="#">{{ s.get_last_edit_user }}</a>
 								</td>
 								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{ article.get_source_url }}" title="Visit source" target="_blank">{{ article.get_source_name }}</a>
-								</td>
-								<td title="{{article.added_at}}">{{ article.added_at | date }}</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ article.get_validity }}</td>
-								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{article.snippet.get_absolute_url}}" title="View snippet" target="_blank">{{ article.snippet.id }}</a>
-								</td>
+									<span title="{{ s.get_first_edit_time }}">{{ s.get_first_edit_time|date }}</span>
+									<span>by</span> 
+									<a href="#">{{ s.get_first_edit_user }}</a>
+								</td>								
+								<td class="mdl-data-table__cell--non-numeric">{{ s.is_published }}</td>
 							</tr>
 							{% endfor %}
 						</tbody>
 					</table>
 					</div>
 				</div>
-				{% if articles.paginator.num_pages > 1 %}
+				{% if snippets.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
-					{% include "common/include/pagination.html" with obj_list=articles getvars=getvars only %}
+					{% include "common/include/pagination.html" with obj_list=snippets getvars=getvars only %}
 				</div>
 				{% endif %}
 {% else %}  {% comment %} Display the notification {% endcomment %}
@@ -74,4 +77,4 @@
 
 {% endblock %}
 
-{% block page-title %}Articles{% endblock %}
+{% block page-title %}Snippets{% endblock %}

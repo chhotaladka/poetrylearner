@@ -9,7 +9,10 @@
 
 	<section id="id-section-main" class="p-8">
 		<div class="mdl-poetry__post mdl-grid">
-		
+			<!--
+			<div id="id-extra-card" class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top mdl-shadow--2dp wFull">
+			</div>-->
+			
 			<div id="id-author-card" class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top mdl-shadow--2dp wFull">
 				<div class="nav-pannel mdl-card__actions">
 					{% with prev_author=author.get_previous %}
@@ -34,8 +37,9 @@
 						<div>Name: <span id="id-author-name">{{ author.get_name }}</span></div>
 						<div>Birth: <span>{{ author.get_birth_date }}</span></div>
 						<div>Death: <span>{{ author.get_death_date }}</span></div>						
-						<div>Reference
-							<a title="Go to the source" href={{ author.source_url }} target="_blank">URL</a>
+						<div>
+							<span>Reference	<a title="Visit the source to know more" href={{ author.source_url }} target="_blank">URL</a>
+							(Source of the data)</span>
 						</div>
 						<div>Added at <span>{{ author.added_at }}</span></div>					
 						<div>Validity <span id="id-validity">{{ author.valid }}</span></div>										
@@ -44,22 +48,60 @@
 					<a href="{% url 'crawlers:article-list' %}?author={{ author.get_name }}">
 						<button id="id-list-btn" class="action-button" title="List crawled articles by {{ author.get_name }}">
 			                <i class="material-icons" role="presentation">list</i>
-			                <span class="action-button__text">List crawled articles</span>
+			                <span class="action-button__text mdl-badge mdl-badge--no-background" data-badge="{{ articles.total }}">List crawled articles</span>
 						</button>
-					</a>																		
-					<div class="mdl-layout-spacer"></div>
-					{% if not author.get_validity %}					
-					<button id="id-add-btn" class="action-button" title="Add {{ author.get_name }} to main db">						
+					</a>
+					{% if author.get_validity %}				
+					<button id="id-article-btn" data-url="{% url 'crawlers:author-add-snippet' pk=author.id %}" class="action-button" title="Add all new crawled articles to snippets">						
+		                <i class="material-icons" role="presentation">playlist_add</i>
+		                <span class="action-button__text mdl-badge mdl-badge--no-background" data-badge="{{ articles.new }}">Add crawled articles to snippets</span>		                
+					</button>
+					{% endif %}					
+					{% if not author.get_validity %}
+					{% comment %} Provide a button to add this author to main database i.e. projects.Author {% endcomment %}					
+					<button id="id-add-btn" class="action-button" title="Add {{ author.get_name }} to main database">						
 		                <i class="material-icons" role="presentation">person_add</i>
 		                <span class="action-button__text">Add author to main db</span>		                
-					</button>					
+					</button>
+					{% else %}
+					{% comment %}  Auhtor is valid. So, there should be her/his entry in main database of Author i.e. projects.Author. Take me there {% endcomment %}
+					<a href="{% url 'projects:author-list' %}?q={{ author.get_name }}">
+						<button id="id-find-btn" class="action-button" title="Find {{ author.get_name }} in main database">						
+			                <i class="material-icons" role="presentation">search</i>
+			                <span class="action-button__text">Search this author in main db</span>		                
+						</button>
+					</a>				
 					{% endif %}
 					
 				</div>
+				<div id="id-div-action" class="action-pannel mdl-card__actions mdl-card--border hidden">
+					<div class="mL-16">
+				  		Add all crawled articles by {{author.get_name}} to snippets, which have not been added before.
+					</div>
+					<div class="mdl-layout-spacer"></div>					
+					<button id="id-add-article-btn" class="mL-16 mR-16 mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+						Add
+					</button>
+					<button id="id-cancel-btn" class="mL-16 mR-16 mdl-button mdl-js-button mdl-button--raised ">
+						Cancel
+					</button>						
+									
+				</div>
+				<div id="id-div-status" class="status-pannel tAc mdl-card__actions mdl-card--border hidden">
+					<div>
+						<i id="id-status-icon" class="material-icons" role="presentation"></i>
+					</div>
+					<div id="id-status-text" class="">
+						Status
+					</div>
+				</div>					
+				<div id="id-div-loading" class="loading-bar mdl-card__actions mdl-card--border hidden">
+					<div id="p2" class="wFull mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>									
+				</div>																		
 			</div>
 
 			<div id="id-div-form" class="mdl-card mdl-cell mdl-cell--8-col hidden">
-			{# update the AJAX response of add-author request here #}			
+			{% comment %} update the AJAX response of add-author request here {% endcomment %}	
 				<div id="id-div-form-body" class="mdl-card__supporting-text">			
 				</div>
 				<div class="mdl-card__menu">
@@ -84,5 +126,7 @@
 	{{ block.super }}
 	{% if not author.get_validity %}
 	<script type="text/javascript" src="{% static 'js/crawlers/author.js' %}"></script>
-	{% endif %}
+	{% else %}
+	<script type="text/javascript" src="{% static 'js/crawlers/mk-snippet.js' %}"></script>
+	{% endif %}		
 {% endblock %}

@@ -4,6 +4,7 @@
 $(document).ready(function(){
 
 	var data_attributes = {};
+	data_attributes.valid = false;
 
 	/**
 	 * Iska hum kuchh nahi kar sakte !!
@@ -56,6 +57,7 @@ $(document).ready(function(){
                 console.log(data);
 				$("#id-flash-icon").children().remove();
 				if (data.result == 'success') {
+					data_attributes.valid = true;
 					var html = $.parseHTML('<i class="material-icons mdl-color-text--green-600">check_circle</i>')
 					$("#id-flash-icon").append(html);
 					$("#id-flash-msg").text('Author created! Validation successful!');
@@ -186,7 +188,10 @@ $(document).ready(function(){
 		body.children().remove();
 		$('#id-div-form').addClass('hidden');
 		$('#id-author-card').addClass('wFull');
-		$('#id-add-btn').toggleClass('hidden');
+
+		if (data_attributes.valid == false) {
+			$('#id-add-btn').removeClass('hidden');
+		}
 	};
 	
 	/**
@@ -217,7 +222,7 @@ $(document).ready(function(){
 		$('#id-dismiss').on('click', dismissForm);
 
 		$('#id-author-card').removeClass('wFull');
-		$('#id-add-btn').toggleClass('hidden');
+		$('#id-add-btn').addClass('hidden');
 		$('#id-div-form').removeClass('hidden');
 	};
 

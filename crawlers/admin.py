@@ -4,19 +4,26 @@ from django.contrib import admin
 from crawlers.models import RawArticle, RawAuthor
 
 class RawArticleAdmin(admin.ModelAdmin):
-    list_display = ('source_url', 'added_at', 
+    list_display = ('title', 'author', 'source_url', 'added_at', 
                     'valid', 'snippet')
     
     fieldsets = [
-        (None,               {'fields': ['source_url', 'content', 
-                                         'valid', 'snippet']
+        (None,               {'fields': ['title', 'author', 'source_url',
+                                         ]
                               
                               }
          ),
         
     ]
-    list_filter = ['added_at']
-    search_fields = ['content']
+    list_filter = ['added_at', 'valid']
+    search_fields = ['title', 'author', 'content']
+
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj: # editing an existing object
+            return self.readonly_fields + ('source_url', 'content')
+        return self.readonly_fields
+        
     
 class RawAuthorAdmin(admin.ModelAdmin):
     list_display = ('name', 'birth', 'death', 'source_url',

@@ -44,10 +44,28 @@ class Snippet(models.Model):
     def get_title(self):
         return self.title
     
+    def get_body(self):
+        return self.body
+    
+    def get_first_edit_user(self):
+        return self.added_by
+    
+    def get_first_edit_time(self):
+        return self.added_at
+        
+    def get_last_edit_user(self):
+        return self.updated_by
+    
+    def get_last_edit_time(self):
+        return self.updated_at    
+    
     def get_language(self):
         tmp = dict(LANGUAGES)
         return tmp[self.language]
-
+    
+    def is_published(self):
+        return self.published
+    
     def get_slug(self):
         """
         TODO

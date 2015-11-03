@@ -66,15 +66,8 @@ class Snippet(models.Model):
     def is_published(self):
         return self.published
     
-    def get_slug(self):
-        """
-        TODO
-        Returns the slugified title of the Snippet
-        """
-        return str(slugify(self.title))
-
     def get_absolute_url(self):     
-        kwargs = {'pk': str(self.id), 'slug': self.get_slug()}
+        kwargs = {'pk': str(self.id)}
         return reverse('snippets:view', kwargs=kwargs)    
 
     def get_description(self):

@@ -14,7 +14,7 @@ from snippets.utils import truncatewords
 
 # Create your views here.
 
-def snippet_details(request, slug, pk):
+def snippet_details(request, pk):
     """
     Details of the Snippet
     """
@@ -31,14 +31,7 @@ def snippet_details(request, slug, pk):
         print "DBG:: Redirecting to edit URL"
         return redirect('snippets:add', pk=obj.id)
     
-    ##
-    # Check, if `slug` is different from what it is expected,
-    # soft-redirect to the correct URL
-    
-    if slug != obj.get_slug():
-        print "DBG:: Redirecting to correct URL"
-        return redirect(obj)
-    
+   
     # Instantiate the Meta class
     title_for_meta = obj.get_title() + ' by ' + obj.author.get_name()    
     meta = Meta(title = title_for_meta, 

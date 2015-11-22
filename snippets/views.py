@@ -40,8 +40,8 @@ def snippet_details(request, pk):
                 url = obj.get_absolute_url(),                
                 author = obj.author, 
                 date_time = obj.updated_at,
-                object_type = 'article'
-                #TODO keywords = [ tags.name for tags in obj.tags.all()]
+                object_type = 'article',
+                keywords = obj.tags.names(),
             )
     
     ##
@@ -90,8 +90,19 @@ class AddSnippet(View):
         form = self.form_class(request.POST, request.FILES, instance=snippet)
         
         if form.is_valid():          
-            obj = form.save(self.request.user, commit=True)    
-            messages.success(request, 'Changes on snippet %s is successful! '%obj.title)        
+            obj = form.save(self.request.user, commit=False)
+            
+            if obj.pk:          
+                obj.updated_by = self.request.user
+            else:
+                obj.added_by = self.request.user
+                obj.updated_by = self.request.user
+            
+            obj.save()
+            # Without this next line the tags won't be saved.
+            form.save_m2m()                
+                 
+            messages.success(request, 'Changes on snippet "%s" is successful! '%obj.title)        
             return HttpResponseRedirect(obj.get_absolute_url())
         
         return render(request, self.template_name, {'form': form})    
@@ -153,13 +164,39 @@ def snippet_list(request):
     return render(request, template, context)
 
 
+def tagged_list(request, slug):
+    """
+    Views the list of Snippets tagged using 'slug'
+    """
+    obj_list = Snippet.objects.filter(tags__slug=slug)
+    
+    # Pagination
+    paginator = Paginator(obj_list, 20) # Show 20 entries per page    
+    page = request.GET.get('page')
+    try:
+        objs = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        objs = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        objs = paginator.page(paginator.num_pages)
+            
+    context = {'snippets': objs}
+    template = 'snippets/tagged-list.html'    
+
+    return render(request, template, context)
+
+
 def tag_list(request):
-    objs = {}
+    """
+    Views the list of all tags
+    """
+    objs = Snippet.objects.filter(tags__slug=slug)
     context = {'tags': objs}
     template = 'snippets/tag-list.html'    
 
     return render(request, template, context)
-
 
 def dashboard(request):
     snippet = {}

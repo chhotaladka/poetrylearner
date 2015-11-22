@@ -8,8 +8,6 @@ import os, sys, traceback
 from django.conf import settings
 from django.core import validators
 
-from django_select2.fields import AutoModelSelect2MultipleField, AutoModelSelect2TagField
-from django_select2.widgets import AutoHeavySelect2TagWidget
 from django.core.exceptions import ObjectDoesNotExist
 import json
 
@@ -21,7 +19,7 @@ class SnippetForm(ModelForm):
        
     class Meta:
         model = Snippet
-        fields = ['title', 'body', 'language', 'author']                  
+        fields = ['title', 'body', 'language', 'author', 'tags']                  
                
         
     def __init__(self, *args, **kwargs):
@@ -48,6 +46,7 @@ class SnippetForm(ModelForm):
                 Field('body', css_class='input-sm'),
                 Field('author', css_class='input-sm'),
                 Field('language', css_class='input-sm'),
+                Field('tags', css_class='input-sm'),
             ),
         
             FormActions(
@@ -58,13 +57,7 @@ class SnippetForm(ModelForm):
         )
                 
     def save(self, owner, commit=True, *args, **kwargs):
-        obj = super(SnippetForm, self).save(commit=False, *args, **kwargs)
-        
-        if obj.pk:          
-            obj.updated_by = owner
-        else:
-            obj.added_by = owner
-            obj.updated_by = owner
+        obj = super(SnippetForm, self).save(commit=False, *args, **kwargs)        
             
         if commit:
             obj.save()

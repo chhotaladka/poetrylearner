@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     # pip installed
     'django_select2',
     'crispy_forms',
+    'taggit',
     # Developed by us
     'articles',
     'crawlers',
@@ -196,6 +197,9 @@ AUTO_RENDER_SELECT2_STATICS = True
 # http://django-select2.readthedocs.org/en/latest/get_started.html#select2-bootstrap-default-false
 SELECT2_BOOTSTRAP = True
 
+# django-taggit related
+# To make django-taggit to be CASE INSENSITIVE when looking up existing tags (by default False)
+TAGGIT_CASE_INSENSITIVE = True
 
 #
 # Meta data

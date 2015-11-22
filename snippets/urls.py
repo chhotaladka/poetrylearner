@@ -10,6 +10,7 @@ urlpatterns = [
     # Dashboard
     url(r'^$', views.dashboard, name='dashboard'),
     url(r'^snippet/?$', views.snippet_list, name='snippet-list'),
+    url(r'^tagged/(?P<slug>[\w.@+-]+)/?$', views.tagged_list, name='tagged-list'),
     url(r'^tag/?$', views.tag_list, name='tag-list'),
     
 ]

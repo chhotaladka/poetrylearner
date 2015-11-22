@@ -52,10 +52,17 @@
 								<span itemprop="creator">{{ snippet.author.get_display_name }}</span>
 							</a>
 						</span>	
-						<span>In 
-							<a title="Explore in {{snippet.get_language}}" href="#">
-								<span itemprop="inLanguage">{{ snippet.get_language }}</span>
+						<span>						
+							<a class="hashtag pretty-link" href="#">
+								<s>#</s>
+								<b itemprop="inLanguage">{{ snippet.get_language }}</b>
+							</a>							
+							{% for tag in snippet.get_tags_slugs %}
+					 		<a class="hashtag pretty-link" href="{% url 'snippets:tagged-list' slug=tag %}">
+					 			<s>#</s>
+								<b>{{ tag }}</b>
 							</a>
+							{% endfor %}							
 						</span>						
 						<span>This article was published in 
 							<a title="Explore the book {{ snippet.page}}" href="{{ snippet.page.get_absolute_url }}">

@@ -8,7 +8,8 @@ from django.core.urlresolvers import reverse
 from django.utils.text import slugify
 
 from projects.models import Author, Page
-from tag import Tag
+from taggit.managers import TaggableManager
+from snippets.utils import truncatewords
 
 # Create your models here.
 
@@ -27,7 +28,7 @@ class Snippet(models.Model):
     updated_by = models.ForeignKey(auth.models.User, related_name='updated_snippets')
     updated_at = models.DateTimeField(auto_now=True)
     
-    #tags = models.ManyToManyField('Tag', related_name='%(class)ss')
+    tags = TaggableManager(blank=True)
     
     published = models.BooleanField(default=False)
 
@@ -63,6 +64,12 @@ class Snippet(models.Model):
         tmp = dict(LANGUAGES)
         return tmp[self.language]
     
+    def get_tags_names(self):
+        return self.tags.names()
+    
+    def get_tags_slugs(self):
+        return self.tags.slugs()  
+    
     def is_published(self):
         return self.published
     
@@ -75,7 +82,7 @@ class Snippet(models.Model):
         Content to share on social media sites
         """
         #TODO return first stanza
-        return self.body
+        return truncatewords(self.body, 120)
     
 #     def get_dirty_fields(self):
 #         return [f.name for f in self._meta.fields if self._original_state[f.attname] != self.__dict__[f.attname]]

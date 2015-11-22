@@ -29,8 +29,7 @@
 						    	<th class="mdl-data-table__cell--non-numeric">Author</th>
 						    	<th class="mdl-data-table__cell--non-numeric">Source</th>
 						    	<th>Added at</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Valid</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Snippet</th>
+						    	<th class="mdl-data-table__cell--non-numeric" title="Article once has been added to Snippet">Valid</th>						    	
 						    </tr>
 						</thead>						
 						<tbody>
@@ -47,9 +46,10 @@
 									<a href="{{ article.get_source_url }}" title="Visit source" target="_blank">{{ article.get_source_name }}</a>
 								</td>
 								<td title="{{article.added_at}}">{{ article.added_at | date }}</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ article.get_validity }}</td>
 								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{article.snippet.get_absolute_url}}" title="View snippet" target="_blank">{{ article.snippet.id }}</a>
+									{% if article.get_validity %}
+									<a href="{{article.snippet.get_absolute_url}}" title="View snippet" target="_blank">{{ article.get_validity }}</a>
+									{% endif %}
 								</td>
 							</tr>
 							{% endfor %}

@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from django.contrib import auth
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.models import ContentType
 import json
 from urlparse import urlparse
 from snippets.models.snippet import Snippet
@@ -42,7 +43,7 @@ class RawArticle(models.Model):
     author = models.CharField(max_length=100, null=True, blank=True)
     content = models.TextField(null=False)
     added_at = models.DateTimeField(auto_now_add=True)
-    valid = models.BooleanField(default=False)
+    valid = models.BooleanField(default=False) # Valid true means, this article once has been added to `Snippet`
     snippet = models.ForeignKey(Snippet, related_name='ref_articles', null=True, blank=True, verbose_name="related entry in article table")
     
     objects = ArticleManager()
@@ -60,6 +61,10 @@ class RawArticle(models.Model):
     def get_absolute_url(self):
         kwargs = {'pk': str(self.id)}
         return reverse('crawlers:article-details', kwargs=kwargs)
+
+    def get_admin_url(self):
+        content_type = ContentType.objects.get_for_model(self.__class__)
+        return reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))    
     
     def get_source_url(self):
         return self.source_url

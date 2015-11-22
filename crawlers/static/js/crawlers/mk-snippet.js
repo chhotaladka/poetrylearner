@@ -35,7 +35,7 @@ $(document).ready(function(){
 	 */
 	var renderResponse = function(data){
 		console.log("renderResponses: In, "+data.result);
-		$('#id-div-status').toggleClass('hidden');
+		$('#id-div-status').addClass('hidden');
 		$('#id-div-loading').toggleClass('hidden');
 
 		if (data.result == 'success') {
@@ -43,7 +43,7 @@ $(document).ready(function(){
 			$('#id-status-icon').text('done');
 			$('#id-div-status').removeClass('status-failure');
 			$('#id-div-status').addClass('status-success');
-			$('#id-div-status').toggleClass('hidden');			
+			$('#id-div-status').removeClass('hidden');			
 						
 		} else if (data.result == 'failure') {
 			console.log("failed");
@@ -51,7 +51,7 @@ $(document).ready(function(){
 			$('#id-status-icon').text('error_outline');
 			$('#id-div-status').removeClass('status-success');
 			$('#id-div-status').addClass('status-failure');
-			$('#id-div-status').toggleClass('hidden');
+			$('#id-div-status').removeClass('hidden');
 			$('#id-article-btn').toggleClass('hidden');
 		} else {
 			console.log("unexpected error!");
@@ -59,7 +59,7 @@ $(document).ready(function(){
 			$('#id-status-icon').text('error_outline');
 			$('#id-div-status').removeClass('status-success');
 			$('#id-div-status').addClass('status-failure');
-			$('#id-div-status').toggleClass('hidden');
+			$('#id-div-status').removeClass('hidden');
 			$('#id-article-btn').toggleClass('hidden');
 		}
 	
@@ -112,7 +112,7 @@ $(document).ready(function(){
 
 		$('#id-div-action').toggleClass('hidden');
 		$('#id-status-text').text('Waiting for the server response. Please wait...');
-		$('#id-div-status').toggleClass('hidden');
+		$('#id-div-status').removeClass('hidden');
 		$('#id-div-loading').toggleClass('hidden');
 		$('#id-article-btn').toggleClass('hidden');
 		sendRequest();

@@ -1,0 +1,66 @@
+{% comment %}
+	Info:       Snippet list with short description
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+
+{% if snippets %} {% comment %} Display the list {% endcomment %}		
+			<div class="bC-none mdl-cell mdl-cell--12-col">				
+				<div class="mdl-card__supporting-text stats-text">		            
+					Displaying {{ snippets|length }} of {{ snippets.paginator.count }} results.
+				</div>
+				{% if snippets.paginator.num_pages > 1 %}
+				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
+					{% include "common/include/pagination.html" with obj_list=snippets getvars=getvars only %}
+				</div>
+				{% endif %}
+			</div>
+					
+			{% for s in snippets %}
+			<div class="mdl-card poetry-card--small mdl-cell mdl-cell--12-col">	
+				<div class="mdl-card__title mdl-color-text--grey-800">
+					<h2 class="mdl-card__title-text mR-8">															
+						<a href="{{s.get_absolute_url}}" title="View full article">{{ s.get_title }}</a>
+					</h2>														
+					<span class="mdl-card__subtitle-text">by
+						<a title="View the author {{s.author.name}}" href="{{ s.author.get_absolute_url }}">
+							<span>{{ s.author.get_display_name }}</span>
+						</a>
+					</span>					
+				</div>
+				<div class="mdl-card__supporting-text mdl-color-text--grey-800">{{ s.get_description }}				
+				</div>
+				<div class="meta-pannel mdl-card__actions">
+					<div class="textsize--12px">
+						{% for tag in s.get_tags_slugs %}
+			 			<a class="hashtag pretty-link" href="{% url 'snippets:tagged-list' slug=tag %}">
+			 				<s>#</s><b>{{ tag }}</b>
+						</a>
+						{% endfor %}	    				
+	    			</div>
+	    			<div class="mdl-layout-spacer"></div>
+					<div class="meta">
+						<span class="meta-val--bignum">12,234,002</span>
+		                <span class="meta-name">views</span>
+		                <!--<span class="visuallyhidden">views</span>-->	                
+					</div>
+				</div>								
+														
+			</div>
+			{% endfor %}
+
+			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">				
+				{% if snippets.paginator.num_pages > 1 %}
+				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
+					{% include "common/include/pagination.html" with obj_list=snippets getvars=getvars only %}
+				</div>
+				{% endif %}
+			</div>
+{% else %}  {% comment %} Display the notification {% endcomment %}
+			<div class="bC-none mdl-cell mdl-cell--12-col">
+				<div class="mdl-card__supporting-text oops-message">
+					<i class="material-icons md-48">error_outline</i>	            
+					<h6>Oops!! No data found for this query.</h6>
+				</div>
+			</div>
+{% endif %}

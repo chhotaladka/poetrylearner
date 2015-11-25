@@ -11,6 +11,7 @@ from django.http.response import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from projects.models import Author
 from snippets.models import Snippet
+from common.utils import html_to_plain_text
 
 # Create your views here.
 
@@ -153,7 +154,7 @@ def author_add_snippet(request, pk):
                     # Create a new snippet              
                     snippet = Snippet()
                     snippet.title = raw_article.title
-                    snippet.body = raw_article.content
+                    snippet.body = html_to_plain_text(raw_article.content)
                     snippet.author = author
                     snippet.added_by = request.user
                     snippet.updated_by = request.user

@@ -1,0 +1,74 @@
+{% comment %}
+	Info:       Snippet form (full)
+	Requires:   css and js of static/mdl/*
+	Note:       Add External plugins like jquery.ime in including template #}
+{% endcomment %}
+
+<form id="id-snippet-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
+	{% csrf_token %} 
+	{{ form.non_field_errors }}
+	<fieldset>
+		<div id="div_id_language" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<label for="id_language" class="mdl-textfield__label">
+				{{form.language.label}}{% if form.language.help_text %} ({{ form.language.help_text|safe }}){% endif %}
+			</label>
+			<select id="id_language" class="mdl-textfield__input" name="language">
+			{% for x,y in form.fields.language.choices %}
+    			<option value="{{ x }}"{% if form.language.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}
+			</select>
+		{% if form.language.errors %}
+		    {% for error in form.language.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}					
+		</div>
+			
+		<div id="div_id_title" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<label for="id_title" class="mdl-textfield__label">
+				{{form.title.label}}{% if form.title.help_text %} ({{ form.title.help_text|safe }}){% endif %}
+			</label>
+			<input id="id_title" class="mdl-textfield__input" name="title" type="text" autocomplete="off" maxlength="200" value="{{ form.title.value|default_if_none:'' }}" required/>
+		{% if form.title.errors %}
+		    {% for error in form.title.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		</div>
+			
+		<div id="div_id_body" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	
+			<label for="id_body" class="mdl-textfield__label">
+				{{form.body.label}}{% if form.body.help_text %} ({{ form.body.help_text|safe }}){% endif %}
+			</label>
+			<textarea id="id_body" class="mdl-textfield__input" name="body" rows="10" required>{{ form.body.value|default_if_none:'' }}</textarea>
+		{% if form.body.errors %}
+		    {% for error in form.body.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}					
+		</div>
+
+		<div id="div_id_author" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<label for="id_author" class="mdl-textfield__label">
+				{{form.author.label}}{% if form.author.help_text %} ({{ form.author.help_text|safe }}){% endif %}
+			</label>
+			<select id="id_author" class="mdl-textfield__input" name="author">
+			{% for x,y in form.fields.author.choices %}
+    			<option value="{{ x }}"{% if form.author.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}
+			</select>			
+		{% if form.author.errors %}
+		    {% for error in form.author.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}					
+		</div>	
+			
+		<div id="div_id_tags" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<label for="id_tags" class="mdl-textfield__label">
+				{{form.tags.label}}{% if form.tags.help_text %} ({{ form.tags.help_text|safe }}){% endif %}
+			</label>
+			<input id="id_tags" class="mdl-textfield__input" name="tags" type="text" maxlength="200" value="{% for taggeditem in form.tags.value %}{{taggeditem.tag.name}}{% if not forloop.last %}, {% endif %}{% endfor %}"/>
+		{% if form.tags.errors %}
+		    {% for error in form.tags.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}								
+		</div>		
+		
+	</fieldset>
+	<div class="tAr">
+		<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="submit" value="Save changes" id="id-form-submit"/> 
+		<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;/&#39;"/>
+	</div>
+</form>

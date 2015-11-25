@@ -3,14 +3,16 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, CreateView
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.views.generic.base import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+import os, sys, traceback
 from meta_tags.views import Meta
 from snippets.models import Snippet
 from snippets.forms import SnippetForm
-from snippets.utils import truncatewords
+from common.utils import truncatewords, truncatelines
 
 # Create your views here.
 
@@ -35,7 +37,7 @@ def snippet_details(request, pk):
     # Instantiate the Meta class
     title_for_meta = obj.get_title() + ' by ' + obj.author.get_name()    
     meta = Meta(title = title_for_meta, 
-                description = truncatewords(obj.body, 120), 
+                description = truncatelines(obj.body, 4), 
                 section= 'poetry', 
                 url = obj.get_absolute_url(),                
                 author = obj.author, 
@@ -60,8 +62,12 @@ class AddSnippet(View):
     Add a new Snippet or edit an existing one
     """
     form_class = SnippetForm
-    template_name = 'snippets/add.html'
-    
+    template_name = 'snippets/add-snippet.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(self.__class__, self).dispatch(request, *args, **kwargs)
+       
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
@@ -76,7 +82,7 @@ class AddSnippet(View):
             # Update
             self.obj = get_object_or_404(Snippet, pk=kwargs.get('pk', None))
             form = self.form_class(instance=self.obj)
-
+        
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
@@ -107,7 +113,7 @@ class AddSnippet(View):
         
         return render(request, self.template_name, {'form': form})    
 
-
+@login_required
 def snippet_list(request):
     """
     List Snippet
@@ -167,8 +173,16 @@ def snippet_list(request):
 def tagged_list(request, slug):
     """
     Views the list of Snippets tagged using 'slug'
+    TODO:: Order the list using certain criteria
     """
-    obj_list = Snippet.objects.filter(tags__slug=slug)
+    try:
+        obj_list = Snippet.objects.filter(tags__slug=slug)
+    except:
+        print ("Error: Unexpected error:", sys.exc_info()[0])
+        for frame in traceback.extract_tb(sys.exc_info()[2]):
+            fname,lineno,fn,text = frame
+            print ("DBG:: Error in %s on line %d" % (fname, lineno))
+        obj_list = []
     
     # Pagination
     paginator = Paginator(obj_list, 20) # Show 20 entries per page    
@@ -182,12 +196,13 @@ def tagged_list(request, slug):
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
             
-    context = {'snippets': objs}
+    context = {'snippets': objs, 'tag': slug}
     template = 'snippets/tagged-list.html'    
 
     return render(request, template, context)
 
 
+@login_required
 def tag_list(request):
     """
     Views the list of all tags
@@ -198,6 +213,8 @@ def tag_list(request):
 
     return render(request, template, context)
 
+
+@login_required
 def dashboard(request):
     snippet = {}
     snippet['total'] = Snippet.objects.all().count()

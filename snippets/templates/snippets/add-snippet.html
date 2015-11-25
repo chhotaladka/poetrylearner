@@ -1,0 +1,33 @@
+{% extends "mdl-base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+	Add a snippet
+{% endblock %}
+
+{% block extra-style %}
+	<link rel="stylesheet" href="{% static "js/ime/css/jquery.ime.css" %}"/>
+{% endblock %}
+
+{% block main %}
+	{% include "snippets/include/form-snippet.html" %}	
+{% endblock %}
+
+{% block search %}{% endblock %}
+
+{% block scripts %}
+	  
+	<script type="text/javascript" src="{% static "js/ime/libs/rangy/rangy-core.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.selector.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.preferences.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.inputmethods.js" %}"></script>
+	
+	<script>
+		$( document ).ready( function () {
+			/* $( 'input, textarea, [contenteditable]' ).ime(); */
+			$( '#id_body, #id_title' ).ime();
+		} );
+	</script>
+
+{% endblock %}

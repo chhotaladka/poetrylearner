@@ -9,7 +9,7 @@ from django.utils.text import slugify
 
 from projects.models import Author, Page
 from taggit.managers import TaggableManager
-from snippets.utils import truncatewords
+from common.utils import truncatewords, truncatelines
 
 # Create your models here.
 
@@ -80,9 +80,9 @@ class Snippet(models.Model):
     def get_description(self):
         """
         Content to share on social media sites
+        e.g. first stanza
         """
-        #TODO return first stanza
-        return truncatewords(self.body, 120)
+        return truncatelines(self.body, 4)
     
 #     def get_dirty_fields(self):
 #         return [f.name for f in self._meta.fields if self._original_state[f.attname] != self.__dict__[f.attname]]

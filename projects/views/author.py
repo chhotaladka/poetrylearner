@@ -147,7 +147,16 @@ def author_list(request):
     # Check the parameters passed in the URL and process accordingly
     q = request.GET.get('q', None)    
     filters = request.GET.get('filters', None)
+    view = request.GET.get('view', None)
     
+    # Default view type is CARD view
+    view_type = 'card'
+    if view == 't':        
+        view_type = 'table'
+    #elif view == 'c':
+    #    view_type = 'card'    
+        
+         
     if filters:
         filters = filters.split(',')        
         # Supported filters are: birth or nobirth, death or nodeath
@@ -188,7 +197,7 @@ def author_list(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
             
-    context = {'authors': objs}
+    context = {'authors': objs, 'view': view_type}
     template = 'projects/author-list.html'    
 
     return render(request, template, context)

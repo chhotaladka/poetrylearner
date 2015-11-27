@@ -8,66 +8,15 @@
 
 	<section id="id-section-main" class="p-8">
 		<div class="mdl-poetry__post mdl-grid">
-			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">							
 
-{% if authors %} {% comment %} Display the list {% endcomment %}				
-				<div class="mdl-card__supporting-text stats-text">		            
-					Displaying {{ authors|length }} of {{ authors.paginator.count }} authors.
-				</div>
-				{% if authors.paginator.num_pages > 1 %}
-				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
-					{% include "common/include/pagination.html" with obj_list=authors getvars=getvars only %}
-				</div>
-				{% endif %}
+		<div class="mdl-cell mdl-cell--12-col mdl-grid">
+{% if view == 'table' %}
+{% include "projects/include/author-list-table.html" %}
+{% elif view == 'card' %}	
+{% include "projects/include/author-list-card.html" %}
+{% endif %}
+		</div>
 
-				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-					<div class="table--large">
-					<table class="mdl-data-table mdl-js-data-table wSn">
-						<thead>
-							<tr>
-						    	<th>ID</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Name</th>						    	
-						    	<th>Birth</th>
-						    	<th>Death</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Last edited</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Reference</th>						    							    
-						    </tr>
-						</thead>						
-						<tbody>
-							{% for author in authors %}
-							<tr>
-								<td>{{ forloop.counter }}</td>
-								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{author.get_absolute_url}}" title="View author">
-									{{ author.get_name_in_english }} {% if author.get_sobriquet %} '{{ author.get_sobriquet }}' {% endif %} ({{ author.get_name }})
-									</a>
-								</td>
-								<td title="Date of birth">{{author.get_date_birth}}</td>
-								<td title="Date of death">{{author.get_date_death}}</td>
-								<td class="mdl-data-table__cell--non-numeric">
-									<span title="{{ author.get_last_edit_time }}">{{ author.get_last_edit_time|date }}</span>
-									<span>by</span> 
-									<a href="#">{{ author.get_last_edit_user }}</a>
-								</td>
-								<td class="mdl-data-table__cell--non-numeric" href="{{ author.get_source_url }}" title="Know more" target="_blank">{{ author.get_source_name }}</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-					</div>
-				</div>
-				{% if authors.paginator.num_pages > 1 %}
-				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
-					{% include "common/include/pagination.html" with obj_list=authors getvars=getvars only %}
-				</div>
-				{% endif %}
-{% else %}  {% comment %} Display the notification {% endcomment %}
-				<div class="mdl-card__supporting-text oops-message">
-					<i class="material-icons md-48">error_outline</i>	            
-					<h6>Oops!! No data found for this query.</h6>
-				</div>
-{% endif %}					
-			</div>					
 		</div>	
 	</section>
 

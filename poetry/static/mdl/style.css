@@ -78,6 +78,11 @@ html, body {
     height: 120px;
     border-radius: 50%;
 }
+.mdl-poetry .author-avatar-md {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
 .author-avatar-small,
 .mdl-poetry__post .author-avatar-small {
     width: 64px;
@@ -142,6 +147,8 @@ height: 128px;
 }
 .poetry-card--small .mdl-card__supporting-text {
 	padding: 0px 16px;
+	font-size: 14px;
+	white-space: pre-line;
 }
 .poetry-card--small .mdl-card__title {
 	flex-wrap: wrap;
@@ -153,6 +160,58 @@ height: 128px;
 .poetry-card--small .mdl-card__title-text:hover a {
 	color: #74A0B5;
 	
+}
+
+.author-card--sm {
+	min-height: auto;
+	/*border: 1px solid rgba(0, 0, 0, 0.1);*/
+	box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14);
+	z-index: 1;
+	margin-bottom: 16px;
+}
+.author-card--sm .mdl-card__supporting-text {
+	padding: 0px 16px;
+	font-size: 14px;
+	white-space: pre-line;
+}
+.author-card--sm .mdl-card__title {
+	flex-direction: column;
+	align-items: center;
+	
+}
+.author-card--sm .avatar {
+    border-radius: 50%;
+    margin: 24px auto 12px;
+    display: block;
+}
+.author-card--sm .title-text {
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 16px;
+    line-height: 20px;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.author-card--sm .extras {
+	color: rgba(0, 0, 0, 0.54);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+	font-size: 14px;
+}
+.author-card--sm .extras span {    
+    vertical-align: middle;
+}
+.author-card--sm .action {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+}
+.author-card--sm .action:hover {
+	text-decoration: none;
 }
 
 .mdl-poetry .info-list {

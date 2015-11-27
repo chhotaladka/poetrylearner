@@ -8,70 +8,15 @@
 
 	<section id="id-section-main" class="p-8">
 		<div class="mdl-poetry__post mdl-grid">
-			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">							
 
-{% if snippets %} {% comment %} Display the list {% endcomment %}				
-				<div class="mdl-card__supporting-text stats-text">		            
-					Displaying {{ snippets|length }} of {{ snippets.paginator.count }} snippets.
-				</div>
-				{% if snippets.paginator.num_pages > 1 %}
-				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
-					{% include "common/include/pagination.html" with obj_list=snippets getvars=getvars only %}
-				</div>
-				{% endif %}
-
-				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-					<div class="table--large">
-					<table class="mdl-data-table mdl-js-data-table wSn">
-						<thead>
-							<tr>
-						    	<th>ID</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Title</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Author</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Last edited</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Added</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Published</th>						    							    
-						    </tr>
-						</thead>						
-						<tbody>
-							{% for s in snippets %}
-							<tr>
-								<td>{{ forloop.counter }}</td>
-								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{s.get_absolute_url}}" title="View full article">{{ s.get_title }}</a>
-								</td>
-								<td class="mdl-data-table__cell--non-numeric">
-									<a href="{{s.author.get_absolute_url}}" title="View author">{{ s.author.get_display_name }}</a>
-								</td>								
-								<td class="mdl-data-table__cell--non-numeric">
-									<span title="{{ s.get_last_edit_time }}">{{ s.get_last_edit_time|date }}</span>
-									<span>by</span> 
-									<a href="#">{{ s.get_last_edit_user }}</a>
-								</td>
-								<td class="mdl-data-table__cell--non-numeric">
-									<span title="{{ s.get_first_edit_time }}">{{ s.get_first_edit_time|date }}</span>
-									<span>by</span> 
-									<a href="#">{{ s.get_first_edit_user }}</a>
-								</td>								
-								<td class="mdl-data-table__cell--non-numeric">{{ s.is_published }}</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-					</div>
-				</div>
-				{% if snippets.paginator.num_pages > 1 %}
-				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
-					{% include "common/include/pagination.html" with obj_list=snippets getvars=getvars only %}
-				</div>
-				{% endif %}
-{% else %}  {% comment %} Display the notification {% endcomment %}
-				<div class="mdl-card__supporting-text oops-message">
-					<i class="material-icons md-48">error_outline</i>	            
-					<h6>Oops!! No data found for this query.</h6>
-				</div>
-{% endif %}					
-			</div>					
+		<div class="mdl-cell mdl-cell--12-col mdl-grid">
+{% if view == 'table' %}
+{% include "snippets/include/snippet-list-table.html" %}
+{% elif view == 'card' %}	
+{% include "snippets/include/snippet-list-card.html" %}
+{% endif %}
+		</div>
+		
 		</div>	
 	</section>
 

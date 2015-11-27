@@ -125,6 +125,14 @@ def snippet_list(request):
     author = request.GET.get('author', None)
     q = request.GET.get('q', None)
     filters = request.GET.get('filters', None)
+    view = request.GET.get('view', None)
+    
+    # Default view type is CARD view
+    view_type = 'card'
+    if view == 't':        
+        view_type = 'table'
+    #elif view == 'c':
+    #    view_type = 'card'    
     
     if filters:
         filters = filters.split(',')
@@ -164,7 +172,7 @@ def snippet_list(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
             
-    context = {'snippets': objs}
+    context = {'snippets': objs, 'view': view_type}
     template = 'snippets/snippet-list.html'    
 
     return render(request, template, context)

@@ -185,6 +185,8 @@ height: 128px;
 .author-card--lg .mdl-card__title {
 	flex-direction: column;
 	align-items: center;
+}
+.author-card--lg .mdl-card__title {
 	box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14);
 }
 .author-card--lg .mdl-card__title {

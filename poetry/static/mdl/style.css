@@ -63,7 +63,7 @@ html, body {
 
 .mdl-poetry .mdl-card__supporting-text p {
 	max-width: 512px;
-	/*margin: 16px auto;*/
+	margin: 16px auto;
 	font-size: 14px;
 	line-height: 24px;
 
@@ -162,27 +162,46 @@ height: 128px;
 	
 }
 
+/* Author cards */
 .author-card--sm {
 	min-height: auto;
-	/*border: 1px solid rgba(0, 0, 0, 0.1);*/
 	box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14);
 	z-index: 1;
 	margin-bottom: 16px;
+}
+.author-card--sm:hover {
+	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+	z-index: 2;
 }
 .author-card--sm .mdl-card__supporting-text {
 	padding: 0px 16px;
 	font-size: 14px;
 	white-space: pre-line;
 }
-.author-card--sm .mdl-card__title {
+.author-card--lg .mdl-card__supporting-text {
+	color: rgba(0, 0, 0, 0.87);
+}
+.author-card--sm .mdl-card__title,
+.author-card--lg .mdl-card__title {
 	flex-direction: column;
 	align-items: center;
-	
+	box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.14);
+}
+.author-card--lg .mdl-card__title {
+	background-color: rgba(219, 68, 55, 1);
+	color: white;
 }
 .author-card--sm .avatar {
     border-radius: 50%;
     margin: 24px auto 12px;
     display: block;
+	border: 2px solid #FFF;
+}
+.author-card--lg .avatar {
+    border-radius: 50%;
+    margin: 24px auto 12px;
+    display: block;
+	border: 2px solid #FFF;
 }
 .author-card--sm .title-text {
     color: rgba(0, 0, 0, 0.87);
@@ -192,15 +211,26 @@ height: 128px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.author-card--lg .title-text {
+	font-weight: 400;
+	font-size: 24px;
+	line-height: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .author-card--sm .extras {
 	color: rgba(0, 0, 0, 0.54);
+}
+.author-card--sm .extras,
+.author-card--lg .extras {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all;
 	font-size: 14px;
 }
-.author-card--sm .extras span {    
+.author-card--sm .extras span,
+.author-card--lg .extras span {    
     vertical-align: middle;
 }
 .author-card--sm .action {

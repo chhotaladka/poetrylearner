@@ -1,0 +1,57 @@
+{% comment %}
+	Info:       Author full detail Card
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+{% load humanize %} 
+<div class="mdl-card author-card--lg mdl-cell mdl-cell--12-col">
+	<div class="mdl-card__title">
+		<img class="avatar" width="120" height="120" src="{{ author.get_image_url }}">					
+		<div class="title-text">																					
+			{{ author.get_name }}{% if author.sobriquet %}({{ author.get_sobriquet }}){% endif %}
+		</div>
+		<div class="extras">
+			<span class="text">{{author.get_name_in_english}}</span>
+		</div>
+		<div class="extras">
+		{% if author.date_birth %}
+			<span title="Birth">{{ author.date_birth }}</span> 
+		{% endif %}
+		{% if author.date_death %}					
+			<span title="Death">- {{ author.date_death }}</span>
+		{% endif %}
+		</div>					
+	</div>					
+	<div class="mdl-card__supporting-text">
+	{% if info %}					
+		<p>{{ info.description }}</p>
+		<p>Source: <a title="Click here to know more" href="{{ author.source_url }}" target="_blank">
+			{{ info.source }}
+		</a></p>							    							
+	{% else %}					
+		<p>{{ author.summary }}</p>					
+	{% endif %}
+	</div>
+	<div class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500">
+		<div class="meta-edit">
+			<div>
+				<span>Last edited by</span>
+				<span> 
+    				<a title="Go to the profile page of user" href=#>{{ author.modified_by }}</a>
+				</span>
+			</div>
+			<div>
+				<span>{{ author.date_modified|naturaltime }}</span>
+			</div>
+		</div>
+		<div class="mdl-layout-spacer"></div>
+		<a href="#" class="mdl-button mdl-button mdl-button--colored">Read our features</a>								    			
+	</div>
+	<div class="mdl-card__menu">
+		<a href="?edit=True" title="Edit to improve author details">
+		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">
+          <i class="material-icons mdl-color-text--white">edit</i>
+		</button>
+		</a>
+	</div>
+</div>

@@ -24,7 +24,7 @@ def user_directory_path(instance, filename):
     """
 
     file_type = filename.split('.')[-1]
-    new_name = instance.get_display_name().split(' ')[0]
+    new_name = instance.get_name_in_english().split(' ')[0]
     new_name = new_name.lower() + '.' + file_type
     
     print_log( "saving author.image " + filename + " as " + new_name)
@@ -47,10 +47,10 @@ class Author(models.Model):
 
 
     def __str__(self):          # on Python 3
-        return self.name
+        return self.name_en
     
     def __unicode__(self):      # on Python 2
-        return self.name
+        return self.name_en
     
     def get_recent_books(self):
         """

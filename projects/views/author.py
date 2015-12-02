@@ -145,18 +145,28 @@ def author_list(request):
     
     ##
     # Check the parameters passed in the URL and process accordingly
-    q = request.GET.get('q', None)    
-    filters = request.GET.get('filters', None)
-    view = request.GET.get('view', None)
     
+    # Search query
+    q = request.GET.get('q', None)
+    # Filters for the queryset
+    filters = request.GET.get('filters', None)
+    # Sort the result by: 'name' for `Author.name`, 'edit' for `Author.date_modified`
+    # Default is 'edit' i.e. Give recently edited item first
+    sort = request.GET.get('sort', 'edit')
+    # Order the result: 'inc' for increasing order; 'dec' for decreasing order
+    # Default is 'dec'
+    order = request.GET.get('order', 'dec')
+    # View type of the result list: 't' for table view; 'c' for card view
     # Default view type is CARD view
-    view_type = 'card'
+    view = request.GET.get('view', 'c')
+    
+    # Set the view type
     if view == 't':        
         view_type = 'table'
-    #elif view == 'c':
-    #    view_type = 'card'    
-        
-         
+    elif view == 'c':
+        view_type = 'card'
+    
+    # Filter the queryset on the basis of `filters` given
     if filters:
         filters = filters.split(',')        
         # Supported filters are: birth or nobirth, death or nodeath
@@ -172,15 +182,27 @@ def author_list(request):
         elif 'nodeath' in filters:
             # get the authors whom death info is not known
             q_objects &= Q(date_death=None)            
-
+    
+    # Apply Search query
     if q:
         q = q.strip()      
         # get the authors with 'name'        
         q_objects &= Q(name_en__icontains=q) | Q(name__icontains=q) | Q(sobriquet__icontains=q)      
                 
-    # Get all authors           
-    obj_list = Author.objects.all().filter(q_objects)
-    
+    # Get all authors sorted and ordered
+    if sort == 'name':
+        if order == 'inc':
+            obj_list = Author.objects.all().filter(q_objects).order_by('-name')
+        else:
+            obj_list = Author.objects.all().filter(q_objects).order_by('name')
+    elif sort == 'edit':
+        if order == 'inc':
+            obj_list = Author.objects.all().filter(q_objects).order_by('date_modified')
+        else:
+            obj_list = Author.objects.all().filter(q_objects).order_by('-date_modified')    
+    else:
+        obj_list = Author.objects.all().filter(q_objects)
+        
     ##
     # Check for permissions and render the list of authors
     

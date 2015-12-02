@@ -3,10 +3,19 @@
 	Requires:   css and js of static/mdl/*
 	Note:       xxx
 {% endcomment %}
-{% load humanize %} 
+{% load staticfiles %}
+{% load humanize %}
+
 <div class="mdl-card author-card--lg mdl-cell mdl-cell--12-col">
 	<div class="mdl-card__title">
-		<img class="avatar" width="120" height="120" src="{{ author.get_image_url }}">					
+		{% with author_img_url=author.get_image_url %}
+		{% if author_img_url %}
+		<img class="avatar" width="120" height="120" src={{ author_img_url }}>
+		{% else %}
+		<i class="avatar material-icons">person</i>
+		{% endif %}
+		
+		{% endwith %}					
 		<div class="title-text">																					
 			{{ author.get_name }}{% if author.sobriquet %}({{ author.get_sobriquet }}){% endif %}
 		</div>
@@ -25,11 +34,16 @@
 	<div class="mdl-card__supporting-text">
 	{% if info %}					
 		<p>{{ info.description }}</p>
-		<p>Source: <a title="Click here to know more" href="{{ author.source_url }}" target="_blank">
+		<p>Source: <a title="Click here to know more" href="{{ author.get_source_url }}" target="_blank">
 			{{ info.source }}
 		</a></p>							    							
 	{% else %}					
-		<p>{{ author.summary }}</p>					
+		<p>{{ author.summary }}</p>
+		{% if author.get_source_url %}
+		<p>Source: <a title="Click here to know more" href="{{ author.get_source_url }}" target="_blank">
+			{{ author.get_source_name }}
+		</a></p>
+		{% endif %}				
 	{% endif %}
 	</div>
 	<div class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500">
@@ -41,7 +55,7 @@
 				</span>
 			</div>
 			<div>
-				<span>{{ author.date_modified|naturaltime }}</span>
+				<span title="{{ author.date_modified }}">{{ author.date_modified|naturaltime }}</span>
 			</div>
 		</div>
 		<div class="mdl-layout-spacer"></div>

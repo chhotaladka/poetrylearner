@@ -121,13 +121,12 @@ class Author(models.Model):
     
     def get_image_url(self):
         """
-        Returns default Author image if `self.image` is None
+        Returns Author image path else None
         """
         if self.image:
             return '{0}{1}'.format(settings.MEDIA_URL, self.image)            
         else:
-            default_img = 'img/author.jpg'
-            return '{0}{1}'.format(settings.STATIC_URL, default_img)  
+            return None 
     
     def clean(self):
         print "DBG:: Model Auhtor clean called"

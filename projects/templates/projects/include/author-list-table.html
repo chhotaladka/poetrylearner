@@ -3,7 +3,7 @@
 	Requires:   css and js of static/mdl/*
 	Note:       xxx
 {% endcomment %}
-								
+{% load humanize %}								
 {% if authors %} {% comment %} Display the list {% endcomment %}
 	<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">				
 		<div class="mdl-card__supporting-text stats-text">		            
@@ -40,7 +40,7 @@
 						<td title="Date of birth">{{author.get_date_birth}}</td>
 						<td title="Date of death">{{author.get_date_death}}</td>
 						<td class="mdl-data-table__cell--non-numeric">
-							<span title="{{ author.get_last_edit_time }}">{{ author.get_last_edit_time|date }}</span>
+							<span title="{{ author.get_last_edit_time }}">{{ author.get_last_edit_time|naturaltime }}</span>
 							<span>by</span> 
 							<a href="#">{{ author.get_last_edit_user }}</a>
 						</td>

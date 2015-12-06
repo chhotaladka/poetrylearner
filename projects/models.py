@@ -77,6 +77,16 @@ class Author(models.Model):
     def get_summary(self):
         return self.summary
     
+    def get_short_info(self):
+        """
+        Get one line info about the Auhtor
+        """
+        if self.summary:
+            info = self.summary.split('.')[0] + '.'
+        else:
+            info = ''
+        return info
+    
     def get_source_url(self):
         return self.source_url
     

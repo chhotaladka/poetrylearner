@@ -15,10 +15,11 @@
 {% block main %}
 
 		{% if messages %}
-		<section id="FlashMsg" class="pT-8 pB-8">
-			<div class="mdl-poetry__post mdl-grid">			
-				<div class="mdl-cell mdl-cell--12-col">
-					<div class="flash-msg mdl-color-text--grey-600">
+		<section id="msgPannel" class="pT-8 pB-8">
+			<div class="mdl-poetry__post mdl-grid">	
+					
+				<div class="mdl-card__actions mdl-cell mdl-cell--8-col mdl-color-text--grey-600">
+					<div class="flash-msg">
 		    			{% for message in messages %}
 	    				<div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
 	    					<i class="material-icons">info</i>
@@ -26,9 +27,22 @@
 	    				</div>
 		    			{% endfor %}
 		    		</div>
-				</div>			
+					<div class="mdl-layout-spacer"></div>
+					<button id="msgCloseBtn" class="action-button--small" title="Close">
+						<i class="material-icons" role="presentation">close</i>       
+					</button>		    		
+				</div>	
+						
 			</div>	
-		</section>	
+		</section>
+		<script>
+		$(document).ready(function(){			
+			var hideMsg = function(){			
+				$('#msgPannel').addClass('hidden');
+			};			
+			$('#msgCloseBtn').on('click', hideMsg);
+		});
+		</script>
 		{% endif %}
 		
     	<section id="AuthorDetails" class="pT-8 pB-48">

@@ -19,15 +19,6 @@ html, body {
     flex-shrink: 0;
 }
 
-.mdl-poetry .flash-msg > * {
-    display: flex !important;
-    flex-direction: row;
-    align-items: center;
-}
-.mdl-poetry .flash-msg i {
-    margin-right: 8px;
-}
-
 .mdl-poetry .table--large .mdl-data-table {
   width: 100%;
   width: -moz-available;          /* WebKit-based browsers will ignore this. */
@@ -143,7 +134,9 @@ html, body {
 height: 128px;
 /*background: url('../img/header6.jpg') top / cover;*/
 }
-
+.poetry-card .mdl-card__title-text {
+	font-size: 42px;
+}
 .poetry-card--small {
 	min-height: auto;
 	border: 1px solid rgba(0, 0, 0, 0.1);
@@ -165,6 +158,20 @@ height: 128px;
 	
 }
 
+/* flash msg section */
+#msgPannel {
+    -webkit-transition-duration: 1s;
+    transition-duration: 1s;
+}
+.mdl-poetry .flash-msg > * {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+}
+.mdl-poetry .flash-msg i {
+    margin-right: 8px;
+}
+
 /* Author cards */
 .author-card--sm {
 	min-height: auto;
@@ -178,10 +185,14 @@ height: 128px;
 	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 	z-index: 2;
 }
+.author-card--md {
+	min-height: auto;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
 .author-card--sm .mdl-card__supporting-text,
 .author-card--md .mdl-card__supporting-text {
-	padding: 0px 16px;
-	font-size: 14px;
+	padding-top: 0px;
 }
 .author-card--lg .mdl-card__supporting-text {
 	color: rgba(0, 0, 0, 0.87);
@@ -262,8 +273,10 @@ height: 128px;
     text-align: center;
     text-transform: uppercase;
 }
-.author-card--sm .action:hover,
-.author-card--md .action:hover {
+.author-card--md .action {
+	color: #3F51B5;
+}
+.author-card--sm .action:hover {
 	text-decoration: none;
 }
 .author-card--sm .action.mdl-button:hover,

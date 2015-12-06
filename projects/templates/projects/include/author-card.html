@@ -51,11 +51,11 @@
 			<div>
 				<span>Last edited by</span>
 				<span> 
-    				<a title="Go to the profile page of user" href=#>{{ author.modified_by }}</a>
+    				<a title="Go to the profile page of user" href=#>{{ author.get_last_edit_user }}</a>
 				</span>
 			</div>
 			<div>
-				<span title="{{ author.date_modified }}">{{ author.date_modified|naturaltime }}</span>
+				<span title="{{ author.get_last_edit_time }}">{{ author.get_last_edit_time|naturaltime }}</span>
 			</div>
 		</div>
 		<div class="mdl-layout-spacer"></div>

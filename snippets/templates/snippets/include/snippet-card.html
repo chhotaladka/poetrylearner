@@ -6,7 +6,8 @@
 {% load staticfiles %}
 {% load humanize %}
 
-<div class="mdl-card poetry-card wFull" itemscope itemtype="http://schema.org/Article">
+<div class="mdl-card poetry-card wFull bC-none" itemscope itemtype="http://schema.org/Article">
+{% with snippet_url=snippet.get_absolute_url %}
 	<div class="mdl-card__title mdl-card--expand mdl-color-text--grey-800">
 		<h2 class="mdl-card__title-text" itemprop="headline">															
 			{{ snippet.get_title }}
@@ -14,7 +15,7 @@
 	</div>		
 	<div class="mdl-card__supporting-text mdl-color-text--grey-500 article-info">
 		<span>By
-			<a title="View the author {{snippet.author.name}}" href="{{ snippet.author.get_absolute_url }}">
+			<a title="View the author {{ author_name }}" href="{{ snippet.author.get_absolute_url }}">
 				<span itemprop="creator">{{ snippet.author.get_display_name }}</span>
 			</a>
 		</span>	
@@ -29,12 +30,14 @@
 				<b>{{ tag }}</b>
 			</a>
 			{% endfor %}							
-		</span>						
+		</span>	
+		{% if snippet.page %}				
 		<span>This article was published in 
-			<a title="Explore the book {{ snippet.page}}" href="{{ snippet.page.get_absolute_url }}">
+			<a title="Explore the book {{ snippet.page }}" href="{{ snippet.page.get_absolute_url }}">
 			The Prophet
 			</a>
-		</span>						
+		</span>
+		{% endif %}		
 	</div>
 
 	<div id="articleContent" itemprop="articleBody" class="article-content mdl-card__supporting-text mdl-color-text--grey-700">											
@@ -103,11 +106,11 @@
 			<div>
 				<span>Last edited by</span>
 				<span> 
-    				<a title="Go to the profile page of user" href=#>{{snippet.updated_by}}</a>
+    				<a title="Go to the profile page of user" href=#>{{snippet.get_last_edit_user}}</a>
 				</span>
 			</div>
 			<div>
-				<span>{{ snippet.updated_at |naturaltime }}</span>
+				<span>{{ snippet.get_last_edit_time |naturaltime }}</span>
 			</div>
 		</div>
 		<div class="mdl-layout-spacer"></div>
@@ -125,7 +128,7 @@
 		    </span>
 	    </a>						
 	</div>												
-
+{% endwith %}
 </div>
 
 {% block scripts %}
@@ -144,17 +147,12 @@
 		};
 		var hideMeta = function(){			
 			$('#metaPannel').addClass('hidden');
-		};
-		
-		var hideMsg = function(){			
-			$('#msgPannel').addClass('hidden');
 		};		
 		
 		$('#shareBtn').on('click', displayShare);
 		$('#sharePannelCloseBtn').on('click', hideShare);
 		$('#moreBtn').on('click', displayMeta);
-		$('#metaPannelCloseBtn').on('click', hideMeta);
-		$('#msgCloseBtn').on('click', hideMsg);
+		$('#metaPannelCloseBtn').on('click', hideMeta);		
 	});
 	</script>
 {% endblock %}

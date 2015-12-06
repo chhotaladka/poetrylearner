@@ -31,18 +31,26 @@
 				</div>	
 						
 			</div>	
-		</section>	
+		</section>
+		<script>
+		$(document).ready(function(){			
+			var hideMsg = function(){			
+				$('#msgPannel').addClass('hidden');
+			};			
+			$('#msgCloseBtn').on('click', hideMsg);
+		});
+		</script>
 		{% endif %}
 						
     	<section id="mainArticle" class="pT-8 pB-48">
 			<div class="mdl-poetry__post mdl-grid">		
-		
-				<div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet mdl-cell--top mdl-grid">
-					{% include "snippets/include/snippet-card.html" with snippet=snippet %}
-				</div>								
+
 				<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--top mdl-grid">
 					{% include "projects/include/author-card-md.html" with author=snippet.author %}
-				</div>				
+				</div>			
+				<div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet mdl-cell--top mdl-grid">
+					{% include "snippets/include/snippet-card.html" with snippet=snippet %}
+				</div>											
 				<div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-grid">				
 					<div class="section-title mdl-cell mdl-cell--12-col">
 						<h3>Similar entries</h3>	

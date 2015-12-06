@@ -88,6 +88,10 @@ html, body {
     margin: 24px auto 12px;    
 	border: 2px solid #FFF;
 }
+.avatar-xsm {
+    border-radius: 50%;   
+	border: 2px solid #FFF;
+}
 .mdl-poetry__post .book-avatar {
     width: 120px;
     height: 120px;
@@ -174,15 +178,16 @@ height: 128px;
 	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 	z-index: 2;
 }
-.author-card--sm .mdl-card__supporting-text {
+.author-card--sm .mdl-card__supporting-text,
+.author-card--md .mdl-card__supporting-text {
 	padding: 0px 16px;
 	font-size: 14px;
-	white-space: pre-line;
 }
 .author-card--lg .mdl-card__supporting-text {
 	color: rgba(0, 0, 0, 0.87);
 }
 .author-card--sm .mdl-card__title,
+.author-card--md .mdl-card__title,
 .author-card--lg .mdl-card__title {
 	flex-direction: column;
 	align-items: center;
@@ -195,6 +200,7 @@ height: 128px;
 	color: white;
 }
 .author-card--sm .avatar,
+.author-card--md .avatar,
 .author-card--lg .avatar {
     border-radius: 50%;
     margin: 24px auto 12px;
@@ -207,13 +213,15 @@ height: 128px;
 	font-size: 120px;
 	opacity: 0.80;
 }
-.author-card--sm i.avatar {
+.author-card--sm i.avatar,
+.author-card--md i.avatar {
 	width: 90px;
 	height: 90px;
 	font-size: 90px;
 	color: rgba(0, 0, 0, 0.44);
 }
-.author-card--sm .title-text {
+.author-card--sm .title-text,
+.author-card--md .title-text {
     color: rgba(0, 0, 0, 0.87);
     font-size: 16px;
     line-height: 20px;
@@ -228,10 +236,12 @@ height: 128px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.author-card--sm .extras {
+.author-card--sm .extras,
+.author-card--md .extras {
 	color: rgba(0, 0, 0, 0.54);
 }
 .author-card--sm .extras,
+.author-card--md .extras,
 .author-card--lg .extras {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -240,26 +250,32 @@ height: 128px;
 	font-size: 14px;
 }
 .author-card--sm .extras span,
+.author-card--md .extras span,
 .author-card--lg .extras span {    
     vertical-align: middle;
 }
-.author-card--sm .action {
+.author-card--sm .action,
+.author-card--md .action {
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
     text-align: center;
     text-transform: uppercase;
 }
-.author-card--sm .action:hover {
+.author-card--sm .action:hover,
+.author-card--md .action:hover {
 	text-decoration: none;
 }
-.author-card--sm .action.mdl-button:hover {
+.author-card--sm .action.mdl-button:hover,
+.author-card--md .action.mdl-button:hover {
 	color: white;
 	background-color: rgba(219, 68, 55, 0.90); }
-.author-card--sm .action.mdl-button:focus:not(:active) {
+.author-card--sm .action.mdl-button:focus:not(:active),
+.author-card--md .action.mdl-button:focus:not(:active) {
 	color: white;
 	background-color: rgba(219, 68, 55, 1); }
-.author-card--sm .action.mdl-button:active {
+.author-card--sm .action.mdl-button:active,
+.author-card--md .action.mdl-button:active {
 	color: white;
 	background-color: rgba(219, 68, 55, 1); }
 
@@ -708,6 +724,7 @@ height: 128px;
 .mH-auto { min-height: auto; }
 .mxH-36 { max-height: 36px; }
 .bC-none { background-color: transparent;}
+.bC-inh { background-color: inherit;}
 
 .position-rel { position: relative;}
 .position-abs { position: absolute;}

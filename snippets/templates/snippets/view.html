@@ -11,7 +11,6 @@
 {% endblock %}
 
 {% block main %}
-
 		{% if messages %}
 		<section id="msgPannel" class="pT-8 pB-8">
 			<div class="mdl-poetry__post mdl-grid">	
@@ -34,183 +33,24 @@
 			</div>	
 		</section>	
 		{% endif %}
-		
-				
+						
     	<section id="mainArticle" class="pT-8 pB-48">
-			<div class="mdl-poetry__post mdl-grid" itemscope itemtype="http://schema.org/Article">		
+			<div class="mdl-poetry__post mdl-grid">		
 		
-				<div class="mdl-card poetry-card mdl-cell mdl-cell--8-col">
-					<div class="mdl-card__title mdl-card--expand mdl-color-text--grey-800">
-						<h2 class="mdl-card__title-text" itemprop="headline">															
-							{{ snippet.get_title }}
-						</h2>
-	
-					</div>		
-					<div class="mdl-card__supporting-text mdl-color-text--grey-500 article-info">
-						<span>By
-							<a title="View the author {{snippet.author.name}}" href="{{ snippet.author.get_absolute_url }}">
-								<span itemprop="creator">{{ snippet.author.get_display_name }}</span>
-							</a>
-						</span>	
-						<span>						
-							<a class="hashtag pretty-link" href="#">
-								<s>#</s>
-								<b itemprop="inLanguage">{{ snippet.get_language }}</b>
-							</a>							
-							{% for tag in snippet.get_tags_slugs %}
-					 		<a class="hashtag pretty-link" href="{% url 'snippets:tagged-list' slug=tag %}">
-					 			<s>#</s>
-								<b>{{ tag }}</b>
-							</a>
-							{% endfor %}							
-						</span>						
-						<span>This article was published in 
-							<a title="Explore the book {{ snippet.page}}" href="{{ snippet.page.get_absolute_url }}">
-	    					The Prophet
-	    					</a>
-	    				</span>						
-					</div>
-			
-					<div id="articleContent" itemprop="articleBody" class="article-content mdl-card__supporting-text mdl-color-text--grey-700">											
-			    		{% autoescape off %} <!-- Temorary: remove after adding CKeditor etc. -->
-						{{ snippet.body }}
-						{% endautoescape %}
-
-					</div>
-						
-					<div class="action-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
-						<button id="shareBtn" class="action-button" title="Share">
-			                <i class="material-icons" role="presentation">share</i>
-			                <span class="action-button__text">Share</span>	                
-						</button>
-						
-						<button id="bookmarkBtn" class="action-button" title="Send to my Bookmarks">
-			                <i class="material-icons color-used" role="presentation">bookmark</i>
-			                <span class="action-button__text">Bookmark</span>			                
-						</button>
-												
-						<button id="favBtn" class="action-button" title="I love this">							
-			                <i class="material-icons" role="presentation">favorite</i>
-			                <span class="action-button__text">Favorite</span>			                            
-						</button>
-						
-						<button id="copyBtn" class="action-button" title="Copy to clipboard">							
-			                <i class="material-icons" role="presentation">content_copy</i>
-			                <span class="action-button__text">Copy</span>			                            
-						</button>					
-						
-						<button id="moreBtn" class="action-button" title="Show meta data">							
-			                <i class="material-icons" role="presentation">more_horiz</i>
-			                <span class="action-button__text">More</span>			                            
-						</button>															
-
-						<div class="meta" title="Views">
-							<span class="meta-val--bignum mR-4">12,234,002</span>
-			                <span class="meta-name">views</span>
-			                <!--<span class="visuallyhidden">views</span>-->	                
-						</div>						
-					</div>
-
-					<div id="sharePannel" class="share-pannel mdl-card__actions mdl-card--border hidden">
-						
-						<button id="shareTwitteBtn" class="share-button" title="Share to Twitter" onclick="">
-							<span class="share-icon-twitter"></span>			                	                
-						</button>						
-						<button id="shareFbBtn" class="share-button" title="Share to Facebook">
-							<span class="share-icon-fb"></span>			                
-						</button>												
-						<button id="shareGoogleBtn" class="share-button" title="Share to Google+">
-							<span class="share-icon-google"></span>       
-						</button>
-						<button id="shareMailBtn" class="share-button" title="Mail to">
-							<span class="share-icon-mail"></span>       
-						</button>
-						
-						<div class="mdl-layout-spacer"></div>
-						<button id="sharePannelCloseBtn" class="action-button--small" title="Close">
-							<i class="material-icons" role="presentation">close</i>       
-						</button>																	
-					</div>
-					
-					<div id="metaPannel" class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500 hidden">
-						<div class="meta-edit">
-		    				<div>
-		    					<span>Last edited by</span>
-		    					<span> 
-				    				<a title="Go to the profile page of user" href=#>{{snippet.updated_by}}</a>
-		    					</span>
-		    				</div>
-		    				<div>
-		    					<span>{{ snippet.updated_at |naturaltime }}</span>
-		    				</div>
-		    			</div>
-		    			<div class="mdl-layout-spacer"></div>
-						<button id="metaPannelCloseBtn" class="action-button--small" title="Close">
-							<i class="material-icons" role="presentation">close</i>       
-						</button>	
-					</div>								
-					
-					<div class="mdl-card__menu">
-					    <a href="?edit=True" title="Edit to improve the article" data-upgraded=",MaterialButton,MaterialRipple" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-							<i class="material-icons">edit</i>
-						    <span class="mdl-button__ripple-container">
-						    	<span style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(12px, 16px);" class="mdl-ripple is-animating">
-						    	</span>
-						    </span>
-					    </a>						
-					</div>												
-
-				</div> <!-- /mdl-card -->
-
-								
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top mdl-grid">				
-					<div class="section-title mdl-cell mdl-cell--12-col">
-						<h3>More from {{snippet.author.name}}</h3>	
-					</div>
-					
-				</div> <!-- /mdl-card -->
-				
-				<div class="mdl-card mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-grid">				
+				<div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet mdl-cell--top mdl-grid">
+					{% include "snippets/include/snippet-card.html" with snippet=snippet %}
+				</div>								
+				<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--top mdl-grid">
+					{% include "projects/include/author-card-md.html" with author=snippet.author %}
+				</div>				
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-grid">				
 					<div class="section-title mdl-cell mdl-cell--12-col">
 						<h3>Similar entries</h3>	
-					</div>
-					
-				</div> <!-- /mdl-card -->												
+					</div>					
+				</div>												
 				
 			</div>		
     	</section> <!-- /ArticleDetails -->
 
 
-{% endblock %}
-
-{% block scripts %}
-
-	<script>
-	$(document).ready(function(){
-	
-		var displayShare = function(){			
-			$('#sharePannel').toggleClass('hidden');
-		};
-		var hideShare = function(){
-			$('#sharePannel').addClass('hidden');
-		};
-		
-		var displayMeta = function(){
-			$('#metaPannel').toggleClass('hidden');
-		};
-		var hideMeta = function(){			
-			$('#metaPannel').addClass('hidden');
-		};
-		
-		var hideMsg = function(){			
-			$('#msgPannel').addClass('hidden');
-		};		
-		
-		$('#shareBtn').on('click', displayShare);
-		$('#sharePannelCloseBtn').on('click', hideShare);
-		$('#moreBtn').on('click', displayMeta);
-		$('#metaPannelCloseBtn').on('click', hideMeta);
-		$('#msgCloseBtn').on('click', hideMsg);
-	});
-	</script>
 {% endblock %}

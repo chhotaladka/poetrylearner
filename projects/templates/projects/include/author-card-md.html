@@ -1,0 +1,41 @@
+{% comment %}
+	Info:       Author Card with short details
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+{% load staticfiles %}
+{% load humanize %}
+
+<div class="mdl-card author-card--md wFull bC-none">	
+	<div class="mdl-card__title mdl-color-text--grey-800">					
+		{% with author_img_url=author.get_image_url %}
+		{% if author_img_url %}
+		<img class="avatar" width="90" height="90" src={{ author_img_url }}>
+		{% else %}
+		<i class="avatar material-icons">person</i>
+		{% endif %}	
+		{% endwith %}		
+		<div class="title-text">
+			<a href="{{author.get_absolute_url}}" title="View Author">														
+			{% if author.sobriquet %}{{ author.get_sobriquet }}{% else %}{{ author.get_name }}{% endif %}
+			</a>
+		</div>
+		<div class="extras">
+			<span class="text">{{author.get_name_in_english}}</span>
+		</div>
+		<div class="extras">
+		{% if author.date_birth %}
+			<span class="textsize--12px" title="Birth">{{ author.date_birth }}</span> 
+		{% endif %}
+		{% if author.date_death %}					
+			<span class="textsize--12px" title="Death">- {{ author.date_death }}</span>
+		{% endif %}
+		</div>					
+	</div>
+	<div class="mdl-card__supporting-text">					
+		<p>{{ author.get_short_info }}</p>
+	</div>	
+	<a href="{{author.get_absolute_url}}" class="action mdl-button mdl-button--colored tAc">
+		View more					
+	</a>											
+</div>

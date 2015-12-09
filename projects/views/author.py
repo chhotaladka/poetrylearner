@@ -27,34 +27,22 @@ def author_details(request, slug, pk):
     obj = get_object_or_404(Author, pk=pk)
     
     ##
-    # Check the parameters passed in the URL and process accordingly
-    
+    # Check the parameters passed in the URL and process accordingly    
     if request.GET.get('edit', False):
-        ##
-        # Check for permissions and redirect to AddAuthor view for editing
-        
+        # Check for permissions and redirect to AddAuthor view for editing        
         print "DBG:: Redirecting to edit URL"
         return redirect('projects:add-author', pk=obj.id)
     
     ##
     # Check, if `slug` is different from what it is expected,
-    # softredirect to the correct URL
-    
+    # softredirect to the correct URL    
     if slug != obj.get_slug():
         print "DBG:: Redirecting to correct URL"
         return redirect(obj)
     
-    
-    url = obj.source_url
-    # If url has value, then fetch info from the url
-    fetched_info = {}
-    if url:
-        fetched_info = utils.fetch(url)
-    
     ##
-    # Make the context and render
-  
-    context = {'author': obj, 'info': fetched_info}
+    # Make the context and render  
+    context = {'author': obj }
     template = "projects/author-details.html"
     
     #return render_to_response(template, context , context_instance=RequestContext(request))

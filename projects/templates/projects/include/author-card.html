@@ -6,7 +6,7 @@
 {% load staticfiles %}
 {% load humanize %}
 
-<div class="mdl-card author-card--lg mdl-cell mdl-cell--12-col">
+<div class="mdl-card author-card--lg bS-1 wFull">
 	<div class="mdl-card__title">
 		{% with author_img_url=author.get_image_url %}
 		{% if author_img_url %}
@@ -32,19 +32,12 @@
 		</div>					
 	</div>					
 	<div class="mdl-card__supporting-text">
-	{% if info %}					
-		<p>{{ info.description }}</p>
+		{% if author.get_source_url %}					
+		<p>{{ author.summary }}</p>		
 		<p>Source: <a title="Click here to know more" href="{{ author.get_source_url }}" target="_blank">
-			{{ info.source }}
-		</a></p>							    							
-	{% else %}					
-		<p>{{ author.summary }}</p>
-		{% if author.get_source_url %}
-		<p>Source: <a title="Click here to know more" href="{{ author.get_source_url }}" target="_blank">
-			{{ author.get_source_name }}
-		</a></p>
-		{% endif %}				
-	{% endif %}
+			{{ author.get_source_name }}</a>
+		</p>
+		{% endif %}
 	</div>
 	<div class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500">
 		<div class="meta-edit">
@@ -55,11 +48,10 @@
 				</span>
 			</div>
 			<div>
-				<span title="{{ author.get_last_edit_time }}">{{ author.get_last_edit_time|naturaltime }}</span>
+				<span title="Last updated at {{ author.get_last_edit_time }}">{{ author.get_last_edit_time|naturaltime }}</span>
 			</div>
 		</div>
-		<div class="mdl-layout-spacer"></div>
-		<a href="#" class="mdl-button mdl-button mdl-button--colored">Read our features</a>								    			
+		<div class="mdl-layout-spacer"></div>							    			
 	</div>
 	<div class="mdl-card__menu">
 		<a href="?edit=True" title="Edit to improve author details">

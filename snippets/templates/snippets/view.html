@@ -45,20 +45,34 @@
     	<section id="mainArticle" class="pT-8 pB-48">
 			<div class="mdl-poetry__post mdl-grid">		
 
-				<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--top mdl-grid">
-					{% include "projects/include/author-card-md.html" with author=snippet.author %}
-				</div>			
-				<div class="mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet mdl-cell--top mdl-grid">
+				<section class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--top mdl-cell--hide-phone mdl-grid">
+					{% include "projects/include/author-card-md.html" with author=snippet.author %}				
+				</section>			
+				<section class="mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet mdl-cell--top mdl-grid">
 					{% include "snippets/include/snippet-card.html" with snippet=snippet %}
-				</div>											
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-grid">				
-					<div class="section-title mdl-cell mdl-cell--12-col">
-						<h3>Similar entries</h3>	
+				</section>											
+				<section class="mdl-cell mdl-cell--4-col mdl-grid">				
+					<div class="section-title wFull">
+						<h3>Latest from {{snippet.author.get_name}}</h3>	
+					</div>
+					<div id="id-div-list1" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
 					</div>					
-				</div>												
+				</section>
+				<section class="mdl-cell mdl-cell--4-col mdl-grid">				
+					<div class="section-title wFull">
+						<h3>You may also like</h3>	
+					</div>
+					<div id="id-div-list2" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
+					</div>					
+				</section>																
 				
 			</div>		
     	</section> <!-- /ArticleDetails -->
 
 
+{% endblock %}
+
+{% block scripts %}
+{{ scripts.super }}
+<script type="text/javascript" src="{% static "js/snippets/auth_list.js" %}"></script>
 {% endblock %}

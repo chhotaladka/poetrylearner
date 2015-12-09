@@ -11,8 +11,11 @@ from django.db.models import Q
 import os, sys, traceback
 from meta_tags.views import Meta
 from snippets.models import Snippet
+from projects.models import Author
 from snippets.forms import SnippetForm
 from common.utils import truncatewords, truncatelines
+from django.core import serializers
+import json
 
 # Create your views here.
 
@@ -177,6 +180,36 @@ def snippet_list(request):
 
     return render(request, template, context)
 
+
+def recent_snippets_by_author(request, pk):
+    """
+    View 10 recent snippets by this Author
+    """
+    
+    # Get the object from the `pk`, raises a Http404 if not found
+    author = get_object_or_404(Author, pk=pk)
+    
+    # Get the articles              
+    objs = list(Snippet.objects.filter(author=pk).order_by('-updated_at')[:5])
+      
+    if request.is_ajax():
+        result = []
+        for obj in objs:
+            data = {}
+            data['title'] = obj.title
+            data['body'] = obj.get_description()
+            data['url'] = obj.get_absolute_url()
+            result.append(data)
+            
+        #serialized_objs = serializers.serialize('json', objs, fields=('title','body', 'get_absolute_url'))
+
+        return HttpResponse(json.dumps(result), content_type="application/json")
+    
+    context = {'snippets': objs, 'view': 'card'}
+    template = 'snippets/snippet-list.html'    
+
+    return render(request, template, context)    
+    
 
 def tagged_list(request, slug):
     """

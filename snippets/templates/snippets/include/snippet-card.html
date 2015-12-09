@@ -13,7 +13,7 @@
 			{{ snippet.get_title }}
 		</h2>
 	</div>		
-	<div class="mdl-card__supporting-text mdl-color-text--grey-500 article-info">
+	<div class="mdl-card__supporting-text mdl-color-text--grey-600 article-info">
 		<span>By
 			<a title="View the author {{ author_name }}" href="{{ snippet.author.get_absolute_url }}">
 				<span itemprop="creator">{{ snippet.author.get_display_name }}</span>
@@ -40,7 +40,7 @@
 		{% endif %}		
 	</div>
 
-	<div id="articleContent" itemprop="articleBody" class="article-content mdl-card__supporting-text mdl-color-text--grey-700">											
+	<div id="articleContent" itemprop="articleBody" class="article-content mdl-card__supporting-text mdl-color-text--grey-800">											
 		{% autoescape off %} <!-- Temorary: remove after adding CKeditor etc. -->
 		{{ snippet.body }}
 		{% endautoescape %}
@@ -61,11 +61,6 @@
 		<button id="favBtn" class="action-button" title="I love this">							
             <i class="material-icons" role="presentation">favorite</i>
             <span class="action-button__text">Favorite</span>			                            
-		</button>
-		
-		<button id="copyBtn" class="action-button" title="Copy to clipboard">							
-            <i class="material-icons" role="presentation">content_copy</i>
-            <span class="action-button__text">Copy</span>			                            
 		</button>					
 		
 		<button id="moreBtn" class="action-button" title="Show meta data">							
@@ -132,6 +127,7 @@
 </div>
 
 {% block scripts %}
+{{ scripts.super }}
 	<script>
 	$(document).ready(function(){
 	

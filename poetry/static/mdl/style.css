@@ -51,14 +51,6 @@ html, body {
 	width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
 }
 
-
-.mdl-poetry .mdl-card__supporting-text p {
-	max-width: 512px;
-	margin: 16px auto;
-	font-size: 14px;
-	line-height: 24px;
-
-}
 .mdl-poetry .mdl-card__supporting-text.article-content {
 	font-size: 14px;
 	line-height: 20px;
@@ -111,10 +103,9 @@ html, body {
 }
 
 .mdl-poetry .section-title h3 {
-    text-transform: none;
     margin: 0px;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 
@@ -129,13 +120,16 @@ html, body {
     color: inherit;
 }
 
+.poetry-card {
+	max-width: 512px;
+}
 .poetry-card .mdl-card__title {
   /*height: 176px;*/
 height: 128px;
 /*background: url('../img/header6.jpg') top / cover;*/
 }
 .poetry-card .mdl-card__title-text {
-	font-size: 42px;
+	font-size: 32px;
 }
 .poetry-card--small {
 	min-height: auto;
@@ -156,6 +150,37 @@ height: 128px;
 .poetry-card--small .mdl-card__title-text:hover a {
 	color: #74A0B5;
 	
+}
+
+.poetry-card--sm {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	padding: 8px;	
+	border-radius: 2px;
+	box-sizing: border-box;
+	border-left: 2px solid transparent;
+}
+.poetry-card--sm .title {
+	margin: 8px;
+	color: #333;
+	font-size: 14px;
+	font-weight: 500;
+}
+.poetry-card--sm .text {
+	margin-left: 8px;
+	color: #757575;
+	white-space: pre-line;
+	font-size: 13px;
+	line-height: 18px;
+}
+.poetry-card--sm:hover .title {
+	color: #167AC6;
+}
+.poetry-card--sm:hover {
+	text-decoration: none;
+	border-left: 2px solid rgba(219, 68, 55, 1);
 }
 
 /* flash msg section */
@@ -189,13 +214,17 @@ height: 128px;
 	min-height: auto;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
+	margin-top: 36px;
+}
+.author-card--lg {
+	max-width: 512px;
 }
 .author-card--sm .mdl-card__supporting-text,
 .author-card--md .mdl-card__supporting-text {
 	padding-top: 0px;
 }
 .author-card--lg .mdl-card__supporting-text {
-	color: rgba(0, 0, 0, 0.87);
+	color: rgba(0, 0, 0, 0.77);
 }
 .author-card--sm .mdl-card__title,
 .author-card--md .mdl-card__title,
@@ -229,7 +258,7 @@ height: 128px;
 	width: 90px;
 	height: 90px;
 	font-size: 90px;
-	color: rgba(0, 0, 0, 0.44);
+	color: rgba(0, 0, 0, 0.34);
 }
 .author-card--sm .title-text,
 .author-card--md .title-text {
@@ -292,6 +321,11 @@ height: 128px;
 	color: white;
 	background-color: rgba(219, 68, 55, 1); }
 
+@media (min-width: 480px) and (max-width: 839px) {
+	.author-card--md .info {
+		display: none !important;
+	}
+}
 
 .mdl-poetry .info-list {
     box-sizing: border-box;
@@ -616,14 +650,16 @@ height: 128px;
 	text-decoration: none;
 }
 
-/* pretty-link */
+/* links */
 .pretty-link:hover, .pretty-link:hover s, .pretty-link:focus, .pretty-link:focus s {
     text-decoration: none;
 }
 .pretty-link:hover b, .pretty-link:focus b {
     text-decoration: underline;	
 }
-
+.h-link {
+	color: #1A0DAB;
+}
 
 /* Angled edge */
 .quote, .quote-a, .quote-b {
@@ -741,6 +777,8 @@ height: 128px;
 
 .position-rel { position: relative;}
 .position-abs { position: absolute;}
+
+.bS-1 { box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);}
 
 
 /* Common style */

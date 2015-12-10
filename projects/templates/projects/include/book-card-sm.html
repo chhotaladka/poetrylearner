@@ -1,0 +1,17 @@
+{% comment %}
+	Info:       Book card with short details
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+{% load staticfiles %}
+
+<div class="mdl-card book-card--sm bS-1 wFull">
+	<div class="mdl-card__media mdl-color--yellow-600 mdl-color-text--grey-800">
+		<h4>
+			<a href="{{book.get_absolute_url}}">{{ book.name }}</a>
+		</h4>
+	</div>					
+	<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+		Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
+	</div>
+</div>

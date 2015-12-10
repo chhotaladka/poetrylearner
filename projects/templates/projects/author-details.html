@@ -1,86 +1,64 @@
 {% extends "projects/project-base.html" %}
 {% load staticfiles %}
 
-{% block meta %}
-	<meta name="description" content="">
-	<meta name="author" content="" >
-
-{% endblock %}
-
-{% block title %}
-	{{ author.name }}
-{% endblock %}
-
+{% block title %}{{ author.name }}{% endblock %}
 
 {% block main %}
 
-		{% if messages %}
-		<section id="msgPannel" class="pT-8 pB-8">
-			<div class="mdl-poetry__post mdl-grid">	
-					
-				<div class="mdl-card__actions mdl-cell mdl-cell--8-col mdl-color-text--grey-600">
-					<div class="flash-msg">
-		    			{% for message in messages %}
-	    				<div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-	    					<i class="material-icons">info</i>
-	    					{{ message }}
-	    				</div>
-		    			{% endfor %}
-		    		</div>
-					<div class="mdl-layout-spacer"></div>
-					<button id="msgCloseBtn" class="action-button--small" title="Close">
-						<i class="material-icons" role="presentation">close</i>       
-					</button>		    		
-				</div>	
-						
-			</div>	
-		</section>
-		<script>
-		$(document).ready(function(){			
-			var hideMsg = function(){			
-				$('#msgPannel').addClass('hidden');
-			};			
-			$('#msgCloseBtn').on('click', hideMsg);
-		});
-		</script>
-		{% endif %}
-		
-    	<section id="AuthorDetails" class="pT-8 pB-48">
-			<div class="mdl-poetry__post mdl-grid">		
-		
-				<div class="mdl-cell mdl-cell--8-col mdl-grid">
-				{% include "projects/include/author-card.html" %}
-				</div>				
-				<div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid">				
-					<div class="section-title mdl-cell mdl-cell--12-col">
-						<h3>x y z</h3>	
-					</div>					
-				</div>							
+	{% if messages %}
+	<section id="msgPannel" class="pT-8 pB-8">
+		<div class="_layout layout-L mdl-grid">	
 				
-			</div>		
-    	</section> <!-- /AuthorDetails -->  
+			<div class="mdl-card__actions mdl-cell mdl-cell--8-col mdl-color-text--grey-600">
+				<div class="flash-msg">
+	    			{% for message in messages %}
+    				<div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+    					<i class="material-icons">info</i>
+    					{{ message }}
+    				</div>
+	    			{% endfor %}
+	    		</div>
+				<div class="mdl-layout-spacer"></div>
+				<button id="msgCloseBtn" class="action-button--small" title="Close">
+					<i class="material-icons" role="presentation">close</i>       
+				</button>		    		
+			</div>	
+					
+		</div>	
+	</section>
+	<script>
+	$(document).ready(function(){			
+		var hideMsg = function(){			
+			$('#msgPannel').addClass('hidden');
+		};			
+		$('#msgCloseBtn').on('click', hideMsg);
+	});
+	</script>
+	{% endif %}
+	
+	<section id="priSect" class="pT-8 pB-16">
+		<div class="_layout layout-sLs mdl-grid">		
+			<section class="__l mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
+			</section>	
+			<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
+			{% include "projects/include/author-card.html" %}
+			</section>				
+			<section class="__r mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
+			</section>				
+		</div>		
+	</section>  
 
-    	<section id="AuthorBooks" class="pB-48">
-			<div class="mdl-poetry__post mdl-grid">
-			
-				<div class="section-title mdl-cell mdl-cell--12-col">
-					<h3>Recently added books</h3>	
-				</div>
-
-				{% for book in author.get_recent_books %}
-				<div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop mdl-shadow--2dp">
-					<div class="mdl-card__media mdl-color--yellow-600 mdl-color-text--grey-800">
-						<h4>
-							<a href="{{book.get_absolute_url}}">{{ book.name }}</a>
-						</h4>
-					</div>					
-					<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-						Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
-					</div>				
-				</div>
-				{% endfor %}
-
-			</div>		
-    	</section> <!-- /AuthorBooks --> 
-    	
+	<section class="pB-16">
+		<div class="_layout layout-L mdl-grid">			
+			<div class="section-title mdl-cell mdl-cell--12-col">
+				<h3>Recently added books</h3>	
+			</div>
+			{% for book in author.get_recent_books %}				
+			<div class="mdl-cell mdl-cell--4-col">
+			{% include "projects/include/book-card-sm.html" with book=book %}
+			</div>
+			{% endfor %}
+		</div>		
+	</section> 
+	
 {% endblock %}		    				    																

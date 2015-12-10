@@ -5,11 +5,6 @@ html, body {
   padding: 0;
 }
 
-.mdl-poetry .mdl-layout > .mdl-layout__content > section {
- /*   padding-top: 16px;
-    padding-bottom: 48px; */
-}
-
 .mdl-poetry .mdl-poetry__post {
     max-width: 1080px;
     padding: 0px;
@@ -17,6 +12,19 @@ html, body {
     width: 100%;
     margin: 0px auto;
     flex-shrink: 0;
+}
+._layout {
+    max-width: 1080px;
+    padding: 0px;
+    width: 100%;
+    margin: 0px auto;
+}
+._layout-sLs .__l,
+._layout-sLs .__c,
+._layout-sLs .__r {
+	padding: 0px;
+}
+._layout-L {
 }
 
 .mdl-poetry .table--large .mdl-data-table {
@@ -133,7 +141,8 @@ height: 128px;
 }
 .poetry-card--small {
 	min-height: auto;
-	border: 1px solid rgba(0, 0, 0, 0.1);
+	max-width: 512px;
+	/*border: 1px solid rgba(0, 0, 0, 0.1);*/
 }
 .poetry-card--small .mdl-card__supporting-text {
 	padding: 0px 16px;
@@ -196,6 +205,13 @@ height: 128px;
 .mdl-poetry .flash-msg i {
     margin-right: 8px;
 }
+/* Book cards */
+.book-card--sm {
+	min-height: auto;
+	margin-bottom: 16px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
 
 /* Author cards */
 .author-card--sm {
@@ -218,6 +234,7 @@ height: 128px;
 }
 .author-card--lg {
 	max-width: 512px;
+	margin: 0px auto;
 }
 .author-card--sm .mdl-card__supporting-text,
 .author-card--md .mdl-card__supporting-text {

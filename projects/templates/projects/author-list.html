@@ -6,16 +6,14 @@
 
 {% block main %}
 
-	<section id="id-section-main" class="p-8">
-		<div class="mdl-poetry__post mdl-grid">
+	<section class="pT-8 pB-16">
+		<div class="_layout layout-L mdl-grid">
 
-		<div class="mdl-cell mdl-cell--12-col mdl-grid">
-{% if view == 'table' %}
-{% include "projects/include/author-list-table.html" %}
-{% elif view == 'card' %}	
-{% include "projects/include/author-list-card.html" %}
+			<div class="__c mdl-cell mdl-cell--12-col mdl-grid">
+{% if view == 'table' %}{% include "projects/include/author-list-table.html" %}
+{% elif view == 'card' %}{% include "projects/include/author-list-card.html" %}
 {% endif %}
-		</div>
+			</div>
 
 		</div>	
 	</section>

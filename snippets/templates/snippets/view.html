@@ -11,64 +11,75 @@
 {% endblock %}
 
 {% block main %}
-		{% if messages %}
-		<section id="msgPannel" class="pT-8 pB-8">
-			<div class="mdl-poetry__post mdl-grid">	
-					
-				<div class="mdl-card__actions mdl-cell mdl-cell--8-col mdl-color-text--grey-600">
-					<div class="flash-msg">
-		    			{% for message in messages %}
-	    				<div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-	    					<i class="material-icons">info</i>
-	    					{{ message }}
-	    				</div>
-		    			{% endfor %}
-		    		</div>
-					<div class="mdl-layout-spacer"></div>
-					<button id="msgCloseBtn" class="action-button--small" title="Close">
-						<i class="material-icons" role="presentation">close</i>       
-					</button>		    		
-				</div>	
-						
-			</div>	
-		</section>
-		<script>
-		$(document).ready(function(){			
-			var hideMsg = function(){			
-				$('#msgPannel').addClass('hidden');
-			};			
-			$('#msgCloseBtn').on('click', hideMsg);
-		});
-		</script>
-		{% endif %}
-						
-    	<section id="mainArticle" class="pT-8 pB-48">
-			<div class="mdl-poetry__post mdl-grid">		
-
-				<section class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--top mdl-cell--hide-phone mdl-grid">
-					{% include "projects/include/author-card-md.html" with author=snippet.author %}				
-				</section>			
-				<section class="mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet mdl-cell--top mdl-grid">
-					{% include "snippets/include/snippet-card.html" with snippet=snippet %}
-				</section>											
-				<section class="mdl-cell mdl-cell--4-col mdl-grid">				
-					<div class="section-title wFull">
-						<h3>Latest from {{snippet.author.get_name}}</h3>	
-					</div>
-					<div id="id-div-list1" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
-					</div>					
-				</section>
-				<section class="mdl-cell mdl-cell--4-col mdl-grid">				
-					<div class="section-title wFull">
-						<h3>You may also like</h3>	
-					</div>
-					<div id="id-div-list2" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
-					</div>					
-				</section>																
+	{% if messages %}
+	<section id="msgPannel" class="pT-8 pB-8">
+		<div class="mdl-poetry__post mdl-grid">	
 				
-			</div>		
-    	</section> <!-- /ArticleDetails -->
+			<div class="mdl-card__actions mdl-cell mdl-cell--8-col mdl-color-text--grey-600">
+				<div class="flash-msg">
+	    			{% for message in messages %}
+    				<div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+    					<i class="material-icons">info</i>
+    					{{ message }}
+    				</div>
+	    			{% endfor %}
+	    		</div>
+				<div class="mdl-layout-spacer"></div>
+				<button id="msgCloseBtn" class="action-button--small" title="Close">
+					<i class="material-icons" role="presentation">close</i>       
+				</button>		    		
+			</div>	
+					
+		</div>	
+	</section>
+	<script>
+	$(document).ready(function(){			
+		var hideMsg = function(){			
+			$('#msgPannel').addClass('hidden');
+		};			
+		$('#msgCloseBtn').on('click', hideMsg);
+	});
+	</script>
+	{% endif %}
 
+	<section id="priSect" class="pT-8 pB-16">
+		<div class="_layout layout-mL mdl-grid">		
+			<section class="__l mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--top mdl-cell--hide-phone mdl-grid pA-0">
+			{% include "projects/include/author-card-md.html" with author=snippet.author %}
+			</section>	
+			<section class="__c mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet pA-0">
+			{% include "snippets/include/snippet-card.html" with snippet=snippet %}
+			</section>			
+		</div>		
+	</section> 
+
+	<section id="secSect" class="pB-16">
+		<div class="_layout layout-sss mdl-grid">			
+
+			<section class="__l mdl-cell mdl-cell--4-col mdl-grid pA-0">				
+				<div class="section-title wFull">
+					<h3>Latest from {{snippet.author.get_name}}</h3>	
+				</div>
+				<div id="id-div-list1" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
+				</div>					
+			</section>
+			<section class="__c mdl-cell mdl-cell--4-col mdl-grid pA-0">				
+				<div class="section-title wFull">
+					<h3>You may also like</h3>	
+				</div>
+				<div id="id-div-list2" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
+				</div>					
+			</section>
+			<section class="__r mdl-cell mdl-cell--4-col mdl-grid pA-0">				
+				<div class="section-title wFull">
+					<h3>You may also like</h3>	
+				</div>
+				<div id="id-div-list3" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
+				</div>					
+			</section>			
+
+		</div>		
+	</section>					
 
 {% endblock %}
 

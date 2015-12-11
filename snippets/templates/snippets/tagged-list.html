@@ -6,16 +6,16 @@
 
 {% block main %}
 
-<section id="id-section-main" class="p-8">
-	<div class="mdl-poetry__post mdl-grid">
-		<div class="mdl-cell mdl-cell--4-col mdl-cell--top mdl-grid">
-		</div>
-		
-		<div class="mdl-cell mdl-cell--8-col mdl-grid">
-{% include "snippets/include/snippet-list-card.html" %}
-		</div>			
-				
-	</div>	
+<section id="priSect" class="pT-8 pB-16">
+	<div class="_layout layout-sLs mdl-grid">		
+		<section class="__l mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
+		</section>	
+		<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
+		{% include "snippets/include/snippet-list-card.html" %}
+		</section>				
+		<section class="__r mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
+		</section>				
+	</div>		
 </section>
 
 {% endblock %}

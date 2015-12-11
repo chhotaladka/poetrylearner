@@ -19,12 +19,14 @@ html, body {
     width: 100%;
     margin: 0px auto;
 }
-._layout-sLs .__l,
-._layout-sLs .__c,
-._layout-sLs .__r {
+.layout-sLs .__l,
+.layout-sLs .__c,
+.layout-sLs .__r {
 	padding: 0px;
 }
-._layout-L {
+.layout-L {
+}
+.layout-mL {
 }
 
 .mdl-poetry .table--large .mdl-data-table {
@@ -130,6 +132,7 @@ html, body {
 
 .poetry-card {
 	max-width: 512px;
+	margin: 0px auto;
 }
 .poetry-card .mdl-card__title {
   /*height: 176px;*/
@@ -139,24 +142,25 @@ height: 128px;
 .poetry-card .mdl-card__title-text {
 	font-size: 32px;
 }
-.poetry-card--small {
+
+.poetry-card--md {
 	min-height: auto;
 	max-width: 512px;
-	/*border: 1px solid rgba(0, 0, 0, 0.1);*/
+	margin: 0px auto;	
 }
-.poetry-card--small .mdl-card__supporting-text {
+.poetry-card--md .mdl-card__supporting-text {
 	padding: 0px 16px;
 	font-size: 14px;
 	white-space: pre-line;
 }
-.poetry-card--small .mdl-card__title {
+.poetry-card--md .mdl-card__title {
 	flex-wrap: wrap;
 }
-.poetry-card--small .mdl-card__title-text {
+.poetry-card--md .mdl-card__title-text {
 	font-size: 20px;
 	font-weight: 400;
 }
-.poetry-card--small .mdl-card__title-text:hover a {
+.poetry-card--md .mdl-card__title-text:hover a {
 	color: #74A0B5;
 	
 }

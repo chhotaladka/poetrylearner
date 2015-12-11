@@ -13,6 +13,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.db.models import Q
+from django.utils.decorators import method_decorator
 #import json
 
 # Create your views here.
@@ -49,14 +50,16 @@ def author_details(request, slug, pk):
     return render(request, template, context)
 
 
-
-#@login_required
 class AddAuthor(View):
     """
     Add a new Author or Modify the existing
     """
     form_class = AuthorForm
     template_name = 'projects/add-author.html'
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(self.__class__, self).dispatch(request, *args, **kwargs)    
     
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.

@@ -15,7 +15,7 @@ from django.db.models import Q
 
 # Create your views here.
 
-#@login_required
+@login_required
 def project_data(request, pk):
     """
     Details of Project Data i.e. scanned images, OCR etc
@@ -65,7 +65,7 @@ def project_data(request, pk):
         template = 'projects/project-data.html'
         return render(request, template, context)
     
-
+@login_required
 def data_image_details(request, pk):
     """
     Project's image data (i.e. scanned image and processed image) access view
@@ -153,7 +153,7 @@ def data_image_details(request, pk):
         return render(request, template_name, {'xyz': 123})
         
 
-
+@login_required
 def data_ocr_details(request, pk):
     """
     Project's OCR data (i.e. ) access view

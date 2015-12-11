@@ -13,12 +13,13 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.db.models import Q
+from django.utils.decorators import method_decorator
 #import json
 
 # Create your views here.
      
 
-#@login_required
+@login_required
 def project_details(request, slug, pk):
     """
     Details of the Project
@@ -65,7 +66,8 @@ def project_details(request, slug, pk):
 PROJECT_FORMS = [("bookform", BookForm),
                  ("projectform", ProjectForm),
                 ]
-#@login_required   
+
+  
 class AddProjectWizard(SessionWizardView):
     """
     AddProjectWizard
@@ -77,6 +79,10 @@ class AddProjectWizard(SessionWizardView):
     template_name = 'projects/add-project.html'
     book_instance = None
     project_instance = None
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(self.__class__, self).dispatch(request, *args, **kwargs)    
        
     def get_form_initial(self, step):
 
@@ -170,6 +176,7 @@ class AddProjectWizard(SessionWizardView):
         return HttpResponseRedirect(obj.get_absolute_url())
 
 
+@login_required 
 def project_list(request):
     """
     List view of Project
@@ -215,7 +222,7 @@ def project_list(request):
 
     return render(request, template, context)
 
-
+@login_required 
 def dashboard(request):
     project = {}
     book = {}

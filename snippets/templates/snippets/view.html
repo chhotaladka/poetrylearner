@@ -1,5 +1,6 @@
 {% extends "snippets/snippet-base.html" %}
 {% load staticfiles %}
+{% load snippets_tags %}
 {% load humanize %} 
 
 {% block meta %}
@@ -51,35 +52,43 @@
 			{% include "snippets/include/snippet-card.html" with snippet=snippet %}
 			</section>			
 		</div>		
-	</section> 
+	</section>
 
-	<section id="secSect" class="pB-16">
-		<div class="_layout layout-sss mdl-grid">			
-
-			<section class="__l mdl-cell mdl-cell--4-col mdl-grid pA-0">				
+	<section class="pB-8">
+		<div class="_layout layout-sLs mdl-grid">		
+			<section class="__l mdl-cell mdl-cell--4-col mdl-cell--top mdl-grid pA-0">
+			</section>	
+			<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
+				<div class="section-title wFull">
+					<h3>More like this</h3>	
+				</div>
+				<div id="id-similar-poems">
+				{% get_similar_snippets 5 like snippet as similar %}
+				{% for s in similar %}
+				{% include "snippets/include/snippet-card-md.html" with snippet=s %}
+				{% endfor %}
+				</div>
+			</section>				
+			<section class="__r mdl-cell mdl-cell--2-col mdl-cell--top mdl-grid pA-0">
+			</section>				
+		</div>		
+	</section>
+	
+	<section class="pB-8">
+		<div class="_layout layout-sLs mdl-grid">		
+			<section class="__l mdl-cell mdl-cell--4-col mdl-cell--top mdl-grid pA-0">
+			</section>	
+			<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
 				<div class="section-title wFull">
 					<h3>Latest from {{snippet.author.get_name}}</h3>	
 				</div>
-				<div id="id-div-list1" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
-				</div>					
-			</section>
-			<section class="__c mdl-cell mdl-cell--4-col mdl-grid pA-0">				
-				<div class="section-title wFull">
-					<h3>You may also like</h3>	
+				<div id="id-recent-poems" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
 				</div>
-				<div id="id-div-list2" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
-				</div>					
-			</section>
-			<section class="__r mdl-cell mdl-cell--4-col mdl-grid pA-0">				
-				<div class="section-title wFull">
-					<h3>You may also like</h3>	
-				</div>
-				<div id="id-div-list3" class="wFull" data-url="{% url 'snippets:recent-snippets-by-author' pk=snippet.author.id %}">
-				</div>					
-			</section>			
-
+			</section>				
+			<section class="__r mdl-cell mdl-cell--2-col mdl-cell--top mdl-grid pA-0">
+			</section>				
 		</div>		
-	</section>					
+	</section>
 
 {% endblock %}
 

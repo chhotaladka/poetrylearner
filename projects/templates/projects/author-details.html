@@ -57,10 +57,12 @@
 				<div class="section-title mdl-cell mdl-cell--12-col">
 					<h3>Recently added poems</h3>	
 				</div>
+				<div id="id-recent-poems">
 				{% get_recent_snippets 5 by author as snippets %}
 				{% for snippet in snippets %}
 				{% include "snippets/include/snippet-card-md.html" with snippet=snippet %}
 				{% endfor %}
+				</div>
 			</section>				
 			<section class="__r mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
 			</section>				

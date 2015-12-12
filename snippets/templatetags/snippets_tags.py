@@ -23,19 +23,20 @@ class RecentSnippetsNode(Node):
     @classmethod
     def handle_token(cls, parser, token):
         """
-        Class method to parse get_recent_snippets and return a Node.
+        Class method to parse and return a Node.
         """
         tokens = token.split_contents()        
         
+        if len(tokens) < 4:
+            raise template.TemplateSyntaxError, "%s tag takes at least three arguments" % tokens[0]
+
+        # Check the 1st argument
         try:
             count = int(tokens[1])
             if count < 1:
-                raise template.TemplateSyntaxError, "First argument of get_recent_snippets tag must be a positive integer"
+                raise template.TemplateSyntaxError, "First argument of %s tag must be a positive integer" % tokens[0]
         except:
-            raise template.TemplateSyntaxError, "First argument of get_recent_snippets tag must be a positive integer"
-        
-        if len(tokens) < 4:
-            raise template.TemplateSyntaxError, "get_recent_snippets tag takes at least three arguments"
+            raise template.TemplateSyntaxError, "First argument of %s tag must be a positive integer" % tokens[0]
         
         # Check the 2nd argument
         if tokens[2] == 'as':
@@ -137,6 +138,66 @@ class RecentSnippetsNode(Node):
         return ''
 
 
+class SimilarSnippetsNode(Node):
+    """
+    Render the similar snippets list
+    """
+
+    def __init__(self, count=5, varname=None, snippet=None):
+        self.count = count
+        self.varname = varname
+        self.snippet = template.Variable(snippet)
+
+    @classmethod
+    def handle_token(cls, parser, token):
+        """
+        Class method to parse and return a Node.
+        """
+        tokens = token.split_contents()        
+        
+        if len(tokens) < 6:
+            raise template.TemplateSyntaxError, "%s tag takes at least three arguments" % tokens[0]
+
+        # Check the 1st argument
+        try:
+            count = int(tokens[1])
+            if count < 1:
+                raise template.TemplateSyntaxError, "First argument of %s tag must be a positive integer" % tokens[0]
+        except:
+            raise template.TemplateSyntaxError, "First argument of %s tag must be a positive integer" % tokens[0]
+                
+        # Check the 2nd argument
+        if tokens[2] != 'like':
+            correct_syntax = "'%s [count] like [Snippet object] as [varname]'" % tokens[0]
+            raise template.TemplateSyntaxError, "Second argument must be 'like'. Correct syntax is " + correct_syntax
+        
+        # Check the 4th argument
+        if tokens[4] != 'as':
+            correct_syntax = "'%s [count] like [Snippet object] as [varname]'" % tokens[0]
+            raise template.TemplateSyntaxError, "Forth argument must be 'as'. Correct syntax is " + correct_syntax
+            
+        return cls(
+                   count=count, 
+                   varname = tokens[5],
+                   snippet = tokens[3]
+                )
+        
+
+    def render(self, context):
+        try:
+            snippet = self.snippet.resolve(context)                            
+            context[self.varname] = snippet.tags.similar_objects()[:self.count]
+    
+        except:
+            print ("Error: Unexpected error:", sys.exc_info()[0])
+            for frame in traceback.extract_tb(sys.exc_info()[2]):
+                fname,lineno,fn,text = frame
+                print ("DBG:: Error in %s on line %d" % (fname, lineno)) 
+            raise template.TemplateSyntaxError, "Something went wrong. Check the queryset to resolve the error"            
+            
+        return ''
+
+
 @register.tag
 def get_recent_snippets(parser, token):
     """
@@ -158,3 +219,18 @@ def get_recent_snippets(parser, token):
     """     
     
     return RecentSnippetsNode.handle_token(parser, token)
+
+
+@register.tag
+def get_similar_snippets(parser, token):
+    """
+    Get the list of similar snippets
+    
+    Syntax::
+        case 1: {% get_similar_snippets [count] like [Snippet object] as [varname] %}        
+        
+    Example usage::
+        {% get_recent_snippets 5 like snippet as snippet_list %}
+    """     
+    
+    return SimilarSnippetsNode.handle_token(parser, token)

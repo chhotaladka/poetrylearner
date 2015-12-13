@@ -1,5 +1,4 @@
 {% load staticfiles %}
-
 <!DOCTYPE html>
 <html lang="en-US">
 	<head>
@@ -32,7 +31,7 @@
 	<div class="mdl-layout mdl-js-layout dashboard-layout
 	            mdl-layout--fixed-drawer mdl-layout--fixed-header">  
 	  {% block header %}{# header of a section/app. Modify in the base template of the app #}
-	  <header class="mdl-layout__header page-header mdl-layout__header--waterfall mdl-color-text--grey-700 mdl-layout__header--transparent">
+	  <header class="mdl-layout__header page-header mdl-layout__header--waterfall">
 	    <div class="mdl-layout__header-row page-header--row">
 	      <span class="mdl-layout-title">{% block page-title %}Page Title{% endblock %}{# Define at each page to set its title #}</span>
 	      {% comment %}  
@@ -62,7 +61,7 @@
 	  {% endblock %}{# end of header block #}
 	  
 	  <div class="mdl-layout__drawer mdl-color--white mdl-color-text--grey-700">
-	    <span class="mdl-layout-title">Title</span>
+	    <span class="mdl-layout-title lH-46">Title</span>
 	    
 	    {% block search %}{# Modify the search block as per the current page #}
 		<div id="id-search-box" class="search-box">

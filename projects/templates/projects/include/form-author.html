@@ -42,22 +42,22 @@
 			<label for="id_date_birth" class="mdl-textfield__label">
 				{{form.date_birth.label}}{% if form.date_birth.help_text %} ({{ form.date_birth.help_text|safe }}){% endif %}
 			</label>
-			<input id="id_date_birth" class="mdl-textfield__input" name="date_birth" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value={% if form.errors %}"{{ form.date_birth.value|default_if_none:'' }}"{% else %}"{{ form.date_birth.value|date:'Y-m-d'|default_if_none:'' }}"{% endif %}/>
-			<span class="mdl-textfield__error">Wrong format</span>
+			<input id="id_date_birth" class="mdl-textfield__input" name="date_birth" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value={% if form.errors %}"{{ form.date_birth.value|default_if_none:'' }}"{% else %}"{{ form.date_birth.value|date:'Y-m-d'|default_if_none:'' }}"{% endif %}/>			
 		{% if form.date_birth.errors %}
 		    {% for error in form.date_birth.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
-		{% endif %}					
+		{% endif %}
+			<span class="mdl-textfield__error">Wrong format</span>					
 		</div>		
 		
 		<div id="div_id_date_death" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">	
 			<label for="id_date_death" class="mdl-textfield__label">
 				{{form.date_death.label}}{% if form.date_death.help_text %} ({{ form.date_death.help_text|safe }}){% endif %}
 				</label>		
-			<input id="id_date_death" class="mdl-textfield__input" name="date_death" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value={% if form.errors %}"{{ form.date_death.value|default_if_none:'' }}"{% else %}"{{ form.date_death.value|date:'Y-m-d'|default_if_none:'' }}"{% endif %}/>
-			<span class="mdl-textfield__error">Wrong format</span>
+			<input id="id_date_death" class="mdl-textfield__input" name="date_death" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value={% if form.errors %}"{{ form.date_death.value|default_if_none:'' }}"{% else %}"{{ form.date_death.value|date:'Y-m-d'|default_if_none:'' }}"{% endif %}/>			
 		{% if form.date_death.errors %}
 		    {% for error in form.date_death.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
-		{% endif %}					
+		{% endif %}
+			<span class="mdl-textfield__error">Wrong format</span>					
 		</div>
 		
 		

@@ -1,0 +1,35 @@
+{% comment %}
+	Info:       Message/notification displayed on the page.
+				It renders the `messages` passed in the context.
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+
+{% if messages %}
+	<section id="msgPannel" class="msg-pannel pT-8 pB-8 ">
+		<div class="_layout">					
+			<div class="msg-card wFull">
+				<div class="flash-msg">
+	    			{% for message in messages %}
+					<div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+						<i class="material-icons">info</i>
+						{{ message }}
+					</div>
+	    			{% endfor %}
+	    		</div>
+				<div class="mdl-layout-spacer"></div>
+				<button id="msgCloseBtn" class="action-button--small" title="Close">
+					<i class="material-icons" role="presentation">close</i>       
+				</button>		    		
+			</div>					
+		</div>	
+	</section>
+	<script>
+	$(document).ready(function(){			
+		var hideMsg = function(){			
+			$('#msgPannel').addClass('hidden');
+		};			
+		$('#msgCloseBtn').on('click', hideMsg);
+	});
+	</script>
+{% endif %}

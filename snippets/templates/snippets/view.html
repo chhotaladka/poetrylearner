@@ -12,36 +12,8 @@
 {% endblock %}
 
 {% block main %}
-	{% if messages %}
-	<section id="msgPannel" class="pT-8 pB-8">
-		<div class="mdl-poetry__post mdl-grid">	
-				
-			<div class="mdl-card__actions mdl-cell mdl-cell--8-col mdl-color-text--grey-600">
-				<div class="flash-msg">
-	    			{% for message in messages %}
-    				<div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-    					<i class="material-icons">info</i>
-    					{{ message }}
-    				</div>
-	    			{% endfor %}
-	    		</div>
-				<div class="mdl-layout-spacer"></div>
-				<button id="msgCloseBtn" class="action-button--small" title="Close">
-					<i class="material-icons" role="presentation">close</i>       
-				</button>		    		
-			</div>	
-					
-		</div>	
-	</section>
-	<script>
-	$(document).ready(function(){			
-		var hideMsg = function(){			
-			$('#msgPannel').addClass('hidden');
-		};			
-		$('#msgCloseBtn').on('click', hideMsg);
-	});
-	</script>
-	{% endif %}
+
+	{% include "common/include/message-pannel.html" with messages=messages only %}
 
 	<section id="priSect" class="pT-8 pB-16">
 		<div class="_layout layout-mL mdl-grid">		

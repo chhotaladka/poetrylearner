@@ -191,19 +191,31 @@ height: 128px;
 	text-decoration: none;
 }
 
-/* flash msg section */
-#msgPannel {
+/* flash msg/notification section */
+#msgPannel,
+.msg-pannel {
+	background-color: rgba(219, 68, 55, 1);
+	color: white;
     -webkit-transition-duration: 1s;
     transition-duration: 1s;
 }
-.mdl-poetry .flash-msg > * {
+.msg-card {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+}
+.msg-card .action-button--small {
+	color: white !important;
+}
+.flash-msg > * {
     display: flex !important;
     flex-direction: row;
     align-items: center;
 }
-.mdl-poetry .flash-msg i {
+.flash-msg i {
     margin-right: 8px;
 }
+
 /* Book cards */
 .book-card--sm {
 	min-height: auto;

@@ -132,7 +132,7 @@ html, body {
 
 .poetry-card {
 	max-width: 512px;
-	
+	margin: 0px auto;
 }
 .poetry-card .mdl-card__title {
   /*height: 176px;*/
@@ -146,7 +146,7 @@ height: 128px;
 .poetry-card--md {
 	min-height: auto;
 	max-width: 512px;
-	margin: 0px auto 16px auto;	
+	margin: 0px auto 16px;	
 }
 .poetry-card--md .mdl-card__supporting-text {
 	padding: 0px 16px;
@@ -229,7 +229,7 @@ height: 128px;
 	min-height: auto;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
-	margin-top: 36px;
+	margin: 0px auto;
 }
 .author-card--lg {
 	max-width: 512px;
@@ -299,10 +299,9 @@ height: 128px;
 .author-card--sm .extras,
 .author-card--md .extras,
 .author-card--lg .extras {
-    overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    word-break: break-all;
+    white-space: normal;
+    word-break: keep-all;
 	font-size: 14px;
 }
 .author-card--sm .extras span,

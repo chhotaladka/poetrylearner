@@ -1,8 +1,27 @@
-
 html, body {
-  font-family:'Roboto','Helvetica','Arial',sans-serif!important;
-  margin: 0;
-  padding: 0;
+    font-family: Arial,sans-serif;
+    background: #FFF none repeat scroll 0% 0%;
+    margin: 0px;
+    padding: 0px;
+    border: 0px none;
+    position: absolute;
+    height: 100%;
+    min-width: 100%;
+    font-size: 13px;
+    color: #404040;
+    direction: ltr;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(//fonts.gstatic.com/s/opensans/v13/DXI1ORHCpsQm3Vp6mXoaTegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(//fonts.gstatic.com/s/opensans/v13/cJZKeOuBrn4kERxqtaUH3VtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
 }
 
 .mdl-poetry .mdl-poetry__post {
@@ -135,8 +154,8 @@ html, body {
 	margin: 0px auto;
 }
 .poetry-card .mdl-card__title {
-  /*height: 176px;*/
-height: 128px;
+	height: 176px;
+/*height: 128px;*/
 /*background: url('../img/header6.jpg') top / cover;*/
 }
 .poetry-card .mdl-card__title-text {

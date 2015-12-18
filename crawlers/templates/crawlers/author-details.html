@@ -9,11 +9,8 @@
 
 	<section id="id-section-main" class="p-8">
 		<div class="mdl-poetry__post mdl-grid">
-			<!--
-			<div id="id-extra-card" class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top mdl-shadow--2dp wFull">
-			</div>-->
 			
-			<div id="id-author-card" class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top mdl-shadow--2dp wFull">
+			<div id="id-author-card" class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top bS-1 wFull">
 				<div class="nav-pannel mdl-card__actions">
 					{% with prev_author=author.get_previous %}
 					<a href="{% url 'crawlers:author-details' pk=prev_author.id %}">

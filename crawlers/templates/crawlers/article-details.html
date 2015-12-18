@@ -5,11 +5,13 @@
 {% endblock %}
 
 {% block main %}
-
-	<section id="id-section-main" class="p-8">
-		<div class="mdl-poetry__post mdl-grid">
-			<div class="mdl-card poetry-card mdl-cell mdl-cell--12-col">
-
+	{% include "common/include/message-pannel.html" with messages=messages only %}
+	
+<section id="priSect" class="pT-8 pB-16">
+	<div class="_layout layout-L mdl-grid">			
+		<section class="__c mdl-cell mdl-cell--12-col pA-0">
+			
+			<div class="mdl-card poetry-card wFull bS-1">
 				<div class="article-info mdl-card__supporting-text mdl-color-text--grey-500 mT-16">
 					<div>ID <b>{{article.id}}</b></div>
 					<div id="cTitleId">Title: {{ article.get_title }}</div>
@@ -45,10 +47,11 @@
 					{{ article.get_poem }}
 					{% endautoescape %}
 				</div>
-
-			</div>					
-		</div>	
-	</section>
+			</div>
+			
+		</section>			
+	</div>		
+</section>
 
 {% endblock %}
 

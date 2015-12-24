@@ -81,10 +81,16 @@ class AddSnippet(View):
         if len(kwargs.get('pk', None)) is 0:
             # Create
             form = self.form_class(initial=None)
+            ## Set the queryset as Empty Query Set. We will get the author options later on using ajax request
+            # NOTE: Comment following line, if you are not using ajax request to select author
+            form.fields['author'].queryset = Author.objects.none()
         else:
             # Update
             self.obj = get_object_or_404(Snippet, pk=kwargs.get('pk', None))
             form = self.form_class(instance=self.obj)
+            ## Limit the queryset. We will get the author options later on using ajax request.
+            # NOTE: Comment following line, if you are not using ajax request to select author. 
+            form.fields['author'].queryset = Author.objects.filter(id=self.obj.author.id)
         
         return render(request, self.template_name, {'form': form})
 

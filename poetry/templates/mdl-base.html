@@ -5,7 +5,7 @@
 	    <meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	    {% comment %} The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags {% endcomment %}	    
 	    
 		{% block meta %}{# Write down all meta here #}{% endblock %}
 		
@@ -35,10 +35,9 @@
 	      <div class="mdl-layout-spacer"></div>      
 	      <nav class="mdl-navigation page-header--nav">
 	      {% block header-nav-links %}{# Modify the links as per the current Section (App) #}
-	        <a class="mdl-navigation__link" href="">Link</a>
-	        <a class="mdl-navigation__link" href="">Link</a>
-	        <a class="mdl-navigation__link" href="">Link</a>
-	        <a class="mdl-navigation__link" href="">Link</a>
+	      	<a class="mdl-navigation__link" href="{% url 'snippets:snippet-list' %}">Poems</a>
+	        <a class="mdl-navigation__link" href="{% url 'projects:author-list' %}">Poets</a>	        
+	        <a class="mdl-navigation__link" href=""><i class="material-icons lH-72 _c-uicon" role="presentation">person</i></a>	        
 	       {% endblock %}{# end of header-nav-links block #}
 	      </nav>
 	    </div>   

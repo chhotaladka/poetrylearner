@@ -48,6 +48,35 @@ html, body {
 .layout-mL {
 }
 
+/* error cards e.g. 404, 403 etc */
+.err-card {
+	text-align: center;
+	max-width: 512px;
+	padding: 8px;
+	margin: 0px auto;
+}
+.err-card h1 {
+	margin: 8px;
+    font-family: "Open Sans",arial;
+    color: #555;
+    font-size: 42px;
+    font-weight: 300;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+.err-card h2 {
+    font-family: "Open Sans",arial;
+    color: #555;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+.err-card p {
+    margin: 0px 0px 10px;
+    color: #555;
+    font-size: 14px;
+}
+
 .mdl-poetry .table--large .mdl-data-table {
   width: 100%;
   width: -moz-available;          /* WebKit-based browsers will ignore this. */
@@ -853,6 +882,10 @@ html, body {
     border-radius: 3px;
 }
 .lH-46 {line-height: 46px !important;}
+.lH-72 {line-height: 72px !important;}
+.lH-i {line-height: inherit !important;}
+
+._c-uicon {color: #818181 !important;}
 
 /* Common style */
 a {

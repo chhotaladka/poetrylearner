@@ -15,6 +15,7 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 from django.utils.decorators import method_decorator
 import json
+from common.search import get_query
 
 # Create your views here.
 
@@ -220,37 +221,25 @@ def search_author(request):
     """
     For ajax search of author select field
     """
-    try:
-        q_objects = Q()
-        # Search query
-        q = request.GET.get('q', None)                  
+
+    # Search query
+    if ('q' in request.GET) and request.GET['q'].strip():
+        query_string = request.GET['q']
+        entry_query = get_query(query_string, ['name_en', 'name', 'sobriquet',])
+        obj_list = Author.objects.filter(entry_query).order_by('name')[:5]
+    else:
+        obj_list = []
+            
+    result = []
+    for obj in obj_list:
+        data = {}
+        data['id'] = obj.id
+        data['name'] = obj.name
+        data['name_en'] = obj.name_en
+        data['birth'] = obj.date_birth.year if obj.date_birth else ''
+        data['death'] = obj.date_death.year if obj.date_death else ''
+        result.append(data)
         
-        # Apply Search query
-        if q:
-            q = q.strip()      
-            # get the authors with 'name'        
-            q_objects &= Q(name_en__icontains=q) | Q(name__icontains=q) | Q(sobriquet__icontains=q)      
-                   
-            obj_list = Author.objects.all().filter(q_objects).order_by('name')[:5]
-        else:
-            obj_list = []
-                
-        result = []
-        for obj in obj_list:
-            data = {}
-            data['id'] = obj.id
-            data['name'] = obj.name
-            data['name_en'] = obj.name_en
-            data['birth'] = obj.date_birth.year if obj.date_birth else ''
-            data['death'] = obj.date_death.year if obj.date_death else ''
-            result.append(data)
-            
-        r = json.dumps(result)
-        print r    
-    except:
-        print ("Error: Unexpected error:", sys.exc_info()[0])
-        for frame in traceback.extract_tb(sys.exc_info()[2]):
-            fname,lineno,fn,text = frame
-            print ("DBG:: Error in %s on line %d" % (fname, lineno))
-            
+    r = json.dumps(result)
+                  
     return HttpResponse(r, content_type="application/json")    

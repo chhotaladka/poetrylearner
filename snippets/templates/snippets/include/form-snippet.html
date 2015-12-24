@@ -3,6 +3,8 @@
 	Requires:   css and js of static/mdl/*
 	Note:       Add External plugins like jquery.ime in including template #}
 {% endcomment %}
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 
 <form id="id-snippet-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
 	{% csrf_token %} 
@@ -42,15 +44,15 @@
 		{% endif %}					
 		</div>
 
-		<div id="div_id_author" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			<label for="id_author" class="mdl-textfield__label">
+		<div id="div_id_author" class="mdl-textfield">
+			<label for="id_author" class="">
 				{{form.author.label}}{% if form.author.help_text %} ({{ form.author.help_text|safe }}){% endif %}
-			</label>
-			<select id="id_author" class="mdl-textfield__input" name="author">
-			{% for x,y in form.fields.author.choices %}
+			</label>		
+			<select id="id_author" class="js-example-responsive wFull" name="author">
+    		{% if form.fields.author.choices %}{% for x,y in form.fields.author.choices %}
     			<option value="{{ x }}"{% if form.author.value == x %} selected=selected{% endif %}>{{ y }}</option>
-			{% endfor %}
-			</select>			
+			{% endfor %}{% endif %}
+			</select>				
 		{% if form.author.errors %}
 		    {% for error in form.author.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
 		{% endif %}					
@@ -72,3 +74,66 @@
 		<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;/&#39;"/>
 	</div>
 </form>
+
+<script>
+$(document).ready(function(){
+	
+	function formatAuthor (author) {
+	  if (!author.id) { return author.text; }
+	  if (author.birth) {var b_str = '<span> Birth ' + author.birth + '</span>';}
+	  else { var b_str = '';}
+	  if (author.death) {var d_str = '<span> Death ' + author.death + '</span>';}
+	  else { var d_str = '';}
+	  var str = 
+	    '<div><span>' + author.name + ' (' + author.name_en + ')</span>'
+	    + '</div>'
+	    + '<div class="fS-10px">' + b_str + d_str
+	    + '</div>'	    
+	  var $author = $(str);
+	  return $author;
+	};
+	function formatAuthorSelection (author) {
+	  console.log(author);
+	  if (!author.id) { return author.text; }
+	  if (!author.text) {
+	  	  var $author = $(
+	    	'<span>' + author.name + ' </span>'
+	    	+ '<span>(' + author.name_en + ')</span>'
+	  		);
+	  } else {
+		  var $author = $(
+		    '<span>' + author.text + ' </span>'		    
+		  );
+	  }
+	  return $author;
+	};
+		
+    $("#id_author").select2({
+      ajax: {
+        url: "/p/search/author/",
+        dataType: 'json',
+        delay: 500,
+        data: function (params) {
+          return {
+            q: params.term, // search term
+          };
+        },
+        processResults: function (data, params) {
+          // parse the results into the format expected by Select2
+          // since we are using custom formatting functions we do not need to
+          // alter the remote JSON data
+          return {
+            results: data,
+          };
+        },
+        cache: true
+      },
+      theme: "classic",
+      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+      minimumInputLength: 3,
+      templateResult: formatAuthor,
+      templateSelection: formatAuthorSelection,
+      placeholder: ""
+    });
+});
+</script>

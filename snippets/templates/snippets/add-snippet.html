@@ -6,28 +6,35 @@
 {% endblock %}
 
 {% block extra-style %}
-	<link rel="stylesheet" href="{% static "js/ime/css/jquery.ime.css" %}"/>
+	<link rel="stylesheet" href="{% static "js/ime/css/jquery.ime.css" %}"/>	
 {% endblock %}
 
 {% block main %}
-	{% include "snippets/include/form-snippet.html" %}	
+	<section id="priSect" class="pT-8 pB-16">
+		<div class="_layout layout-mL mdl-grid">		
+			<section class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+			</section>	
+			<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
+				<div class="mdl-card poetry-card bS-1 wFull">
+				{% include "snippets/include/form-snippet.html" %}
+				</div>
+			</section>			
+		</div>		
+	</section>	
 {% endblock %}
 
 {% block search %}{% endblock %}
 
-{% block scripts %}
-	  
+{% block scripts %}  
 	<script type="text/javascript" src="{% static "js/ime/libs/rangy/rangy-core.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.selector.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.preferences.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.inputmethods.js" %}"></script>
-	
+	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.inputmethods.js" %}"></script>	
 	<script>
 		$( document ).ready( function () {
 			/* $( 'input, textarea, [contenteditable]' ).ime(); */
 			$( '#id_body, #id_title' ).ime();
 		} );
 	</script>
-
 {% endblock %}

@@ -810,6 +810,11 @@ html, body {
 }
 
 /* Shortcut styles */
+.fS-10px {
+    font-size: 10px;
+    line-height: 16px;
+    font-weight: 300;
+}
 .textsize--12px {
     font-size: 12px;
     line-height: 18px;

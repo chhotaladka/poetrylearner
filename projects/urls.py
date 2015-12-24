@@ -27,6 +27,9 @@ urlpatterns = [
     url(r'^data/image/(?P<pk>\d*)/?$', views.data_image_details, name='data_image'),
     
     # To view scanned pages' OCR data of a book(i.e. project) 
-    url(r'^data/ocr/(?P<pk>\d*)/?$', views.data_ocr_details, name='data_ocr'),    
+    url(r'^data/ocr/(?P<pk>\d*)/?$', views.data_ocr_details, name='data_ocr'),
+    
+    # Ajax requests
+    url(r'^search/author/?$', views.search_author, name='search_author'),  
        
 ]

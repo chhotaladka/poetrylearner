@@ -7,16 +7,18 @@
 {% block main %}
 
 <section id="priSect" class="pT-8 pB-16">
-	<div class="_layout layout-sLs mdl-grid">		
+	<div class="_layout layout-sLs mdl-grid">
+{% if view == 'table' %}			
+		<section class="__c mdl-cell mdl-cell--12-col pA-0">
+		{% include "snippets/include/snippet-list-table.html" %}
+		</section>
+{% elif view == 'card' %}		
 		<section class="__l mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
 		</section>	
 		<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
-{% if view == 'table' %}{% include "snippets/include/snippet-list-table.html" %}
-{% elif view == 'card' %}{% include "snippets/include/snippet-list-card.html" %}
-{% endif %}
-		</section>				
-		<section class="__r mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
-		</section>				
+		{% include "snippets/include/snippet-list-card.html" %}
+		</section>
+{% endif %}		
 	</div>		
 </section>	
 

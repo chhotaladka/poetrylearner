@@ -6,6 +6,7 @@ urlpatterns = [
     
     url(r'^(?P<pk>\d+)/?$', views.snippet_details, name='view'),
     url(r'^add/(?P<pk>\d*)/?$', views.AddSnippet.as_view(), name='add'),
+    url(r'^publish/(?P<pk>\d*)/?$', views.PublishSnippet.as_view(), name='publish'),
     
     # Dashboard
     url(r'^$', views.dashboard, name='dashboard'),

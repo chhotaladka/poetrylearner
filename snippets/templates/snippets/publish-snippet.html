@@ -1,0 +1,16 @@
+{% extends "mdl-base.html" %}
+{% load staticfiles %}
+
+{% block title %}Publish or unpublish a snippet{% endblock %}
+
+{% block main %}
+	<section id="priSect" class="pT-8 pB-16">
+		<div class="_layout layout-mL mdl-grid">		
+			<section class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+			</section>	
+			<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">				
+				{% include "snippets/include/form-pub-snippet.html" %}
+			</section>			
+		</div>		
+	</section>	
+{% endblock %}

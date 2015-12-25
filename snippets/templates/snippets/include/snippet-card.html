@@ -19,7 +19,11 @@
 				<span itemprop="creator">{{ snippet.author.get_display_name }}</span>
 			</a>
 		</span>	
-		<span>						
+		<span>
+		{% if snippet.is_published %}{% comment %} TODO make it visible only to admin {% endcomment %}
+		<i id="id-pub" class="material-icons" style="font-size:13px;color:#66B5D2;">assignment_turned_in</i>
+		<span for="id-pub" class="mdl-tooltip">Published</span>
+		{% endif %}						
 			<a class="hashtag pretty-link" href="#">
 				<s>#</s>
 				<b itemprop="inLanguage">{{ snippet.get_language }}</b>
@@ -115,14 +119,22 @@
 	</div>								
 	
 	<div class="mdl-card__menu">
-	    <a href="{% url 'snippets:add' pk=snippet.id %}/?cancel={{request.path}}" title="Edit to improve the article" data-upgraded=",MaterialButton,MaterialRipple" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-			<i class="material-icons">edit</i>
-		    <span class="mdl-button__ripple-container">
-		    	<span style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(12px, 16px);" class="mdl-ripple is-animating">
-		    	</span>
-		    </span>
-	    </a>						
-	</div>												
+		<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn1">
+          <i class="material-icons">more_vert</i>
+		</button>
+        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">
+          <li class="mdl-menu__item">
+          {% if snippet.is_published %}
+          	<a href="{% url 'snippets:publish' pk=snippet.id %}" title="Unpublish the article">Unpublish</a>
+          {% else %}
+          	<a href="{% url 'snippets:publish' pk=snippet.id %}" title="Publish the article">Publish</a>
+          {% endif %}
+          </li>
+          <li class="mdl-menu__item">
+          	<a href="{% url 'snippets:add' pk=snippet.id %}/?cancel={{ request.path }}" title="Edit to improve the article" >Edit</a>
+          </li>
+        </ul>
+	</div>													
 {% endwith %}
 </div>
 

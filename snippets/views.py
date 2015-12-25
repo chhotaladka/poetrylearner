@@ -12,7 +12,7 @@ import os, sys, traceback
 from meta_tags.views import Meta
 from snippets.models import Snippet
 from projects.models import Author
-from snippets.forms import SnippetForm
+from snippets.forms import SnippetForm, PublishSnippetForm
 from common.utils import truncatewords, truncatelines
 from django.core import serializers
 import json
@@ -126,6 +126,48 @@ class AddSnippet(View):
             return HttpResponseRedirect(obj.get_absolute_url())
         
         return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url})    
+
+  
+class PublishSnippet(View):
+    """
+    Publish or unpublish a Snippet
+    """
+    form_class = PublishSnippetForm
+    template_name = 'snippets/publish-snippet.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(self.__class__, self).dispatch(request, *args, **kwargs)
+       
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        obj = form.save(self.request.user)
+        return HttpResponseRedirect(obj.get_absolute_url()) 
+    
+    def get(self, request, *args, **kwargs):              
+        self.obj = get_object_or_404(Snippet, pk=kwargs.get('pk', None))
+        form = self.form_class(instance=self.obj)
+        
+        return render(request, self.template_name, {'form': form, 'snippet': self.obj})
+
+    def post(self, request, *args, **kwargs):        
+        snippet = Snippet.objects.get(id=kwargs.get('pk', None))        
+        form = self.form_class(request.POST, instance=snippet)
+        
+        if form.is_valid():          
+            obj = form.save(self.request.user, commit=False)
+            obj.updated_by = self.request.user
+            if not obj.pk:          
+                obj.added_by = self.request.user
+            
+            obj.save()               
+                 
+            messages.success(request, 'Changes on snippet "%s" is successful! '%obj.title)        
+            return HttpResponseRedirect(obj.get_absolute_url())
+        
+        return render(request, self.template_name, {'form': form, 'snippet': self.obj})    
+
 
 @login_required
 def snippet_list(request):

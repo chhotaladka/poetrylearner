@@ -24,3 +24,17 @@ class SnippetForm(ModelForm):
         if commit:
             obj.save()
         return obj
+
+
+class PublishSnippetForm(ModelForm): 
+       
+    class Meta:
+        model = Snippet
+        fields = ['published']
+                
+    def save(self, owner, commit=True, *args, **kwargs):
+        obj = super(PublishSnippetForm, self).save(commit=False, *args, **kwargs)        
+            
+        if commit:
+            obj.save()
+        return obj    

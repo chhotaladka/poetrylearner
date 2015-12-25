@@ -238,6 +238,7 @@ def search_author(request):
         data['name_en'] = obj.name_en
         data['birth'] = obj.date_birth.year if obj.date_birth else ''
         data['death'] = obj.date_death.year if obj.date_death else ''
+        data['url'] = obj.get_absolute_url()
         result.append(data)
         
     r = json.dumps(result)

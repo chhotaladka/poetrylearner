@@ -85,7 +85,9 @@ $(document).ready(function(){
 	  if (author.death) {var d_str = '<span> Death ' + author.death + '</span>';}
 	  else { var d_str = '';}
 	  var str = 
-	    '<div><span>' + author.name + ' (' + author.name_en + ')</span>'
+	    '<div>'
+	    + '<a href="' + author.url + '" target="_blank">'
+	    + '<span>' + author.name + ' (' + author.name_en + ')</span></a>'	    
 	    + '</div>'
 	    + '<div class="fS-10px">' + b_str + d_str
 	    + '</div>'	    
@@ -93,12 +95,11 @@ $(document).ready(function(){
 	  return $author;
 	};
 	function formatAuthorSelection (author) {
-	  console.log(author);
 	  if (!author.id) { return author.text; }
 	  if (!author.text) {
-	  	  var $author = $(
-	    	'<span>' + author.name + ' </span>'
-	    	+ '<span>(' + author.name_en + ')</span>'
+	  	  var $author = $(	  	    
+	    	  '<span>' + author.name + ' </span>'
+	    	+ '<span>(' + author.name_en + ')</span>'	    	
 	  		);
 	  } else {
 		  var $author = $(
@@ -133,7 +134,8 @@ $(document).ready(function(){
       minimumInputLength: 3,
       templateResult: formatAuthor,
       templateSelection: formatAuthorSelection,
-      placeholder: ""
+      placeholder: "",
+      allowClear: true
     });
 });
 </script>

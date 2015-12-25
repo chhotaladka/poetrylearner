@@ -132,7 +132,6 @@ def snippet_list(request):
     ##
     # Check the parameters passed in the URL and process accordingly    
     author = request.GET.get('author', None)
-    q = request.GET.get('q', None)
     filters = request.GET.get('filters', None)
     view = request.GET.get('view', None)
     
@@ -155,12 +154,7 @@ def snippet_list(request):
     if author:
         author = author.strip()
         # filter the source_url
-        q_objects &= Q(author__icontains=author)
-    
-    if q:
-        q = q.strip()
-        # TODO make it more perfect 
-        q_objects &= Q(title__icontains=q) | Q(author__icontains=q)      
+        q_objects &= Q(author__name_en__icontains=author) | Q(author__name__icontains=author) | Q(author__sobriquet__icontains=author)          
         
     # Get all articles              
     obj_list = Snippet.objects.all().filter(q_objects)

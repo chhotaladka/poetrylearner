@@ -66,6 +66,7 @@ class AddSnippet(View):
     """
     form_class = SnippetForm
     template_name = 'snippets/add-snippet.html'
+    cancel_url = '/'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -78,6 +79,10 @@ class AddSnippet(View):
         return HttpResponseRedirect(obj.get_absolute_url()) 
     
     def get(self, request, *args, **kwargs):
+        # Check the parameters passed in the URL and process accordingly
+        # Prepare the cancel_url for 'Cancel button' to be passed with the context    
+        self.cancel_url = request.GET.get('cancel', '/')  
+              
         if len(kwargs.get('pk', None)) is 0:
             # Create
             form = self.form_class(initial=None)
@@ -92,7 +97,7 @@ class AddSnippet(View):
             # NOTE: Comment following line, if you are not using ajax request to select author. 
             form.fields['author'].queryset = Author.objects.filter(id=self.obj.author.id)
         
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url})
 
     def post(self, request, *args, **kwargs):
         if len(kwargs.get('pk', None)) is not 0:
@@ -120,7 +125,7 @@ class AddSnippet(View):
             messages.success(request, 'Changes on snippet "%s" is successful! '%obj.title)        
             return HttpResponseRedirect(obj.get_absolute_url())
         
-        return render(request, self.template_name, {'form': form})    
+        return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url})    
 
 @login_required
 def snippet_list(request):

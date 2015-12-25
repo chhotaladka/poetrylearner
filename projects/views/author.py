@@ -57,6 +57,7 @@ class AddAuthor(View):
     """
     form_class = AuthorForm
     template_name = 'projects/add-author.html'
+    cancel_url = '/'
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -70,6 +71,10 @@ class AddAuthor(View):
     
     #@login_required(function, redirect_field_name, login_url)
     def get(self, request, *args, **kwargs):
+        # Check the parameters passed in the URL and process accordingly
+        # Prepare the cancel_url for 'Cancel button' to be passed with the context    
+        self.cancel_url = request.GET.get('cancel', '/') 
+        
         if request.is_ajax():
             self.template_name = 'projects/include/form-author.html'
             
@@ -81,7 +86,7 @@ class AddAuthor(View):
             self.obj = get_object_or_404(Author, pk=kwargs.get('pk', None))
             form = self.form_class(instance=self.obj)
 
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url})
 
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
@@ -125,7 +130,7 @@ class AddAuthor(View):
             res['data'] = render_to_string(self.template_name, {'form': form})                
             return JsonResponse(res)
                         
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url})
 
 
 

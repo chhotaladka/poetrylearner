@@ -54,7 +54,7 @@
 		<div class="mdl-layout-spacer"></div>							    			
 	</div>
 	<div class="mdl-card__menu">
-		<a href="?edit=True" title="Edit to improve author details">
+		<a href="{% url 'projects:add-author' pk=author.id %}/?cancel={{request.path}}" title="Edit to improve author details">
 		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">
           <i class="material-icons mdl-color-text--white">edit</i>
 		</button>

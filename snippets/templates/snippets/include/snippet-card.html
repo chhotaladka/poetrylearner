@@ -115,7 +115,7 @@
 	</div>								
 	
 	<div class="mdl-card__menu">
-	    <a href="?edit=True" title="Edit to improve the article" data-upgraded=",MaterialButton,MaterialRipple" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+	    <a href="{% url 'snippets:add' pk=snippet.id %}/?cancel={{request.path}}" title="Edit to improve the article" data-upgraded=",MaterialButton,MaterialRipple" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
 			<i class="material-icons">edit</i>
 		    <span class="mdl-button__ripple-container">
 		    	<span style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(12px, 16px);" class="mdl-ripple is-animating">

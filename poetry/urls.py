@@ -26,7 +26,7 @@ urlpatterns = i18n_patterns('',
     url(r'^c/', include('crawlers.urls', namespace='crawlers')),
     url(r'^p/', include('projects.urls', namespace='projects')),
     url(r'^s/', include('snippets.urls', namespace='snippets')),
-    url(r'^', include('articles.urls', namespace="articles")),
+    url(r'^', include('common.urls', namespace="common")),
 )
 
 # This is only needed when using runserver.

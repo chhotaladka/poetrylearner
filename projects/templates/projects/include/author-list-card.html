@@ -24,7 +24,7 @@
 						<span class="text"></span>
 					</div>		
 				</div>
-				<a href="{% url 'projects:add-author' pk='' %}" class="action mdl-button mdl-button--colored tAc">
+				<a href="{% url 'projects:add-author' pk='' %}/?cancel={{request.path}}" class="action mdl-button mdl-button--colored tAc">
 					Add an author					
 				</a>																				
 			</div>

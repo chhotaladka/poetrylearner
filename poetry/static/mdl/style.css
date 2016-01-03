@@ -644,6 +644,89 @@ html, body {
     font-size: 12px;
 }
 
+/* Site search related */
+.site-search-row {
+	height: 52px;
+/*	display: flex;
+	flex-flow: row nowrap;
+	flex-shrink: 0;*/
+	box-sizing: border-box;
+	align-self: center;
+	align-items: center;
+	margin: 0px;
+}
+@media (max-width: 479px) {
+  .site-search-row { width: calc(100% - 16px); }
+}
+@media (min-width: 480px) and (max-width: 839px) {
+  .site-search-row { width: calc(66.6666666666%); }
+}
+@media (min-width: 840px) {
+  .site-search-row { width: calc(50% - 16px); }
+}
+.site-search {
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+}
+.search-btn {
+	display: inline-block;
+	height: 30px;
+	border: 1px solid transparent;
+	padding: 0px 10px;
+	outline: 0px none;
+	font-weight: 500;
+	font-size: 11px;
+	text-decoration: none;
+	white-space: nowrap;
+	word-wrap: normal;
+	line-height: normal;
+	vertical-align: middle;
+	cursor: pointer;
+	border-radius: 2px 0px 0px 2px;
+	box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+	background: #F8F8F8 none repeat scroll 0% 0%;
+	color: #333;
+}
+.search-btn:hover {
+	background-color: #E8E8E8;
+}
+.site-search .search-btn {
+	border-left: 0px none;
+	border-radius: 0px 2px 2px 0px;
+	border-color: #D3D3D3;
+}
+.search-input {
+    background: rgba(255, 255, 255, 0.9) none repeat scroll 0% 0% padding-box;
+    border-width: 1px;
+    border-style: solid;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    border-spacing: 0px;
+    border-radius: 2px 0px 0px 2px;
+	border: 1px solid #CCC;
+	box-shadow: 0px 1px 2px #EEE inset;
+    color: inherit;
+	height: 28px;
+	display: block;
+	width: 100%;
+	padding: 0px 8px;
+	text-align: left;
+}
+.search-input:hover {
+	box-shadow: 0px 1px 2px #DDD inset;
+}
+.search-input[keepfocus],
+.search-input:focus,
+.search-input[autofocus] {
+	border-color: rgba(51, 166, 255, 0.6) rgba(39, 145, 225, 0.6) rgba(0, 122, 204, 0.6);
+	box-shadow: 0px 1px 2px #CCC inset;
+}
+
 /* Layouts: drawer/search/header related */
 .dashboard-layout .mdl-layout__drawer-button {
 	/*position: relative;*/
@@ -670,6 +753,10 @@ html, body {
 .dashboard-navigation.mdl-navigation .mdl-navigation__link:hover {
     background-color: transparent;
 	color: inherit;
+}
+.mdl-navigation__link.section {
+	font-weight: 600 !important;
+	border-bottom: 1px solid #E0E0E0;
 }
 .dashboard-navigation > a:hover {
 	text-decoration: none;
@@ -711,6 +798,17 @@ html, body {
 .page-header--row.mdl-layout__header-row > * {
     flex-shrink: 1;
 }
+.nav-submenu {
+  position: absolute;
+  right: 16px;
+  top: 16px; }
+
+/* icons & symbols */
+.icons {
+	color: #818181 !important;
+	line-height: inherit !important;
+	vertical-align: bottom;
+}
 
 /* Popup/overlay/info-box etc */
 .info-overlay.mdl-menu {
@@ -746,6 +844,9 @@ html, body {
 }
 
 /* links */
+.pretty-link b {
+	font-weight: 500;
+}
 .pretty-link:hover, .pretty-link:hover s, .pretty-link:focus, .pretty-link:focus s {
     text-decoration: none;
 }
@@ -814,6 +915,10 @@ html, body {
 }
 
 /* Shortcut styles */
+.fS-13 {
+	font-size: 13px;
+	line-height: 18px;
+}
 .fS-10px {
     font-size: 10px;
     line-height: 16px;
@@ -894,7 +999,6 @@ html, body {
 .lH-72 {line-height: 72px !important;}
 .lH-i {line-height: inherit !important;}
 
-._c-uicon {color: #818181 !important;}
 
 /* Common style */
 a {
@@ -908,6 +1012,25 @@ a:hover {
 a:visited {
 	/*color: #ED4255;*/
 
+}
+.banner {
+    text-align: center;
+	margin-top: calc(10%);
+}
+.banner h1 {
+    font-family: "Open Sans",arial;
+    color: #555;
+    font-size: 32px;
+    font-weight: 300;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+.banner h2 {
+    font-family: "Open Sans",arial;
+    color: #555;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 20px;
 }
 
 /*
@@ -995,4 +1118,13 @@ a:visited {
 .status-warning {
 	background-color: #ff5722 !important;/*deep-orange-500*/
 	color: white;	
+}
+.publish {
+	font-size: 13px !important;
+	color: #A5A5A5 !important;
+	line-height: inherit !important;
+	vertical-align: bottom;
+}
+.publish:hover {
+	color: #66B5D2 !important;
 }

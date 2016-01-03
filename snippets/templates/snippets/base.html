@@ -3,10 +3,3 @@
 
 {% comment %} To set the main nav link active throughout the views of this app {% endcomment %}
 {% block is-snippets-active %}active{% endblock %}
-
-{% block header-nav-links %}
-    <a class="mdl-navigation__link" href="{% url 'snippets:dashboard' %}" title="Crawlers Home">Home</a>
-    <a class="mdl-navigation__link" href="{% url 'snippets:snippet-list' %}" title="Browse Snippets">Snippets</a>
-    <a class="mdl-navigation__link" href="{% url 'snippets:tag-list' %}" title="Browse Tags">Tags</a>    
-    <a class="mdl-navigation__link" href="" title="Help me to figure out">Help</a>
-{% endblock %}

@@ -7,7 +7,7 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    {% comment %} The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags {% endcomment %}	    
 	    
-		{% block meta %}{# Write down all meta here #}{% endblock %}
+		{% block meta %}{% comment %} Write down all meta here {% endcomment %}{% endblock %}
 		
 	    <title>{% block title %} Home {% endblock title %} - siteName.org </title>
 	    
@@ -16,7 +16,7 @@
 	    <link rel="stylesheet" href="{% static "mdl/style.css" %}">
 	    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-	    {% block extra-style %}{# Include here extra css style #}{% endblock %} 
+	    {% block extra-style %}{% comment %} Include here extra css style {% endcomment %}{% endblock %} 
 	
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     	<script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
@@ -31,22 +31,44 @@
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 	  <header class="mdl-layout__header page-header mdl-layout__header--waterfall">
 	    <div class="mdl-layout__header-row page-header--row">
-	      <span class="mdl-layout-title">{% block page-title %}Page Title{% endblock %}{# Define at each page to set its title #}</span>
-	      <div class="mdl-layout-spacer"></div>      
+	      <span class="mdl-layout-title">{% block page-title %}Page Title{% endblock %}</span>{% comment %} Define at each page to set its title {% endcomment %}
+	      <div class="mdl-layout-spacer"></div>    
 	      <nav class="mdl-navigation page-header--nav">
-	      {% block header-nav-links %}{# Modify the links as per the current Section (App) #}
-	      	<a class="mdl-navigation__link" href="{% url 'snippets:snippet-list' %}">Poems</a>
+	      {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
+	      	<!--<a class="mdl-navigation__link" href="#" onclick="document.getElementById('id-search-box').classList.toggle('hidden'); return false;"><i class="material-icons icons search" role="presentation">search</i></a>-->
+	      	<a class="mdl-navigation__link" href="{% url 'snippets:snippet-list' %}">Poetry</a>
 	        <a class="mdl-navigation__link" href="{% url 'projects:author-list' %}">Poets</a>	        
-	        <a class="mdl-navigation__link" href=""><i class="material-icons lH-72 _c-uicon" role="presentation">person</i></a>	        
-	       {% endblock %}{# end of header-nav-links block #}
+	        <a id="id-user-submenu" class="mdl-navigation__link" href="#"><i class="material-icons icons user" role="presentation">person</i></a>	        
+	       {% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
 	      </nav>
-	    </div>   
+	    </div>
+	    <div id="id-search-box" class="site-search-row"> 	    	  
+		    <form id="id-search-form" class="site-search" onsubmit="if (document.getElementById('id-search-term').value == '') return false;" action="{% block search-form-action %}{% endblock %}" method="get">
+				<input class="search-input" id="id-search-term" spellcheck="false" autocomplete="off" onkeydown="if (!this.value &amp;&amp; (event.keyCode == 40 || event.keyCode == 32 || event.keyCode == 34)) {this.onkeydown = null; this.blur();}" name="q" value="" tabindex="1" placeholder="Search" title="Search" type="text">
+			    <button class="search-btn search-btn-component" type="submit" onclick="if (document.getElementById('id-search-term').value == '') return false; document.getElementById('id-search-form').submit(); return false;;return true;" tabindex="2" id="search-btn" dir="ltr">
+			    	<i class="material-icons icons search" role="presentation">search</i>
+			    </button>								    	
+		    </form>
+		    <div class="fS-13 tAr">
+		    	<a class="pretty-link" href="#" tabindex="3"><b>Advance search</b></a>
+		    </div>
+	    </div>
+	    {% comment %} User icon submenu {% endcomment %}
+	    <div class="nav-submenu">
+			<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu"
+			    for="id-user-submenu">
+			  <li class="mdl-menu__item">Some Action</li>
+			  <li class="mdl-menu__item">Another Action</li>
+			  <li disabled class="mdl-menu__item">Disabled Action</li>
+			  <li class="mdl-menu__item">Yet Another Action</li>
+			</ul>
+		</div>      
 	  </header>
 
 		<main class="mdl-layout__content">
-		{% block main %}{# Put the main content in this block #}{% endblock %}
+		{% block main %}{% comment %} Put the main content in this block {% endcomment %}{% endblock %}
 		   	
-		{% block footer %}{# write down footer code in this block #}
+		{% block footer %}{% comment %} write down footer code in this block {% endcomment %}
 		{% comment %}  
 		<footer class="mdl-mini-footer">
 		  <div class="mdl-mini-footer__left-section">
@@ -57,13 +79,13 @@
 		    </ul>
 		  </div>
 		</footer>{% endcomment %}
-		{% endblock %}{# end of footer #}
+		{% endblock %}{% comment %} end of footer {% endcomment %}
 		</main>
 	</div>
-	{% endblock %} {# end of body #}
+	{% endblock %}{% comment %} end of body {% endcomment %}
 	
- 	{% block modal %}{# Modal code #}{% endblock %}	
-	{% block scripts %}{# extra scripts #}{% endblock %}
+ 	{% block modal %}{% comment %} Modal code {% endcomment %}{% endblock %}	
+	{% block scripts %}{% comment %} extra scripts {% endcomment %}{% endblock %}
 		
 	</body>
 </html>

@@ -16,14 +16,10 @@
 	<div class="mdl-card__supporting-text mdl-color-text--grey-600 article-info">
 		<span>By
 			<a title="View the author {{ author_name }}" href="{{ snippet.author.get_absolute_url }}">
-				<span itemprop="creator">{{ snippet.author.get_display_name }}</span>
+				<span itemprop="creator">{{ snippet.author.get_display_name }}</span>				
 			</a>
 		</span>	
-		<span>
-		{% if snippet.is_published %}{% comment %} TODO make it visible only to admin {% endcomment %}
-		<i id="id-pub" class="material-icons" style="font-size:13px;color:#66B5D2;">assignment_turned_in</i>
-		<span for="id-pub" class="mdl-tooltip">Published</span>
-		{% endif %}						
+		<span>					
 			<a class="hashtag pretty-link" href="#">
 				<s>#</s>
 				<b itemprop="inLanguage">{{ snippet.get_language }}</b>
@@ -33,7 +29,11 @@
 	 			<s>#</s>
 				<b>{{ tag }}</b>
 			</a>
-			{% endfor %}							
+			{% endfor %}
+			{% if snippet.is_published %}{% comment %} TODO make it visible only to admin {% endcomment %}
+			<i id="id-pub" class="material-icons publish">assignment_turned_in</i>
+			<span for="id-pub" class="mdl-tooltip">Published</span>
+			{% endif %}								
 		</span>	
 		{% if snippet.page %}				
 		<span>This article was published in 
@@ -45,7 +45,7 @@
 	</div>
 
 	<div id="articleContent" itemprop="articleBody" class="article-content mdl-card__supporting-text mdl-color-text--grey-800">											
-		{% autoescape off %} <!-- Temorary: remove after adding CKeditor etc. -->
+		{% autoescape off %}
 		{{ snippet.body }}
 		{% endautoescape %}
 
@@ -74,8 +74,7 @@
 
 		<div class="meta" title="Views">
 			<span class="meta-val--bignum mR-4">12,234,002</span>
-            <span class="meta-name">views</span>
-            <!--<span class="visuallyhidden">views</span>-->	                
+            <span class="meta-name">views</span>                            
 		</div>						
 	</div>
 

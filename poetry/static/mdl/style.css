@@ -727,6 +727,245 @@ html, body {
 	box-shadow: 0px 1px 2px #CCC inset;
 }
 
+/* Forms gmail style */
+.form-element {
+    position: relative;
+    margin: 0px 0px 1em;
+	font-size: 14px;
+	line-height: 24px;
+}
+.form-element label {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+}
+.form-element strong {
+    margin: 0px 0px 0.5em;
+    display: inline-block;
+    width: 100%;
+	color: #222;
+    -moz-user-select: none;
+}
+.form-element .help-text {
+    margin: 0px 0px 0.5em;
+    display: inline-block;
+    width: 100%;
+	font-size: 13px;
+	line-height: 18px;
+	color: #666;
+}
+.form-element .placeholder-text {
+	position: absolute;
+	top: 8px;
+	left: 10px;
+	color: #999;
+	display: none;
+}
+.form-element .errormsg {
+    margin: 0.5em 0px 0px;
+    display: block;
+    color: #DD4B39;
+    font-size: 13px;
+	line-height: 18px;
+}
+.form-element select {
+    display: inline-block;
+	width: 100%;
+    height: 29px;
+    margin: 0px;
+    padding: 0px 8px;
+}
+
+.form-element button, 
+.form-element input, 
+.form-element select, 
+.form-element textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+.form-element button::-moz-focus-inner,
+.form-element input::-moz-focus-inner {
+	border: 0;
+}
+.form-element input[type=email],
+.form-element input[type=number],
+.form-element input[type=password],
+.form-element input[type=tel],
+.form-element input[type=text],
+.form-element input[type=url],
+.form-element textarea {
+	-webkit-appearance: none;
+	appearance: none;
+	display: inline-block;
+	width: 100%;
+	margin: 0;
+	background: #fff;
+	border: 1px solid #d9d9d9;
+	border-top: 1px solid #c0c0c0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-border-radius: 1px;
+	-moz-border-radius: 1px;
+	border-radius: 1px;
+}
+.form-element input {
+	height: 29px;
+	padding: 0px 8px;
+}
+.form-element textarea {
+    padding: 4px 8px;
+}
+.form-element input[type=email]:hover,
+.form-element input[type=number]:hover,
+.form-element input[type=password]:hover,
+.form-element input[type=tel]:hover,
+.form-element input[type=text]:hover,
+.form-element input[type=url]:hover,
+.form-element textarea:hover {
+	border: 1px solid #b9b9b9;
+	border-top: 1px solid #a0a0a0;
+	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+	-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+.form-element input[type=email]:focus,
+.form-element input[type=number]:focus,
+.form-element input[type=password]:focus,
+.form-element input[type=tel]:focus,
+.form-element input[type=text]:focus,
+.form-element input[type=url]:focus,
+.form-element textarea:focus {
+	outline: none;
+	border: 1px solid #4d90fe;
+	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+	-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+}
+.form-element input[type=email][disabled=disabled],
+.form-element input[type=number][disabled=disabled],
+.form-element input[type=password][disabled=disabled],
+.form-element input[type=tel][disabled=disabled],
+.form-element input[type=text][disabled=disabled],
+.form-element input[type=url][disabled=disabled] {
+	border: 1px solid #e5e5e5;
+	background: #f1f1f1;
+}
+.form-element input[type=email][disabled=disabled]:hover,
+.form-element input[type=number][disabled=disabled]:hover,
+.form-element input[type=password][disabled=disabled]:hover,
+.form-element input[type=tel][disabled=disabled]:hover,
+.form-element input[type=text][disabled=disabled]:hover,
+.form-element input[type=url][disabled=disabled]:hover {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+.form-element input[type=email][readonly=readonly],
+.form-element input[type=number][readonly=readonly],
+.form-element input[type=password][readonly=readonly],
+.form-element input[type=text][readonly=readonly],
+.form-element input[type=url][readonly=readonly],
+.form-element textarea[readonly=readonly] {
+	border: 1px solid #d9d9d9;
+}
+.form-element input[type=email][readonly=readonly]:hover,
+.form-element input[type=number][readonly=readonly]:hover,
+.form-element input[type=password][readonly=readonly]:hover,
+.form-element input[type=text][readonly=readonly]:hover,
+.form-element input[type=url][readonly=readonly]:hover,
+.form-element textarea[readonly=readonly]:hover,
+.form-element input[type=email][readonly=readonly]:focus,
+.form-element input[type=number][readonly=readonly]:focus,
+.form-element input[type=password][readonly=readonly]:focus,
+.form-element input[type=text][readonly=readonly]:focus,
+.form-element input[type=url][readonly=readonly]:focus,
+.form-element textarea[readonly=readonly]:focus {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+.form-element input[type=checkbox].form-error,
+.form-element input[type=email].form-error,
+.form-element input[type=number].form-error,
+.form-element input[type=password].form-error,
+.form-element input[type=text].form-error,
+.form-element input[type=tel].form-error,
+.form-element input[type=url].form-error {
+	border: 1px solid #dd4b39;
+}
+.form-element input[type=checkbox],
+.form-element input[type=radio] {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 13px;
+	height: 13px;
+	margin: 0;
+	cursor: pointer;
+	vertical-align: bottom;
+	background: #fff;
+	border: 1px solid #dcdcdc;
+	-webkit-border-radius: 1px;
+	-moz-border-radius: 1px;
+	border-radius: 1px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	position: relative;
+}
+.form-element input[type=checkbox]:active,
+.form-element input[type=radio]:active {
+	border-color: #c6c6c6;
+	background: #ebebeb;
+}
+.form-element input[type=checkbox]:hover {
+	border-color: #c6c6c6;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+}
+.form-element input[type=radio] {
+	-webkit-border-radius: 1em;
+	-moz-border-radius: 1em;
+	border-radius: 1em;
+	width: 15px;
+	height: 15px;
+}
+.form-element input[type=checkbox]:checked,
+.form-element input[type=radio]:checked {
+	background: #fff;
+}
+.form-element input[type=radio]:checked::after {
+	content: '';
+	display: block;
+	position: relative;
+	top: 3px;
+	left: 3px;
+	width: 7px;
+	height: 7px;
+	background: #666;
+	-webkit-border-radius: 1em;
+	-moz-border-radius: 1em;
+	border-radius: 1em;
+}
+.form-element input[type=checkbox]:checked::after {
+	content: url(https://ssl.gstatic.com/ui/v1/menu/checkmark.png);
+	display: block;
+	position: absolute;
+	top: -6px;
+	left: -5px;
+}
+.form-element input[type=checkbox]:focus {
+	outline: none;
+	border-color:#4d90fe;
+}
+.form-element .image {
+	width: 50%;
+    margin: auto;    
+	border: 2px solid #FFF;
+}
+
+
 /* Layouts: drawer/search/header related */
 .dashboard-layout .mdl-layout__drawer-button {
 	/*position: relative;*/

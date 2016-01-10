@@ -1,0 +1,39 @@
+{% comment %}
+	Info:       Place form (full)
+	Requires:   css and js of static/mdl/*
+	Note:       Don't forget to load staticfiles #}
+{% endcomment %}
+
+<form id="id-place-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
+	{% csrf_token %} 
+	<span class="errormsg">{{ form.non_field_errors }}</span>
+	{% include "repository/include/fieldset-thing.html" %}
+	<fieldset>			
+		{% include "repository/include/field-address.html" %}						
+		<div id="div_id_has_map" class="form-element">	
+			<label for="id_has_map">
+				<strong>{{form.has_map.label}}</strong>
+				<input autocomplete="off" class="form-input" id="id_has_map" maxlength="200" name="has_map" type="url" value="{{ form.has_map.value|default_if_none:'' }}"/>
+			</label>				
+		{% if form.has_map.errors %}
+		    {% for error in form.has_map.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.has_map.help_text %}<span class="help-text">{{ form.has_map.help_text|safe }}</span>{% endif %}					 	
+		</div>						
+		
+	</fieldset>
+	<div class="tAr">
+		<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="submit" value="Save changes" id="id-form-submit"/> 
+		<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;"/>
+	</div>
+</form>
+<script>{% comment %} Prevent Users from submitting form by hitting enter {% endcomment %}
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>

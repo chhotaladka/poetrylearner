@@ -1,0 +1,22 @@
+{% extends "mdl-base.html" %}
+{% load staticfiles %}
+
+{% block title %}Add a place{% endblock %}
+
+{% block main %}	
+<section id="priSect" class="pT-8 pB-48">
+	<div class="_layout layout-sLs mdl-grid">		
+		<section class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+		</section>	
+		<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
+			<div class="mdl-card author-card--lg bS-1 wFull">
+			{% include "repository/include/form-place.html" %}
+			</div>
+		</section>				
+		<section class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+		</section>				
+	</div>		
+</section>	
+{% endblock %}
+
+{% block search %}{% endblock %}

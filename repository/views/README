@@ -1,0 +1,4 @@
+
+readers.py - views strictly reading main content: articles, books, persons, places etc.
+
+writers.py - views that write main content, with possible reading             

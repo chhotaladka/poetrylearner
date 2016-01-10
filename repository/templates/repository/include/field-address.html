@@ -1,0 +1,16 @@
+{% comment %}
+	Info:       Field address.
+	Requires:   Can be included in the Form of an item having 'address' as an text Field 
+	Note:       Don't forget to load staticfiles
+{% endcomment %}
+
+		<div id="div_id_address" class="form-element">
+			<label for="id_address">
+				<strong>{{form.address.label}}</strong>
+				<textarea id="id_address" class="form-input" name="address" rows="2">{{ form.address.value|default_if_none:'' }}</textarea>
+			</label>			
+		{% if form.address.errors %}
+		    {% for error in form.address.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.address.help_text %}<span class="help-text">{{ form.address.help_text|safe }}</span>{% endif %}							
+		</div>

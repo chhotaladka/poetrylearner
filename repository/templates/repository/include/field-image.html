@@ -1,0 +1,24 @@
+{% comment %}
+	Info:       Field image.
+	Requires:   Can be included in the Form of an item having 'image' as an form ImageField 
+	Note:       Don't forget to load staticfiles
+{% endcomment %}
+
+		<div id="div_id_image" class="form-element">
+			<label for="id_image">
+				<strong>{{form.image.label}}</strong>
+			</label>
+			{% if form.image.value %}
+			<img id="preview" class="image" src="/media/{{ form.image.value }}"></img>				 
+			<label for="image-clear_id" class="mdl-checkbox mdl-js-checkbox">
+				<input id="image-clear_id" name="image-clear" type="checkbox" class="mdl-checkbox__input" />
+				<span class="mdl-checkbox__label">Clear</span>
+			</label>
+			<br />Change:
+			{% endif %}
+			<input id="id_image" name="image" type="file" value="{{ form.image.value|default_if_none:'' }}"/>
+		{% if form.image.errors %}
+		    {% for error in form.image.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.image.help_text %}<span class="help-text">{{ form.image.help_text|safe }}</span>{% endif %}		
+		</div>

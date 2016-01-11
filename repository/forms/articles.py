@@ -7,9 +7,11 @@ class PoetryForm(ModelForm):
        
     class Meta:
         model = Poetry
-        fields = '__all__'
-        #fields = ['name', 'name_en', 'sobriquet', 'date_birth', 'date_death', 'image', 'summary', 'source_url']                          
-
+        fields = ['name', 'description', 'same_as', # Thing
+                  'creator', 'license', 'keywords', # CreativeWork
+                  'language', 'body'                # Article
+                  ]
+        
     def save(self, owner, commit=True, *args, **kwargs):
         obj = super(PoetryForm, self).save(commit=False, *args, **kwargs)
 
@@ -22,8 +24,10 @@ class SnippetForm(ModelForm):
        
     class Meta:
         model = Snippet
-        fields = '__all__'
-        #fields = ['name', 'name_en', 'sobriquet', 'date_birth', 'date_death', 'image', 'summary', 'source_url']                          
+        fields = ['name', 'description', 'same_as', # Thing
+                  'media', 'creator', 'contributor', 'publisher', 'license', 'keywords', # CreativeWork
+                  'language', 'body' # Article
+                  ]
 
     def save(self, owner, commit=True, *args, **kwargs):
         obj = super(SnippetForm, self).save(commit=False, *args, **kwargs)

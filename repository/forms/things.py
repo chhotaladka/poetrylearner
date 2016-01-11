@@ -8,7 +8,8 @@ class ProductForm(ModelForm):
     
     class Meta:
         model = Product
-        exclude = ['added_by', 'modified_by']
+        fields = ['name', 'description', 'same_as', # Thing
+                  'manufacturer', 'image', 'is_related_to', 'is_similar_to'] # Product
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
@@ -30,7 +31,8 @@ class EventForm(ModelForm):
     
     class Meta:
         model = Event
-        exclude = ['added_by', 'modified_by']
+        fields = ['name', 'description', 'same_as', # Thing
+                   'location', 'start_date', 'end_date', 'super_event', 'image'] # Event
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
@@ -50,7 +52,8 @@ class OrganizationForm(ModelForm):
     
     class Meta:
         model = Organization
-        exclude = ['added_by', 'modified_by']
+        fields = ['name', 'description', 'same_as', # Thing
+                  'address', 'parent', 'type']      # Organization
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
@@ -69,7 +72,8 @@ class PlaceForm(ModelForm):
     
     class Meta:
         model = Place
-        exclude = ['added_by', 'modified_by']
+        fields = ['name', 'description', 'same_as', # Thing
+                  'address', 'has_map']             # Place
 
     def save(self, owner, commit=True, *args, **kwargs):
         obj = super(self.__class__, self).save(commit=False, *args, **kwargs)        
@@ -82,7 +86,9 @@ class PersonForm(ModelForm):
     
     class Meta:
         model = Person
-        exclude = ['affiliation', 'added_by', 'modified_by']
+        fields = ['name', 'description', 'same_as', # Thing
+                  'additional_name', 'affiliation', 'date_birth', 'date_death', 
+                  'gender', 'image']                # Person
 
     def save(self, owner, commit=True, *args, **kwargs):
         obj = super(self.__class__, self).save(commit=False, *args, **kwargs)        

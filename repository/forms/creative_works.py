@@ -7,8 +7,9 @@ class BookForm(ModelForm):
        
     class Meta:
         model = Book
-        fields = '__all__'
-        #fields = ['name', 'name_en', 'sobriquet', 'date_birth', 'date_death', 'image', 'summary', 'source_url']                          
+        fields = ['name', 'description', 'same_as', # Thing
+                  'creator', 'contributor', 'publisher', 'license', 'keywords', # CreativeWork
+                  'language', 'isbn'] # Book
 
     def save(self, owner, commit=True, *args, **kwargs):
         obj = super(BookForm, self).save(commit=False, *args, **kwargs)

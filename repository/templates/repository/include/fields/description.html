@@ -1,0 +1,16 @@
+{% comment %}
+	Info:       Field description.
+	Requires:   Can be included in the Form of an item having 'description' as TextField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_description" class="form-element">	
+			<label for="id_description">
+				<strong>{{form.description.label}}</strong>
+				<textarea id="id_description" class="form-input" name="description" rows="2">{{ form.description.value|default_if_none:'' }}</textarea>
+			</label>			
+		{% if form.description.errors %}
+		    {% for error in form.description.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.description.help_text %}<span class="help-text">{{ form.description.help_text|safe }}</span>{% endif %}				
+		</div>

@@ -1,0 +1,16 @@
+{% comment %}
+	Info:       Field same_as.
+	Requires:   Can be included in the Form of an item having 'same_as' as URLField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_same_as" class="form-element">	
+			<label for="id_same_as">
+				<strong>{{form.same_as.label}}</strong>
+				<input autocomplete="off" class="form-input" id="id_same_as" maxlength="200" name="same_as" type="url" value="{{ form.same_as.value|default_if_none:'' }}"/>
+			</label>				
+		{% if form.same_as.errors %}
+		    {% for error in form.same_as.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.same_as.help_text %}<span class="help-text">{{ form.same_as.help_text|safe }}</span>{% endif %}					 	
+		</div>

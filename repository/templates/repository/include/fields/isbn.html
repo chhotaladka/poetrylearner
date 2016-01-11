@@ -1,0 +1,16 @@
+{% comment %}
+	Info:       Field isbn.
+	Requires:   Can be included in the Form of an item having 'isbn' as CharField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_isbn" class="form-element">
+			<label for="id_isbn">
+				<strong>{{form.isbn.label}}</strong>
+				<input id="id_isbn" class="form-input" name="isbn" type="text" spellcheck="false" autocomplete="off" maxlength="300" value="{{ form.isbn.value|default_if_none:'' }}" required/>
+			</label>			
+		{% if form.isbn.errors %}
+		    {% for error in form.isbn.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+			{% if form.isbn.help_text %}<span class="help-text">{{ form.isbn.help_text|safe }}</span>{% endif %}			
+		</div>

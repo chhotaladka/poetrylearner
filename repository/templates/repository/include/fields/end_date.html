@@ -1,0 +1,17 @@
+{% comment %}
+	Info:       Field end_date.
+	Requires:   Can be included in the Form of an item having 'end_date' as DateField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_end_date" class="form-element">	
+			<label for="id_end_date">
+				<strong>{{form.end_date.label}}</strong>
+				<input id="id_end_date" class="form-input" name="end_date" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value={% if form.errors %}"{{ form.end_date.value|default_if_none:'' }}"{% else %}"{{ form.end_date.value|date:'Y-m-d'|default_if_none:'' }}"{% endif %}/>
+			</label>							
+		{% if form.end_date.errors %}
+		    {% for error in form.end_date.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+			<span class="mdl-textfield__error">Wrong format</span>
+			{% if form.end_date.help_text %}<span class="help-text">{{ form.end_date.help_text|safe }}</span>{% endif %}				
+		</div>

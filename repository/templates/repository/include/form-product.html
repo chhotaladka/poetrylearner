@@ -9,37 +9,8 @@
 	<span class="errormsg">{{ form.non_field_errors }}</span>
 	{% include "repository/include/fieldset-thing.html" %}
 	<fieldset>
-		<div id="div_id_type" class="form-element">
-			<label for="id_type">
-				<strong>{{form.type.label}}</strong>
-			</label>		
-			<select id="id_type" name="type">
-    		{% if form.fields.type.choices %}{% for x,y in form.fields.type.choices %}
-    			<option value="{{ x }}"{% if form.type.value == x %} selected=selected{% endif %}>{{ y }}</option>
-			{% endfor %}{% endif %}
-			</select>				
-		{% if form.type.errors %}
-		    {% for error in form.type.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
-		{% endif %}
-		{% if form.type.help_text %}<span class="help-text">{{ form.type.help_text|safe }}</span>{% endif %}					
-		</div>
-
-		<div id="div_id_manufacturer" class="form-element">
-			<label for="id_manufacturer">
-				<strong>{{form.manufacturer.label}}</strong>
-			</label>		
-			<select id="id_manufacturer" name="manufacturer">
-    		{% if form.fields.manufacturer.choices %}{% for x,y in form.fields.manufacturer.choices %}
-    			<option value="{{ x }}"{% if form.manufacturer.value == x %} selected=selected{% endif %}>{{ y }}</option>
-			{% endfor %}{% endif %}
-			</select>				
-		{% if form.manufacturer.errors %}
-		    {% for error in form.manufacturer.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
-		{% endif %}
-		{% if form.manufacturer.help_text %}<span class="help-text">{{ form.manufacturer.help_text|safe }}</span>{% endif %}					
-		</div>					
-		{% include "repository/include/field-image.html" %}					
-		
+		{% include "repository/include/fields/manufacturer.html" %}
+		{% include "repository/include/fields/image.html" %}		
 	</fieldset>
 	<div class="tAr">
 		<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="submit" value="Save changes" id="id-form-submit"/> 

@@ -1,0 +1,24 @@
+{% comment %}
+	Info:       Field media.
+	Requires:   Can be included in the Form of an item having 'media' as an form FileField 
+	Note:       Don't forget to load staticfiles
+{% endcomment %}
+
+		<div id="div_id_media" class="form-element">
+			<label for="id_media">
+				<strong>{{form.media.label}}</strong>
+			</label>
+			{% if form.media.value %}							
+			<label for="media-clear_id" class="mdl-checkbox mdl-js-checkbox">
+				<a id="preview" href="/media/{{ form.media.value }}">"{{ form.media.value }}"</a>
+				<input id="media-clear_id" name="media-clear" type="checkbox" class="mdl-checkbox__input" />
+				<span class="mdl-checkbox__label">Clear</span>
+			</label>
+			<br />Change:
+			{% endif %}
+			<input id="id_media" name="media" type="file" value="{{ form.media.value|default_if_none:'' }}"/>
+		{% if form.media.errors %}
+		    {% for error in form.media.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.media.help_text %}<span class="help-text">{{ form.media.help_text|safe }}</span>{% endif %}		
+		</div>

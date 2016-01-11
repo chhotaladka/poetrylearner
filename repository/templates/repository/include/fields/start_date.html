@@ -1,0 +1,17 @@
+{% comment %}
+	Info:       Field start_date.
+	Requires:   Can be included in the Form of an item having 'start_date' as DateField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_start_date" class="form-element">	
+			<label for="id_start_date">
+				<strong>{{form.start_date.label}}</strong>
+				<input id="id_start_date" class="form-input" name="start_date" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value={% if form.errors %}"{{ form.start_date.value|default_if_none:'' }}"{% else %}"{{ form.start_date.value|date:'Y-m-d'|default_if_none:'' }}"{% endif %}/>
+			</label>						
+		{% if form.start_date.errors %}
+		    {% for error in form.start_date.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+			<span class="mdl-textfield__error">Wrong format</span>
+			{% if form.start_date.help_text %}<span class="help-text">{{ form.start_date.help_text|safe }}</span>{% endif %}					
+		</div>

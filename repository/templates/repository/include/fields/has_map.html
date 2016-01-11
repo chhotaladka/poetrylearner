@@ -1,0 +1,16 @@
+{% comment %}
+	Info:       Field has_map.
+	Requires:   Can be included in the Form of an item having 'has_map' as URLField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_has_map" class="form-element">	
+			<label for="id_has_map">
+				<strong>{{form.has_map.label}}</strong>
+				<input autocomplete="off" class="form-input" id="id_has_map" maxlength="200" name="has_map" type="url" value="{{ form.has_map.value|default_if_none:'' }}"/>
+			</label>				
+		{% if form.has_map.errors %}
+		    {% for error in form.has_map.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.has_map.help_text %}<span class="help-text">{{ form.has_map.help_text|safe }}</span>{% endif %}					 	
+		</div>

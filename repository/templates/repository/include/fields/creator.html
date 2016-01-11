@@ -1,0 +1,20 @@
+{% comment %}
+	Info:       Field creator.
+	Requires:   Can be included in the Form of an item having 'creator' as a ForeignKey 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_creator" class="form-element">
+			<label for="id_creator">
+				<strong>{{form.creator.label}}</strong>
+			</label>		
+			<select id="id_creator" name="creator" required>
+    		{% if form.fields.creator.choices %}{% for x,y in form.fields.creator.choices %}
+    			<option value="{{ x }}"{% if form.creator.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}{% endif %}
+			</select>				
+		{% if form.creator.errors %}
+		    {% for error in form.creator.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.creator.help_text %}<span class="help-text">{{ form.creator.help_text|safe }}</span>{% endif %}				
+		</div>	

@@ -1,0 +1,16 @@
+{% comment %}
+	Info:       Field keywords.
+	Requires:   Can be included in the Form of an item having 'keywords' as an form CharField/TaggableManager 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_keywords" class="form-element">
+			<label for="id_keywords">
+				<strong>{{form.keywords.label}}</strong>
+				<input id="id_keywords" class="form-input" name="keywords" type="text" spellcheck="false" autocomplete="off" maxlength="300" value="{{ form.keywords.value|default_if_none:'' }}"/>
+			</label>			
+		{% if form.keywords.errors %}
+		    {% for error in form.keywords.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+			{% if form.keywords.help_text %}<span class="help-text">{{ form.keywords.help_text|safe }}</span>{% endif %}			
+		</div>

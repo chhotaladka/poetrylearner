@@ -1,0 +1,20 @@
+{% comment %}
+	Info:       Field location.
+	Requires:   Can be included in the Form of an item having 'location' as a ForeignKey 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_location" class="form-element">
+			<label for="id_location">
+				<strong>{{form.location.label}}</strong>
+			</label>		
+			<select id="id_location" name="location">
+    		{% if form.fields.location.choices %}{% for x,y in form.fields.location.choices %}
+    			<option value="{{ x }}"{% if form.location.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}{% endif %}
+			</select>				
+		{% if form.location.errors %}
+		    {% for error in form.location.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.location.help_text %}<span class="help-text">{{ form.location.help_text|safe }}</span>{% endif %}					
+		</div>	

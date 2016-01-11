@@ -1,0 +1,20 @@
+{% comment %}
+	Info:       Field type.
+	Requires:   Can be included in the Form of an item having 'type' as Choice CharField 
+	Note:       Type of organization
+{% endcomment %}
+
+		<div id="div_id_type" class="form-element">
+			<label for="id_type">
+				<strong>{{form.type.label}}</strong>
+			</label>		
+			<select id="id_type" name="type">
+    		{% if form.fields.type.choices %}{% for x,y in form.fields.type.choices %}
+    			<option value="{{ x }}"{% if form.type.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}{% endif %}
+			</select>				
+		{% if form.type.errors %}
+		    {% for error in form.type.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.type.help_text %}<span class="help-text">{{ form.type.help_text|safe }}</span>{% endif %}					
+		</div>

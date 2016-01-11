@@ -1,0 +1,16 @@
+{% comment %}
+	Info:       Field additional_name.
+	Requires:   Can be included in the Form of an item having 'additional_name' as CharField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_additional_name" class="form-element">
+			<label for="id_additional_name">
+				<strong>{{form.additional_name.label}}</strong>
+				<input id="id_additional_name" class="form-input" name="additional_name" type="text" autocomplete="off" maxlength="200" value="{{ form.additional_name.value|default_if_none:'' }}"/>
+			</label>			
+		{% if form.additional_name.errors %}
+		    {% for error in form.additional_name.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.additional_name.help_text %}<span class="help-text">{{ form.additional_name.help_text|safe }}</span>{% endif %}							
+		</div>

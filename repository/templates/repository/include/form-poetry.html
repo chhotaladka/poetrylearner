@@ -1,82 +1,21 @@
 {% comment %}
-	Info:       Person form (full)
+	Info:       Poetry form (full)
 	Requires:   css and js of static/mdl/*
-	Note:       Don't forget to load staticfiles #}
+	Note:       xxx
 {% endcomment %}
 
-<form id="id-person-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
+<form id="id-poetry-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
 	{% csrf_token %} 
 	<span class="errormsg">{{ form.non_field_errors }}</span>
-	{% include "repository/include/fieldset-thing.html" %}
 	<fieldset>
-		<div id="div_id_additional_name" class="form-element">
-			<label for="id_additional_name">
-				<strong>{{form.additional_name.label}}</strong>
-				<input id="id_additional_name" class="form-input" name="additional_name" type="text" autocomplete="off" maxlength="200" value="{{ form.additional_name.value|default_if_none:'' }}"/>
-			</label>			
-		{% if form.additional_name.errors %}
-		    {% for error in form.additional_name.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
-		{% endif %}
-		{% if form.additional_name.help_text %}<span class="help-text">{{ form.additional_name.help_text|safe }}</span>{% endif %}							
-		</div>
-
-		<div id="div_id_gender" class="form-element">
-			<label for="id_gender">
-				<strong>{{form.gender.label}}</strong>
-			</label>		
-			<select id="id_gender" name="gender">
-    		{% if form.fields.gender.choices %}{% for x,y in form.fields.gender.choices %}
-    			<option value="{{ x }}"{% if form.gender.value == x %} selected=selected{% endif %}>{{ y }}</option>
-			{% endfor %}{% endif %}
-			</select>				
-		{% if form.gender.errors %}
-		    {% for error in form.gender.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
-		{% endif %}					
-		</div>						
-	
-		<div id="div_id_date_birth" class="form-element">	
-			<label for="id_date_birth">
-				<strong>{{form.date_birth.label}}</strong>
-				<input id="id_date_birth" class="form-input" name="date_birth" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value={% if form.errors %}"{{ form.date_birth.value|default_if_none:'' }}"{% else %}"{{ form.date_birth.value|date:'Y-m-d'|default_if_none:'' }}"{% endif %}/>
-			</label>						
-		{% if form.date_birth.errors %}
-		    {% for error in form.date_birth.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
-		{% endif %}
-			<span class="mdl-textfield__error">Wrong format</span>
-			{% if form.date_birth.help_text %}<span class="help-text">{{ form.date_birth.help_text|safe }}</span>{% endif %}					
-		</div>		
-		
-		<div id="div_id_date_death" class="form-element">	
-			<label for="id_date_death">
-				<strong>{{form.date_death.label}}</strong>
-				<input id="id_date_death" class="form-input" name="date_death" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value={% if form.errors %}"{{ form.date_death.value|default_if_none:'' }}"{% else %}"{{ form.date_death.value|date:'Y-m-d'|default_if_none:'' }}"{% endif %}/>
-				</label>							
-		{% if form.date_death.errors %}
-		    {% for error in form.date_death.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
-		{% endif %}
-			<span class="mdl-textfield__error">Wrong format</span>
-			{% if form.date_death.help_text %}<span class="help-text">{{ form.date_death.help_text|safe }}</span>{% endif %}				
-		</div>		
-		
-		<div id="div_id_image" class="form-element">
-			<label for="id_image">
-				<strong>{{form.image.label}}</strong>
-			</label>
-			{% if form.image.value %}
-			<img id="preview" class="image" src="/media/{{ form.image.value }}"></img>				 
-			<label for="image-clear_id" class="mdl-checkbox mdl-js-checkbox">
-				<input id="image-clear_id" name="image-clear" type="checkbox" class="mdl-checkbox__input" />
-				<span class="mdl-checkbox__label">Clear</span>
-			</label>
-			<br />Change:
-			{% endif %}
-			<input id="id_image" name="image" type="file" value="{{ form.image.value|default_if_none:'' }}"/>
-		{% if form.image.errors %}
-		    {% for error in form.image.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
-		{% endif %}
-		{% if form.image.help_text %}<span class="help-text">{{ form.image.help_text|safe }}</span>{% endif %}		
-		</div>				
-		
+		{% include "repository/include/fields/language.html" %}
+		{% include "repository/include/fields/name.html" %}
+		{% include "repository/include/fields/body.html" %}
+		{% include "repository/include/fields/creator.html" %}
+		{% include "repository/include/fields/keywords.html" %}		
+		{% include "repository/include/fields/same_as.html" %}	
+		{% include "repository/include/fields/license.html" %}
+		{% include "repository/include/fields/description.html" %}	
 	</fieldset>
 	<div class="tAr">
 		<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="submit" value="Save changes" id="id-form-submit"/> 

@@ -1,0 +1,19 @@
+{% comment %}
+	Info:       Field gender.
+	Requires:   Can be included in the Form of an item having 'gender' as Choice CharField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_gender" class="form-element">
+			<label for="id_gender">
+				<strong>{{form.gender.label}}</strong>
+			</label>		
+			<select id="id_gender" name="gender">
+    		{% if form.fields.gender.choices %}{% for x,y in form.fields.gender.choices %}
+    			<option value="{{ x }}"{% if form.gender.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}{% endif %}
+			</select>				
+		{% if form.gender.errors %}
+		    {% for error in form.gender.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}					
+		</div>

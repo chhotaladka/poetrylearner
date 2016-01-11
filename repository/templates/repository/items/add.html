@@ -1,0 +1,91 @@
+{% extends "mdl-base.html" %}
+{% load staticfiles %}
+
+{% block title %}Add an item{% endblock %}
+
+{% block main %}
+<section class="pT-8 pB-16">
+	<div class="_layout layout-L mdl-grid">
+
+		<div class="__c mdl-cell mdl-cell--12-col mdl-grid">
+
+			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+				<a href="{% url 'repository:add-person' pk='' %}?cancel={{request.path}}" class="icon">						
+					<i class="material-icons">person</i>
+				</a>		
+				<div class="title-text">
+					<a href="{% url 'repository:add-person' pk='' %}?cancel={{request.path}}">Add Person</a>
+				</div>
+			</div>
+
+			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+				<a href="{% url 'repository:add-poetry' pk='' %}?cancel={{request.path}}" class="icon">						
+					<i class="material-icons">local_library</i>
+				</a>											
+				<div class="title-text">
+					<a href="{% url 'repository:add-poetry' pk='' %}?cancel={{request.path}}">Add Poetry</a>
+				</div>																				
+			</div>			
+
+			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+				<a href="{% url 'repository:add-book' pk='' %}?cancel={{request.path}}" class="icon">						
+					<i class="material-icons">book</i>
+				</a>								
+				<div class="title-text">
+					<a href="{% url 'repository:add-book' pk='' %}?cancel={{request.path}}">Add Book</a>	
+				</div>	
+			</div>
+
+			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+				<a href="{% url 'repository:add-snippet' pk='' %}?cancel={{request.path}}" class="icon">						
+					<i class="material-icons">style</i>
+				</a>										
+				<div class="title-text">
+					<a href="{% url 'repository:add-snippet' pk='' %}?cancel={{request.path}}">Add Snippet</a>
+				</div>			
+			</div>
+						
+			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">	
+				<a href="{% url 'repository:add-org' pk='' %}?cancel={{request.path}}" class="icon">						
+					<i class="material-icons">business</i>
+				</a>								
+				<div class="title-text">
+					<a href="{% url 'repository:add-org' pk='' %}?cancel={{request.path}}">Add Organization</a>
+				</div>															
+			</div>
+			
+			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+				<a href="{% url 'repository:add-event' pk='' %}?cancel={{request.path}}" class="icon">						
+					<i class="material-icons">event</i>
+				</a>									
+				<div class="title-text">
+					<a href="{% url 'repository:add-event' pk='' %}?cancel={{request.path}}">Add Event</a>
+				</div>
+			</div>
+			
+			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+				<a href="{% url 'repository:add-product' pk='' %}?cancel={{request.path}}" class="icon">						
+					<i class="material-icons">shopping_cart</i>
+				</a>										
+				<div class="title-text">
+					<a href="{% url 'repository:add-product' pk='' %}?cancel={{request.path}}">Add Product</a>	
+				</div>																			
+			</div>	
+
+			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+				<a href="{% url 'repository:add-place' pk='' %}?cancel={{request.path}}" class="icon">						
+					<i class="material-icons">place</i>
+				</a>											
+				<div class="title-text">
+					<a href="{% url 'repository:add-place' pk='' %}?cancel={{request.path}}">Add Place</a>
+				</div>																			
+			</div>							
+
+		</div>
+
+	</div>	
+</section>
+		
+{% endblock %}
+
+{% block search %}{% endblock %}

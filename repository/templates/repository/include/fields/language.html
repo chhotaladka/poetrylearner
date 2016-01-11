@@ -1,0 +1,20 @@
+{% comment %}
+	Info:       Field language.
+	Requires:   Can be included in the Form of an item having 'language' as Choice CharField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_language" class="form-element">
+			<label for="id_language">
+				<strong>{{form.language.label}}</strong>
+			</label>		
+			<select id="id_language" name="language">
+    		{% if form.fields.language.choices %}{% for x,y in form.fields.language.choices %}
+    			<option value="{{ x }}"{% if form.language.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}{% endif %}
+			</select>				
+		{% if form.language.errors %}
+		    {% for error in form.language.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.language.help_text %}<span class="help-text">{{ form.language.help_text|safe }}</span>{% endif %}				
+		</div>

@@ -1,0 +1,36 @@
+{% comment %}
+	Info:       Book form (full)
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+
+<form id="id-snippet-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
+	{% csrf_token %} 
+	<span class="errormsg">{{ form.non_field_errors }}</span>
+	<fieldset>
+		{% include "repository/include/fields/language.html" %}
+		{% include "repository/include/fields/name.html" %}
+		{% include "repository/include/fields/isbn.html" %}
+		{% include "repository/include/fields/creator.html" %}
+		{% include "repository/include/fields/publisher.html" %}
+		{#{% include "repository/include/fields/contributor.html" %}#}		
+		{% include "repository/include/fields/keywords.html" %}		
+		{% include "repository/include/fields/same_as.html" %}			
+		{% include "repository/include/fields/license.html" %}
+		{% include "repository/include/fields/description.html" %}	
+	</fieldset>
+	<div class="tAr">
+		<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="submit" value="Save changes" id="id-form-submit"/> 
+		<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;"/>
+	</div>
+</form>
+<script>{% comment %} Prevent Users from submitting form by hitting enter {% endcomment %}
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>

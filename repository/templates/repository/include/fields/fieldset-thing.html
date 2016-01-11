@@ -1,0 +1,11 @@
+{% comment %}
+	Info:       Fieldset for classes derived from Thing.
+	Requires:   Must be included in the Form of child classes of Thing 
+	Note:       xxx
+{% endcomment %}
+
+	<fieldset>
+		{% include "repository/include/fields/name.html" %}
+		{% include "repository/include/fields/description.html" %}		
+		{% include "repository/include/fields/same_as.html" %}	
+	</fieldset>

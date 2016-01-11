@@ -1,0 +1,20 @@
+{% comment %}
+	Info:       Field publisher.
+	Requires:   Can be included in the Form of an item having 'publisher' as a ForeignKey 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_publisher" class="form-element">
+			<label for="id_publisher">
+				<strong>{{form.publisher.label}}</strong>
+			</label>		
+			<select id="id_publisher" name="publisher">
+    		{% if form.fields.publisher.choices %}{% for x,y in form.fields.publisher.choices %}
+    			<option value="{{ x }}"{% if form.publisher.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}{% endif %}
+			</select>				
+		{% if form.publisher.errors %}
+		    {% for error in form.publisher.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.publisher.help_text %}<span class="help-text">{{ form.publisher.help_text|safe }}</span>{% endif %}				
+		</div>	

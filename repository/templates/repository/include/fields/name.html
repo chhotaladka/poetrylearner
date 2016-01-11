@@ -1,0 +1,16 @@
+{% comment %}
+	Info:       Field name.
+	Requires:   Can be included in the Form of an item having 'name' as CharField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_name" class="form-element">
+			<label for="id_name">
+				<strong>{{form.name.label}}</strong>
+				<input id="id_name" class="form-input" name="name" type="text" spellcheck="false" autocomplete="off" maxlength="300" value="{{ form.name.value|default_if_none:'' }}" required/>
+			</label>			
+		{% if form.name.errors %}
+		    {% for error in form.name.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+			{% if form.name.help_text %}<span class="help-text">{{ form.name.help_text|safe }}</span>{% endif %}			
+		</div>

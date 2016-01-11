@@ -9,66 +9,18 @@
 	<span class="errormsg">{{ form.non_field_errors }}</span>
 	{% include "repository/include/fieldset-thing.html" %}
 	<fieldset>
-		<div id="div_id_super_event" class="form-element">
-			<label for="id_super_event">
-				<strong>{{form.super_event.label}}</strong>
-			</label>		
-			<select id="id_super_event" name="super_event">
-    		{% if form.fields.super_event.choices %}{% for x,y in form.fields.super_event.choices %}
-    			<option value="{{ x }}"{% if form.super_event.value == x %} selected=selected{% endif %}>{{ y }}</option>
-			{% endfor %}{% endif %}
-			</select>				
-		{% if form.super_event.errors %}
-		    {% for error in form.super_event.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
-		{% endif %}
-		{% if form.super_event.help_text %}<span class="help-text">{{ form.super_event.help_text|safe }}</span>{% endif %}					
-		</div>
+		{% include "repository/include/fields/super_event.html" %}
 			
-		<div id="div_id_start_date" class="form-element">	
-			<label for="id_start_date">
-				<strong>{{form.start_date.label}}</strong>
-				<input id="id_start_date" class="form-input" name="start_date" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value={% if form.errors %}"{{ form.start_date.value|default_if_none:'' }}"{% else %}"{{ form.start_date.value|date:'Y-m-d'|default_if_none:'' }}"{% endif %}/>
-			</label>						
-		{% if form.start_date.errors %}
-		    {% for error in form.start_date.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
-		{% endif %}
-			<span class="mdl-textfield__error">Wrong format</span>
-			{% if form.start_date.help_text %}<span class="help-text">{{ form.start_date.help_text|safe }}</span>{% endif %}					
-		</div>	
-					
-		<div id="div_id_end_date" class="form-element">	
-			<label for="id_end_date">
-				<strong>{{form.end_date.label}}</strong>
-				<input id="id_end_date" class="form-input" name="end_date" autocomplete="off" type="text" pattern="^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$" value={% if form.errors %}"{{ form.end_date.value|default_if_none:'' }}"{% else %}"{{ form.end_date.value|date:'Y-m-d'|default_if_none:'' }}"{% endif %}/>
-				</label>							
-		{% if form.end_date.errors %}
-		    {% for error in form.end_date.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
-		{% endif %}
-			<span class="mdl-textfield__error">Wrong format</span>
-			{% if form.end_date.help_text %}<span class="help-text">{{ form.end_date.help_text|safe }}</span>{% endif %}				
-		</div>
+		{% include "repository/include/fields/start_date.html" %}
+		{% include "repository/include/fields/end_date.html" %}
 
-		<div id="div_id_location" class="form-element">
-			<label for="id_location">
-				<strong>{{form.location.label}}</strong>
-			</label>		
-			<select id="id_location" name="location">
-    		{% if form.fields.location.choices %}{% for x,y in form.fields.location.choices %}
-    			<option value="{{ x }}"{% if form.location.value == x %} selected=selected{% endif %}>{{ y }}</option>
-			{% endfor %}{% endif %}
-			</select>				
-		{% if form.location.errors %}
-		    {% for error in form.location.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
-		{% endif %}
-		{% if form.location.help_text %}<span class="help-text">{{ form.location.help_text|safe }}</span>{% endif %}					
-		</div>								
-
-		{% include "repository/include/field-image.html" %}						
+		{% include "repository/include/fields/location.html" %}
+		{% include "repository/include/fields/image.html" %}						
 		
 	</fieldset>
 	<div class="tAr">
 		<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="submit" value="Save changes" id="id-form-submit"/> 
-		<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;"/>
+		<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" name="cancel" value="Cancel" id="id-form-cancel" onclick="document.location.href=&#39;{{ cancel_url }}&#39;"/>
 	</div>
 </form>
 <script>{% comment %} Prevent Users from submitting form by hitting enter {% endcomment %}

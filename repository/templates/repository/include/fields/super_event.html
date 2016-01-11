@@ -1,0 +1,20 @@
+{% comment %}
+	Info:       Field super_event.
+	Requires:   Can be included in the Form of an item having 'super_event' as a ForeignKey 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_super_event" class="form-element">
+			<label for="id_super_event">
+				<strong>{{form.super_event.label}}</strong>
+			</label>		
+			<select id="id_super_event" name="super_event">
+    		{% if form.fields.super_event.choices %}{% for x,y in form.fields.super_event.choices %}
+    			<option value="{{ x }}"{% if form.super_event.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}{% endif %}
+			</select>				
+		{% if form.super_event.errors %}
+		    {% for error in form.super_event.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.super_event.help_text %}<span class="help-text">{{ form.super_event.help_text|safe }}</span>{% endif %}					
+		</div>	

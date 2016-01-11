@@ -1,0 +1,16 @@
+{% comment %}
+	Info:       Field license.
+	Requires:   Can be included in the Form of an item having 'license' as an form CharField 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_license" class="form-element">
+			<label for="id_license">
+				<strong>{{form.license.label}}</strong>
+				<input id="id_license" class="form-input" name="license" type="text" spellcheck="false" autocomplete="off" maxlength="300" value="{{ form.license.value|default_if_none:'' }}"/>
+			</label>			
+		{% if form.license.errors %}
+		    {% for error in form.license.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+			{% if form.license.help_text %}<span class="help-text">{{ form.license.help_text|safe }}</span>{% endif %}			
+		</div>

@@ -1,0 +1,20 @@
+{% comment %}
+	Info:       Field manufacturer.
+	Requires:   Can be included in the Form of an item having 'manufacturer' as a ForeignKey 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_manufacturer" class="form-element">
+			<label for="id_manufacturer">
+				<strong>{{form.manufacturer.label}}</strong>
+			</label>		
+			<select id="id_manufacturer" name="manufacturer">
+    		{% if form.fields.manufacturer.choices %}{% for x,y in form.fields.manufacturer.choices %}
+    			<option value="{{ x }}"{% if form.manufacturer.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}{% endif %}
+			</select>				
+		{% if form.manufacturer.errors %}
+		    {% for error in form.manufacturer.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.manufacturer.help_text %}<span class="help-text">{{ form.manufacturer.help_text|safe }}</span>{% endif %}					
+		</div>	

@@ -21,7 +21,7 @@ class Book(CreativeWork):
 
     language = models.CharField(max_length=8, 
                                 choices=LANGUAGES, default='en',
-                                help_text=_('The language of the content.')
+                                help_text=_('The language of the book.')
                                 )
         
     isbn = models.CharField(max_length=32,

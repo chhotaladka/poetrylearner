@@ -25,7 +25,7 @@ class Thing(models.Model):
     '''
     
     name = models.CharField(max_length=300,
-                            help_text=_('The name/headline of the item.')
+                            help_text=_('The name/title/headline of the item.')
                         )    
     description = models.TextField(null=True, blank=True,
                                    help_text=_('A short description of the item.')

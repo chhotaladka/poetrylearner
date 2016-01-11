@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^add/book/(?P<pk>\d*)/?$', views.writers.AddBook.as_view(), name='add-book'),
     url(r'^add/poetry/(?P<pk>\d*)/?$', views.writers.AddPoetry.as_view(), name='add-poetry'),
     url(r'^add/snippet/(?P<pk>\d*)/?$', views.writers.AddSnippet.as_view(), name='add-snippet'),
+    url(r'^add/?$', views.writers.add_item, name='add-item'),
     
     url(r'^data/(?P<type>[\w.@+-]+)/(?P<pk>\d+)/(?P<slug>[\w.@+-]+)?/?$', views.readers.item, name='item'),
 

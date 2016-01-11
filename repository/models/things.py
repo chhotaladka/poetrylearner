@@ -201,11 +201,11 @@ class Event(Thing):
                             )
     
     start_date = models.DateField(null=True, blank=True,
-                                  help_text=_('The start date <YYYY-MM-DD> of the event.')
+                                  help_text=_('The start date "YYYY-MM-DD" of the event.')
                                 )
     
     end_date = models.DateField(null=True, blank=True,
-                                  help_text=_('The end date <YYYY-MM-DD> of the event.')
+                                  help_text=_('The end date "YYYY-MM-DD" of the event.')
                                 )
     
     super_event = models.ForeignKey('self',
@@ -265,7 +265,7 @@ class CreativeWork(Thing):
                                    help_text=_('Resource(s) used in the creation of this resource. A citation or reference to another creative work, such as another publication, web page, scholarly article, etc.')
                                 )
     
-    date_published = models.DateTimeField(auto_now=True,
+    date_published = models.DateTimeField(null=True, blank=True,
                                           help_text=_('Date of first broadcast/publication.')
                                         )    
     

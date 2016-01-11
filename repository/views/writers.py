@@ -104,13 +104,24 @@ class CreateThingView(View):
         return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url})
 
 
+def add_item(request):
+    '''
+    Add an item
+    '''    
+    ##
+    # Make the context and render  
+    context = {'obj': None }
+    template = "repository/items/add.html"  
+    return render(request, template, context)
+    
+
 class AddPerson(CreateThingView):
     '''
     Add/Edit a Person
     '''
     model = Person
     form_class = PersonForm
-    template_name = 'repository/add-person.html'
+    template_name = 'repository/items/add-person.html'
     ajax_template_name = 'repository/include/form-person.html'
 
     @method_decorator(login_required)

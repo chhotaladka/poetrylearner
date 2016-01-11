@@ -7,7 +7,7 @@
 		<div id="div_id_isbn" class="form-element">
 			<label for="id_isbn">
 				<strong>{{form.isbn.label}}</strong>
-				<input id="id_isbn" class="form-input" name="isbn" type="text" spellcheck="false" autocomplete="off" maxlength="300" value="{{ form.isbn.value|default_if_none:'' }}" required/>
+				<input id="id_isbn" class="form-input" name="isbn" type="text" spellcheck="false" autocomplete="off" maxlength="300" value="{{ form.isbn.value|default_if_none:'' }}"/>
 			</label>			
 		{% if form.isbn.errors %}
 		    {% for error in form.isbn.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}

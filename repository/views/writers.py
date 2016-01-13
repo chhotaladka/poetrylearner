@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
+from django.utils import timezone
 import json
 
 from repository.models import *
@@ -17,12 +18,12 @@ from repository.forms import *
 
 class CreateThingView(View):
     '''
-    Add/Edit an Item(Thing)
+    Base class for Add/Edit an Item(Thing)
     '''
-    model = Person
-    form_class = PersonForm
-    template_name = 'repository/add-person.html'
-    ajax_template_name = 'repository/include/form-person.html'
+    model = None
+    form_class = None
+    template_name = None
+    ajax_template_name = None
     cancel_url = '/'    
     
     def form_valid(self, form):
@@ -40,7 +41,7 @@ class CreateThingView(View):
         if request.is_ajax():
             self.template_name = self.ajax_template_name
             
-        if len(kwargs.get('pk', None)) is 0:
+        if kwargs.get('pk', None) is None:
             # Create
             form = self.form_class(initial=None)
         else:
@@ -55,12 +56,12 @@ class CreateThingView(View):
         if request.is_ajax():
             self.template_name = self.ajax_template_name
                     
-        if len(kwargs.get('pk', None)) is not 0:
+        if kwargs.get('pk', None) is None:
+            # Create
+            instance = self.model()         
+        else:
             # Update
             instance = self.model.objects.get(id=kwargs.get('pk', None))
-        else:
-            # Create
-            instance = self.model()
             
         form = self.form_class(request.POST, request.FILES, instance=instance)
         
@@ -103,8 +104,72 @@ class CreateThingView(View):
                         
         return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url})
 
+  
+class AddItem(CreateThingView):
+    '''
+    Add/Edit an Item
+    '''
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        type = kwargs.get('type', None)
+        print "DBG: requested content type > ", type
+        # Check the type i.e. content_type and derive the data model etc.
+        if type == Snippet.content_type():
+            self.model = Snippet
+            self.form_class = SnippetForm
+            self.template_name = 'repository/items/add-snippet.html'
+            self.ajax_template_name = 'repository/include/form-snippet.html' 
+            
+        elif type == Poetry.content_type():
+            self.model = Poetry
+            self.form_class = PoetryForm
+            self.template_name = 'repository/items/add-poetry.html'
+            self.ajax_template_name = 'repository/include/form-poetry.html'
+            
+        elif type == Person.content_type():
+            self.model = Person
+            self.form_class = PersonForm
+            self.template_name = 'repository/items/add-person.html'
+            self.ajax_template_name = 'repository/include/form-person.html'
+            
+        elif type == Place.content_type():
+            self.model = Place
+            self.form_class = PlaceForm
+            self.template_name = 'repository/items/add-place.html'
+            self.ajax_template_name = 'repository/include/form-place.html'
+                   
+        elif type == Product.content_type():
+            self.model = Product
+            self.form_class = ProductForm
+            self.template_name = 'repository/items/add-product.html'
+            self.ajax_template_name = 'repository/include/form-product.html'
+                      
+        elif type == Event.content_type():
+            self.model = Event
+            self.form_class = EventForm
+            self.template_name = 'repository/items/add-event.html'
+            self.ajax_template_name = 'repository/include/form-event.html'
+                     
+        elif type == Organization.content_type():
+            self.model = Organization
+            self.form_class = OrganizationForm
+            self.template_name = 'repository/items/add-organization.html'
+            self.ajax_template_name = 'repository/include/form-organization.html' 
+    
+        elif type == Book.content_type():
+            self.model = Book
+            self.form_class = BookForm
+            self.template_name = 'repository/items/add-book.html'
+            self.ajax_template_name = 'repository/include/form-book.html'
+                    
+        else:
+            print "Error: content type is not found"
+            raise Http404
+                
+        return super(self.__class__, self).dispatch(request, *args, **kwargs) 
 
-def add_item(request):
+      
+def add(request):
     '''
     Add an item
     '''    
@@ -112,111 +177,43 @@ def add_item(request):
     # Make the context and render  
     context = {'obj': None }
     template = "repository/items/add.html"  
+    return render(request, template, context)    
+ 
+    
+def publish(request, type, pk, slug):
+    """
+    Publish or unpublish a creative work type item
+    """
+    
+    print "DBG: requested content type > ", type
+    # Check the type i.e. content_type and derive the data model etc.
+    if type == Snippet.content_type():
+        item_cls = Snippet
+        template = "repository/items/publish.html"  
+                
+    elif type == Poetry.content_type():
+        item_cls = Poetry
+        template = "repository/items/publish.html"
+        
+    else:
+        print "Error: content type is not found"
+        raise Http404
+
+    # Get the object from the `pk`, raises a Http404 if not found
+    obj = get_object_or_404(item_cls, pk=pk)
+        
+    if request.method == "POST":
+        action = request.POST.get('submit')
+        if action == 'Publish':
+            obj.date_published = timezone.now()
+        elif action == 'Unpublish':
+            obj.date_published = None
+        obj.save()
+        messages.success(request, 'Changes on item %s are successful! '%obj.name)
+        return HttpResponseRedirect(obj.get_absolute_url())                                   
+           
+    ##
+    # Make the context and render  
+    context = {'obj': obj }    
     return render(request, template, context)
-    
-
-class AddPerson(CreateThingView):
-    '''
-    Add/Edit a Person
-    '''
-    model = Person
-    form_class = PersonForm
-    template_name = 'repository/items/add-person.html'
-    ajax_template_name = 'repository/include/form-person.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(self.__class__, self).dispatch(request, *args, **kwargs)
-
-    
-class AddOrg(CreateThingView):
-    '''
-    Add/Edit an Organization
-    '''
-    model = Organization
-    form_class = OrganizationForm
-    template_name = 'repository/items/add-organization.html'
-    ajax_template_name = 'repository/include/form-organization.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(self.__class__, self).dispatch(request, *args, **kwargs)
-    
-    
-class AddPlace(CreateThingView):
-    '''
-    Add/Edit a Place
-    '''
-    model = Place
-    form_class = PlaceForm
-    template_name = 'repository/items/add-place.html'
-    ajax_template_name = 'repository/include/form-place.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(self.__class__, self).dispatch(request, *args, **kwargs) 
-    
-class AddProduct(CreateThingView):
-    '''
-    Add/Edit a Product
-    '''
-    model = Product
-    form_class = ProductForm
-    template_name = 'repository/items/add-product.html'
-    ajax_template_name = 'repository/include/form-product.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(self.__class__, self).dispatch(request, *args, **kwargs)
-    
-class AddEvent(CreateThingView):
-    '''
-    Add/Edit a Event
-    '''
-    model = Event
-    form_class = EventForm
-    template_name = 'repository/items/add-event.html'
-    ajax_template_name = 'repository/include/form-event.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(self.__class__, self).dispatch(request, *args, **kwargs)
-    
-class AddBook(CreateThingView):
-    '''
-    Add/Edit a Book
-    '''
-    model = Book
-    form_class = BookForm
-    template_name = 'repository/items/add-book.html'
-    ajax_template_name = 'repository/include/form-book.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(self.__class__, self).dispatch(request, *args, **kwargs)
-    
-class AddPoetry(CreateThingView):
-    '''
-    Add/Edit a Poetry
-    '''
-    model = Poetry
-    form_class = PoetryForm
-    template_name = 'repository/items/add-poetry.html'
-    ajax_template_name = 'repository/include/form-poetry.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(self.__class__, self).dispatch(request, *args, **kwargs) 
-    
-class AddSnippet(CreateThingView):
-    '''
-    Add/Edit a Snippet
-    '''
-    model = Snippet
-    form_class = SnippetForm
-    template_name = 'repository/items/add-snippet.html'
-    ajax_template_name = 'repository/include/form-snippet.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(self.__class__, self).dispatch(request, *args, **kwargs)                                           
+                                               

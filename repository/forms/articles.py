@@ -13,7 +13,7 @@ class PoetryForm(ModelForm):
                   ]
         
     def save(self, owner, commit=True, *args, **kwargs):
-        obj = super(PoetryForm, self).save(commit=False, *args, **kwargs)
+        obj = super(self.__class__, self).save(commit=False, *args, **kwargs)
 
         if commit:
             obj.save()
@@ -30,8 +30,9 @@ class SnippetForm(ModelForm):
                   ]
 
     def save(self, owner, commit=True, *args, **kwargs):
-        obj = super(SnippetForm, self).save(commit=False, *args, **kwargs)
+        obj = super(self.__class__, self).save(commit=False, *args, **kwargs)
 
         if commit:
             obj.save()
         return obj    
+      

@@ -1,0 +1,56 @@
+{% extends "repository/repo-base.html" %}
+{% load staticfiles %}
+
+{% block title %}Publish/unpublish the item '{{ obj.name }}'{% endblock %}
+
+{% block main %}
+
+	{% include "common/include/message-pannel.html" with messages=messages only %}
+	
+	<section id="priSect" class="pT-8 pB-16">
+		<div class="_layout layout-sLs mdl-grid">		
+			<section class="__l mdl-cell mdl-cell--3-col pA-0">
+			</section>	
+			<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
+				<div class="mdl-card poetry-card bS-1 wFull">
+				{% with is_published=obj.is_published %}
+					<div class="mdl-card__title mdl-color-text--grey-800">
+						<h2 class="mdl-card__title-text">															
+							{{ obj.name }}
+						</h2>
+					</div>
+					<div class="mdl-card__supporting-text article-info">
+						By {{ obj.creator.name }}
+					</div>	
+					{% if is_published %}
+					<div class="mdl-card__supporting-text">
+						If you unpublish the article, it will no longer be accessible to the public.
+					</div>	
+					{% else %}
+					<div class="mdl-card__supporting-text">
+						Before publishing, kindly make sure of the followings:
+						<br /><strong>1.</strong> There are no useless html tags.
+						<br /><strong>2.</strong> Formatting is perfect.
+						<br /><strong>3.</strong> There is no copyright issues.
+						<br />In doubt? Ok, go to the <a href="{{ obj.get_edit_url }}/?cancel={{ request.path }}"><strong>edit</strong></a> 
+						page and re-check the content. Otheriwse, go ahead.
+					</div>
+					{% endif %}
+					<form id="id-snippet-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
+						{% csrf_token %} 
+						<div class="tAr">
+							<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" 
+							name="submit" {% if is_published %}value="Unpublish"{% else %}value="Publish"{% endif %} id="id-form-submit"/> 
+							<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" 
+							name="cancel" value="Cancel" id="id-form-cancel" onclick="window.history.back();"/>
+						</div>
+					</form>
+				{% endwith %}
+				</div>
+			</section>				
+			<section class="__r mdl-cell mdl-cell--3-col pA-0">
+			</section>				
+		</div>		
+	</section>
+	
+{% endblock %}

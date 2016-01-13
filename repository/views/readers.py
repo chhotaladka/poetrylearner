@@ -14,7 +14,6 @@ from django.utils.decorators import method_decorator
 import json
 
 from repository.models import *
-from repository.forms import PersonForm
 
 from common.search import get_query
 
@@ -23,7 +22,7 @@ from common.search import get_query
 
 def item(request, type, pk, slug):
     '''
-    Details of the Person
+    Details of an item
     '''
     print "DBG: requested content type > ", type
     # Check the type i.e. content_type and derive the data model etc.
@@ -54,7 +53,11 @@ def item(request, type, pk, slug):
     elif type == Organization.content_type():
         item_cls = Organization
         template = "repository/items/organization.html"  
-        
+
+    elif type == Book.content_type():
+        item_cls = Book
+        template = "repository/items/book.html"
+                
     else:
         print "Error: content type is not found"
         raise Http404

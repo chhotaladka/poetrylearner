@@ -16,13 +16,26 @@ class Reference(models.Model):
     A citation or reference to another creative work, such as another publication, web page, scholarly article, etc.
     '''
     
+    name = models.CharField(max_length=300,
+                            help_text=_('The name/title of the item.'))
+                                
     body = models.TextField(null=False,
                             help_text=_('List of references.')
                             )
     
+    def __str__(self):          # on Python 3
+        return self.name
+    
+    def __unicode__(self):      # on Python 2
+        return self.name
 
-
-
+    @classmethod
+    def content_type(cls):
+        return cls.__name__.lower()
+    
+    def get_absolute_url(self):
+        pass
+    
 
 class Tag(TagBase):
     # ... fields here

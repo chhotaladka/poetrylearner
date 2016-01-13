@@ -70,7 +70,11 @@ class Thing(models.Model):
              
     def get_absolute_url(self):        
         kwargs = {'pk': self.id, 'slug': self.get_slug(), 'type': self.content_type()}
-        return reverse('repository:item', kwargs=kwargs)    
+        return reverse('repository:item', kwargs=kwargs)
+
+    def get_edit_url(self):        
+        kwargs = {'pk': self.id, 'type': self.content_type()}
+        return reverse('repository:add-item', kwargs=kwargs)        
 
     def headline(self):
         return self.name

@@ -19,7 +19,8 @@ urlpatterns = [
     url(r'^data/(?P<type>[\w.@+-]+)/(?P<pk>\d+)/(?P<slug>[\w.@+-]+)?/publish/?$', views.writers.publish, name='publish'),
     
     url(r'^data/(?P<type>[\w.@+-]+)/(?P<pk>\d+)/(?P<slug>[\w.@+-]+)?/?$', views.readers.item, name='item'),
-
+    url(r'^data/(?P<type>[\w.@+-]+)/?$', views.readers.list, name='list'),
+    url(r'^data/?$', views.readers.items, name='items'),
     
 #     url(r'^(?P<pk>\d+)/?$', views.snippet_details, name='view'),
 #     url(r'^add/(?P<pk>\d*)/?$', views.AddSnippet.as_view(), name='add'),

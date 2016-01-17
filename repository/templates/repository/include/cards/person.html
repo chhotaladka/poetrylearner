@@ -7,7 +7,7 @@
 {% load humanize %}
 
 <div class="mdl-card author-card--lg bS-1 wFull">
-	<div class="mdl-card__title">
+	<div class="mdl-card__title column bg-person">
 		{% with person_img_url=person.get_image_url %}
 		{% if person_img_url %}
 		<img class="avatar" width="120" height="120" src={{ person_img_url }}>
@@ -51,7 +51,7 @@
 		<div class="mdl-layout-spacer"></div>							    			
 	</div>
 	<div class="mdl-card__menu">
-		<a href="{% url 'repository:add-person' pk=person.id %}/?cancel={{request.path}}" title="Edit to improve person details">
+		<a href="{% url 'repository:add-item' type=person.content_type pk=person.id %}/?cancel={{request.path}}" title="Edit to improve.">
 		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">
           <i class="material-icons mdl-color-text--white">edit</i>
 		</button>

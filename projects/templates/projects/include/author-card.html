@@ -7,7 +7,7 @@
 {% load humanize %}
 
 <div class="mdl-card author-card--lg bS-1 wFull">
-	<div class="mdl-card__title">
+	<div class="mdl-card__title column bg-person">
 		{% with author_img_url=author.get_image_url %}
 		{% if author_img_url %}
 		<img class="avatar" width="120" height="120" src={{ author_img_url }}>

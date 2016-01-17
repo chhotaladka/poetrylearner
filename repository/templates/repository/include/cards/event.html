@@ -1,0 +1,80 @@
+{% comment %}
+	Info:       Event full detail Card
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+{% load staticfiles %}
+{% load humanize %}
+
+<div class="mdl-card event author-card--lg bS-1 wFull">
+{% with event_img_url=event.get_image_url %}
+	{% if event_img_url %}
+	<div class="mdl-card__title column" style="background: url('{{ event_img_url }}') center / cover;">
+	{% else %}
+	<div class="mdl-card__title column bg-event">
+	{% endif %}							
+		<div class="title-text highlight">																					
+			{{ event.name }}
+		</div>
+		<div class="extras highlight">
+		{% if event.super_event %}
+			<span>Part of
+			<a href="{{ event.super_event.get_absolute_url }}" title="Parent event">{{ event.super_event }}</a>
+			</span> 
+		{% endif %}
+		</div>
+		{% if event.location %}		
+		<div class="extras highlight">
+			<i class="material-icons md-18">place</i>
+		</div>
+		<div class="extras highlight">
+			<a href="{{ event.location.get_absolute_url }}" class="icon" title="Location or area of action.">						
+				{{ event.location.name }}
+			</a>
+		</div>
+		{% endif %}		
+	</div>
+	<div class="meta-pannel mdl-card__actions">
+		<div class="light-txt">
+		{% if event.start_date %}
+			<div>Start</div>
+			<div class="b">{{ event.start_date }}</div> 
+		{% endif %}	
+		</div>	
+		<div class="mdl-layout-spacer"></div>
+		<div class="light-txt">
+		{% if event.end_date %}
+			<div>End</div>				
+			<div class="b">{{ event.end_date }}</div>
+		{% endif %}		
+		</div>
+	</div>						
+	<div class="mdl-card__supporting-text">				
+		<p>{{ event.description }}</p>		
+		<p>Source: <a title="Click here to know more" href="{{ event.similar_item_url }}" target="_blank">
+			{{ event.similar_item_name }}</a>
+		</p>
+	</div>
+	<div class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500">
+		<div class="meta-edit">
+			<div>
+				<span>Last edited by</span>
+				<span> 
+    				<a title="Go to the profile page of user" href=#>{{ event.get_last_edit_user }}</a>
+				</span>
+			</div>
+			<div>
+				<span title="Last updated at {{ event.get_last_edit_time }}">{{ event.get_last_edit_time|naturaltime }}</span>
+			</div>
+		</div>
+		<div class="mdl-layout-spacer"></div>							    			
+	</div>
+	<div class="mdl-card__menu">
+		<a href="{% url 'repository:add-item' type=event.content_type pk=event.id %}/?cancel={{request.path}}" title="Edit to improve.">
+		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">
+          <i class="material-icons mdl-color-text--white">edit</i>
+		</button>
+		</a>
+	</div>
+{% endwith %}
+</div>

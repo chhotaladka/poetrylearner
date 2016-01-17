@@ -1,0 +1,70 @@
+{% comment %}
+	Info:       Book full detail Card
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+{% load staticfiles %}
+{% load humanize %}
+
+<div class="mdl-card poetry-card bS-1 wFull">
+	<div class="mdl-card__title column mdl-color-text--grey-800 mdl-color--yellow-600">												
+		<h2 class="mdl-card__title-text mdl-color-text--grey-900">{{ book.name }}</h2>
+		<div class="mdl-card__subtitle-text title__extras">
+			<span>By
+				<a title="View the profile of {{book.creator.name}}" href="{{ book.creator.get_absolute_url }}">
+					<button class="mdl-button">{{ book.creator.name }}</button>
+				</a>
+			</span>
+		</div>		
+	</div>					
+	<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+		<div>
+			<span>Wrriten in <strong>{{ book.get_language }}</strong></span>
+		</div>
+		{% with contributors=book.contributor.all %}
+		{% if contributors %}
+		<div class="">
+			<span>Contributers {% for person in contributors %}
+	 		<a title="View {{person.name}}" href="{{ person.get_absolute_url }}"><b>{{ person.name }}</b></a>
+			{% if not forloop.last %}<span>, </span>{% endif %}{% endfor %}
+			</span>
+		</div>
+		{% endif %}
+		{% endwith %}				
+		{% if book.publisher %}
+		<div>		
+			<span>Published by <strong>{{ book.publisher }}</strong></span>			   			    			
+		</div>
+		{% endif %}
+		
+		{% if book.publisher or book.date_published %}
+		<div class="book-id">		
+			<span>ISBN</span>
+			<a title="View this book on openlibrary.org" target="_blank" href="http://openlibrary.org/isbn/{{ book.isbn|default_if_none:'' }}">
+				<strong>{{ book.isbn|default_if_none:"none" }}</strong>
+			</a>
+		</div>
+		{% endif %}
+	</div>
+	<div class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500">
+		<div class="meta-edit">
+			<div>
+				<span>Last edited by</span>
+				<span> 
+    				<a title="Go to the profile page of user" href=#>{{ book.get_last_edit_user }}</a>
+				</span>
+			</div>
+			<div>
+				<span title="Last updated at {{ book.get_last_edit_time }}">{{ book.get_last_edit_time|naturaltime }}</span>
+			</div>
+		</div>
+		<div class="mdl-layout-spacer"></div>							    			
+	</div>
+	<div class="mdl-card__menu">
+		<a href="{% url 'repository:add-item' type=book.content_type pk=org.id %}/?cancel={{request.path}}" title="Edit to improve.">
+		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">
+          <i class="material-icons mdl-color-text--white">edit</i>
+		</button>
+		</a>
+	</div>
+</div> <!-- /mdl-card -->

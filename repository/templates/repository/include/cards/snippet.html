@@ -1,0 +1,83 @@
+{% comment %}
+	Info:       Poetry full detail Card
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+{% load staticfiles %}
+{% load humanize %}
+
+<div class="mdl-card snippet wide-card wFull bS-1">
+{% with snippet_url=snippet.get_absolute_url %}
+	<div class="mdl-card__title bg-snippet">
+		<h2 class="mdl-card__title-text">															
+			{{ snippet.headline }}
+		</h2>
+	</div>		
+	<div class="mdl-card__supporting-text mdl-color-text--grey-600 article-info">
+		<div class="">
+			<a title="Click here to view source" href="{{ snippet.similar_item_url }}" target="_blank">
+				{{ snippet.similar_item_name }}
+			</a>
+		</div>	
+		<div>												
+			{% for tag in snippet.get_tags_slugs %}
+	 		<a class="hashtag pretty-link" href="#">
+	 			<s>#</s>
+				<b>{{ tag }}</b>
+			</a>
+			{% endfor %}
+			{% if snippet.is_published %}{% comment %} TODO make it visible only to admin {% endcomment %}
+			<i id="id-pub" class="material-icons publish">assignment_turned_in</i>
+			<span for="id-pub" class="mdl-tooltip">Published at {{ snippet.date_published }}</span>
+			{% endif %}								
+		</div>						
+	</div>
+	<div class="mdl-card__supporting-text">	
+		<div class="light-txt">										
+		{% autoescape off %}
+		{{ snippet.description }}
+		{% endautoescape %}
+		</div>
+	</div>		
+	<div id="articleContent" class="article-content mdl-card__supporting-text mdl-color-text--grey-800">											
+		{% autoescape off %}
+		{{ snippet.body }}
+		{% endautoescape %}
+	</div>
+	<div class="mdl-card__supporting-text">	
+		<div class="light-txt">										
+		<span>Published under license:</span> 
+		<span class="b">{{ snippet.license|default:"Not spcified" }}</span>
+		</div>
+	</div>	
+	<div class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500">
+		<div class="meta-edit">
+			<div>
+				<span>Last edited by</span>
+				<span> 
+    				<a title="Go to the profile page of user" href=#>{{ snippet.get_last_edit_user }}</a>
+				</span>
+			</div>
+			<div>
+				<span title="Last updated at {{ snippet.get_last_edit_time }}">{{ snippet.get_last_edit_time|naturaltime }}</span>
+			</div>
+		</div>
+		<div class="mdl-layout-spacer"></div>							    			
+	</div>	
+	<div class="mdl-card__menu">
+		<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn1">
+          <i class="material-icons">more_vert</i>
+		</button>
+        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">
+          <li class="mdl-menu__item">
+          	<a href="{% url 'repository:publish' type=snippet.content_type pk=snippet.id slug=snippet.get_slug %}">  
+          	{% if snippet.is_published %}Unpublish{% else %}Publish{% endif %}
+          	</a>
+          </li>
+          <li class="mdl-menu__item">
+          	<a href="{{ snippet.get_edit_url }}/?cancel={{ request.path }}" title="Edit to improve the article" >Edit</a>
+          </li>
+        </ul>
+	</div>													
+{% endwith %}
+</div>

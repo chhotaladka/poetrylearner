@@ -50,7 +50,13 @@ class Organization(Thing):
                                 help_text=_('Type of the organization.')
                                 )      
 
-
+    def get_type(self):
+        '''
+        Returns the organization type
+        '''
+        tmp = dict(self.ORGANIZATION_TYPE)
+        return tmp[self.type]
+    
         
 class Product(Thing):
     '''
@@ -249,7 +255,7 @@ class CreativeWork(Thing):
     creator = models.ForeignKey(Person,
                                 on_delete=models.SET_NULL,
                                 related_name="%(class)s_created",
-                                null=True,
+                                null=True, blank=True,
                                 help_text=_('The creator/author of this content.')
                                 )
     
@@ -297,5 +303,14 @@ class CreativeWork(Thing):
         return self.keywords.slugs()
     
     def is_published(self):
-        return True if self.date_published else False    
+        return True if self.date_published else False
+    
+    def get_media_url(self):
+        '''
+        Return media url of the item. If not exist, return None.
+        '''
+        if self.media:
+            return '{0}{1}'.format(settings.MEDIA_URL, self.media)            
+        else:
+            return None        
 

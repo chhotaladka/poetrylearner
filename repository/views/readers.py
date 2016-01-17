@@ -19,13 +19,13 @@ from common.search import get_query
 
 # Create your views here.
 
-
-def item(request, type, pk, slug):
+def _resolve_item_type(type):
     '''
-    Details of an item
+    Check the type i.e. content_type and retunr the model class and template.
     '''
-    print "DBG: requested content type > ", type
-    # Check the type i.e. content_type and derive the data model etc.
+    item_cls = None
+    template = None    
+    
     if type == Snippet.content_type():
         item_cls = Snippet
         template = "repository/items/snippet.html"  
@@ -56,11 +56,21 @@ def item(request, type, pk, slug):
 
     elif type == Book.content_type():
         item_cls = Book
-        template = "repository/items/book.html"
-                
-    else:
+        template = "repository/items/book.html"                
+    
+    return item_cls, template
+
+
+def item(request, type, pk, slug):
+    '''
+    Details of an item
+    '''
+    print "DBG: requested content type > ", type
+
+    item_cls, template = _resolve_item_type(type)    
+    if item_cls is None:
         print "Error: content type is not found"
-        raise Http404
+        raise Http404 
                                        
     # Get the object from the `pk`, raises a Http404 if not found
     obj = get_object_or_404(item_cls, pk=pk)
@@ -77,12 +87,27 @@ def item(request, type, pk, slug):
     return render(request, template, context)
 
 
+def items(request):
+    '''
+    Show all data items
+    '''    
+    ##
+    # Make the context and render  
+    context = {'obj': None }
+    template = "repository/items/data.html"  
+    return render(request, template, context) 
 
 
-def list(request):
+def list(request, type):
     '''
     List the Persons
     '''    
+    
+    item_cls, template = _resolve_item_type(type)    
+    if item_cls is None:
+        print "Error: content type is not found"
+        raise Http404 
+        
     q_objects = Q()
     
     ##
@@ -134,16 +159,16 @@ def list(request):
     # Get all authors sorted and ordered
     if sort == 'name':
         if order == 'inc':
-            obj_list = Person.objects.all().filter(q_objects).order_by('-name')
+            obj_list = item_cls.objects.all().filter(q_objects).order_by('-name')
         else:
-            obj_list = Person.objects.all().filter(q_objects).order_by('name')
+            obj_list = item_cls.objects.all().filter(q_objects).order_by('name')
     elif sort == 'edit':
         if order == 'inc':
-            obj_list = Person.objects.all().filter(q_objects).order_by('date_modified')
+            obj_list = item_cls.objects.all().filter(q_objects).order_by('date_modified')
         else:
-            obj_list = Person.objects.all().filter(q_objects).order_by('-date_modified')    
+            obj_list = item_cls.objects.all().filter(q_objects).order_by('-date_modified')    
     else:
-        obj_list = Person.objects.all().filter(q_objects)
+        obj_list = item_cls.objects.all().filter(q_objects)
         
     ##
     # Check for permissions and render the list of authors
@@ -161,8 +186,8 @@ def list(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
             
-    context = {'authors': objs, 'view': view_type}
-    template = 'projects/author-list.html'    
+    context = {'list': objs, 'view': view_type}
+    template = 'repository/items/list.html'    
 
     return render(request, template, context)
 

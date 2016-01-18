@@ -19,46 +19,58 @@ from common.search import get_query
 
 # Create your views here.
 
-def _resolve_item_type(type):
+def _resolve_item_type(type, list=False):
     '''
     Check the type i.e. content_type and retunr the model class and template.
     '''
     item_cls = None
-    template = None    
+    template = None
+    list_template = None    
     
     if type == Snippet.content_type():
         item_cls = Snippet
-        template = "repository/items/snippet.html"  
+        template = "repository/items/snippet.html" 
+        list_template = "repository/include/list/snippet.html" 
         
     elif type == Poetry.content_type():
         item_cls = Poetry
         template = "repository/items/poetry.html"
+        list_template = "repository/include/list/poetry.html"
         
     elif type == Person.content_type():
         item_cls = Person
         template = "repository/items/person.html"
+        list_template = "repository/include/list/person.html"
         
     elif type == Place.content_type():
         item_cls = Place
-        template = "repository/items/place.html" 
+        template = "repository/items/place.html"
+        list_template = "repository/include/list/place.html" 
                
     elif type == Product.content_type():
         item_cls = Product
         template = "repository/items/product.html"
+        list_template = "repository/include/list/product.html"
                   
     elif type == Event.content_type():
         item_cls = Event
-        template = "repository/items/event.html" 
+        template = "repository/items/event.html"
+        list_template = "repository/include/list/event.html" 
                  
     elif type == Organization.content_type():
         item_cls = Organization
-        template = "repository/items/organization.html"  
+        template = "repository/items/organization.html"
+        list_template = "repository/include/list/organization.html"  
 
     elif type == Book.content_type():
         item_cls = Book
-        template = "repository/items/book.html"                
+        template = "repository/items/book.html"
+        list_template = "repository/include/list/book.html"                
     
-    return item_cls, template
+    if list:
+        return item_cls, list_template
+    
+    return item_cls, template    
 
 
 def item(request, type, pk, slug):
@@ -103,7 +115,7 @@ def list(request, type):
     List the Persons
     '''    
     
-    item_cls, template = _resolve_item_type(type)    
+    item_cls, list_template = _resolve_item_type(type, list=True)    
     if item_cls is None:
         print "Error: content type is not found"
         raise Http404 
@@ -186,7 +198,7 @@ def list(request, type):
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
             
-    context = {'list': objs, 'view': view_type}
+    context = {'items': objs, 'list_template': list_template}
     template = 'repository/items/list.html'    
 
     return render(request, template, context)

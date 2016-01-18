@@ -1,19 +1,14 @@
-{% extends "projects/base.html" %}
-
-{% block title %}
-	List of authors
-{% endblock %}
+{% extends "mdl-base.html" %}
+{% block title %}List of items{% endblock title %}
 
 {% block main %}
-
 	<section class="pT-8 pB-16">
 		<div class="_layout layout-L mdl-grid">
 			<div class="__c mdl-cell mdl-cell--12-col mdl-grid">
-			{% include "snippets/include/snippet-list-card.html" with snippets=list %}
+			{% include list_template with items=items %}
 			</div>
 		</div>	
 	</section>
-
 {% endblock %}
 
 {% block page-title %}Authors{% endblock %}

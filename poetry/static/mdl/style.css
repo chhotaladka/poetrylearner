@@ -148,7 +148,6 @@ html, body {
 
 
 .mdl-card__actions {
-    display: flex;
     box-sizing: border-box;
     align-items: center;
 }
@@ -472,7 +471,7 @@ html, body {
     border-radius: 2px;
     color: #919191;
     position: relative;
-    height: 36px;
+    /*height: 36px;*/
     min-width: 64px;
     padding: 0px 8px;
     display: inline-block;
@@ -484,7 +483,7 @@ html, body {
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    line-height: 36px;
+    /*line-height: 36px;*/
     vertical-align: middle;
 }
 .mdl-poetry .action-button .action-button__text {
@@ -498,7 +497,6 @@ html, body {
     background: none repeat scroll 0px 0px transparent;
     border: medium none;
     cursor: pointer;
-	padding: 2px;
     text-align: left;
 	color: #919191;
 	font-size: 10px;
@@ -551,19 +549,22 @@ html, body {
 	display: inline-block;
 }
 
+.panel,
+.meta-panel,
 .meta-pannel {
 	padding: 8px 16px;
 }
 .meta-edit,
 .light-txt {
     font-size: 12px;
-    line-height: 18px;
+    line-height: 17px;
     font-weight: 300;
 	color: #757575;
 }
 .meta-edit a,
 .light-txt a {
-	color: #ED4255;
+	/*color: #ED4255;*/
+	color: #3F51B5;
 }
 
 .mdl-poetry .mdl-card a {

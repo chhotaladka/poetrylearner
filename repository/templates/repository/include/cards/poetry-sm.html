@@ -1,0 +1,35 @@
+{% comment %}
+	Info:       Poetry small Card
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+
+<div class="mdl-card poetry poetry-card mH-auto wFull bS-1">
+	<div class="mdl-card__supporting-text">
+		<div class="fS-28 mdl-color-text--grey-700">	
+			<a href="{{ poetry.get_absolute_url }}" title="View full article">{{ poetry.headline }}</a>
+		</div>
+	</div>		
+	<div class="mdl-card__supporting-text mdl-color-text--grey-600 article-info">
+		<div>
+			by<a title="View the poet" href="{{ poetry.creator.get_absolute_url }}">
+				{{ poetry.creator.name }}
+			</a>
+		</div>	
+		<div>												
+			{% for tag in poetry.get_tags_slugs %}
+	 		<a class="hashtag pretty-link" href="#">
+	 			<s>#</s>
+				<b>{{ tag }}</b>
+			</a>
+			{% endfor %}								
+		</div>						
+	</div>
+	<div class="mdl-card__supporting-text">	
+		<div class="light-txt">										
+		{% autoescape off %}
+		{{ poetry.summary }}
+		{% endautoescape %}
+		</div>
+	</div>												
+</div>

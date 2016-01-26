@@ -1,0 +1,20 @@
+{% comment %}
+	Info:       Product small Card
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+<div class="mdl-card product wide-card mH-auto wFull bS-1">
+	<div class="mdl-card__supporting-text">	
+		<div class="fS-28">																					
+			<a href="{{ product.get_absolute_url }}" title="View product">{{ product.name }}</a>
+		</div>	
+		<div class="extras">
+			<a href="{{ product.manufacturer.get_absolute_url }}" title="View manufacturer">{{ product.manufacturer.name }}</a>
+		</div>
+		<div class="extras">
+			<a title="View similar item" href="{{ product.similar_item_url }}" target="_blank">
+			{{ product.similar_item_name }}
+			</a>				
+		</div>		
+	</div>														
+</div>

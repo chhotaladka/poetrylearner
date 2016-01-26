@@ -1,0 +1,38 @@
+{% comment %}
+	Info:       Person small Card
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+{% load staticfiles %}
+<div class="mdl-card author-card--sm bS-1 wFull">
+	<div class="mdl-card__title column">
+		{% with person_img_url=person.get_image_url %}
+		{% if person_img_url %}
+		<img class="avatar" width="90" height="90" src={{ person_img_url }}>
+		{% else %}
+		<i class="avatar material-icons icon">person</i>
+		{% endif %}		
+		{% endwith %}					
+		<div class="title-text">
+			<a href="{{person.get_absolute_url}}" title="View Person">														
+				{{ person.name }}
+			</a>
+		</div>
+		<div class="extras">
+			<span class="text">{{person.additional_name}}</span>
+		</div>		
+		<div class="extras">
+		{% if person.date_birth %}
+			<span class="fS-12" title="Birth">{{ person.date_birth }}</span> 
+		{% endif %}
+		{% if person.date_death %}					
+			<span class="fS-12" title="Death">- {{ person.date_death }}</span>
+		{% endif %}
+		</div>					
+	</div>
+	<div class="mdl-card__actions action-pannel">
+		<a href="{{person.get_absolute_url}}" class="action mdl-button c-blue wFull">
+			View more					
+		</a>
+	</div>
+</div>

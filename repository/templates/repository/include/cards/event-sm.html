@@ -1,0 +1,29 @@
+{% comment %}
+	Info:       Event small Card
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+<div class="mdl-card event wide-card mH-auto wFull bS-1">
+	<div class="mdl-card__supporting-text">
+		<div class="fS-28">	
+			<a href="{{ event.get_absolute_url }}" title="View event">{{ event.headline }}</a>
+		</div>
+	</div>		
+	<div class="meta-pannel mdl-card__actions">
+		<div class="light-txt">
+			{{ event.location.name }}
+		</div>
+		<div class="mdl-layout-spacer"></div>
+		<div class="light-txt">
+		{% if event.start_date %}
+			<span>Start</span>
+			<span class="b">{{ event.start_date }}</span> 
+		{% endif %}				
+		{% if event.end_date %}
+			<span>|</span>
+			<span>End</span>				
+			<span class="b">{{ event.end_date }}</span>
+		{% endif %}		
+		</div>
+	</div>												
+</div>

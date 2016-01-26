@@ -1,36 +1,42 @@
 {% comment %}
-	Info:       Snippet card with short details
+	Info:       Snippet small Card
 	Requires:   css and js of static/mdl/*
 	Note:       xxx
 {% endcomment %}
-{% load humanize %}
 
-<div class="mdl-card poetry-card--md bS-1 wFull">	
-	<div class="mdl-card__title mdl-color-text--grey-800">
-		<h2 class="mdl-card__title-text mR-8">															
-			<a href="{{snippet.get_absolute_url}}" title="View full article">{{ snippet.name }}</a>
-		</h2>														
-		<span class="mdl-card__subtitle-text">by
-			<a title="View the author {{snippet.creator.name}}" href="{{ snippet.creator.get_absolute_url }}">
-				<span>{{ snippet.creator.name }}</span>
-			</a>
-		</span>					
-	</div>
-	<div class="mdl-card__supporting-text mdl-color-text--grey-800">{{ snippet.description }}				
-	</div>
-	<div class="meta-pannel mdl-card__actions">
-		<div class="textsize--12px">
+<div class="mdl-card snippet wide-card mH-auto wFull bS-1">
+	<div class="mdl-card__supporting-text">
+		<div class="fS-28 mdl-color-text--grey-700">	
+			<a href="{{ snippet.get_absolute_url }}" title="View full article">{{ snippet.headline }}</a>
+		</div>
+	</div>		
+	<div class="mdl-card__supporting-text mdl-color-text--grey-600 article-info">
+		<div class="row fill">
+			<div>
+				<a title="Click here to view source" href="{{ snippet.similar_item_url }}" target="_blank">
+					{{ snippet.similar_item_name }}
+				</a>
+			</div>
+			{% if snippet.is_published %}
+			<div class="publish">
+				<a title="Last updated" href="#">{{ snippet.get_last_edit_time|date }}</a>
+			</div>
+			{% endif %}			
+		</div>	
+		<div>												
 			{% for tag in snippet.get_tags_slugs %}
- 			<a class="hashtag pretty-link" href="{% url 'snippets:tagged-list' slug=tag %}">
- 				<s>#</s><b>{{ tag }}</b>
+	 		<a class="hashtag pretty-link" href="#">
+	 			<s>#</s>
+				<b>{{ tag }}</b>
 			</a>
-			{% endfor %}	    				
+			{% endfor %}								
+		</div>						
+	</div>
+	<div class="mdl-card__supporting-text">	
+		<div class="light-txt">										
+		{% autoescape off %}
+		{{ snippet.summary }}
+		{% endautoescape %}
 		</div>
-		<div class="mdl-layout-spacer"></div>
-		<div class="meta">
-			<span class="meta-val--bignum">12,234,002</span>
-            <span class="meta-name">views</span>
-            <!--<span class="visuallyhidden">views</span>-->	                
-		</div>
-	</div>																			
+	</div>												
 </div>

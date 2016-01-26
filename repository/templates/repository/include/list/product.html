@@ -1,0 +1,37 @@
+{% comment %}
+	Info:       Product list as Card View
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+
+{% if items %} {% comment %} Display the list {% endcomment %}		
+	<div class="bC-none mdl-cell mdl-cell--12-col">				
+		<div class="mdl-card__supporting-text stats-text">		            
+			Displaying {{ items|length }} of {{ items.paginator.count }} results.
+		</div>
+		{% if items.paginator.num_pages > 1 %}
+		<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
+			{% include "common/include/pagination.html" with obj_list=items getvars=getvars only %}
+		</div>
+		{% endif %}
+	</div>			
+	{% for item in items %}
+	<div class="mdl-cell mdl-cell--12-col">	
+	{% include "repository/include/cards/product-sm.html" with product=item %}														
+	</div>
+	{% endfor %}
+	<div class="bC-none mdl-cell mdl-cell--12-col">				
+		{% if items.paginator.num_pages > 1 %}
+		<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
+			{% include "common/include/pagination.html" with obj_list=items getvars=getvars only %}
+		</div>
+		{% endif %}
+	</div>
+{% else %}  {% comment %} Display the notification {% endcomment %}
+	<div class="bC-none mdl-cell mdl-cell--12-col">
+		<div class="mdl-card__supporting-text oops-message">
+			<i class="material-icons md-48">error_outline</i>	            
+			<h6>Oops!! No data found for this query.</h6>
+		</div>
+	</div>
+{% endif %}

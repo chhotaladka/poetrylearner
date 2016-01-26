@@ -36,20 +36,9 @@
 		</p>
 		{% endif %}
 	</div>
-	<div class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500">
-		<div class="meta-edit">
-			<div>
-				<span>Last edited by</span>
-				<span> 
-    				<a title="Go to the profile page of user" href=#>{{ person.get_last_edit_user }}</a>
-				</span>
-			</div>
-			<div>
-				<span title="Last updated at {{ person.get_last_edit_time }}">{{ person.get_last_edit_time|naturaltime }}</span>
-			</div>
-		</div>
-		<div class="mdl-layout-spacer"></div>							    			
-	</div>
+	{% comment %}  Include meta panel {% endcomment %}
+	{% include "repository/include/misc/meta-panel.html" with item=person %}
+
 	<div class="mdl-card__menu">
 		<a href="{% url 'repository:add-item' type=person.content_type pk=person.id %}/?cancel={{request.path}}" title="Edit to improve.">
 		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">

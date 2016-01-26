@@ -38,21 +38,10 @@
 	</div>
 	<div class="mdl-card__supporting-text">					
 		Dsiplay organization tree
-	</div>	
-	<div class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500">
-		<div class="meta-edit">
-			<div>
-				<span>Last edited by</span>
-				<span> 
-    				<a title="Go to the profile page of user" href=#>{{ org.get_last_edit_user }}</a>
-				</span>
-			</div>
-			<div>
-				<span title="Last updated at {{ org.get_last_edit_time }}">{{ org.get_last_edit_time|naturaltime }}</span>
-			</div>
-		</div>
-		<div class="mdl-layout-spacer"></div>							    			
-	</div>
+	</div>		
+	{% comment %}  Include meta panel {% endcomment %}
+	{% include "repository/include/misc/meta-panel.html" with item=org %}
+	
 	<div class="mdl-card__menu">
 		<a href="{% url 'repository:add-item' type=org.content_type pk=org.id %}/?cancel={{request.path}}" title="Edit to improve.">
 		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">

@@ -47,7 +47,7 @@
 		
 	<div class="action-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
 		<button id="shareBtn" class="action-button" title="Share" 
-			onclick="document.getElementById('sharePannel').classList.toggle('hidden'); return false;">
+			onclick="document.getElementById('sharePanel').classList.toggle('hidden'); return false;">
             <i class="material-icons" role="presentation">share</i>
             <span class="action-button__text">Share</span>	                
 		</button>
@@ -60,65 +60,19 @@
 		<button id="favBtn" class="action-button" title="I love this">							
             <i class="material-icons" role="presentation">favorite</i>
             <span class="action-button__text">Favorite</span>			                            
-		</button>					
-		
-		<button id="moreBtn" class="action-button" title="Show meta data"
-			onclick="document.getElementById('metaPannel').classList.toggle('hidden'); return false;">							
-            <i class="material-icons" role="presentation">more_horiz</i>
-            <span class="action-button__text">More</span>			                            
-		</button>															
+		</button>																					
 
-		<div class="meta" title="Views">
+		<div class="meta">
 			<span class="meta-val--bignum mR-4">12,234,002</span>
             <span class="meta-name">views</span>                            
 		</div>						
 	</div>
 
-	<div id="sharePannel" class="share-pannel mdl-card__actions mdl-card--border hidden">
-		
-		<button id="shareTwitteBtn" class="share-button" title="Share to Twitter" onclick="">
-			<span class="share-icon-twitter"></span>			                	                
-		</button>						
-		<button id="shareFbBtn" class="share-button" title="Share to Facebook">
-			<span class="share-icon-fb"></span>			                
-		</button>												
-		<button id="shareGoogleBtn" class="share-button" title="Share to Google+">
-			<span class="share-icon-google"></span>       
-		</button>
-		<button id="shareMailBtn" class="share-button" title="Mail to">
-			<span class="share-icon-mail"></span>       
-		</button>
-		
-		<div class="mdl-layout-spacer"></div>
-		<button id="sharePannelCloseBtn" class="action-button--small" title="Close"
-			onclick="document.getElementById('sharePannel').classList.add('hidden'); return false;">
-			<i class="material-icons" role="presentation">close</i>       
-		</button>																	
-	</div>
+	{% comment %}  Include share panel {% endcomment %}
+	{% include "repository/include/misc/share-panel.html" with item=poetry %}
 	
-	<div id="metaPannel" class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500 hidden">
-		<div class="meta-edit">
-			<div class="light-txt">
-				<span>Source: <a title="Click here to know more" href="{{ poetry.similar_item_url }}" target="_blank">
-				{{ poetry.similar_item_name }}
-				</a></span>
-			</div>
-			<div>
-				<span>Last edited by</span>
-				<span> 
-    				<a title="Go to the profile page of user" href=#>{{poetry.get_last_edit_user}}</a>
-				</span>
-			</div>
-			<div>
-				<span title="Last updated at {{ poetry.get_last_edit_time }}">{{ poetry.get_last_edit_time |naturaltime }}</span>
-			</div>
-		</div>
-		<div class="mdl-layout-spacer"></div>
-		<button id="metaPannelCloseBtn" class="action-button--small" title="Close"
-			onclick="document.getElementById('metaPannel').classList.add('hidden'); return false;">
-			<i class="material-icons" role="presentation">close</i>       
-		</button>	
-	</div>								
+	{% comment %}  Include meta panel {% endcomment %}
+	{% include "repository/include/misc/meta-panel.html" with item=poetry %}
 	
 	<div class="mdl-card__menu">
 		<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn1">

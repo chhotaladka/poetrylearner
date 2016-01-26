@@ -1,0 +1,56 @@
+{% comment %}
+	Info:       Meta panel of the item
+	Requires:   `item` context of an item.
+	Note:       Use inside mdl-card div
+{% endcomment %}
+{% load humanize %}
+<div class="meta-panel mdl-card__actions mdl-card--border">	
+	<div id="metaPannelData" class="hidden">
+		<div class="row fill">
+			<div class="light-txt">
+				<span>Similar item:</span>
+				<a title="Reference web page that unambiguously indicates the item's identity." href="{{ item.similar_item_url }}">
+					{{ item.similar_item_name }}
+				</a>
+			</div>
+			<div class="mdl-layout-spacer"></div>
+		</div>
+		<div class="row fill">
+			<div class="light-txt">				
+				<div>
+					<span>Last edited by</span> 
+					<a title="View the user" href=#>{{item.get_last_edit_user}}</a>			
+				</div>
+				<div>
+					<span title="Last edited at {{ item.get_last_edit_time }}">{{ item.get_last_edit_time |naturaltime }}</span>
+				</div>
+			</div>	
+			<div class="mdl-layout-spacer"></div>
+			<div class="light-txt">				
+				<div>
+					<span>Added by</span> 
+					<a title="View the user" href=#>{{item.get_first_edit_user}}</a>			
+				</div>
+				<div>
+					<span title="Added at {{ item.get_first_edit_time }}">{{ item.get_first_edit_time }}</span>
+				</div>
+			</div>
+		</div>
+		<div id="metaPannelBtnL" class="tAc">
+			<button class="action-button wFull" title="Hide meta data"
+				onclick="document.getElementById('metaPannelData').classList.add('hidden');
+						document.getElementById('metaPannelBtnM').classList.remove('hidden');
+						return false;">							
+			    <i class="material-icons md-24" role="presentation">expand_less</i>		    			                           
+			</button>
+		</div>				
+	</div>
+	<div id="metaPannelBtnM" class="tAc">
+		<button class="action-button wFull" title="Show meta data"
+			onclick="document.getElementById('metaPannelBtnM').classList.add('hidden'); 
+					document.getElementById('metaPannelData').classList.remove('hidden');
+					return false;">							
+		    <i class="material-icons md-24" role="presentation">expand_more</i>		    			                           
+		</button>
+	</div>			
+</div>

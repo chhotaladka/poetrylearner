@@ -6,7 +6,7 @@
 {% endcomment %}
 
 {% if messages %}
-	<section id="msgPannel" class="msg-pannel pT-8 pB-8 ">
+	<section id="msgPanel" class="msg-panel pT-8 pB-8 ">
 		<div class="_layout">					
 			<div class="msg-card wFull">
 				<div class="flash-msg">
@@ -27,7 +27,7 @@
 	<script>
 	$(document).ready(function(){			
 		var hideMsg = function(){			
-			$('#msgPannel').addClass('hidden');
+			$('#msgPanel').addClass('hidden');
 		};			
 		$('#msgCloseBtn').on('click', hideMsg);
 	});

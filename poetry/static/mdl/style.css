@@ -228,8 +228,8 @@ html, body {
 }
 
 /* flash msg/notification section */
-#msgPannel,
-.msg-pannel {
+#msgPanel,
+.msg-panel {
 	background-color: rgba(219, 68, 55, 1);
 	color: white;
     -webkit-transition-duration: 1s;
@@ -443,26 +443,26 @@ html, body {
 	color: #616161;
 }
 
-.mdl-poetry .mdl-card__actions.nav-pannel {
+.mdl-poetry .mdl-card__actions.nav-panel {
 	padding: 4px;
 }
 .mdl-poetry .mdl-card__actions.loading-bar {
 	padding: 0px;
 }
-.mdl-poetry .mdl-card__actions.status-pannel {
+.mdl-poetry .mdl-card__actions.status-panel {
 	padding: 8px;
 	font-size: 14px;
 }
-.mdl-poetry .mdl-card__actions.action-pannel {	
+.mdl-poetry .mdl-card__actions.action-panel {	
 	font-size: 14px;
 	display: flex;
 	flex-wrap: wrap-reverse;
 	justify-content: space-between;
 }
-.mdl-poetry .action-pannel .material-icons {
+.mdl-poetry .action-panel .material-icons {
 	font-size: 20px;
 }
-.mdl-poetry .action-pannel .material-icons.color-used { 
+.mdl-poetry .action-panel .material-icons.color-used { 
 	color: #ED4255;
 }
 .mdl-poetry .action-button {
@@ -509,7 +509,7 @@ html, body {
 		display: none !important; }
 }
 
-.mdl-poetry .share-pannel {
+.mdl-poetry .share-panel {
 	padding: 4px 16px 4px 16px;
 }
 .mdl-poetry .share-button {
@@ -551,7 +551,7 @@ html, body {
 
 .panel,
 .meta-panel,
-.meta-pannel {
+.meta-panel {
 	padding: 8px 16px;
 }
 .meta-edit,

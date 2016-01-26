@@ -51,7 +51,7 @@
 
 	</div>
 		
-	<div class="action-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
+	<div class="action-panel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
 		<button id="shareBtn" class="action-button" title="Share">
             <i class="material-icons" role="presentation">share</i>
             <span class="action-button__text">Share</span>	                
@@ -78,7 +78,7 @@
 		</div>						
 	</div>
 
-	<div id="sharePannel" class="share-pannel mdl-card__actions mdl-card--border hidden">
+	<div id="sharePanel" class="share-panel mdl-card__actions mdl-card--border hidden">
 		
 		<button id="shareTwitteBtn" class="share-button" title="Share to Twitter" onclick="">
 			<span class="share-icon-twitter"></span>			                	                
@@ -94,12 +94,12 @@
 		</button>
 		
 		<div class="mdl-layout-spacer"></div>
-		<button id="sharePannelCloseBtn" class="action-button--small" title="Close">
+		<button id="sharePanelCloseBtn" class="action-button--small" title="Close">
 			<i class="material-icons" role="presentation">close</i>       
 		</button>																	
 	</div>
 	
-	<div id="metaPannel" class="meta-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-500 hidden">
+	<div id="metaPanel" class="meta-panel mdl-card__actions mdl-card--border mdl-color-text--grey-500 hidden">
 		<div class="meta-edit">
 			<div>
 				<span>Last edited by</span>
@@ -112,7 +112,7 @@
 			</div>
 		</div>
 		<div class="mdl-layout-spacer"></div>
-		<button id="metaPannelCloseBtn" class="action-button--small" title="Close">
+		<button id="metaPanelCloseBtn" class="action-button--small" title="Close">
 			<i class="material-icons" role="presentation">close</i>       
 		</button>	
 	</div>								
@@ -143,23 +143,23 @@
 	$(document).ready(function(){
 	
 		var displayShare = function(){			
-			$('#sharePannel').toggleClass('hidden');
+			$('#sharePanel').toggleClass('hidden');
 		};
 		var hideShare = function(){
-			$('#sharePannel').addClass('hidden');
+			$('#sharePanel').addClass('hidden');
 		};
 		
 		var displayMeta = function(){
-			$('#metaPannel').toggleClass('hidden');
+			$('#metaPanel').toggleClass('hidden');
 		};
 		var hideMeta = function(){			
-			$('#metaPannel').addClass('hidden');
+			$('#metaPanel').addClass('hidden');
 		};		
 		
 		$('#shareBtn').on('click', displayShare);
-		$('#sharePannelCloseBtn').on('click', hideShare);
+		$('#sharePanelCloseBtn').on('click', hideShare);
 		$('#moreBtn').on('click', displayMeta);
-		$('#metaPannelCloseBtn').on('click', hideMeta);		
+		$('#metaPanelCloseBtn').on('click', hideMeta);		
 	});
 	</script>
 {% endblock %}

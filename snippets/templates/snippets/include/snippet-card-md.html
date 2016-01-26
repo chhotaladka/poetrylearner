@@ -18,7 +18,7 @@
 	</div>
 	<div class="mdl-card__supporting-text mdl-color-text--grey-800">{{ snippet.get_description }}				
 	</div>
-	<div class="meta-pannel mdl-card__actions">
+	<div class="meta-panel mdl-card__actions">
 		<div class="textsize--12px">
 			{% for tag in snippet.get_tags_slugs %}
  			<a class="hashtag pretty-link" href="{% url 'snippets:tagged-list' slug=tag %}">

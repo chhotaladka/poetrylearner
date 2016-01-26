@@ -5,7 +5,7 @@
 {% endcomment %}
 {% load humanize %}
 <div class="meta-panel mdl-card__actions mdl-card--border">	
-	<div id="metaPannelData" class="hidden">
+	<div id="metaPanelData" class="hidden">
 		<div class="row fill">
 			<div class="light-txt">
 				<span>Similar item:</span>
@@ -36,19 +36,19 @@
 				</div>
 			</div>
 		</div>
-		<div id="metaPannelBtnL" class="tAc">
+		<div id="metaPanelBtnL" class="tAc">
 			<button class="action-button wFull" title="Hide meta data"
-				onclick="document.getElementById('metaPannelData').classList.add('hidden');
-						document.getElementById('metaPannelBtnM').classList.remove('hidden');
+				onclick="document.getElementById('metaPanelData').classList.add('hidden');
+						document.getElementById('metaPanelBtnM').classList.remove('hidden');
 						return false;">							
 			    <i class="material-icons md-24" role="presentation">expand_less</i>		    			                           
 			</button>
 		</div>				
 	</div>
-	<div id="metaPannelBtnM" class="tAc">
+	<div id="metaPanelBtnM" class="tAc">
 		<button class="action-button wFull" title="Show meta data"
-			onclick="document.getElementById('metaPannelBtnM').classList.add('hidden'); 
-					document.getElementById('metaPannelData').classList.remove('hidden');
+			onclick="document.getElementById('metaPanelBtnM').classList.add('hidden'); 
+					document.getElementById('metaPanelData').classList.remove('hidden');
 					return false;">							
 		    <i class="material-icons md-24" role="presentation">expand_more</i>		    			                           
 		</button>

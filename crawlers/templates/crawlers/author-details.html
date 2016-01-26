@@ -11,7 +11,7 @@
 		<div class="mdl-poetry__post mdl-grid">
 			
 			<div id="id-author-card" class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top bS-1 wFull">
-				<div class="nav-pannel mdl-card__actions">
+				<div class="nav-panel mdl-card__actions">
 					{% with prev_author=author.get_previous %}
 					<a href="{% url 'crawlers:author-details' pk=prev_author.id %}">
 						<button id="id-prev-btn" class="action-button" title="Previous Author {{prev_author.get_name}}">
@@ -41,7 +41,7 @@
 						<div>Added at <span>{{ author.added_at }}</span></div>					
 						<div>Validity <span id="id-validity">{{ author.valid }}</span></div>										
 				</div>
-				<div class="action-pannel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
+				<div class="action-panel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
 					<a href="{% url 'crawlers:article-list' %}?author={{ author.get_name }}">
 						<button id="id-list-btn" class="action-button" title="List crawled articles by {{ author.get_name }}">
 			                <i class="material-icons" role="presentation">list</i>
@@ -71,7 +71,7 @@
 					{% endif %}
 					
 				</div>
-				<div id="id-div-action" class="action-pannel mdl-card__actions mdl-card--border hidden">
+				<div id="id-div-action" class="action-panel mdl-card__actions mdl-card--border hidden">
 					<div class="mL-16">
 				  		Add all crawled articles by {{author.get_name}} to snippets, which have not been added before.
 					</div>
@@ -84,7 +84,7 @@
 					</button>						
 									
 				</div>
-				<div id="id-div-status" class="status-pannel tAc mdl-card__actions mdl-card--border hidden">
+				<div id="id-div-status" class="status-panel tAc mdl-card__actions mdl-card--border hidden">
 					<div>
 						<i id="id-status-icon" class="material-icons" role="presentation"></i>
 					</div>

@@ -6,6 +6,7 @@ from django.conf.global_settings import LANGUAGES
 from django.template.defaultfilters import default
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from common.utils import truncatelines
 
 from creative_works import Article
 
@@ -20,7 +21,14 @@ class Poetry(Article):
     '''
     class Meta:
         verbose_name = _("Poetry")
-        verbose_name_plural = _("Poetries")    
+        verbose_name_plural = _("Poetries")  
+        
+    def summary(self):
+        """
+        Content to share on social media sites
+        e.g. first stanza
+        """
+        return truncatelines(self.body, 4)          
     
 
 class Snippet(Article):

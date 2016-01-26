@@ -6,6 +6,7 @@ from django.conf.global_settings import LANGUAGES
 from django.template.defaultfilters import default
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.utils.html import strip_tags
 
 from things import CreativeWork
 
@@ -68,6 +69,9 @@ class Article(CreativeWork):
 
     @property
     def summary(self):
-        return strip_tags(self.body)[:300]            
+        if self.description:
+            return self.description
+        else:
+            return strip_tags(self.body)[:200] + '...'          
                
         

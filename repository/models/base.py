@@ -93,7 +93,7 @@ class Thing(models.Model):
         return self.added_by
     
     def get_first_edit_time(self):
-        return self.added_at
+        return self.date_added
         
     def get_last_edit_user(self):
         return self.modified_by

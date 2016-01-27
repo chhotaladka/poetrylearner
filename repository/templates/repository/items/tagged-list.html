@@ -1,0 +1,14 @@
+{% extends "mdl-base.html" %}
+{% block title %}#{{tag}} tagged items{% endblock %}
+
+{% block main %}
+	<section class="pT-8 pB-16">
+		<div class="_layout layout-L mdl-grid">
+			<div class="__c mdl-cell mdl-cell--12-col mdl-grid">
+			{% include list_template with items=items %}
+			</div>
+		</div>	
+	</section>
+{% endblock %}
+
+{% block page-title %}Tags{% endblock %}

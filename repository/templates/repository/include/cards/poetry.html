@@ -25,8 +25,7 @@
 				<b>{{ poetry.get_language }}</b>
 			</a>							
 			{% for tag in poetry.get_tags_slugs %}
-	 		{% comment %}  <a class="hashtag pretty-link" href="{% url 'repository:tagged-list' slug=tag %}">{% endcomment %}
-	 		<a class="hashtag pretty-link" href="#">
+	 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-poetry' slug=tag %}">
 	 			<s>#</s>
 				<b>{{ tag }}</b>
 			</a>

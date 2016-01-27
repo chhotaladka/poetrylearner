@@ -204,6 +204,47 @@ def list(request, type):
     return render(request, template, context)
 
 
+def tagged_items(request, slug, type):
+    """
+    Views the list of Items tagged using 'slug'
+    TODO:: Order the list using some criteria
+    """
+
+    try:
+        if type == Snippet.content_type():
+            item_cls = Snippet
+            list_template = "repository/include/list/snippet.html" 
+            
+        else:
+            item_cls = Poetry
+            list_template = "repository/include/list/poetry.html"
+            
+        obj_list = item_cls.objects.filter(keywords__slug=slug)
+    except:
+        print ("Error: Unexpected error:", sys.exc_info()[0])
+        for frame in traceback.extract_tb(sys.exc_info()[2]):
+            fname,lineno,fn,text = frame
+            print ("DBG:: Error in %s on line %d" % (fname, lineno))
+        obj_list = []
+    
+    # Pagination
+    paginator = Paginator(obj_list, 20) # Show 20 entries per page    
+    page = request.GET.get('page')
+    try:
+        objs = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        objs = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        objs = paginator.page(paginator.num_pages)
+            
+    context = {'items': objs, 'tag': slug, 'list_template': list_template}
+    template = 'repository/items/tagged-list.html'    
+
+    return render(request, template, context)
+
+
 def search(request):
     '''
     For ajax search of Person select field

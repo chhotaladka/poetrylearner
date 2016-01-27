@@ -21,7 +21,7 @@
 		</div>	
 		<div>												
 			{% for tag in snippet.get_tags_slugs %}
-	 		<a class="hashtag pretty-link" href="#">
+	 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-snippet' slug=tag %}">
 	 			<s>#</s>
 				<b>{{ tag }}</b>
 			</a>

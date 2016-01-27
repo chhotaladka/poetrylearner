@@ -18,7 +18,7 @@
 		</div>	
 		<div>												
 			{% for tag in poetry.get_tags_slugs %}
-	 		<a class="hashtag pretty-link" href="#">
+	 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-poetry' slug=tag %}">
 	 			<s>#</s>
 				<b>{{ tag }}</b>
 			</a>
@@ -26,10 +26,6 @@
 		</div>						
 	</div>
 	<div class="mdl-card__supporting-text">	
-		<div class="light-txt">										
-		{% autoescape off %}
-		{{ poetry.summary }}
-		{% endautoescape %}
-		</div>
+		<div class="light-txt wS-pl">{% autoescape off %}{{ poetry.summary }}{% endautoescape %}</div>
 	</div>												
 </div>

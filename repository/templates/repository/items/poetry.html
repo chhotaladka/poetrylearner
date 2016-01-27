@@ -18,5 +18,10 @@
 			</section>				
 		</div>		
 	</section>
-	
+
+	<a id="floating-btn-bottom" href="{% url 'repository:add-item' type='poetry' %}?cancel={{request.path}}"
+		class="bg-poetry mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-shadow--4dp">
+	    <i class="material-icons" role="presentation">add</i>
+	    <span class="visuallyhidden">Add</span>
+	</a>	
 {% endblock %}		    				    																

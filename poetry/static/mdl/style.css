@@ -566,6 +566,10 @@ html, body {
 	/*color: #ED4255;*/
 	color: #3F51B5;
 }
+.summary-txt {
+	font-size: 14px;
+	white-space: pre-line;
+}
 
 .mdl-poetry .mdl-card a {
 
@@ -1059,6 +1063,15 @@ html, body {
 	line-height: inherit !important;
 	vertical-align: bottom;
 }
+#floating-btn-bottom {
+    position: fixed;
+    display: block;
+    right: 0px;
+    bottom: 0px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    z-index: 900;
+}
 
 /* Popup/overlay/info-box etc */
 .info-overlay.mdl-menu {
@@ -1220,6 +1233,7 @@ html, body {
 .pR-8 { padding-right: 8px;}
 
 .wSn { white-space: normal; }
+.wS-pl { white-space: pre-line; }
 
 .mR-8 { margin-right: 8px; }
 .mL-8 { margin-left: 8px; }

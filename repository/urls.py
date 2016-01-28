@@ -25,6 +25,8 @@ urlpatterns = [
 
     url(r'^poetry/tagged/(?P<slug>[\w.@+-]+)/?$', views.readers.tagged_items, {'type': 'poetry'}, name='tagged-poetry'),
     url(r'^snippet/tagged/(?P<slug>[\w.@+-]+)/?$', views.readers.tagged_items, {'type': 'snippet'}, name='tagged-snippet'),
-#     url(r'^tag/?$', views.tag_list, name='tag-list'),
+
+    url(r'^search/person/?$', views.search.person, name='search-person'),
+    url(r'^search/org/?$', views.search.organization, name='search-organization'),
     
 ]

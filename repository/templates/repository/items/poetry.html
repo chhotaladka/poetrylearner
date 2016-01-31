@@ -1,5 +1,6 @@
 {% extends "repository/repo-base.html" %}
 {% load staticfiles %}
+{% load poetry_tags %}
 
 {% block title %}{{ obj.name }}{% endblock %}
 
@@ -15,6 +16,26 @@
 			{% include "repository/include/cards/poetry.html" with poetry=obj %}
 			</section>				
 			<section class="__r mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
+			</section>				
+		</div>		
+	</section>
+
+	<section class="pB-8">
+		<div class="_layout layout-sLs mdl-grid">		
+			<section class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+			</section>	
+			<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">			
+				<div class="section-title wFull">
+					<h3>More like this</h3>	
+				</div>
+				<div id="id-similar-poems">
+				{% get_similar_poetries 5 like obj as similar %}
+				{% for s in similar %}
+				{% include "repository/include/cards/poetry-sm.html" with poetry=s %}
+				{% endfor %}
+				</div>			
+			</section>				
+			<section class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
 			</section>				
 		</div>		
 	</section>

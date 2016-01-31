@@ -7,7 +7,7 @@
 {% if items %} {% comment %} Display the list {% endcomment %}		
 			<div class="bC-none mdl-cell mdl-cell--12-col">				
 				<div class="mdl-card__supporting-text stats-text">		            
-					Displaying {{ items|length }} of {{ items.paginator.count }} results.
+					Got {{ items.paginator.count }} results.
 				</div>
 				{% if items.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            

@@ -118,49 +118,49 @@ class AddItem(CreateThingView):
             self.model = Snippet
             self.form_class = SnippetForm
             self.template_name = 'repository/items/add-snippet.html'
-            self.ajax_template_name = 'repository/include/form-snippet.html' 
+            self.ajax_template_name = 'repository/include/forms/snippet.html' 
             
         elif type == Poetry.content_type():
             self.model = Poetry
             self.form_class = PoetryForm
             self.template_name = 'repository/items/add-poetry.html'
-            self.ajax_template_name = 'repository/include/form-poetry.html'
+            self.ajax_template_name = 'repository/include/forms/poetry.html'
             
         elif type == Person.content_type():
             self.model = Person
             self.form_class = PersonForm
             self.template_name = 'repository/items/add-person.html'
-            self.ajax_template_name = 'repository/include/form-person.html'
+            self.ajax_template_name = 'repository/include/forms/person.html'
             
         elif type == Place.content_type():
             self.model = Place
             self.form_class = PlaceForm
             self.template_name = 'repository/items/add-place.html'
-            self.ajax_template_name = 'repository/include/form-place.html'
+            self.ajax_template_name = 'repository/include/forms/place.html'
                    
         elif type == Product.content_type():
             self.model = Product
             self.form_class = ProductForm
             self.template_name = 'repository/items/add-product.html'
-            self.ajax_template_name = 'repository/include/form-product.html'
+            self.ajax_template_name = 'repository/include/forms/product.html'
                       
         elif type == Event.content_type():
             self.model = Event
             self.form_class = EventForm
             self.template_name = 'repository/items/add-event.html'
-            self.ajax_template_name = 'repository/include/form-event.html'
+            self.ajax_template_name = 'repository/include/forms/event.html'
                      
         elif type == Organization.content_type():
             self.model = Organization
             self.form_class = OrganizationForm
             self.template_name = 'repository/items/add-organization.html'
-            self.ajax_template_name = 'repository/include/form-organization.html' 
+            self.ajax_template_name = 'repository/include/forms/organization.html' 
     
         elif type == Book.content_type():
             self.model = Book
             self.form_class = BookForm
             self.template_name = 'repository/items/add-book.html'
-            self.ajax_template_name = 'repository/include/form-book.html'
+            self.ajax_template_name = 'repository/include/forms/book.html'
                     
         else:
             print "Error: content type is not found"

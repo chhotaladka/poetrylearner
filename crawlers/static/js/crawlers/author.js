@@ -60,13 +60,13 @@ $(document).ready(function(){
 					data_attributes.valid = true;
 					var html = $.parseHTML('<i class="material-icons mdl-color-text--green-600">check_circle</i>')
 					$("#id-flash-icon").append(html);
-					$("#id-flash-msg").text('Author created! Validation successful!');
+					$("#id-flash-msg").text('Person created! Validation successful!');
 					$("#id-validity").text('True');
 					$("#id-add-btn").addClass("hidden");
 				} else {
 					var html = $.parseHTML('<i class="material-icons mdl-color-text--red-600">highlight_off</i>')
 					$("#id-flash-icon").append(html);
-					$("#id-flash-msg").text('Author created! Validation failed due to invalid request.');
+					$("#id-flash-msg").text('Person created! Validation failed due to invalid request.');
 				}
             },
             
@@ -80,7 +80,7 @@ $(document).ready(function(){
 				$("#id-flash-icon").children().remove();
 				var html = $.parseHTML('<i class="material-icons mdl-color-text--red-700">highlight_off</i>')
 				$("#id-flash-icon").append(html);
-				$("#id-flash-msg").text('Author created! Validation failed due to unexpected error.');
+				$("#id-flash-msg").text('Person created! Validation failed due to unexpected error.');
 		    },
 		    
 	    });	
@@ -125,7 +125,7 @@ $(document).ready(function(){
 		console.log("submitForm: In");		
 
 		// Create a new FormData object.
-		var formData = new FormData(document.getElementById('id-author-form'));
+		var formData = new FormData(document.getElementById('id-person-form'));
 
 		/* POST it now!
 		 * Form Validation goes here....
@@ -169,7 +169,7 @@ $(document).ready(function(){
 							+'<i class="material-icons mdl-color-text--red-700">highlight_off</i>'
 						+'</div>'
 						+'<div id="id-flash-msg" class="flash-msg mdl-color-text--grey-600 tAc">'
-							+'Failed to create Author! Unexpected error occured. <br/>Admin chutiye ko bolo dhang se code likhe.'
+							+'Failed to create Person! Unexpected error occured. <br/>Admin chutiye ko bolo dhang se code likhe.'
 						+'</div>';
 				var html = $.parseHTML(str);
 				body.append(html);
@@ -202,14 +202,14 @@ $(document).ready(function(){
 		console.log("renderForm: In");
 		var html = $.parseHTML(data);
 		var body = $("#id-div-form-body");
-		$("#id-div-form-body").off('submit', "#id-author-form");//Remove event listner
+		$("#id-div-form-body").off('submit', "#id-person-form");//Remove event listner
 		body.children().remove();
 		body.append(html);
 
 		componentHandler.upgradeDom();// Register new mdl elements
 		
 		$('#id-form-submit').prop( "onclick", null );
-		$("#id-div-form-body").on('submit', "#id-author-form", function(e){
+		$("#id-div-form-body").on('submit', "#id-person-form", function(e){
 			e.defaultPrevented;
 			e.stopPropagation();   		
 			submitForm(e);
@@ -270,7 +270,7 @@ $(document).ready(function(){
 	var pageClickAct = function(){
 			
 		console.log("pageClickAct: In");
-		data_attributes.url = window.location.origin + '/en/p/add/author/';
+		data_attributes.url = window.location.origin + '/en/r/add/person/';
 		loadForm();
 	};
 	

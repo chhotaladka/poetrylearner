@@ -1,4 +1,5 @@
 {% extends "crawlers/base.html" %}
+{% load staticfiles %}
 
 {% block title %}
 	List of crawled article
@@ -10,18 +11,61 @@
 		<div class="mdl-poetry__post mdl-grid">
 			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">							
 
-{% if articles %} {% comment %} Display the list {% endcomment %}				
+{% if articles %} {% comment %} Display the list {% endcomment %}
+				{% comment %} Pagination {% endcomment %}				
 				<div class="mdl-card__supporting-text stats-text">		            
-					Displaying {{ articles|length }} of {{ articles.paginator.count }} crawled articles.
+					Got {{ articles.paginator.count }} crawled articles.
 				</div>
 				{% if articles.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
 					{% include "common/include/pagination.html" with obj_list=articles getvars=getvars only %}
 				</div>
 				{% endif %}
-				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+				
+				{% comment %} Add to repository panel {% endcomment %}
+				<div class="mdl-card wFull mH-auto">
+					<div id="id-div-action" class="mdl-card__supporting-text">
+						<form id="id-person-search" method="post" class="a-mdl-form">
+							<div class="row aI-c fW-w jC-fs">
+								<div class="mW-512 mR-16">							
+									{% include "crawlers/creator-select2.html" %}							
+								</div>
+								<div class="tAr mT--16">
+									<button class="mdl-button mdl-button--colored" 
+										data-url="{% url 'crawlers:article-to-poetry' %}" id="id-add-article-btn">
+										Add to poetry repository
+									</button> 
+								</div>
+							</div>
+						</form>					
+					</div>
+					<div id="id-div-status" class="row mdl-card__supporting-text hidden">
+						<div>
+							<i id="id-status-icon" class="material-icons" role="presentation"></i>
+						</div>
+						<div id="id-status-text" class="">
+							Status
+						</div>
+					</div>					
+					<div id="id-div-loading" class="hidden">
+						<div id="p2" class="wFull mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>									
+					</div>
+					<div class="tAr">
+						<button id="id-add-btn" class="mdl-button mdl-button--colored hidden">
+					    	Add to repository
+						</button>					
+					</div>
+					<div class="mdl-card__menu">					
+						<button id="id-cancel-btn" class="mdl-button mdl-button--icon">
+				          <i class="material-icons">close</i>
+						</button>
+					</div>					
+				</div>
+				
+				{% comment %} Article list table {% endcomment %}
+				<div class="mdl-color-text--grey-600">
 					<div class="table--large">
-					<table class="mdl-data-table mdl-js-data-table wSn">
+					<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable wSn">
 						<thead>
 							<tr>
 						    	<th>ID</th>
@@ -32,9 +76,9 @@
 						    	<th class="mdl-data-table__cell--non-numeric" title="Article once has been added to Snippet">Valid</th>						    	
 						    </tr>
 						</thead>						
-						<tbody>
+						<tbody id="id-tbody">
 							{% for article in articles %}
-							<tr>
+							<tr data-id={{ article.id }}>
 								<td>{{ forloop.counter }}</td>
 								<td class="mdl-data-table__cell--non-numeric">
 									<a href="{{article.get_absolute_url}}" title="View article">{{ article.get_title }}</a>
@@ -57,6 +101,7 @@
 					</table>
 					</div>
 				</div>
+				{% comment %} Pagination {% endcomment %}
 				{% if articles.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
 					{% include "common/include/pagination.html" with obj_list=articles getvars=getvars only %}
@@ -75,3 +120,8 @@
 {% endblock %}
 
 {% block page-title %}Articles{% endblock %}
+
+{% block scripts %}
+	{{ block.super }}
+	<script type="text/javascript" src="{% static 'js/crawlers/mk-poetry.js' %}"></script>
+{% endblock %}

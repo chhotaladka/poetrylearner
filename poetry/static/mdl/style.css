@@ -1209,6 +1209,8 @@ html, body {
     letter-spacing: 0.01em;
 }
 .wFull { width: 100%; }
+.wHalf { width: 50%; }
+.mW-512 { max-width: 512px;}
 .tAc {
     text-align: center;
 }
@@ -1243,6 +1245,7 @@ html, body {
 .mL-16 { margin-left: 16px; }
 .mT-16 { margin-top: 16px; }
 .mB-16 { margin-bottom: 16px; }
+.mT--16 { margin-top: -16px; }
 
 .mR-4 { margin-right: 4px; }
 
@@ -1277,6 +1280,14 @@ html, body {
 .fD-r {flex-direction: row;}
 .aI-c {align-items: center;}
 .aI-b {align-items: baseline;}
+.fW-w {flex-wrap: wrap;}
+.fW-wr {flex-wrap: wrap-reverse;}
+.fW-no {flex-wrap: nowrap;}
+.jC-sb {justify-content: space-between;}
+.jC-sa {justify-content: space-around;}
+.jC-fs {justify-content: flex-start;}
+.jC-fe {justify-content: flex-end;}
+.jC-c {justify-content: center;}
 
 .c-blue {color: #3F51B5;}
 

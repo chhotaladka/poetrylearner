@@ -32,6 +32,7 @@ class Thing(models.Model):
                                 )
     
     same_as = models.URLField(_('Similar Item'),
+                              max_length=2000,
                               null=True, blank=True,
                               help_text=_("URL of a reference Web page that unambiguously indicates the item's identity. \
                               For example, the URL of the item's Wikipedia page or official website or the URL from where the crawler has collected the data.")

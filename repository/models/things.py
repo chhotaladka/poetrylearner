@@ -23,14 +23,13 @@ class Organization(Thing):
     '''
 
     ORGANIZATION_TYPE = (
-        ('air', 'Airline'),
         ('corp', 'Corporation'),
-        ('edu', 'EducationalOrganization'),
-        ('govt', 'GovernmentOrganization'),
-        ('locl', 'LocalBusiness'),
+        ('edu', 'Educational Organization'),
+        ('govt', 'Government Organization'),
+        ('locl', 'Local Business'),
         ('ngo', 'NGO'),
-        ('perf', 'PerformingGroup'),
-        ('sport', 'SportsOrganization'),
+        ('perf', 'Performing Group'),
+        ('sport', 'Sports Organization'),
     )
     
     address = models.CharField(max_length=300,

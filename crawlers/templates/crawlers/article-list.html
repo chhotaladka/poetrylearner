@@ -25,23 +25,23 @@
 				{% comment %} Add to repository panel {% endcomment %}
 				<div class="mdl-card wFull mH-auto">
 					<div id="id-div-action" class="mdl-card__supporting-text">
-						<form id="id-person-search" method="post" class="a-mdl-form">
+						<form id="id-person-search" class="a-mdl-form">
 							<div class="row aI-c fW-w jC-fs">
 								<div class="mW-512 mR-16">							
 									{% include "crawlers/creator-select2.html" %}							
 								</div>
 								<div class="tAr mT--16">
-									<button class="mdl-button mdl-button--colored" 
+									<div class="mdl-button mdl-button--colored" 
 										data-url="{% url 'crawlers:article-to-poetry' %}" id="id-add-article-btn">
 										Add to poetry repository
-									</button> 
+									</div> 
 								</div>
 							</div>
 						</form>					
 					</div>
-					<div id="id-div-status" class="row mdl-card__supporting-text hidden">
+					<div id="id-div-status" class="row mdl-card__actions hidden">
 						<div>
-							<i id="id-status-icon" class="material-icons" role="presentation"></i>
+							<i id="id-status-icon" class="material-icons icon" role="presentation"></i>
 						</div>
 						<div id="id-status-text" class="">
 							Status

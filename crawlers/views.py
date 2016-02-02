@@ -9,9 +9,9 @@ from django.utils.http import urlencode
 from django.http import JsonResponse
 from django.http.response import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
-from projects.models import Author
-from snippets.models import Snippet
 from common.utils import html_to_plain_text
+
+from repository.models import Poetry, Person 
 
 # Create your views here.
 
@@ -69,7 +69,7 @@ def raw_article_list(request):
     if q:
         q = q.strip()
         # TODO make it more perfect 
-        q_objects &= Q(source_url__icontains=q) | Q(author__icontains=q) | Q(title__icontains=q)      
+        q_objects &= Q(source_url__icontains=q) | Q(author__icontains=q) | Q(title__icontains=q) | Q(content__icontains=q)      
         
     # Get all articles              
     obj_list = RawArticle.objects.all().filter(q_objects)
@@ -126,57 +126,74 @@ def raw_author_details(request, pk):
 
 
 @login_required
-def author_add_snippet(request, pk):
-    
-    #TODO check for the permission: Only admin and users that can access dashboard are allowed 
-    if request.is_ajax():
-        name = get_object_or_404(RawAuthor, pk=pk).name
+def article_to_poetry(request):
+    '''
+    Create poetries in Repository from given RawArticles
+    '''
+    ##
+    # Check the parameters passed in the URL and process accordingly
+    creator_id = request.GET.get('creator', None)
+    article_ids = request.GET.get('articles', None)
+            
+    # Only AJAX POST request is allowed  
+    if request.is_ajax() and request.method == "POST":    
+        if creator_id is None or article_ids is None:
+            # Return failure
+            print "Error: article_to_poetry: No parameter(s) passed."                
+            res = {}
+            res['result'] = 'failure'
+            res['count'] = 0                    
+            return JsonResponse(res)
         
-        try:
-            # Get all raw articles by this author(raw :D) which are not valid 
-            q_articles = Q()
-            q_articles &= Q(author__icontains=name) & Q(valid=False)                
-            raw_articles = RawArticle.objects.all().filter(q_articles)              
+        article_ids = [x.strip() for x in article_ids.split(',')]
+        # remove comma from the 
+        if not article_ids[-1]:
+            article_ids = article_ids[:-1]            
+        creator_id = creator_id.strip()               
+        print "article_to_poetry: creator=", creator_id, "articles=", article_ids            
+        
+        count = 0
+        
+        try:                                
+            # Get the `Person` object having id=`creator_id`
+            # Return failure if not found
+            person = Person.objects.get(pk=creator_id)
             
-            count = 0
-            
-            # Get the `Author` object having name='name'
-            # Return failure if not found                
-            q_authors = Q()
-            q_authors &= Q(name__icontains=name)|Q(name_en__icontains=name)
-            author = Author.objects.all().filter(q_authors)[0:1][0]
-            
-            if author:            
-                # Add all 'articles' to Snippet with 'author' as author field
-                print "Found author", author.get_name(), " in Projects.Author"
+            if person:            
+                # Add all 'articles' to Poetry with 'person' as 'creator' field
+                print "article_to_poetry: found ", person.name, " in person@repository"
                         
-                for raw_article in raw_articles:
-                    # Create a new snippet              
-                    snippet = Snippet()
-                    snippet.title = raw_article.title
-                    snippet.body = html_to_plain_text(raw_article.content)
-                    snippet.author = author
-                    snippet.added_by = request.user
-                    snippet.updated_by = request.user
-                    snippet.save()
-                    print "Created Snippet : ", snippet.id
+                for article_id in article_ids:
+                    article = RawArticle.objects.get(pk=article_id)
                     
-                    # Make the raw_article valid
-                    raw_article.snippet = snippet
-                    raw_article.valid = True
-                    raw_article.save()
-                    count += 1
+                    if article:
+                        # Create a new poetry              
+                        poetry = Poetry()
+                        
+                        poetry.name = article.title
+                        poetry.body = html_to_plain_text(article.content)
+                        poetry.creator = person
+                        poetry.same_as = article.source_url
+                        poetry.added_by = request.user
+                        poetry.modified_by = request.user
+                        poetry.save()
+                        print "article_to_poetry: RawArticle ", article_id, "-> Poetry ", poetry.id
+                        
+                        # Make the raw_article valid
+                        article.valid = True
+                        article.save()
+                        count += 1
                     
                 # Return success with number of snippets made
-                print "Total", count, "raw articles added in snippets."                        
+                print "article_to_poetry: Total", count                        
                 res = {}
                 res['result'] = 'success'
                 res['count'] = count  
                 return JsonResponse(res)
     
             else:
-                # Return failure, means You have to add the entry of RawAuthor to Author first
-                print "No author found as", name, " in Projects.Author"
+                # Return failure, means You have to add the entry of Person first
+                print "No such creator/person found in person@repository"
                 
                 res = {}
                 res['result'] = 'failure'
@@ -194,7 +211,6 @@ def author_add_snippet(request, pk):
             return JsonResponse(res)           
             
     return HttpResponseForbidden()
-
 
 @login_required
 def raw_author_list(request):

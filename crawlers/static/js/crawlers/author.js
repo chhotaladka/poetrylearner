@@ -1,5 +1,5 @@
 /**
- * To create Author in main DB from the crawled Author.
+ * To create a Person in Repository from the crawled Author.
  */
 $(document).ready(function(){
 

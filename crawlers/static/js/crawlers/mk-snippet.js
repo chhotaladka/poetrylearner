@@ -1,4 +1,5 @@
 /**
+ * TO BE REMOVED
  * To create Snippets from articles of an author
  */
 $(document).ready(function(){

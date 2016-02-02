@@ -27,7 +27,7 @@ $(document).ready(function(){
 	  var str = 
 	    '<div>'
 	    + '<a href="' + person.url + '" target="_blank">'
-	    + '<span>' + person.name + person.additional_name + '</span></a>'	    
+	    + '<span>' + person.name + ' ' + person.additional_name + '</span></a>'	    
 	    + '</div>'
 	    + '<div class="fS-10px">' + b_str + d_str
 	    + '</div>'	    
@@ -38,7 +38,7 @@ $(document).ready(function(){
 	  if (!person.id) { return person.text; }
 	  if (!person.text) {
 	  	  var $person = $(	  	    
-	    	  '<span>' + person.name + person.additional_name + ' </span>'	    	
+	    	  '<span>' + person.name + ' ' + person.additional_name + ' </span>'	    	
 	  		);
 	  } else {
 		  var $person = $(

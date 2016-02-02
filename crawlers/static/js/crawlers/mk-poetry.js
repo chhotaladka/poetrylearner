@@ -39,7 +39,7 @@ $(document).ready(function(){
 		$('#id-div-loading').toggleClass('hidden');
 
 		if (data.result == 'success') {
-			$('#id-status-text').text(data.count+' articles added to snippet successfully!!');
+			$('#id-status-text').text(data.count+' articles added to poetry@repository successfully!!');
 			$('#id-status-icon').text('done');
 			$('#id-div-status').removeClass('status-failure');
 			$('#id-div-status').addClass('status-success');
@@ -47,7 +47,7 @@ $(document).ready(function(){
 						
 		} else if (data.result == 'failure') {
 			console.log("failed");
-			$('#id-status-text').text('Failed to add articles to snippet! Current Author was not found in main db. Please add.');
+			$('#id-status-text').text('Failed to add articles to poetry@repository!');
 			$('#id-status-icon').text('error_outline');
 			$('#id-div-status').removeClass('status-success');
 			$('#id-div-status').addClass('status-failure');
@@ -71,13 +71,21 @@ $(document).ready(function(){
 	var sendRequest = function(){
 		console.log("sendRequest: In");	
 		
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            }
+        }
+    });		
+    
 		$.ajax({
 				    
 		    url: data_attributes.url,
 		    data: {
 		        format:'json'
 		    },
-		    type: "GET",		 
+		    type: "POST",		 
 		    // the type of data we expect back
 		    dataType: "json",
 		 
@@ -104,19 +112,16 @@ $(document).ready(function(){
 	/**
 	 * Page Click Actions
 	 */
-	var pageClickAct = function(){			
+	var pageClickAct = function(){				
 		console.log("pageClickAct: In");	
 					
 		data_attributes.url = window.location.origin + $('#id-add-article-btn').data('url');
-		console.log(data_attributes.url);
 		var arg1 = 'articles='
 		var count = 0;
 		$('#id-tbody').find('tr.is-selected').each(function() {
   		arg1 += $(this).data('id') + ','
   		count++;
-		});
-		console.log(arg1, count);
-		
+		});				
 		if (count == 0) {
 			$('#id-status-text').text('Select at least one article.');
 			$('#id-div-status').removeClass('hidden');
@@ -124,23 +129,24 @@ $(document).ready(function(){
 		}
 
 		var arg2 = 'creator=';
-		var cId = '';
-		$('#id_creator option').each(function() {
-  		cId = $(this).val();
-  		console.log(cId);
-		});
+		var selected = $('#id_creator').val();
+		if (selected == null) {
+			$('#id-status-text').text('Search and select author of the selected articles from repository.');
+			$('#id-div-status').removeClass('hidden');
+			return false;				
+		}
 				
-		arg2 += cId;
-		console.log(arg2);		
-		
+		arg2 += selected;
+		data_attributes.url += '?' + arg1 + '&' + arg2	
+		console.log(data_attributes.url);	
 		
 		$('#id-div-action').addClass('hidden');
 		$('#id-status-text').text('Waiting for the server response. Please wait...');
 		$('#id-div-status').removeClass('hidden');
 		$('#id-div-loading').removeClass('hidden');
 		$('#id-cancel-btn').addClass('hidden');
-				
-		//sendRequest();
+
+		sendRequest();
 	};	
 	
 	var displayAction = function(){

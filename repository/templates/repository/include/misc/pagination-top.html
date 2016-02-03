@@ -1,0 +1,11 @@
+{% comment %}  
+	Pagination information to be displayed at the top of the results.
+	Requirement: list of results as `items` in context	
+{% endcomment %}
+	<div class="mdl-cell mdl-cell--12-col">
+		<div class="p-card">			
+			<div class="mdl-card__supporting-text stats-text">		            
+				Got {{ items.paginator.count }} results.
+			</div>
+		</div>
+	</div>

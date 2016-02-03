@@ -5,37 +5,18 @@
 {% endcomment %}
 
 {% if items %} {% comment %} Display the list {% endcomment %}		
-			<div class="bC-none mdl-cell mdl-cell--12-col">				
-				<div class="mdl-card__supporting-text stats-text">		            
-					Got {{ items.paginator.count }} results.
-				</div>
-				{% if items.paginator.num_pages > 1 %}
-				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
-					{% include "common/include/pagination.html" with obj_list=items getvars=getvars only %}
-				</div>
-				{% endif %}
-			</div>
+	{% include "repository/include/misc/pagination-top.html" with items=items %}
 			
-			{% for item in items %}
-			<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
-			{% include "repository/include/cards/organization-sm.html" with org=item %}
-			</div>
-			{% endfor%}
+	{% for item in items %}
+	<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+	{% include "repository/include/cards/organization-sm.html" with org=item %}
+	</div>
+	{% endfor%}
 						
-			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">				
-				{% if items.paginator.num_pages > 1 %}
-				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
-					{% include "common/include/pagination.html" with obj_list=items getvars=getvars only %}
-				</div>
-				{% endif %}
-			</div>
+	{% include "repository/include/misc/pagination-bottom.html" with items=items %}
+	
 {% else %}  {% comment %} Display the notification {% endcomment %}
-			<div class="bC-none mdl-cell mdl-cell--12-col">
-				<div class="mdl-card__supporting-text oops-message">
-					<i class="material-icons md-48">error_outline</i>	            
-					<h6>Oops!! No data found for this query.</h6>
-				</div>
-			</div>
+	{% include "repository/include/misc/empty-result.html" %}
 {% endif %}
 
 <a id="floating-btn-bottom" href="{% url 'repository:add-item' type='organization' %}?cancel={{request.path}}"

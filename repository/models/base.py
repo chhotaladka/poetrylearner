@@ -6,10 +6,11 @@ from django.conf.global_settings import LANGUAGES
 from django.template.defaultfilters import default
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from django.utils.text import slugify
+#from django.utils.text import slugify
 from django.utils.http import urlquote  as django_urlquote
 from django.utils.http import urlencode as django_urlencode
 from urlparse import urlparse
+from common.slugify import slugify 
 
 # Create your models here.
        
@@ -67,7 +68,7 @@ class Thing(models.Model):
         return cls.__name__.lower()
         
     def get_slug(self):
-        return django_urlquote(slugify(self.name))
+        return slugify(self.name)
              
     def get_absolute_url(self):        
         kwargs = {'pk': self.id, 'slug': self.get_slug(), 'type': self.content_type()}

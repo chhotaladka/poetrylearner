@@ -1,0 +1,79 @@
+{% comment %}
+	Info:       Field Organization select2 enabled.
+	Requires:   Can be included in the Form of an item having 'organization' as a ForeignKey 
+	Note:       xxx
+{% endcomment %}
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+
+		<div id="div_id_creator" class="form-element">
+			<label for="id_creator" class="select2__label">
+				<strong>{{form.creator.label}}</strong>
+			</label>		
+			<select id="id_creator" class="js-example-responsive" name="creator" required>
+    		{% if form.fields.creator.choices %}{% for x,y in form.fields.creator.choices %}
+    			<option value="{{ x }}"{% if form.creator.value == x %} selected=selected{% endif %}>{{ y }}</option>
+			{% endfor %}{% endif %}
+			</select>				
+		{% if form.creator.errors %}
+		    {% for error in form.creator.errors %}<span class="error-text">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+		{% if form.creator.help_text %}<span class="help-text">{{ form.creator.help_text|safe }}</span>{% endif %}				
+		</div>	
+
+<script>
+$(document).ready(function(){
+	
+	function formatItem (org) {
+	  if (!org.id) { return org.text; }
+	  var str = 
+	    '<div>'
+	    + '<a href="' + org.url + '" target="_blank">'
+	    + '<span>' + org.name + '</span></a>'	    
+	    + '</div>'    
+	  return $(str);
+	};
+	function formatItemSelection (org) {
+	  if (!org.id) { return org.text; }
+	  if (!org.text) {
+	  	  var $ret = $(	  	    
+	    	  '<span>' + org.name + ' </span>'	    	
+	  		);
+	  } else {
+		  var $ret = $(
+		    '<span>' + org.text + ' </span>'		    
+		  );
+	  }
+	  return $ret;
+	};
+		
+    $("#id_creator").select2({
+      ajax: {
+        url: "/r/search/org/",
+        dataType: 'json',
+        delay: 500,
+        data: function (params) {
+          return {
+            q: params.term, // search term
+          };
+        },
+        processResults: function (data, params) {
+          // parse the results into the format expected by Select2
+          // since we are using custom formatting functions we do not need to
+          // alter the remote JSON data
+          return {
+            results: data,
+          };
+        },
+        cache: true
+      },
+      theme: "classic",
+      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+      minimumInputLength: 3,
+      templateResult: formatItem,
+      templateSelection: formatItemSelection,
+      placeholder: "",
+      allowClear: true
+    });
+});
+</script>		

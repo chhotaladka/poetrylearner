@@ -1394,6 +1394,10 @@ a:visited {
 /*
  * Pagination
  */
+.p-card {
+	max-width: 512px;
+	margin: 0px auto;
+}
 .pagination {
 	padding-left: 0px;
 }

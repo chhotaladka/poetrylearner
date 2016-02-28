@@ -18,3 +18,13 @@ def home(request):
     r = json.dumps(result)
                   
     return HttpResponse(r, content_type="application/json") 
+
+
+def welcome(request):
+    
+    ##
+    # Make the context and render  
+    context = {}
+    template = 'common/welcome.html'
+    
+    return render(request, template, context) 

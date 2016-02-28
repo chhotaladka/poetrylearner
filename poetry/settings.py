@@ -62,8 +62,6 @@ INSTALLED_APPS = (
     'taggit',
     # Developed by us
     'crawlers',
-    'projects',
-    'snippets',
     'meta_tags',
     'common',
     'repository',

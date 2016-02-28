@@ -37,9 +37,7 @@
 	      {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
 	      	<!--<a class="mdl-navigation__link" href="#" onclick="document.getElementById('id-search-box').classList.toggle('hidden'); return false;"><i class="material-icons icons search" role="presentation">search</i></a>-->
 	      	<a class="mdl-navigation__link" href="{% url 'repository:view' %}">View</a>
-	      	<a class="mdl-navigation__link" href="{% url 'repository:add' %}">Add</a>
-	      	<a class="mdl-navigation__link" href="{% url 'snippets:snippet-list' %}">Poetry</a>
-	        <a class="mdl-navigation__link" href="{% url 'projects:author-list' %}">Poets</a>	        
+	      	<a class="mdl-navigation__link" href="{% url 'repository:add' %}">Add</a>        
 	        <a id="id-user-submenu" class="mdl-navigation__link" href="#"><i class="material-icons icons user" role="presentation">person</i></a>	        
 	       {% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
 	      </nav>

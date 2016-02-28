@@ -39,9 +39,7 @@
 	      {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
 	      	<!--<a class="mdl-navigation__link" href="#" onclick="document.getElementById('id-search-box').classList.toggle('hidden'); return false;"><i class="material-icons icons search" role="presentation">search</i></a>-->
 	      	<a class="mdl-navigation__link" href="{% url 'repository:view' %}">View</a>
-	      	<a class="mdl-navigation__link" href="{% url 'repository:add' %}">Add</a>
-	      	<a class="mdl-navigation__link" href="{% url 'snippets:snippet-list' %}">Poetry</a>
-	        <a class="mdl-navigation__link" href="{% url 'projects:author-list' %}">Poets</a>	        
+	      	<a class="mdl-navigation__link" href="{% url 'repository:add' %}">Add</a>	        
 	        <a id="id-user-submenu" class="mdl-navigation__link" href="#"><i class="material-icons icons user" role="presentation">person</i></a>	        
 	       {% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
 	      </nav>
@@ -78,13 +76,6 @@
 	    	<a class="mdl-navigation__link section {% block is-crawlers-active %}{% endblock %}" href="{% url 'crawlers:dashboard' %}">Crawled data</a>
 	    	<a class="mdl-navigation__link" href="{% url 'crawlers:article-list' %}" title="Browse crawled articles">Articles</a>
     		<a class="mdl-navigation__link" href="{% url 'crawlers:author-list' %}" title="Browse crawled authors">Authors</a>	    	
-	    	<a class="mdl-navigation__link section {% block is-snippets-active %}{% endblock %}" href="{% url 'snippets:dashboard' %}">Processed data</a>
-		    <a class="mdl-navigation__link" href="{% url 'snippets:snippet-list' %}/?view=t" title="Browse Snippets">Snippets</a>
-		    <a class="mdl-navigation__link" href="{% url 'snippets:tag-list' %}" title="Browse Tags">Tags</a>  	    	
-	    	<a class="mdl-navigation__link section {% block is-projects-active %}{% endblock %}" href="{% url 'projects:dashboard' %}">Digitization</a>
-			<a class="mdl-navigation__link" href="{% url 'projects:author-list' %}/?view=t" title="Browse authors">Authors</a>
-			<a class="mdl-navigation__link" href="{% url 'projects:book-list' %}" title="Browse books">Books</a>
-			<a class="mdl-navigation__link" href="{% url 'projects:project-list' %}" title="Browse projects">Projects</a>				    
 	    	<a class="mdl-navigation__link section {% block is-users-active %}{% endblock %}" href="/admin">Admin</a>
 	    </nav>
     

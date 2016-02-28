@@ -61,7 +61,6 @@ INSTALLED_APPS = (
     'crispy_forms',
     'taggit',
     # Developed by us
-    'articles',
     'crawlers',
     'projects',
     'snippets',

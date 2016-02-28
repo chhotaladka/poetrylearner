@@ -73,7 +73,7 @@
 						    	<th class="mdl-data-table__cell--non-numeric">Author</th>
 						    	<th class="mdl-data-table__cell--non-numeric">Source</th>
 						    	<th>Added at</th>
-						    	<th class="mdl-data-table__cell--non-numeric" title="Article once has been added to Snippet">Valid</th>						    	
+						    	<th class="mdl-data-table__cell--non-numeric" title="Article once has been added to Repository">Valid</th>						    	
 						    </tr>
 						</thead>						
 						<tbody id="id-tbody">
@@ -92,7 +92,7 @@
 								<td title="{{article.added_at}}">{{ article.added_at | date }}</td>
 								<td class="mdl-data-table__cell--non-numeric">
 									{% if article.get_validity %}
-									<a href="{{article.snippet.get_absolute_url}}" title="View snippet" target="_blank">{{ article.get_validity }}</a>
+									<a href="#" title="View in repository">{{ article.get_validity }}</a>
 									{% endif %}
 								</td>
 							</tr>

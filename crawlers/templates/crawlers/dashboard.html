@@ -13,7 +13,7 @@
 				</div>
 				<div class="mdl-card__supporting-text">
 					This is where we store the unprocessed Articles and Authors, crawled by our Web Spiders.<br />
-					Here you can access all crawled data, add the Authors in the main DB, and post the poetic articles as Snippet.					 					
+					Here you can access all crawled data, add the Authors in the Repository, and post the articles.					 					
 				</div>
 			</div>
 
@@ -41,10 +41,10 @@
 				</div>
 				<div class="mdl-card__supporting-text mdl-color-text--grey-700">
 					Out of <a href="{% url 'crawlers:author-list' %}" title="View all crawled authors"><strong>{{ author.total }}</strong></a> 
-					crawled authors, <a href="{% url 'crawlers:author-list' %}/?filters=valid" title="View valid crawled authors">{{author.valid}}</a> has been processed and added to main database.					
+					crawled authors, <a href="{% url 'crawlers:author-list' %}/?filters=valid" title="View valid crawled authors">{{author.valid}}</a> has been processed and added to Repository.					
 				</div>
 				<div class="mdl-card__supporting-text mdl-color-text--grey-700">
-					To add an author to main database, select the author from the <a href="{% url 'crawlers:author-list' %}" title="List of authors">Authors</a> page and click on the name.
+					To add an author to Repository, select the author from the <a href="{% url 'crawlers:author-list' %}" title="List of authors">Authors</a> page and click on the name.
 					You will get further information about the operation.					 					
 				</div>
 			</div>		
@@ -58,12 +58,12 @@
 				</div>
 				<div class="mdl-card__supporting-text mdl-color-text--grey-700">
 					Out of <a href="{% url 'crawlers:article-list' %}" title="View all crawled articles">{{ article.total }}</a> 
-					crawled articles, <a href="{% url 'crawlers:article-list' %}/?filters=valid" title="View valid crawled articles">{{article.valid}}</a> has been processed and added to snippets.					
+					crawled articles, <a href="{% url 'crawlers:article-list' %}/?filters=valid" title="View valid crawled articles">{{article.valid}}</a> has been processed and added to Repository.					
 				</div>
 				<div class="mdl-card__supporting-text mdl-color-text--grey-700">
-					Once an author is added to main database, her/his articles(poetry) can be posted as snippets.
-					The action is available on the crawled author page. The snippets will be created but will not be published on the web.
-					Admin and authorized users can view these snippets and publish them on the web for public access.
+					Once an author is added to Repository, you can add her/his articles to Repository.
+					The action is available on the crawled author page. The Repository item will be created but will not be published on the web.
+					Admin and authorized users can view these Repository items and publish them on the web for public access.
 				</div>				
 			</div>									
 				

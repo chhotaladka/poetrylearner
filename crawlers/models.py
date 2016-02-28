@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 import json
 from urlparse import urlparse
-from snippets.models.snippet import Snippet
 
 # Create your models here.
 
@@ -22,15 +21,7 @@ class ArticleManager(models.Manager):
     
     def invalid(self):
         qs = self.get_queryset().filter(valid=False)
-        return qs
-    
-    def withsnippet(self):
-        qs = self.get_queryset().exclude(snippet=None)
-        return qs        
- 
-    def withoutsnippet(self):
-        qs = self.get_queryset().filter(snippet=None)
-        return qs    
+        return qs  
     
        
 #
@@ -43,8 +34,7 @@ class RawArticle(models.Model):
     author = models.CharField(max_length=100, null=True, blank=True)
     content = models.TextField(null=False)
     added_at = models.DateTimeField(auto_now_add=True)
-    valid = models.BooleanField(default=False) # Valid true means, this article once has been added to `Snippet`
-    snippet = models.ForeignKey(Snippet, related_name='ref_articles', null=True, blank=True, verbose_name="related entry in article table")
+    valid = models.BooleanField(default=False) # Valid true means, this article once has been added to `Repository`
     
     objects = ArticleManager()
     

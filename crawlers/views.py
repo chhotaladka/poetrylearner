@@ -45,15 +45,11 @@ def raw_article_list(request):
     if filters:
         filters = filters.split(',')
         print filters
-        # Supported filters are: valid, invalid, snippet, nosnippet
+        # Supported filters are: valid, invalid
         if 'valid' in filters:
             q_objects &= Q(valid=True)
         elif 'invalid' in filters:
             q_objects &= Q(valid=False)
-        if 'snippet' in filters:
-            q_objects &= ~Q(snippet=None)
-        elif 'nosnippet' in filters:
-            q_objects &= Q(snippet=None)
     
     
     if source:
@@ -184,7 +180,7 @@ def article_to_poetry(request):
                         article.save()
                         count += 1
                     
-                # Return success with number of snippets made
+                # Return success with number of poetry made
                 print "article_to_poetry: Total", count                        
                 res = {}
                 res['result'] = 'success'
@@ -292,8 +288,7 @@ def dashboard(request):
     author['nodate'] = RawAuthor.objects.nodate().count
     
     article['total'] = RawArticle.objects.all().count
-    article['valid'] = RawArticle.objects.valid().count
-    article['withsnippet'] = RawArticle.objects.withsnippet().count        
+    article['valid'] = RawArticle.objects.valid().count       
         
     context = {'author': author, 'article': article}
     template = "crawlers/dashboard.html"

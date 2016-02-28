@@ -5,7 +5,7 @@ from crawlers.models import RawArticle, RawAuthor
 
 class RawArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'source_url', 'added_at', 
-                    'valid', 'snippet')
+                    'valid',)
     
     fieldsets = [
         (None,               {'fields': ['title', 'author', 'source_url',

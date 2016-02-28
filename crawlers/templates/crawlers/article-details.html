@@ -34,12 +34,7 @@
 						<span>(Source of the data)</span>
 					</div>	
 					<div id="cDateId">Added at {{ article.added_at }}</div>													
-					<div id="cValidId">Validity {{ article.get_validity }}</div>	
-					<div>
-						<span>Related snippet</span>{% if article.snippet %}
-						<a href="{{ article.snippet.get_absolute_url }}" title="Visit snippet">{{ article.snippet.get_title }}</a>{% else %}
-						<span>None</span>{% endif %}						
-					</div>					
+					<div id="cValidId">Validity {{ article.get_validity }}</div>						
 				</div>
 				<hr />					
 				<div id="cPoemId" class="article-content mdl-card__supporting-text mdl-color-text--grey-700">											

@@ -177,7 +177,7 @@
 		'hi-transliteration': {
 			name: 'लिप्यंतरण',
 			source: 'rules/hi/hi-transliteration.js'
-		},
+		},/*
 		'hi-inscript': {
 			name: 'इनस्क्रिप्ट',
 			source: 'rules/hi/hi-inscript.js'
@@ -189,7 +189,7 @@
 		'hi-phonetic': {
 			name: 'फोनेटिक',
 			source: 'rules/hi/hi-phonetic.js'
-		},
+		},*/
 		'is-normforms': {
 			name: 'Venjuleg eyðublöð',
 			source: 'rules/is/is-normforms.js'
@@ -207,11 +207,11 @@
 			name: 'इनस्क्रिप्ट २',
 			source: 'rules/mai/mai-inscript2.js',
 			depends: 'hi-inscript2'
-		},
+		},/*
 		'hi-bolnagri': {
 			name: 'बोलनागरी',
 			source: 'rules/hi/hi-bolnagri.js'
-		},
+		},*/
 		'ml-transliteration': {
 			name: 'ലിപ്യന്തരണം',
 			source: 'rules/ml/ml-transliteration.js'
@@ -574,7 +574,7 @@
 		'ur-transliteration': {
 			name: 'ٹرانسلٹریشن',
 			source: 'rules/ur/ur-transliteration.js'
-		},
+		},/*
 		'ipa-sil': {
 			name: 'International Phonetic Alphabet - SIL',
 			source: 'rules/fonipa/ipa-sil.js'
@@ -582,7 +582,7 @@
 		'ipa-x-sampa': {
 			name: 'International Phonetic Alphabet - X-SAMPA',
 			source: 'rules/fonipa/ipa-x-sampa.js'
-		},
+		},*/
 		'udm-alt': {
 			name: 'Удмурт ALT',
 			source: 'rules/udm/udm-alt.js'
@@ -605,7 +605,7 @@
 		}
 	} );
 
-	$.extend( $.ime.languages, {
+	$.extend( $.ime.languages, {/*
 		'ady': {
 			autonym: 'адыгэбзэ',
 			inputmethods: [ 'cyrl-palochka' ]
@@ -697,11 +697,11 @@
 		'doi': {
 			autonym: 'डोगरी',
 			inputmethods: [ 'doi-inscript2' ]
-		},
+		},*/
 		'en': {
 			autonym: 'English',
 			inputmethods: [ 'ipa-sil', 'ipa-x-sampa' ]
-		},
+		},/*
 		'el': {
 			autonym: 'Ελληνικά',
 			inputmethods: [ 'el-kbd' ]
@@ -741,11 +741,11 @@
 		'he': {
 			autonym: 'עברית',
 			inputmethods: [ 'he-standard-2012-extonly', 'he-standard-2012' ]
-		},
+		},*/
 		'hi': {
 			autonym: 'हिन्दी',
 			inputmethods: [ 'hi-transliteration', 'hi-inscript', 'hi-bolnagri', 'hi-phonetic', 'hi-inscript2' ]
-		},
+		},/*
 		'hr': {
 			autonym: 'Hrvatski',
 			inputmethods: [ 'hr-kbd' ]
@@ -965,7 +965,7 @@
 		'vec': {
 			autonym: 'Venetian',
 			inputmethods: [ 'vec-GVU' ]
-		}
+		}*/
 	} );
 
 }( jQuery ) );

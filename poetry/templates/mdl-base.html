@@ -36,12 +36,14 @@
 	      <nav class="mdl-navigation page-header--nav">
 	      {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
 	      	<!--<a class="mdl-navigation__link" href="#" onclick="document.getElementById('id-search-box').classList.toggle('hidden'); return false;"><i class="material-icons icons search" role="presentation">search</i></a>-->
+	      	<a class="mdl-navigation__link" href="{% url 'repository:view' %}">View</a>
+	      	<a class="mdl-navigation__link" href="{% url 'repository:add' %}">Add</a>
 	      	<a class="mdl-navigation__link" href="{% url 'snippets:snippet-list' %}">Poetry</a>
 	        <a class="mdl-navigation__link" href="{% url 'projects:author-list' %}">Poets</a>	        
 	        <a id="id-user-submenu" class="mdl-navigation__link" href="#"><i class="material-icons icons user" role="presentation">person</i></a>	        
 	       {% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
 	      </nav>
-	    </div>
+	    </div>{% comment %}  
 	    <div id="id-search-box" class="site-search-row"> 	    	  
 		    <form id="id-search-form" class="site-search" onsubmit="if (document.getElementById('id-search-term').value == '') return false;" action="{% block search-form-action %}{% endblock %}" method="get">
 				<input class="search-input" id="id-search-term" spellcheck="false" autocomplete="off" onkeydown="if (!this.value &amp;&amp; (event.keyCode == 40 || event.keyCode == 32 || event.keyCode == 34)) {this.onkeydown = null; this.blur();}" name="q" value="" tabindex="1" placeholder="Search" title="Search" type="text">
@@ -52,7 +54,7 @@
 		    <div class="fS-13 tAr">
 		    	<a class="pretty-link" href="#" tabindex="3"><b>Advance search</b></a>
 		    </div>
-	    </div>
+	    </div>{% endcomment %}
 	    {% comment %} User icon submenu {% endcomment %}
 	    <div class="nav-submenu">
 			<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu"

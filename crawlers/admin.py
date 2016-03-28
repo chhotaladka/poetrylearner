@@ -8,7 +8,7 @@ class RawArticleAdmin(admin.ModelAdmin):
                     'valid',)
     
     fieldsets = [
-        (None,               {'fields': ['title', 'author', 'source_url',
+        (None,               {'fields': ['title', 'author', 'source_url', 'content',
                                          ]
                               
                               }

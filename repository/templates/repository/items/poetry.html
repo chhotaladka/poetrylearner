@@ -1,8 +1,8 @@
-{% extends "repository/repo-base.html" %}
+{% extends "repository/base.html" %}
 {% load staticfiles %}
 {% load poetry_tags %}
 
-{% block title %}{{ obj.name }}{% endblock %}
+{% block title %}{{ obj.name }} | poetry {% endblock %}
 
 {% block main %}
 

@@ -1291,6 +1291,9 @@ html, body {
 
 .c-blue {color: #3F51B5;}
 
+.oN {outline:none !important;}
+.oN::-moz-focus-inner {border: 0;}
+
 .person .highlight,
 .bg-person {
 	background-color: #DB4437 !important;/*red*/

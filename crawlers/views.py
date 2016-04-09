@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from django.http.response import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from common.utils import html_to_plain_text
+from common.decorators import group_required
 
 from repository.models import Poetry, Person 
 
@@ -19,7 +20,7 @@ from repository.models import Poetry, Person
 """
 Details of the RawArticle
 """
-@login_required
+@group_required('administrator')
 def raw_article_details(request, pk):
     obj = get_object_or_404(RawArticle, pk=pk)    
         
@@ -28,7 +29,7 @@ def raw_article_details(request, pk):
 
     return render(request, template, context)
 
-@login_required
+@group_required('administrator')
 def raw_article_list(request):
     """
     
@@ -92,7 +93,7 @@ def raw_article_list(request):
     return render(request, template, context)
 
 
-@login_required
+@group_required('administrator')
 def raw_author_details(request, pk):
     obj = get_object_or_404(RawAuthor, pk=pk)
     # Number of articles by this author in the RawArticle
@@ -121,7 +122,7 @@ def raw_author_details(request, pk):
     return render(request, template, context)
 
 
-@login_required
+@group_required('administrator')
 def article_to_poetry(request):
     '''
     Create poetries in Repository from given RawArticles
@@ -208,7 +209,7 @@ def article_to_poetry(request):
             
     return HttpResponseForbidden()
 
-@login_required
+@group_required('administrator')
 def raw_author_list(request):
     """
     List view
@@ -276,7 +277,7 @@ def raw_author_list(request):
     return render(request, template, context)
 
 
-@login_required
+@group_required('administrator')
 def dashboard(request):
     author = {}
     article = {}

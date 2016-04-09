@@ -1,6 +1,10 @@
 {% extends "repository/base.html" %}
 {% load staticfiles %}
 
+{% block meta %}
+{% include "meta.html" with meta=meta only %}
+{% endblock %}
+
 {% block title %}{{ obj.name }} | snippet {% endblock %}
 
 {% block main %}

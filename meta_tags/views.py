@@ -88,8 +88,11 @@ class Meta(object):
         return self._author
     
     @author.setter
-    def author(self, author):        
-        self._author = self.get_full_url(author.get_absolute_url())    
+    def author(self, author):
+        if author:        
+            self._author = self.get_full_url(author.get_absolute_url())
+        else:
+            self._author = None        
     
     def get_author_fb_id(self):
         return "author-fb-id"

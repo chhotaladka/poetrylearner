@@ -2,6 +2,10 @@
 {% load staticfiles %}
 {% load poetry_tags %}
 
+{% block meta %}
+{% include "meta.html" with meta=meta only %}
+{% endblock %}
+
 {% block title %}{{ obj.name }} | poetry {% endblock %}
 
 {% block main %}

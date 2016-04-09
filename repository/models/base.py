@@ -82,7 +82,22 @@ class Thing(models.Model):
         return self.name
     
     def title(self):
-        return self.name    
+        return self.name
+    
+    def summary(self):
+        return self.description
+    
+    def get_keywords(self):
+        '''
+        Some derived classes would override this function.
+        '''
+        return None 
+
+    def get_author(self):
+        '''
+        Some derived classes would override this function.
+        '''
+        return None     
     
     def similar_item_url(self): 
         return self.same_as

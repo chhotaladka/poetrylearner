@@ -16,6 +16,7 @@ import json
 from repository.models import *
 
 from common.search import get_query
+from meta_tags.views import Meta
 
 # Create your views here.
 
@@ -92,10 +93,21 @@ def item(request, type, pk, slug):
     # softredirect to the correct URL    
     if slug != obj.get_slug():
         return redirect(obj)
+
+    # Instantiate the Meta class
+    meta = Meta(title = obj.headline(), 
+                description = obj.summary(), 
+                section= type, 
+                url = obj.get_absolute_url(),                
+                author = obj.get_author(), 
+                date_time = obj.get_last_edit_time(),
+                object_type = 'article',
+                keywords = obj.get_keywords(),
+            )
     
     ##
     # Make the context and render  
-    context = {'obj': obj }    
+    context = {'obj': obj, 'meta': meta}    
     return render(request, template, context)
 
 

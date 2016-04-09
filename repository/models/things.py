@@ -294,7 +294,12 @@ class CreativeWork(Thing):
     class Meta:
         abstract = True
     
+    def get_author(self):
+        return self.creator
     
+    def get_keywords(self):
+        return self.keywords.names()
+        
     def get_tags_names(self):
         return self.keywords.names()
     

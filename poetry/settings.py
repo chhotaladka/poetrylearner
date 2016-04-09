@@ -32,7 +32,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-#SITE_ID = 1
+SITE_ID = 1
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     # Added 
     'formtools',
     'django.contrib.humanize',
@@ -60,6 +61,12 @@ INSTALLED_APPS = (
     'django_select2',
     'crispy_forms',
     'taggit',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',    
     # Developed by us
     'crawlers',
     'meta_tags',
@@ -102,12 +109,28 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 'django.core.context_processors.csrf',
                 "django.template.context_processors.tz",
-                "django.contrib.messages.context_processors.messages",
+                "django.contrib.messages.context_processors.messages",               
                 'common.context_processors.getvars',
             ],
         },
     },
 ]
+
+# Allauth related
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+LOGIN_REDIRECT_URL = '/'
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': ['email',],
+        'METHOD': 'js_sdk'  # instead of 'oauth2'
+    }
+}
 
 WSGI_APPLICATION = 'poetry.wsgi.application'
 

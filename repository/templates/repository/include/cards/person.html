@@ -10,9 +10,9 @@
 	<div class="mdl-card__title column bg-person">
 		{% with person_img_url=person.get_image_url %}
 		{% if person_img_url %}
-		<img class="avatar" width="120" height="120" src={{ person_img_url }}>
+		<img class="avatar border" width="120" height="120" src={{ person_img_url }}>
 		{% else %}
-		<i class="avatar material-icons">person</i>
+		<i class="avatar material-icons icon">person</i>
 		{% endif %}
 		
 		{% endwith %}					

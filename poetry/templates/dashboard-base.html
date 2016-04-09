@@ -86,9 +86,14 @@
 		</div>
 	    {% endblock %}{% comment %} end of search block {% endcomment %}    
 	    <nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800">	    
+	    	<a class="mdl-navigation__link section {% block is-repo-active %}{% endblock %}" href="{% url 'repository:view' %}">Repository</a>
+	    	<a class="mdl-navigation__link" href="{% url 'repository:view' %}">View item</a>
+    		<a class="mdl-navigation__link" href="{% url 'repository:add' %}">Add item</a> 
+    		
 	    	<a class="mdl-navigation__link section {% block is-crawlers-active %}{% endblock %}" href="{% url 'crawlers:dashboard' %}">Crawled data</a>
-	    	<a class="mdl-navigation__link" href="{% url 'crawlers:article-list' %}" title="Browse crawled articles">Articles</a>
-    		<a class="mdl-navigation__link" href="{% url 'crawlers:author-list' %}" title="Browse crawled authors">Authors</a>	    	
+	    	<a class="mdl-navigation__link" href="{% url 'crawlers:article-list' %}">Articles</a>
+    		<a class="mdl-navigation__link" href="{% url 'crawlers:author-list' %}">Authors</a>	 
+    		  		   	
 	    	<a class="mdl-navigation__link section {% block is-users-active %}{% endblock %}" href="/admin">Admin</a>
 	    </nav>
     

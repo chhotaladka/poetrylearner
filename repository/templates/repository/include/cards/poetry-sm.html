@@ -28,5 +28,13 @@
 	</div>
 	<div class="mdl-card__supporting-text">	
 		<div class="summary-txt mdl-color-text--grey-800">{% autoescape off %}{{ poetry.summary }}{% endautoescape %}</div>
+	</div>	
+	<div class="pos-RB">
+		<div class="action-panel hide">
+			<button class="action-button oN" data-type="poetry" data-id="{{ poetry.id }}" title="Send to my Bookmarks to read later">
+	            <i class="material-icons" role="presentation">free_breakfast</i>
+	            <span class="action-button__text">Read later</span>			                
+			</button>					
+		</div>		
 	</div>												
 </div>

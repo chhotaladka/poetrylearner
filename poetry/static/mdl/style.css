@@ -1364,6 +1364,10 @@ a:visited {
 	/*color: #ED4255;*/
 
 }
+a.mdl-menu__item:hover {
+	text-decoration: none;
+}
+
 .banner {
     text-align: center;
 	margin-top: calc(10%);

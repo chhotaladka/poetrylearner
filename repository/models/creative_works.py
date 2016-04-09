@@ -57,8 +57,7 @@ class Article(CreativeWork):
                             )
     
     class Meta:
-        abstract = True
-        
+        abstract = True        
                 
     def get_language(self):
         '''
@@ -66,8 +65,7 @@ class Article(CreativeWork):
         '''
         tmp = dict(LANGUAGES)
         return tmp[self.language]
-
-    @property
+    
     def summary(self):
         if self.description:
             return self.description

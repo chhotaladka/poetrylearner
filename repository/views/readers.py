@@ -111,13 +111,36 @@ def item(request, type, pk, slug):
     return render(request, template, context)
 
 
-def items(request):
+def home(request):
     '''
-    Show all data items
+    Show home page of Repository
     '''    
     ##
     # Make the context and render  
     context = {'obj': None }
+    template = "repository/home.html"  
+    return render(request, template, context)
+
+
+def items(request):
+    '''
+    Show all data items
+    '''
+    count = {}
+    
+    count['snippet'] = Snippet.objects.all().count
+    count['poetry'] = Poetry.objects.all().count
+    count['person'] = Person.objects.all().count
+    count['place'] = Place.objects.all().count
+    count['product'] = Product.objects.all().count
+    count['event'] = Event.objects.all().count
+    count['organization'] = Organization.objects.all().count
+    count['book'] = Book.objects.all().count
+    
+    
+    ##
+    # Make the context and render  
+    context = {'obj': None, 'count': count }
     template = "repository/items/data.html"  
     return render(request, template, context) 
 

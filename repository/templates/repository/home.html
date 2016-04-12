@@ -1,0 +1,39 @@
+{% extends "repository/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Repository Home{% endblock %}
+
+{% block main %}
+<section class="pT-8 pB-16">
+	<div class="_layout layout-L mdl-grid">
+
+		<div class="__c mdl-cell mdl-cell--12-col mdl-grid">
+
+			<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+				<div class="links-card">
+					<a href="{% url 'repository:add' %}" class="member">						
+						<i class="material-icons dp48">note_add</i>
+						<div class="caption">
+							Add to Repository
+						</div>					
+					</a>		
+				</div>
+			</div>
+
+			<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+				<div class="links-card">
+					<a href="{% url 'repository:view' %}" class="member">						
+						<i class="material-icons dp48">find_in_page</i>
+						<div class="caption">
+							Explore Repository
+						</div>						
+					</a>											
+				</div>															
+			</div>							
+
+		</div>
+
+	</div>	
+</section>
+		
+{% endblock %}

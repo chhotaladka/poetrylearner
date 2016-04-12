@@ -1,7 +1,7 @@
 {% extends "repository/base.html" %}
 {% load staticfiles %}
 
-{% block title %}All data items{% endblock %}
+{% block title %}Explore Repository{% endblock %}
 
 {% block main %}
 <section class="pT-8 pB-16">
@@ -9,76 +9,100 @@
 
 		<div class="__c mdl-cell mdl-cell--12-col mdl-grid">
 
-			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-				<a href="{% url 'repository:list' type='person' %}" class="">						
-					<i class="material-icons dp48">person</i>
-				</a>		
-				<div class="caption">
-					<a href="{% url 'repository:list' type='person' %}">Persons</a>
+			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+				<div class="links-card">
+					<a href="{% url 'repository:list' type='person' %}" class="member">						
+						<i class="material-icons dp48">person</i>
+						<div class="caption">
+							Persons
+						</div>
+						<div class="light-txt">{{ count.person }}</div>					
+					</a>		
 				</div>
 			</div>
 
-			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-				<a href="{% url 'repository:list' type='poetry' %}">						
-					<i class="material-icons dp48">local_library</i>
-				</a>											
-				<div class="caption">
-					<a href="{% url 'repository:list' type='poetry' %}">Poetries</a>
-				</div>																				
+			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+				<div class="links-card">
+					<a href="{% url 'repository:list' type='poetry' %}" class="member">						
+						<i class="material-icons dp48">local_library</i>
+						<div class="caption">
+							Poetries
+						</div>	
+						<div class="light-txt">{{ count.poetry }}</div>				
+					</a>		
+				</div>																			
 			</div>			
 
-			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-				<a href="{% url 'repository:list' type='book' %}">						
-					<i class="material-icons dp48">book</i>
-				</a>								
-				<div class="caption">
-					<a href="{% url 'repository:list' type='book' %}">Books</a>	
-				</div>	
+			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+				<div class="links-card">
+					<a href="{% url 'repository:list' type='book' %}" class="member">						
+						<i class="material-icons dp48">book</i>
+						<div class="caption">
+							Books
+						</div>	
+						<div>{{ count.book }}</div>				
+					</a>		
+				</div>					
 			</div>
 
-			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-				<a href="{% url 'repository:list' type='snippet' %}">						
-					<i class="material-icons dp48">style</i>
-				</a>										
-				<div class="caption">
-					<a href="{% url 'repository:list' type='snippet' %}">Snippets</a>
-				</div>			
+			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+				<div class="links-card">
+					<a href="{% url 'repository:list' type='snippet' %}" class="member">						
+						<i class="material-icons dp48">style</i>
+						<div class="caption">
+							Snippets
+						</div>	
+						<div>{{ count.snippet }}</div>				
+					</a>		
+				</div>						
 			</div>
 						
-			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">	
-				<a href="{% url 'repository:list' type='organization' %}">						
-					<i class="material-icons dp48">account_balance</i>
-				</a>								
-				<div class="caption">
-					<a href="{% url 'repository:list' type='organization' %}">Organizations</a>
-				</div>															
+			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">	
+				<div class="links-card">
+					<a href="{% url 'repository:list' type='organization' %}" class="member">						
+						<i class="material-icons dp48">account_balance</i>
+						<div class="caption">
+							Organizations
+						</div>	
+						<div>{{ count.organization }}</div>				
+					</a>		
+				</div>																		
 			</div>
 			
-			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-				<a href="{% url 'repository:list' type='event' %}">						
-					<i class="material-icons dp48">event</i>
-				</a>									
-				<div class="caption">
-					<a href="{% url 'repository:list' type='event' %}">Events</a>
-				</div>
+			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+				<div class="links-card">
+					<a href="{% url 'repository:list' type='event' %}" class="member">						
+						<i class="material-icons dp48">event</i>
+						<div class="caption">
+							Events
+						</div>	
+						<div>{{ count.event }}</div>				
+					</a>		
+				</div>								
 			</div>
 			
-			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-				<a href="{% url 'repository:list' type='product' %}">						
-					<i class="material-icons dp48">shopping_cart</i>
-				</a>										
-				<div class="caption">
-					<a href="{% url 'repository:list' type='product' %}">Products</a>	
-				</div>																			
+			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+				<div class="links-card">
+					<a href="{% url 'repository:list' type='product' %}" class="member">						
+						<i class="material-icons dp48">shopping_cart</i>
+						<div class="caption">
+							Products
+						</div>	
+						<div>{{ count.product }}</div>				
+					</a>		
+				</div>																						
 			</div>	
 
-			<div class="links-card mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-				<a href="{% url 'repository:list' type='place' %}">						
-					<i class="material-icons dp48">place</i>
-				</a>											
-				<div class="caption">
-					<a href="{% url 'repository:list' type='place' %}">Places</a>
-				</div>																			
+			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+				<div class="links-card">
+					<a href="{% url 'repository:list' type='place' %}" class="member">						
+						<i class="material-icons dp48">place</i>
+						<div class="caption">
+							Places
+						</div>	
+						<div>{{ count.place }}</div>				
+					</a>		
+				</div>																		
 			</div>							
 
 		</div>

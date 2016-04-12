@@ -29,34 +29,30 @@
 	<!-- The drawer is always open in large screens. The header is always shown,
 	  even in small screens. -->
 	<div class="mdl-layout mdl-js-layout dashboard-layout
-	            mdl-layout--fixed-drawer mdl-layout--fixed-header">  
+	            mdl-layout--fixed-header">  
 	  {% block header %}{% comment %} header of a section/app. Modify in the base template of the app {% endcomment %}
 	  <header class="mdl-layout__header page-header mdl-layout__header--waterfall">
 	    <div class="mdl-layout__header-row page-header--row">
 	      <span class="mdl-layout-title">{% block page-title %}Page Title{% endblock %}</span>{% comment %} Define at each page to set its title {% endcomment %}
-	      <div class="mdl-layout-spacer"></div>    
+	      <div class="mdl-layout-spacer"></div> 
+		  <div id="id-search-box" class="site-search-row hidden"> 	    	  
+		    <form id="id-search-form" class="site-search" onsubmit="if (document.getElementById('id-search-term').value == '') return false;" action="{% block search-form-action %}{% endblock %}" method="get">
+			  <input class="search-input" id="id-search-term" spellcheck="false" autocomplete="off" onkeydown="if (!this.value &amp;&amp; (event.keyCode == 40 || event.keyCode == 32 || event.keyCode == 34)) {this.onkeydown = null; this.blur();}" name="q" value="" tabindex="1" placeholder="Search" title="Search" type="text">
+			  <button class="search-btn search-btn-component" type="submit" onclick="if (document.getElementById('id-search-term').value == '') return false; document.getElementById('id-search-form').submit(); return false;;return true;" tabindex="2" id="search-btn" dir="ltr">
+				<i class="material-icons icons search" role="presentation">search</i>
+			  </button>								    	
+			</form>
+		  </div>	         
 	      <nav class="mdl-navigation page-header--nav">
 	      {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
-	      	<!--<a class="mdl-navigation__link" href="#" onclick="document.getElementById('id-search-box').classList.toggle('hidden'); return false;"><i class="material-icons icons search" role="presentation">search</i></a>-->
-	      	<a class="mdl-navigation__link" href="{% url 'repository:view' %}">View</a>
-	      	<a class="mdl-navigation__link" href="{% url 'repository:add' %}">Add</a>        
+	      	<a class="mdl-navigation__link" href="#" onclick="this.classList.toggle('hidden');document.getElementById('id-search-box').classList.toggle('hidden'); return false;"><i class="material-icons icons search" role="presentation">search</i></a>
+	      	<!--<a class="mdl-navigation__link" href="{% url 'repository:view' %}">View</a>
+	      	<a class="mdl-navigation__link" href="{% url 'repository:add' %}">Add</a>  -->      
 	        <a id="id-user-submenu" class="mdl-navigation__link" href="#"><i class="material-icons icons user" role="presentation">person</i></a>	        
 	       {% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
 	      </nav>
 	    </div>
-		{% comment %}  
-	    <div id="id-search-box" class="site-search-row"> 	    	  
-		    <form id="id-search-form" class="site-search" onsubmit="if (document.getElementById('id-search-term').value == '') return false;" action="{% block search-form-action %}{% endblock %}" method="get">
-				<input class="search-input" id="id-search-term" spellcheck="false" autocomplete="off" onkeydown="if (!this.value &amp;&amp; (event.keyCode == 40 || event.keyCode == 32 || event.keyCode == 34)) {this.onkeydown = null; this.blur();}" name="q" value="" tabindex="1" placeholder="Search" title="Search" type="text">
-			    <button class="search-btn search-btn-component" type="submit" onclick="if (document.getElementById('id-search-term').value == '') return false; document.getElementById('id-search-form').submit(); return false;;return true;" tabindex="2" id="search-btn" dir="ltr">
-			    	<i class="material-icons icons search" role="presentation">search</i>
-			    </button>								    	
-		    </form>
-		    <div class="fS-13 tAr">
-		    	<a class="pretty-link" href="#" tabindex="3"><b>Advance search</b></a>
-		    </div>
-	    </div>
-		{% endcomment %}
+		
 	    {% comment %} User icon submenu {% endcomment %}
 	    <div class="nav-submenu">
 			<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu"
@@ -72,8 +68,9 @@
 	  
 	  <div class="mdl-layout__drawer mdl-color--white mdl-color-text--grey-700">
 	    <span class="mdl-layout-title lH-46">Title</span>
-	    
+	     
 	    {% block search %}{% comment %} Modify the search block as per the current page {% endcomment %}
+	    {% comment %}
 		<div id="id-search-box" class="search-box">
 			<div class="mL-8 mR-8">
 				<i class="material-icons">search</i>
@@ -84,11 +81,13 @@
 			    </form>	
 		    </div>
 		</div>
-	    {% endblock %}{% comment %} end of search block {% endcomment %}    
+		{% endcomment %}
+	    {% endblock %}{% comment %} end of search block {% endcomment %}
+	        
 	    <nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800">	    
-	    	<a class="mdl-navigation__link section {% block is-repo-active %}{% endblock %}" href="{% url 'repository:view' %}">Repository</a>
-	    	<a class="mdl-navigation__link" href="{% url 'repository:view' %}">View item</a>
-    		<a class="mdl-navigation__link" href="{% url 'repository:add' %}">Add item</a> 
+	    	<a class="mdl-navigation__link section {% block is-repo-active %}{% endblock %}" href="{% url 'repository:home' %}">Repository</a>
+	    	<a class="mdl-navigation__link" href="{% url 'repository:view' %}">Explore</a>
+    		<a class="mdl-navigation__link" href="{% url 'repository:add' %}">Add</a> 
     		
 	    	<a class="mdl-navigation__link section {% block is-crawlers-active %}{% endblock %}" href="{% url 'crawlers:dashboard' %}">Crawled data</a>
 	    	<a class="mdl-navigation__link" href="{% url 'crawlers:article-list' %}">Articles</a>
@@ -99,6 +98,12 @@
     
 	  </div>
 		<main class="mdl-layout__content">
+		{% block messages %}
+		{% include "common/include/message-panel.html" with messages=messages only %}
+		{% endblock %}
+		
+		{% block breadcrumbs %}{% endblock %}
+		
 		{% block main %}{% comment %} Put the main content in this block {% endcomment %}{% endblock %}
 		   	
 		{% block footer %}{% comment %} write down footer code in this block {% endcomment %}

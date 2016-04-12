@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'^search/person/?$', views.search.person, name='search-person'),
     url(r'^search/org/?$', views.search.organization, name='search-organization'),
     
+    url(r'^$', views.readers.home, name='home'),
+    
 ]

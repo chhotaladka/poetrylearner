@@ -1,6 +1,22 @@
 {% extends "repository/base.html" %}
 {% block title %}#{{tag}} tagged items{% endblock %}
 
+{% block breadcrumbs %}
+<div class="pT-8 pB-8">
+	<div class="_layout mW-512">					
+		<div class="breadcrumbs wFull">
+			<a href="{% url 'repository:home' %}">Repository</a>
+			<span> / </span>
+			<a href="{% url 'repository:view' %}">data</a>
+			<span> / </span>
+			<a href="{% url 'repository:list' type=item_type %}">{{ item_type }}</a>
+			<span> / </span>
+			<span>#{{ tag }}</span>			 	
+		</div>					
+	</div>	
+</div>
+{% endblock %}
+
 {% block main %}
 	<section class="pT-8 pB-16">
 		<div class="_layout layout-L mdl-grid">

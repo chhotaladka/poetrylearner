@@ -1312,6 +1312,11 @@ html, body {
 
 .hide {visibility: hidden;}
 
+.breadcrumbs {
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
 .person .highlight,
 .bg-person {
 	background-color: #DB4437 !important;/*red*/

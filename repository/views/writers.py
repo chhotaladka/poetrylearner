@@ -24,7 +24,8 @@ class CreateThingView(View):
     form_class = None
     template_name = None
     ajax_template_name = None
-    cancel_url = '/'    
+    cancel_url = '/'
+    item_type = None    
     
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
@@ -49,7 +50,7 @@ class CreateThingView(View):
             self.obj = get_object_or_404(self.model, pk=kwargs.get('pk', None))
             form = self.form_class(instance=self.obj)
 
-        return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url})
+        return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url, 'item_type': self.item_type})
 
     def post(self, request, *args, **kwargs):
         print "Post data"
@@ -102,7 +103,7 @@ class CreateThingView(View):
             res['data'] = render_to_string(self.template_name, {'form': form})                
             return JsonResponse(res)
                         
-        return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url})
+        return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url, 'item_type': self.item_type})
 
   
 class AddItem(CreateThingView):
@@ -112,6 +113,7 @@ class AddItem(CreateThingView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         type = kwargs.get('type', None)
+        self.item_type = type
         print "DBG: requested content type > ", type
         # Check the type i.e. content_type and derive the data model etc.
         if type == Snippet.content_type():

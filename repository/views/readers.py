@@ -107,7 +107,7 @@ def item(request, type, pk, slug):
     
     ##
     # Make the context and render  
-    context = {'obj': obj, 'meta': meta}    
+    context = {'obj': obj, 'meta': meta, 'item_type': type}    
     return render(request, template, context)
 
 
@@ -233,7 +233,7 @@ def list(request, type):
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
             
-    context = {'items': objs, 'list_template': list_template}
+    context = {'items': objs, 'list_template': list_template, 'item_type': type}
     template = 'repository/items/list.html'    
 
     return render(request, template, context)
@@ -274,7 +274,7 @@ def tagged_items(request, slug, type):
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
             
-    context = {'items': objs, 'tag': slug, 'list_template': list_template}
+    context = {'items': objs, 'tag': slug, 'list_template': list_template, 'item_type': type}
     template = 'repository/items/tagged-list.html'    
 
     return render(request, template, context)

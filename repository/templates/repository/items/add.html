@@ -2,6 +2,19 @@
 {% load staticfiles %}
 
 {% block title %}Add an item to Repository{% endblock %}
+
+{% block breadcrumbs %}
+<div class="pT-8 pB-8">
+	<div class="_layout mW-512">					
+		<div class="breadcrumbs wFull">
+			<a href="{% url 'repository:home' %}">Repository</a>
+			<span> / </span>
+			<span>add</span>
+			<span> / </span>			 	
+		</div>					
+	</div>	
+</div>
+{% endblock %}
 				
 {% block main %}
 <section class="pT-8 pB-16">

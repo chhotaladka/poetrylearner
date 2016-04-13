@@ -163,11 +163,11 @@ html, body {
 }
 .wide-card {
 	max-width: 620px;
-	margin: 0px auto;
+	margin: 1px auto;
 }
 .poetry-card {
 	max-width: 512px;
-	margin: 0px auto;
+	margin: 1px auto;
 }
 .poetry-card .mdl-card__title {
 	height: 176px;
@@ -226,6 +226,24 @@ html, body {
 .poetry-card--sm:hover {
 	text-decoration: none;
 }
+
+.section-cards {
+	max-width: 512px;
+	margin: 0px auto;
+}
+
+.section-cards .poetry-card {
+    background-color: rgba(255, 255, 255, 1);
+    transition: background-color 1s ease-in-out;
+    -moz-transition: background-color 1s ease-in-out;
+    -webkit-transition: background-color 1s ease-in-out;
+}
+.section-cards .poetry-card:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: background-color .55s ease-in-out;
+    -moz-transition: background-color .55s ease-in-out;
+    -webkit-transition: background-color .55s ease-in-out;
+}​
 
 /* flash msg/notification section */
 #msgPanel,
@@ -468,8 +486,17 @@ html, body {
 .mdl-poetry .action-panel .material-icons.color-used { 
 	color: #ED4255;
 }
-.poetry-card:hover .action-panel {
-	visibility: visible !important;
+.poetry-card:hover .action-panel.hide {
+	opacity: 1 !important;
+	transition: opacity .55s ease-in-out;
+	-moz-transition: opacity .55s ease-in-out;
+	-webkit-transition: opacity .55s ease-in-out;
+}
+.action-panel.hide {
+    opacity: 0;
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out;
 }
 
 .mdl-poetry .action-button {
@@ -1309,8 +1336,6 @@ html, body {
 
 .oN {outline:none !important;}
 .oN::-moz-focus-inner {border: 0;}
-
-.hide {visibility: hidden;}
 
 .breadcrumbs {
 	margin-left: 8px;

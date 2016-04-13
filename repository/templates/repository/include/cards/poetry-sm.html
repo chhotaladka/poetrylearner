@@ -11,11 +11,11 @@
 		</div>
 	</div>		
 	<div class="mdl-card__supporting-text mdl-color-text--grey-600 article-info">
-		<div>
+		<div>{% if item_type != 'person' %}
 			<span>by</span>
 			<a title="View the poet" href="{{ poetry.creator.get_absolute_url }}">
 				{{ poetry.creator.name }}
-			</a>
+			</a>{% endif %}
 		</div>	
 		<div>												
 			{% for tag in poetry.get_tags_slugs %}

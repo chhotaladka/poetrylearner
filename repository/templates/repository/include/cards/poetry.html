@@ -20,7 +20,7 @@
 			</a>
 		</span>	
 		<span>					
-			<a class="hashtag pretty-link" href="#">
+			<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">
 				<s>#</s>
 				<b>{{ poetry.get_language }}</b>
 			</a>							

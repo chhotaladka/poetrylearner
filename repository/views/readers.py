@@ -11,6 +11,7 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.db.models import Q
 from django.utils.decorators import method_decorator
+from django.conf.global_settings import LANGUAGES
 import json
 
 from repository.models import *
@@ -147,7 +148,7 @@ def items(request):
 
 def list(request, type):
     '''
-    List the Persons
+    List the data item of `type`
     '''    
     
     item_cls, list_template = _resolve_item_type(type, list=True)    
@@ -160,62 +161,53 @@ def list(request, type):
     ##
     # Check the parameters passed in the URL and process accordingly
     
-    # Search query
-    q = request.GET.get('q', None)
-    # Filters for the queryset
-    filters = request.GET.get('filters', None)
+    # Creator id (valid for items derived from `CreativeWork`)
+    creator = request.GET.get('creator', None)
+    # Language (valid for items derived from `CreativeWork`)
+    language = request.GET.get('lan', None)    
     # Sort the result by: 'name' for `Author.name`, 'edit' for `Author.date_modified`
     # Default is 'edit' i.e. Give recently edited item first
     sort = request.GET.get('sort', 'edit')
     # Order the result: 'inc' for increasing order; 'dec' for decreasing order
     # Default is 'dec'
     order = request.GET.get('order', 'dec')
-    # View type of the result list: 't' for table view; 'c' for card view
-    # Default view type is CARD view
-    view = request.GET.get('view', 'c')
+              
+    obj_list = []
+    result_title = item_cls._meta.verbose_name_plural.title()
+    kwargs = {}
     
-    # Set the view type
-    if view == 't':        
-        view_type = 'table'
-    elif view == 'c':
-        view_type = 'card'
-    
-    # Filter the queryset on the basis of `filters` given
-    if filters:
-        filters = filters.split(',')        
-        # Supported filters are: birth or nobirth, death or nodeath
-        if 'birth' in filters:
-            # get the authors whom birth info is known
-            q_objects &= ~Q(date_birth=None)
-        elif 'nobirth' in filters:
-            # get the authors whom birth info is not known
-            q_objects &= Q(date_birth=None)
-        if 'death' in filters:
-            # get the authors whom death info is known
-            q_objects &= ~Q(date_death=None)
-        elif 'nodeath' in filters:
-            # get the authors whom death info is not known
-            q_objects &= Q(date_death=None)            
-    
-    # Apply Search query
-    if q:
-        q = q.strip()      
-        # get the authors with 'name'        
-        q_objects &= Q(name_en__icontains=q) | Q(name__icontains=q) | Q(sobriquet__icontains=q)      
+    # Get the items having creator.id = creator
+    if creator:
+        try:
+            creator = int(creator)
+            result_title = get_object_or_404(Person, pk=creator).title() 
+            kwargs['creator'] = creator  
+        except (TypeError, ValueError):
+            print 'Error: That creator_id is not an integer, pass silently'
+            raise Http404
+
+    if language:        
+        tmp = dict(LANGUAGES)
+        if language in tmp:
+            kwargs['language'] = language
+            result_title += ', #' + tmp[language]                        
+        
+    obj_list = item_cls.objects.apply_filter(**kwargs).order_by('-date_modified')
+             
                 
-    # Get all authors sorted and ordered
-    if sort == 'name':
-        if order == 'inc':
-            obj_list = item_cls.objects.all().filter(q_objects).order_by('-name')
-        else:
-            obj_list = item_cls.objects.all().filter(q_objects).order_by('name')
-    elif sort == 'edit':
-        if order == 'inc':
-            obj_list = item_cls.objects.all().filter(q_objects).order_by('date_modified')
-        else:
-            obj_list = item_cls.objects.all().filter(q_objects).order_by('-date_modified')    
-    else:
-        obj_list = item_cls.objects.all().filter(q_objects)
+#     # Get all authors sorted and ordered
+#     if sort == 'name':
+#         if order == 'inc':
+#             obj_list = item_cls.objects.all().filter(q_objects).order_by('-name')
+#         else:
+#             obj_list = item_cls.objects.all().filter(q_objects).order_by('name')
+#     elif sort == 'edit':
+#         if order == 'inc':
+#             obj_list = item_cls.objects.all().filter(q_objects).order_by('date_modified')
+#         else:
+#             obj_list = item_cls.objects.all().filter(q_objects).order_by('-date_modified')    
+#     else:
+#         obj_list = item_cls.objects.all().filter(q_objects)
         
     ##
     # Check for permissions and render the list of authors
@@ -233,7 +225,8 @@ def list(request, type):
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
             
-    context = {'items': objs, 'list_template': list_template, 'item_type': type}
+    context = {'items': objs, 'list_template': list_template, 
+               'item_type': type, 'result_title': result_title}
     template = 'repository/items/list.html'    
 
     return render(request, template, context)
@@ -262,6 +255,8 @@ def tagged_items(request, slug, type):
             print ("DBG:: Error in %s on line %d" % (fname, lineno))
         obj_list = []
     
+    result_title = '#' + slug
+    
     # Pagination
     paginator = Paginator(obj_list, 20) # Show 20 entries per page    
     page = request.GET.get('page')
@@ -274,7 +269,8 @@ def tagged_items(request, slug, type):
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
             
-    context = {'items': objs, 'tag': slug, 'list_template': list_template, 'item_type': type}
+    context = {'items': objs, 'tag': slug, 'list_template': list_template, 
+               'item_type': type, 'result_title': result_title}
     template = 'repository/items/tagged-list.html'    
 
     return render(request, template, context)

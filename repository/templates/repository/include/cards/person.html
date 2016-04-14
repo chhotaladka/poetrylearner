@@ -30,10 +30,7 @@
 	</div>					
 	<div class="mdl-card__supporting-text">
 		{% if person.similar_item_url %}					
-		<p>{{ person.description }}</p>		
-		<p>Source: <a title="Click here to know more" href="{{ person.similar_item_url }}" target="_blank">
-			{{ person.similar_item_name }}</a>
-		</p>
+		<p>{{ person.description }}</p>
 		{% endif %}
 	</div>
 	{% comment %}  Include meta panel {% endcomment %}

@@ -6,10 +6,11 @@ from django.conf.global_settings import LANGUAGES
 from django.template.defaultfilters import default
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.db.models import Q
 
 from taggit.managers import TaggableManager
 
-from base import Thing
+from base import Thing, ThingManager
 from utils import Reference, TaggedItem, image_upload_path
 
 
@@ -235,7 +236,33 @@ class Event(Thing):
             return None
         
 
+class CreativeWorkManager(ThingManager):
+    '''
+    @summary: The default manager for CreativeWork class
+    '''
+    
+    def apply_filter(self, *args, **kwargs):        
+        q_objects = Q()
+        
+        if 'creator' in kwargs:
+            q_objects &= Q(creator__id=kwargs['creator'])
+        if 'contributors' in kwargs:
+            print contributors
+            q_objects &= Q(contributor__in=kwargs['contributors'])#FIXME
+        if 'publisher' in kwargs:
+            print publisher
+            q_objects &= Q(publisher__id=kwargs['publisher'])            
+        
+        return super(CreativeWorkManager, self).apply_filter(*args, **kwargs).filter(q_objects)
 
+    
+class PublishedManager(models.Manager):
+    '''
+    @summary: Returns Published `CreativeWork`s
+    '''    
+    def get_query_set(self):
+        return super(PublishedManager, self).get_queryset().exclude(date_published=None)    
+    
 
 class CreativeWork(Thing):
     '''
@@ -262,7 +289,7 @@ class CreativeWork(Thing):
                                          related_name="%(class)s_contributed",
                                          blank=True,
                                          help_text=_('A secondary contributor to the creative work.')
-                                         )
+                                         )#TODO make it contributors
     
     references = models.ForeignKey(Reference,
                                    on_delete=models.SET_NULL,
@@ -291,6 +318,10 @@ class CreativeWork(Thing):
                                   help_text=_('The publisher(Person or Organization) of the creative work.')
                                   )
     
+    objects = CreativeWorkManager()
+    
+    published = PublishedManager()
+        
     class Meta:
         abstract = True
     

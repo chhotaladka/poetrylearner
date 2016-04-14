@@ -13,7 +13,19 @@ from urlparse import urlparse
 from common.slugify import slugify 
 
 # Create your models here.
-       
+
+class ThingManager(models.Manager):
+    '''
+    @summary: The default manager for Thing base class
+    '''
+    
+    def apply_filter(self, *args, **kwargs):
+        '''
+        Return empty queryset
+        Some derived classes would override this function.
+        '''
+        return super(ThingManager, self).get_queryset().all()        
+               
         
 class Thing(models.Model):
     '''
@@ -53,7 +65,8 @@ class Thing(models.Model):
                                          help_text=_("The date time on which the item was most recently modified or when the item's entry was modified within a DataFeed.")
                                         )
     
-        
+    objects = ThingManager()
+            
     class Meta:
         abstract = True
                

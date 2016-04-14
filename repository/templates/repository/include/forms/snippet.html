@@ -8,10 +8,10 @@
 	{% csrf_token %} 
 	<span class="errormsg">{{ form.non_field_errors }}</span>
 	<fieldset>		
+		{% include "repository/include/fields/same_as.html" %}
 		{% include "repository/include/fields/name.html" %}
 		{% include "repository/include/fields/body.html" %}
 		{% include "repository/include/fields/keywords.html" %}	
-		{% include "repository/include/fields/same_as.html" %}
 		<div class="mB-16">
 			<a class="action-button" title="Add more fields" onclick="document.getElementById('id-extra-fields').classList.toggle('hidden'); this.classList.add('hidden'); return false;">							
 	            <i class="material-icons" role="presentation">more_horiz</i>

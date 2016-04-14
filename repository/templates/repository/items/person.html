@@ -45,7 +45,7 @@
 			<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
 				<div class="section-cards">
 					<div class="section-title wFull">
-						<h3><a href="#">Poetries by {{ obj.title }}</a></h3>	
+						<h3><a href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}">Poetries by {{ obj.title }}</a></h3>	
 					</div>							
 					{% get_recent_poetries 5 by obj as poetries %}
 					{% for p in poetries %}
@@ -53,7 +53,7 @@
 					{% endfor %}				
 					<div class="mdl-card__actions">
 					{% if poetries %}	
-						<a class="action-button wFull oN" href="#" title="Show all poetries by {{ obj.title }}">							
+						<a class="action-button wFull oN" href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}" title="Show all poetries by {{ obj.title }}">							
 						    Show all		    			                           
 						</a>
 					{% else %}<span class="action-button wFull">Working on it...</span>{% endif %}

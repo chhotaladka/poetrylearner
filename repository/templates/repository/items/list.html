@@ -9,7 +9,7 @@
 			<span> / </span>
 			<a href="{% url 'repository:view' %}">data</a>
 			<span> / </span>
-			<span>{{ item_type }}</span>
+			<a href="{% url 'repository:list' type=item_type %}">{{ item_type }}</a>
 			<span> / </span>			 	
 		</div>					
 	</div>	

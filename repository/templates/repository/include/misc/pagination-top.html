@@ -4,8 +4,12 @@
 {% endcomment %}
 	<div class="mdl-cell mdl-cell--12-col">
 		<div class="p-card">			
-			<div class="mdl-card__supporting-text stats-text">		            
-				Got {{ items.paginator.count }} results.
+			<div class="search-stats">
+			{{ items.paginator.count }} results for				
 			</div>
+			<div class="search-title">
+				<h3 class="C-{{item_type}}">{{result_title}}</h3>
+			</div>
+						
 		</div>
 	</div>

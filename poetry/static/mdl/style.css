@@ -651,8 +651,15 @@ html, body {
   color: inherit;
 }
 
-.mdl-poetry .stats-text {
+.mdl-poetry .search-stats {
 	color: #808080;
+	font-size: 13px;
+	line-height: 18px;
+}
+.mdl-poetry .search-title h3 {
+	font-weight: 600;
+	margin: 8px 0px 24px;
+	color: #424242;/*grey-800*/
 }
 
 .mdl-poetry .oops-message {
@@ -1347,31 +1354,37 @@ html, body {
 	background-color: #DB4437 !important;/*red*/
 	color: white;
 }
+.C-person {color: #DB4437 !important;}
 .event .highlight,
 .bg-event {
 	background-color: #00D4DE !important;
 	color: white;
 }
+.C-event {color: #00D4DE !important;}
 .org .highlight,
 .bg-org {
 	background-color: #42A5F5 !important;/*blue-400*/
 	color: white;
 }
+.C-organization {color: #42A5F5 !important;}
 .place .highlight,
 .bg-place {
 	background-color: #4CAF50 !important;/*green-500*/
 	color: white;
 }
+.C-place {color: #4CAF50 !important;}
 .product .highlight,
 .bg-product {
 	background-color: #9C27B0 !important;/*purple-500*/
 	color: white;
 }
+.C-product {color: #9C27B0 !important;}
 .poetry .highlight,
 .bg-poetry {
 	background-color: white;
 	color: #424242 !important;/*grey-800*/
 }
+.C-poetry {}
 .snippet .highlight {
 	background-color: #00D4DE !important;
     color: #424242 !important;/*grey-800*/
@@ -1380,11 +1393,13 @@ html, body {
 	background-color: white;
     color: #424242 !important;/*grey-800*/
 }
+.C-snippet {}
 .book .highlight,
 .bg-book {
 	background-color: #FDD835 !important;/*yellow-600*/
     color: #424242 !important;/*grey-800*/
 }
+.C-book {color: #FDD835 !important;}
 
 /* Common style */
 a {

@@ -7,11 +7,27 @@ from django.template.defaultfilters import default
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.utils.html import strip_tags
+from django.db.models import Q
 
-from things import CreativeWork
+from things import CreativeWork, CreativeWorkManager
 
 # Create your models here.
 
+class LiteratureManager(CreativeWorkManager):
+    '''
+    @summary: The default manager for `Book` and `Article` class
+    '''
+    
+    def apply_filter(self, *args, **kwargs):
+        q_objects = Q()
+        
+        if 'language' in kwargs:
+            q_objects &= Q(language=kwargs['language'])           
+        
+        return super(LiteratureManager, self).apply_filter(*args, **kwargs).filter(q_objects)
+    
+    
+    
 class Book(CreativeWork):
     '''
     @summary: A book.
@@ -29,6 +45,8 @@ class Book(CreativeWork):
                            null=True, blank=True,
                            help_text=_('The ISBN of the book.')
                         )
+    
+    objects = LiteratureManager()    
     
     def get_language(self):
         '''
@@ -55,6 +73,8 @@ class Article(CreativeWork):
     body = models.TextField(null=False,
                             help_text=_('The actual body of the article.')
                             )
+    
+    objects = LiteratureManager()
     
     class Meta:
         abstract = True        

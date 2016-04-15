@@ -2,8 +2,19 @@
 {% load staticfiles %}
 
 {% block title %}Repository Home{% endblock %}
-
-{% block main %}
+{% block headbanner %}
+<section id="id-head" class="centered pB-32">
+	<div class="head__banner repository">
+		<div class="head__title">
+			<h1>Repository</h1>
+		</div>
+		<div class="head__subtitle">
+			Here we store the processed data.		 					
+		</div>
+	</div>				
+</section>
+{% endblock %}
+{% block main %}	
 <section class="pT-8 pB-16">
 	<div class="_layout layout-L mdl-grid">
 

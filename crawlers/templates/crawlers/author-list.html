@@ -3,7 +3,27 @@
 {% block title %}
 	List of crawled author
 {% endblock %}
-
+{% block headbanner %}
+<section id="id-head" class="centered">
+	<div class="head__banner small crawler">
+		<div class="head__subtitle">
+			Crawled Authors.		 					
+		</div>
+	</div>				
+</section>
+{% endblock %}
+{% block breadcrumbs %}
+<div class="pT-8 pB-8">
+	<div class="_layout">					
+		<div class="breadcrumbs wFull">
+			<a href="{% url 'crawlers:dashboard' %}">Crawled data</a>
+			<span> / </span>
+			<a href="{% url 'crawlers:author-list' %}">author</a>
+			<span> / </span>			 	
+		</div>					
+	</div>	
+</div>
+{% endblock %}
 {% block main %}
 
 	<section id="id-section-main" class="p-8">
@@ -11,7 +31,7 @@
 			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">
 {% if authors %} {% comment %} Display the list {% endcomment %}			
 				<div class="mdl-card__supporting-text stats-text">		            
-					Displaying {{ authors|length }} of {{ authors.paginator.count }} crawled authors.
+					Got {{ authors.paginator.count }} crawled authors.
 				</div>
 				{% if authors.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
@@ -72,5 +92,3 @@
 	</section>
 
 {% endblock %}
-
-{% block page-title %}Authors{% endblock %}

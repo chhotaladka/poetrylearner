@@ -4,7 +4,27 @@
 {% block title %}
 	List of crawled article
 {% endblock %}
-
+{% block headbanner %}
+<section id="id-head" class="centered">
+	<div class="head__banner small crawler">
+		<div class="head__subtitle">
+			Crawled Articles.		 					
+		</div>
+	</div>				
+</section>
+{% endblock %}
+{% block breadcrumbs %}
+<div class="pT-8 pB-8">
+	<div class="_layout">					
+		<div class="breadcrumbs wFull">
+			<a href="{% url 'crawlers:dashboard' %}">Crawled data</a>
+			<span> / </span>
+			<a href="{% url 'crawlers:article-list' %}">article</a>
+			<span> / </span>			 	
+		</div>					
+	</div>	
+</div>
+{% endblock %}
 {% block main %}
 
 	<section id="id-section-main" class="p-8">
@@ -118,8 +138,6 @@
 	</section>
 
 {% endblock %}
-
-{% block page-title %}Articles{% endblock %}
 
 {% block scripts %}
 	{{ block.super }}

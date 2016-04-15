@@ -1,10 +1,20 @@
 {% extends "crawlers/base.html" %}
 {% load staticfiles %}
 
-{% block title %}
-	{{ author.get_name }} - crawled author
+{% block title %}{{ author.get_name }} - crawled author{% endblock %}
+{% block breadcrumbs %}
+<div class="pT-8 pB-8">
+	<div class="_layout">					
+		<div class="breadcrumbs wFull">
+			<a href="{% url 'crawlers:dashboard' %}">Crawled data</a>
+			<span> / </span>
+			<a href="{% url 'crawlers:article-list' %}">author</a>
+			<span> / </span>	
+			<span>{{ author.get_name }}</span>		 	
+		</div>					
+	</div>	
+</div>
 {% endblock %}
-
 {% block main %}
 
 	<section id="id-section-main" class="p-8">
@@ -88,8 +98,6 @@
 {% block search-form-action %}
 	{% url 'crawlers:author-list' %}
 {% endblock %}
-
-{% block page-title %}Author / {{ author.get_name }}{% endblock %}
 
 {% block scripts %}
 	{{ block.super }}

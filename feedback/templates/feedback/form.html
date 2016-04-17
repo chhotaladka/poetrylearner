@@ -1,0 +1,16 @@
+{% load url from future %}
+
+{% if content_object %}
+    <form method="post" action="{% url "feedback:add_for_content" ctype_id=ctype_id obj_id=content_object.id %}">
+        {% csrf_token %}
+        <p>You are about to report: {{ content_object }}</p>
+        {{ form.as_p }}
+        <input type="submit" value="Send Feedback" />
+    </form>
+{% else %}
+    <a id="feedbackSnippet" href="{% url "feedback:add" %}"></a>
+    <p id="feedbackSuccess">Thank you!</p>
+    <form id="feedbackForm" method="post" action="{% url "feedback:add" %}">
+        {% include "feedback/form_content.html" %}
+    </form>
+{% endif %}

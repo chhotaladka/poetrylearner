@@ -25,6 +25,7 @@ urlpatterns = i18n_patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^c/', include('crawlers.urls', namespace='crawlers')),
     url(r'^r/', include('repository.urls', namespace='repository')),
+    url(r'^feedback/', include('feedback.urls', namespace='feedback')),
     url(r'^', include('common.urls', namespace="common")),
 )
 

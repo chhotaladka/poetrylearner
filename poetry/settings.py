@@ -72,6 +72,7 @@ INSTALLED_APPS = (
     'meta_tags',
     'common',
     'repository',
+    'feedback',
 )
 
 TEMPLATE_LOADERS = (

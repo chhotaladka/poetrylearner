@@ -58,7 +58,7 @@
           <i class="material-icons">more_vert</i>
 		</button>
         <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">          
-          	<a class="mdl-menu__item" href="{% url 'repository:publish' type=snippet.content_type pk=snippet.id slug=snippet.get_slug %}">  
+          	<a class="mdl-menu__item" href="{% url 'repository:publish' type=snippet.item_type pk=snippet.id slug=snippet.get_slug %}">  
           	{% if snippet.is_published %}Unpublish{% else %}Publish{% endif %}
           	</a>
           	<a class="mdl-menu__item" href="{{ snippet.get_edit_url }}/?cancel={{ request.path }}" title="Edit to improve the article" >

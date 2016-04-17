@@ -23,48 +23,48 @@ from meta_tags.views import Meta
 
 def _resolve_item_type(type, list=False):
     '''
-    Check the type i.e. content_type and retunr the model class and template.
+    Check the type i.e. item_type and retunr the model class and template.
     '''
     item_cls = None
     template = None
     list_template = None    
     
-    if type == Snippet.content_type():
+    if type == Snippet.item_type():
         item_cls = Snippet
         template = "repository/items/snippet.html" 
         list_template = "repository/include/list/snippet.html" 
         
-    elif type == Poetry.content_type():
+    elif type == Poetry.item_type():
         item_cls = Poetry
         template = "repository/items/poetry.html"
         list_template = "repository/include/list/poetry.html"
         
-    elif type == Person.content_type():
+    elif type == Person.item_type():
         item_cls = Person
         template = "repository/items/person.html"
         list_template = "repository/include/list/person.html"
         
-    elif type == Place.content_type():
+    elif type == Place.item_type():
         item_cls = Place
         template = "repository/items/place.html"
         list_template = "repository/include/list/place.html" 
                
-    elif type == Product.content_type():
+    elif type == Product.item_type():
         item_cls = Product
         template = "repository/items/product.html"
         list_template = "repository/include/list/product.html"
                   
-    elif type == Event.content_type():
+    elif type == Event.item_type():
         item_cls = Event
         template = "repository/items/event.html"
         list_template = "repository/include/list/event.html" 
                  
-    elif type == Organization.content_type():
+    elif type == Organization.item_type():
         item_cls = Organization
         template = "repository/items/organization.html"
         list_template = "repository/include/list/organization.html"  
 
-    elif type == Book.content_type():
+    elif type == Book.item_type():
         item_cls = Book
         template = "repository/items/book.html"
         list_template = "repository/include/list/book.html"                
@@ -239,7 +239,7 @@ def tagged_items(request, slug, type):
     """
 
     try:
-        if type == Snippet.content_type():
+        if type == Snippet.item_type():
             item_cls = Snippet
             list_template = "repository/include/list/snippet.html" 
             

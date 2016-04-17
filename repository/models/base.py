@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib import auth
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.conf.global_settings import LANGUAGES
@@ -77,18 +78,24 @@ class Thing(models.Model):
         return self.name
 
     @classmethod
-    def content_type(cls):
+    def item_type(cls):
         return cls.__name__.lower()
+    
+    def get_content_type(self):
+        '''
+        Returns ContentType object
+        '''
+        return ContentType.objects.get_for_model(self)
         
     def get_slug(self):
         return slugify(self.name)
              
     def get_absolute_url(self):        
-        kwargs = {'pk': self.id, 'slug': self.get_slug(), 'type': self.content_type()}
+        kwargs = {'pk': self.id, 'slug': self.get_slug(), 'type': self.item_type()}
         return reverse('repository:item', kwargs=kwargs)
 
     def get_edit_url(self):        
-        kwargs = {'pk': self.id, 'type': self.content_type()}
+        kwargs = {'pk': self.id, 'type': self.item_type()}
         return reverse('repository:add-item', kwargs=kwargs)        
 
     def headline(self):

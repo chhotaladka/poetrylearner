@@ -115,50 +115,50 @@ class AddItem(CreateThingView):
         type = kwargs.get('type', None)
         self.item_type = type
         print "DBG: requested content type > ", type
-        # Check the type i.e. content_type and derive the data model etc.
-        if type == Snippet.content_type():
+        # Check the type i.e. item_type and derive the data model etc.
+        if type == Snippet.item_type():
             self.model = Snippet
             self.form_class = SnippetForm
             self.template_name = 'repository/items/add-snippet.html'
             self.ajax_template_name = 'repository/include/forms/snippet.html' 
             
-        elif type == Poetry.content_type():
+        elif type == Poetry.item_type():
             self.model = Poetry
             self.form_class = PoetryForm
             self.template_name = 'repository/items/add-poetry.html'
             self.ajax_template_name = 'repository/include/forms/poetry.html'
             
-        elif type == Person.content_type():
+        elif type == Person.item_type():
             self.model = Person
             self.form_class = PersonForm
             self.template_name = 'repository/items/add-person.html'
             self.ajax_template_name = 'repository/include/forms/person.html'
             
-        elif type == Place.content_type():
+        elif type == Place.item_type():
             self.model = Place
             self.form_class = PlaceForm
             self.template_name = 'repository/items/add-place.html'
             self.ajax_template_name = 'repository/include/forms/place.html'
                    
-        elif type == Product.content_type():
+        elif type == Product.item_type():
             self.model = Product
             self.form_class = ProductForm
             self.template_name = 'repository/items/add-product.html'
             self.ajax_template_name = 'repository/include/forms/product.html'
                       
-        elif type == Event.content_type():
+        elif type == Event.item_type():
             self.model = Event
             self.form_class = EventForm
             self.template_name = 'repository/items/add-event.html'
             self.ajax_template_name = 'repository/include/forms/event.html'
                      
-        elif type == Organization.content_type():
+        elif type == Organization.item_type():
             self.model = Organization
             self.form_class = OrganizationForm
             self.template_name = 'repository/items/add-organization.html'
             self.ajax_template_name = 'repository/include/forms/organization.html' 
     
-        elif type == Book.content_type():
+        elif type == Book.item_type():
             self.model = Book
             self.form_class = BookForm
             self.template_name = 'repository/items/add-book.html'
@@ -188,12 +188,12 @@ def publish(request, type, pk, slug):
     """
     
     print "DBG: requested content type > ", type
-    # Check the type i.e. content_type and derive the data model etc.
-    if type == Snippet.content_type():
+    # Check the type i.e. item_type and derive the data model etc.
+    if type == Snippet.item_type():
         item_cls = Snippet
         template = "repository/items/publish.html"  
                 
-    elif type == Poetry.content_type():
+    elif type == Poetry.item_type():
         item_cls = Poetry
         template = "repository/items/publish.html"
         

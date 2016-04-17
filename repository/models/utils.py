@@ -30,7 +30,7 @@ class Reference(models.Model):
         return self.name
 
     @classmethod
-    def content_type(cls):
+    def item_type(cls):
         return cls.__name__.lower()
     
     def get_absolute_url(self):

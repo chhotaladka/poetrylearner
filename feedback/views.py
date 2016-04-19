@@ -10,6 +10,7 @@ from django.db.models import Q
 from common.decorators import group_required
 from feedback.forms import FeedbackForm
 from feedback.models import Feedback
+from _mysql import NULL
 
 # Create your views here.
 
@@ -84,22 +85,51 @@ def feedback_list(request):
     '''
         
     q_objects = Q()
+    obj_list = []
     
     ##
     # Check the parameters passed in the URL and process accordingly
-    filters = request.GET.get('filters', None)
     
-    if filters:
-        filters = filters.split(',')
-        print filters
-        # Supported filters are: valid, invalid
-        if 'valid' in filters:
-            q_objects &= Q(valid=True)
-        elif 'invalid' in filters:
-            q_objects &= Q(valid=False)    
+    # Query tab
+    tab = request.GET.get('tab', None)
+    
+    if tab == 'pending':
+        # Feedbacks to which we have not acted
+        obj_list = Feedback.objects.all().filter(
+                                                  Q(action__isnull=True) | 
+                                                  Q(action=u'')
+                                                  )
+
+    elif tab == 'closed':
+        # Feedbacks to which we have responded
+        obj_list = Feedback.objects.all().exclude(
+                                                  Q(action__isnull=True) | 
+                                                  Q(action=u'')
+                                                  )
             
-    # Get all feedbacks              
-    obj_list = Feedback.objects.all().filter(q_objects)    
+    elif tab == 'known':
+        # User has account or have given email id
+        obj_list = Feedback.objects.all().filter(
+                                                 Q(added_by__isnull=False) |
+                                                 Q(email__isnull=False)
+                                                 ).exclude(email=u'')
+        
+    elif tab == 'anonymous':
+        # Feedbacks by anonymous users (haven't given email id)        
+        obj_list = Feedback.objects.all().filter(
+                                                 Q(added_by__isnull=True),
+                                                 Q(email__isnull=True) | 
+                                                 Q(email=u'')
+                                                 )        
+          
+    else:
+        # Most recent feedbacks
+        tab = 'all'
+        obj_list = Feedback.objects.all()
+          
+            
+    # Get all feedbacks                
+    #obj_list = Feedback.objects.all().filter(q_objects)  
     
     # Pagination
     paginator = Paginator(obj_list, 20) # Show 20 entries per page    

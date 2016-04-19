@@ -160,7 +160,7 @@ html, body {
 	color: white !important;
 }
 .head__banner.feedback {
-	background-color: #B1AA23 !important;
+	background-color: #08407D !important;
 	color: white !important;
 }
 .head__banner.repository {
@@ -292,6 +292,83 @@ html, body {
     -moz-transition: background-color .55s ease-in-out;
     -webkit-transition: background-color .55s ease-in-out;
 }​
+
+/* tabs */
+.md-tabs {
+  display: block;
+  width: 100%; }
+
+.md-tabs__tab-bar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-content: space-between;
+      -ms-flex-line-pack: justify;
+          align-content: space-between;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  height: 48px;
+  padding: 0 0 0 0;
+  margin: 0;
+  border-bottom: 1px solid rgb(224,224,224); 
+}
+
+.md-tabs__tab {
+  margin: 0;
+  border: none;
+  padding: 0 24px 0 24px;
+  float: left;
+  position: relative;
+  display: block;
+  color: red;
+  text-decoration: none;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: rgba(0,0,0, 0.54);
+  overflow: hidden; 
+}
+.md-tabs .md-tabs__tab.is-active {
+    color: rgba(0,0,0, 0.87); 
+}
+.md-tabs .md-tabs__tab.is-active:after {
+    height: 2px;
+    width: 100%;
+    display: block;
+    content: " ";
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+    background: rgb(63,81,181);
+}
+
+.md-tabs__panel {
+  display: block; 
+}
+.md-tabs .md-tabs__panel {
+	display: none; 
+}
+.md-tabs .md-tabs__panel.is-active {
+    display: block;
+}
+.md-tabs__tab:hover {
+	color: rgba(0, 0, 0, 0.87) !important;
+}
 
 /* flash msg/notification section */
 #msgPanel,
@@ -1461,7 +1538,8 @@ a:visited {
 	/*color: #ED4255;*/
 
 }
-a.mdl-menu__item:hover {
+a.mdl-menu__item:hover,
+a.md-tabs__tab:hover {
 	text-decoration: none;
 }
 

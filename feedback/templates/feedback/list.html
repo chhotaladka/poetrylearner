@@ -1,6 +1,49 @@
 {% extends "dashboard-base.html" %}
+{% load staticfiles %}
 
 {% block title %}Feedbacks{% endblock %}
+{% block modal %}
+	<div id="imgModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">
+    		<div class="mdl-card mdl-cell mdl-cell--12-col mdl-color-text--grey-600">
+				<div class="mdl-card__title mdl-card--border ">
+					<h3 class="mdl-card__subtitle-text mdl-color-text--teal-400">Upload scanned page image</h3>
+				</div>
+				<div class="mdl-card__supporting-text flash-msg">
+					<div id="modal-flashMsg" role="alert">
+					  <i class="material-icons"></i>
+					  <span class="message"></span>
+					</div>
+				</div>
+				<div class="mdl-card__supporting-text">
+					<div id="imgModalBody">
+						<p>Let there be light!</p>
+					</div>
+				</div>				
+				<div class="mdl-card__menu">
+				    <button data-dismiss="modal" class="mdl-button mdl-button--icon mdl-js-button">
+						<i class="material-icons">close</i>
+				    </button>					  
+				</div>					
+			</div>
+	    </div>
+	
+	  </div>
+	</div> <!-- /imgModal -->
+{% endblock %}
+
+{% block extra-style %}
+	<link rel="stylesheet" href="{% static "css/modal.css" %}">
+{% endblock %}
+		
+{% block scripts %}
+	{{ block.super }}
+	<script type="text/javascript" src="{% static 'feedback/js/feedback.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/modal.js' %}"></script>			
+{% endblock %}
 
 {% block headbanner %}
 <section id="id-head" class="centered">
@@ -12,37 +55,19 @@
 </section>
 {% endblock %}
 {% block breadcrumbs %}
-<section id="id-head" class="centered">
-	<div class="mdl-layout__tab-bar-container">
-	    <div class="mdl-layout__tab-bar">
-	      <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Tab 1</a>
-	      <a href="#scroll-tab-2" class="mdl-layout__tab">Tab 2</a>
-	      <a href="#scroll-tab-3" class="mdl-layout__tab">Tab 3</a>
-	      <a href="#scroll-tab-4" class="mdl-layout__tab">Tab 4</a>
-	      <a href="#scroll-tab-5" class="mdl-layout__tab">Tab 5</a>
-	      <a href="#scroll-tab-6" class="mdl-layout__tab">Tab 6</a>
-	    </div>
-	</div>				
-</section>
 <div class="pT-8 pB-8">
 	<div class="_layout">					
-		<div class="breadcrumbs wFull">
-			<div class="action-panel mdl-card__actions bS-1 mdl-color-text--grey-700">
-				<button id="shareBtn" class="action-button" title="Worth sharing?" 
-					onclick="document.getElementById('sharePanel').classList.toggle('hidden'); return false;">
-		            <i class="material-icons" role="presentation">share</i>
-		            <span class="action-button__text">All</span>	                
-				</button>									
-				<button id="favBtn" class="action-button" title="I love this">							
-		            <i class="material-icons" role="presentation">favorite</i>
-		            <span class="action-button__text">Pending</span>			                            
-				</button>		
-				<button id="bookmarkBtn" class="action-button" title="Send to my Bookmarks to read later">
-		            <i class="material-icons color-used" role="presentation">free_breakfast</i>
-		            <span class="action-button__text">Reviewed</span>			                
-				</button>							
-			</div>					 	
-		</div>					
+
+		<div class="md-tabs">
+			<div class="md-tabs__tab-bar">
+				<a href="{{ request.path }}?tab=all" class="md-tabs__tab is-active" title="Recent feedbacks">all</a>
+				<a href="{{ request.path }}?tab=pending" class="md-tabs__tab" title="Feedbacks to which we have not acted">pending</a>
+				<a href="{{ request.path }}?tab=closed" class="md-tabs__tab" title="Feedbacks to which we have responded">closed</a>
+				<a href="{{ request.path }}?tab=anonymous" class="md-tabs__tab" title="Feedbacks by anonymous users">by Doe</a>
+				<a href="{{ request.path }}?tab=known" class="md-tabs__tab" title="User has account or have given email id">by known</a>
+			</div>
+		</div>										 	
+				
 	</div>	
 </div>
 {% endblock %}
@@ -71,8 +96,8 @@
 							<tr>
 						    	<th>ID</th>
 						    	<th class="mdl-data-table__cell--non-numeric">Date</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Given by</th>
 						    	<th class="mdl-data-table__cell--non-numeric">Page</th>
+						    	<th class="mdl-data-table__cell--non-numeric">Given by</th>
 						    	<th class="mdl-data-table__cell--non-numeric">Feedback</th>
 						    	<th class="mdl-data-table__cell--non-numeric">Action taken</th>
 						    </tr>
@@ -81,8 +106,7 @@
 							{% for feedback in feedbacks %}
 							<tr data-id={{ feedback.id }}>
 								<td>{{ forloop.counter }}</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ feedback.date_added }}</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ feedback.get_user_email }}</td>
+								<td class="mdl-data-table__cell--non-numeric">{{ feedback.date_added }}</td>								
 								<td class="mdl-data-table__cell--non-numeric">
 									<a href="{{ feedback.get_page_url }}" title="{{ feedback.get_page_url }}">url</a>
 									{% if feedback.content_object %}
@@ -90,6 +114,7 @@
 									<a href="{{ feedback.get_content_url }}" title="{{ feedback.get_content_url }}">content</a>
 									{% endif %}
 								</td>
+								<td class="mdl-data-table__cell--non-numeric">{{ feedback.get_user_email }}</td>
 								<td class="mdl-data-table__cell--non-numeric">{{ feedback.get_text }}</td>								
 								<td class="mdl-data-table__cell--non-numeric">
 									{{ feedback.get_action_taken }}

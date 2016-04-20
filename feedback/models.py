@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib import auth
 from django.contrib.contenttypes import generic
+from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -75,6 +76,19 @@ class Feedback(models.Model):
     def get_text(self):
         return self.text
     
+    def is_responded(self):
+        '''
+        returns True if response/action has been updated to `action` field.
+        '''
+        if self.action:
+            return True
+        else:
+            return False
+    
     def get_action_taken(self):
         return self.action    
+    
+    def get_absolute_url(self):
+        kwargs = {'pk': str(self.id)}
+        return reverse('feedback:response', kwargs=kwargs)    
     

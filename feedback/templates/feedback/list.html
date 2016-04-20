@@ -60,11 +60,9 @@
 
 		<div class="md-tabs">
 			<div class="md-tabs__tab-bar">
-				<a href="{{ request.path }}?tab=all" class="md-tabs__tab is-active" title="Recent feedbacks">all</a>
-				<a href="{{ request.path }}?tab=pending" class="md-tabs__tab" title="Feedbacks to which we have not acted">pending</a>
-				<a href="{{ request.path }}?tab=closed" class="md-tabs__tab" title="Feedbacks to which we have responded">closed</a>
-				<a href="{{ request.path }}?tab=anonymous" class="md-tabs__tab" title="Feedbacks by anonymous users">by Doe</a>
-				<a href="{{ request.path }}?tab=known" class="md-tabs__tab" title="User has account or have given email id">by known</a>
+			{% for tab in query_tabs %}
+				<a href="{{ tab.url }}" class="md-tabs__tab {{ tab.css }}" title="{{ tab.help_text }}">{{ tab.name }}</a>
+			{% endfor %}
 			</div>
 		</div>										 	
 				
@@ -91,7 +89,7 @@
 				{% comment %} Article list table {% endcomment %}
 				<div class="mdl-color-text--grey-600">
 					<div class="table--large">
-					<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable wSn">
+					<table class="mdl-data-table mdl-js-data-table wSn">
 						<thead>
 							<tr>
 						    	<th>ID</th>
@@ -106,7 +104,9 @@
 							{% for feedback in feedbacks %}
 							<tr data-id={{ feedback.id }}>
 								<td>{{ forloop.counter }}</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ feedback.date_added }}</td>								
+								<td class="mdl-data-table__cell--non-numeric">
+									<a href="{{ feedback.get_absolute_url }}" title="View details">{{ feedback.date_added }}</a>
+								</td>								
 								<td class="mdl-data-table__cell--non-numeric">
 									<a href="{{ feedback.get_page_url }}" title="{{ feedback.get_page_url }}">url</a>
 									{% if feedback.content_object %}
@@ -115,9 +115,9 @@
 									{% endif %}
 								</td>
 								<td class="mdl-data-table__cell--non-numeric">{{ feedback.get_user_email }}</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ feedback.get_text }}</td>								
+								<td class="mdl-data-table__cell--non-numeric">{{ feedback.get_text|truncatewords:10 }}</td>								
 								<td class="mdl-data-table__cell--non-numeric">
-									{{ feedback.get_action_taken }}
+									{{ feedback.get_action_taken|truncatewords:10 }}
 								</td>
 							</tr>
 							{% endfor %}

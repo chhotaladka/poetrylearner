@@ -291,7 +291,31 @@ html, body {
     transition: background-color .55s ease-in-out;
     -moz-transition: background-color .55s ease-in-out;
     -webkit-transition: background-color .55s ease-in-out;
-}​
+}
+
+/* Data tables */
+.table-card {
+	max-width: 620px;
+	margin: 0px auto;
+    position: relative;
+    border-radius: 2px;
+    font-size: 13px;
+    background-color: #FFF;
+}
+.table-card .name {
+	font-weight: 400;
+	margin: 4px 16px;
+	width: 20%;
+	text-align: right;
+}
+.table-card .data {
+	margin: 4px 16px;
+	width: 80%;
+	text-align: left;
+}
+.__hover:hover {
+	background-color: #eee;
+}
 
 /* tabs */
 .md-tabs {
@@ -1378,13 +1402,13 @@ html, body {
 .wHalf { width: 50%; }
 .mW-512 { max-width: 512px;}
 .tAc {
-    text-align: center;
+    text-align: center !important;
 }
 .tAl {
-    text-align: left;
+    text-align: left !important;
 }
 .tAr {
-    text-align: right;
+    text-align: right !important;
 }
 .pA-0 { padding: 0px; }
 .pA-16 { padding: 16px; }

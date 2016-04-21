@@ -8,12 +8,17 @@ from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 
+FEEDBACK_RATING_MAX = +10
+FEEDBACK_RATING_MIN = -10
+FEEDBACK_RATING_DEFAULT = 0 
 
 class Feedback(models.Model):
     '''
     @summary: Information about user's feedback about contents.
     '''
-
+    
+    RATING_OPTIONS = [(i, i) for i in range(FEEDBACK_RATING_MIN, FEEDBACK_RATING_MAX + 1)]
+    
     url = models.URLField(max_length=2000,
                           help_text=_('Feedback URL.'),
                         )
@@ -26,6 +31,15 @@ class Feedback(models.Model):
                             help_text=_('Action taken on the feedback.'),
                             null=True, blank=True,
                         )
+    
+    rating = models.IntegerField(choices=RATING_OPTIONS, default=FEEDBACK_RATING_DEFAULT,
+                                 help_text=_('Rating given by user as feedback OR given by us on feedback.'),
+                                 null=True, blank=True,
+                                )
+    
+    date_responded = models.DateTimeField(null=True, blank=True,
+                                          help_text=_('Date time of last response/action on the feedback.')
+                                        )
         
     email = models.EmailField(help_text=_('Email field, if user isn\'t logged in and wants to send her email.'),
                               null=True, blank=True,
@@ -65,6 +79,12 @@ class Feedback(models.Model):
             return self.added_by.email
         return self.email
     
+    def get_user(self):
+        if self.added_by:
+            return self.added_by
+        else:
+            return None
+    
     def get_page_url(self):
         return self.url
     
@@ -75,6 +95,9 @@ class Feedback(models.Model):
 
     def get_text(self):
         return self.text
+    
+    def get_rating(self):
+        return self.rating
     
     def is_responded(self):
         '''

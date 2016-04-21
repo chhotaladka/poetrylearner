@@ -307,11 +307,15 @@ html, body {
 	margin: 4px 16px;
 	width: 20%;
 	text-align: right;
+	color: #616161 !important;
 }
 .table-card .data {
 	margin: 4px 16px;
 	width: 80%;
 	text-align: left;
+	font-size: 14px;
+	color: #424242 !important;
+	position: relative;
 }
 .__hover:hover {
 	background-color: #eee;
@@ -1456,6 +1460,11 @@ html, body {
     position: absolute;
     right: 8px;
     bottom: 8px;
+}
+.pos-RB0 {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
 }
 
 .bS-1 { box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);}

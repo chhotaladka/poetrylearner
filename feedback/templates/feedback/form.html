@@ -3,7 +3,8 @@
 {% if content_object %}
     <form method="post" action="{% url "feedback:add_for_content" ctype_id=ctype_id obj_id=content_object.id %}">
         {% csrf_token %}
-        <p>You are about to report: {{ content_object }}</p>
+        <p>How can we make this page better for you?</p>
+        <p>Your suggestion, ideas, complaints will greatly help us.</p>
         {{ form.as_p }}
         <input type="submit" value="Send Feedback" />
     </form>

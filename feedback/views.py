@@ -7,11 +7,11 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.generic import CreateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from django.core.validators import validate_email
+from django.utils import timezone
 
 from common.decorators import group_required
 from feedback.forms import FeedbackForm
-from feedback.models import Feedback
+from feedback.models import Feedback, FEEDBACK_RATING_MAX, FEEDBACK_RATING_MIN
 
 # Create your views here.
 
@@ -87,26 +87,48 @@ def feedback_response(request, pk):
     obj = get_object_or_404(Feedback, pk=pk)    
 
     if request.method == "POST":
-        action = request.POST.get('action')
-        notify = request.POST.get('notify')
+        action = request.POST.get('action', None)
+        notify = request.POST.get('notify', None)
+        rating = request.POST.get('rating', None)
         print action
         
-        # validate and clean data
-#         if action == 'Publish':
-#             obj.date_published = timezone.now()
-#         elif action == 'Unpublish':
-#             obj.date_published = None
-#         obj.save()
+        # validate data and process
+        flag_save = False
+        
+        if rating:
+            try:
+                rating = int(rating)
+                if FEEDBACK_RATING_MIN <= rating <= FEEDBACK_RATING_MAX:
+                    obj.rating = rating
+                    flag_save = True            
+            except ValueError:
+                    pass  # it was not an int.
+        
+        if action != None and action != '':
+            if len(action) < 1000:            
+                obj.action = action
+                flag_save = True                                        
+            else:
+                flag_save = False
+                message = 'Failed. Maximum allowed response length is 1000 characters.'
+        else:
+            flag_save = False
+            message = 'Failed. Response should not be empty.' 
 
-        print notify
-        if notify:
-            user_email = obj.get_user_email()
-            if user_email:               
-                # Send email to the user
-                print 'DBG:: in response to feedback %s, sending email to %s'% (obj.id, user_email)
-                pass
-
-        messages.success(request, 'Response submitted successfully!')
+        if flag_save:
+            obj.date_responded = timezone.now()
+            obj.save()
+            message = 'Response submitted successfully!'
+            
+            # Check notify
+            if notify:
+                user_email = obj.get_user_email()
+                if user_email:               
+                    # Send email to the user
+                    print 'DBG:: in response to feedback %s, sending email to %s'% (obj.id, user_email)
+                    message += ' Notification sent to user.'
+                                        
+        messages.success(request, message)
         return HttpResponseRedirect(obj.get_absolute_url())
 
     ##

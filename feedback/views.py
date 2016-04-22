@@ -23,7 +23,7 @@ class FeedbackCreateView(CreateView):
     model = Feedback
     form_class = FeedbackForm
     #template_name = 'feedback/feedback_form.html'
-    ajax_template = 'feedback/form_content.html'
+    ajax_template = 'feedback/form.html'
 
     def dispatch(self, request, *args, **kwargs):
         print "FeedbackCreateView dispatch."

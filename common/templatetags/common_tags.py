@@ -46,3 +46,18 @@ def make_range(value, arg=1):
     Instead of 3 one may use the variable set in the views
   """
   return range(value, value+int(arg))
+
+
+@register.filter('has_group')
+def has_group(user, groups):
+    '''
+    Pass comma separated gruop names in filter argument
+    
+    e.g. {{ user|has_group:"Administrator, Editor" }}
+    '''
+    if user.is_authenticated():       
+        group_list = [s for s in groups.split(',')]     
+        if user.is_authenticated():
+            if bool(user.groups.filter(name__in=group_list)) | user.is_superuser:
+                return True
+        return False

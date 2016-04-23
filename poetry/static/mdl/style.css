@@ -861,7 +861,7 @@ html, body {
 
 /* Site search related */
 .site-search-row {
-	height: 52px;
+	height: 46px;
 	display: flex;
 	flex-flow: row nowrap;
 	flex-shrink: 0;
@@ -869,6 +869,7 @@ html, body {
 	align-self: center;
 	align-items: center;
 	margin: 0px;
+	justify-content: flex-end;
 }
 @media (max-width: 479px) {
   .site-search-row { width: calc(100% - 16px); }
@@ -899,9 +900,20 @@ html, body {
 	background: transparent;
 	color: #333;
 }
-
-.search-input {
-    background: rgba(255, 255, 255, 0.9) none repeat scroll 0% 0% padding-box;
+.search-box-btn {
+	color: #424242;
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 13px;
+	margin: 0px;
+	display: block;
+	color: #FFF;
+	line-height: 46px;
+	padding: 0px 16px;
+}
+.search-box {
+    background: rgba(252, 252, 252, 0.9) none repeat scroll 0% 0% padding-box;
+	/*background-color: rgba(237, 240, 243, 1);*/
     border-width: 1px;
     border-style: solid;
     -moz-border-top-colors: none;
@@ -914,18 +926,41 @@ html, body {
 	border: none;
 	box-shadow: 0px 1px 2px #EEE inset;
     color: inherit;
-	height: 28px;
+	padding: 0px 4px;
+	text-align: left;
+}
+.icons.search {
+	color: #b1b1b1 !important;
+}
+.search-input {
+	background: transparent;
+    border-width: 1px;
+    border-style: solid;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    border-spacing: 0px;
+    border-radius: 2px 0px 0px 2px;
+	border: none;
+    color: inherit;
+	height: 46px;
 	display: block;
 	width: 100%;
 	padding: 0px 8px;
 	text-align: left;
 }
-.search-input:hover {
+.search-box:hover,
+.search-input1:hover {
 	box-shadow: 0px 1px 2px #DDD inset;
 }
-.search-input[keepfocus],
-.search-input:focus,
-.search-input[autofocus] {
+.search-box[keepfocus],
+.search-box:focus,
+.search-box[autofocus],
+.search-input1[keepfocus],
+.search-input1:focus,
+.search-input1[autofocus] {
 	border-color: rgba(51, 166, 255, 0.6) rgba(39, 145, 225, 0.6) rgba(0, 122, 204, 0.6);
 	box-shadow: 0px 1px 2px #CCC inset;
 }

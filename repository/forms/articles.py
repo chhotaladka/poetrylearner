@@ -1,10 +1,33 @@
 import os, sys, traceback
 from django.forms import ModelForm
+from django.forms.models import  ModelChoiceField
+from django.core.exceptions import ValidationError
 
 from repository.models import Poetry, Snippet, Person
 
+class Select2ChoiceField(ModelChoiceField):
+    '''
+    In case you are populating the fields using ajax request then 'to_python' must be 
+    overridden, as default queryset is None and this function originally check if 
+    returned value is in the queryset which in turns raise validation error "invalid_choice".
+    '''
+                
+    def to_python(self, value):
+        if value in self.empty_values:
+            return None
+        try:
+            key = self.to_field_name or 'pk'
+            #MODIFIED HERE: check for value in all object instead of self.queryset
+            value = self.queryset.model.objects.get(**{key: value})
+        except (ValueError, TypeError, self.queryset.model.DoesNotExist):
+            raise ValidationError(self.error_messages['invalid_choice'], code='invalid_choice')
+        return value
+
+
 class PoetryForm(ModelForm): 
-       
+    
+    creator = Select2ChoiceField(queryset=Person.objects.filter())
+
     class Meta:
         model = Poetry
         fields = ['name', 'description', 'same_as', # Thing

@@ -206,6 +206,21 @@ html, body {
 }
 
 /* CARDS */
+.login-card {
+	display: flex;
+	flex-direction: column;
+    max-width: 354px;
+	min-height: 200px;
+    padding: 40px;
+	margin: 1px auto;
+	background: #FFF none repeat scroll 0% 0%;
+	border-radius: 2px;
+	box-sizing: border-box;
+}
+.login-btn {
+	background-color: #19A36C !important;
+	color: white !important;
+}
 .mdl-card__title {
 	min-height: 176px;
 }
@@ -1136,6 +1151,7 @@ html, body {
 .form-element input[type=radio] {
 	-webkit-appearance: none;
 	appearance: none;
+	display: inline-block;
 	width: 13px;
 	height: 13px;
 	margin: 0;
@@ -1272,7 +1288,10 @@ html, body {
 	text-decoration: none;
 }
 .page-header--row.mdl-layout__header-row {
-    height: 46px;
+	height: 46px;
+	max-width: 1080px;
+	width: 100%;
+	margin: 0px auto;
 }
 .page-header--row.mdl-layout__header-row > * {
     flex-shrink: 1;
@@ -1391,7 +1410,6 @@ html, body {
 }
 
 /* Notifications/warning etc */
-
 .notice {
 	/*background-color: #EEE;*/
 	background-color: #EFF2DF;
@@ -1399,8 +1417,6 @@ html, body {
 	border-radius: 2px;
 	margin: 8px 4px;
 	padding: 8px;
-
-
 }
 
 /* Shortcut styles */
@@ -1517,6 +1533,7 @@ html, body {
 .lH-46 {line-height: 46px !important;}
 .lH-72 {line-height: 72px !important;}
 .lH-i {line-height: inherit !important;}
+.lH-1 {line-height: 1 !important;}
 
 .fD-c {flex-direction: column;}
 .fD-r {flex-direction: row;}
@@ -1612,7 +1629,6 @@ a.md-tabs__tab:hover {
 }
 
 .banner {
-    text-align: center;
 	margin-top: calc(10%);
 }
 .banner h1 {

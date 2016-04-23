@@ -1,46 +1,82 @@
 {% extends "account/base.html" %}
 
-{% load i18n %}
 {% load account socialaccount %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block title %}Login to{% endblock %}
 
-{% block content %}
+{% block body %}	
+<div id="priSect" class="pT-8 pB-16">
+	<div class="_layout layout-L mdl-grid">			
+		<section class="__c mdl-cell mdl-cell--12-col pA-0">
+			<div class="banner">
+				<div class="login-card bS-1 wFull">
+				
+					<h1>Sign in</h1>
+	
+					{% get_providers as socialaccount_providers %}
+					
+					{% if socialaccount_providers %}
+					{% comment %} 
+					<div class="socialaccount_ballot">
+					
+					  <ul class="socialaccount_providers">
+					    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+					  </ul>
+					
+					  <div class="login-or">{% trans 'or' %}</div>
+					
+					</div>
+					{% include "socialaccount/snippets/login_extra.html" %}
+					{% endcomment %}
+					{% else %}
+					<p>If you have not created an account yet, then please
+					<a href="{{ signup_url }}">sign up</a> first.</p>
+					{% endif %}
+	
+		
+					<form class="login a-mdl-form" method="POST" action="{% url 'account_login' %}">
+						{% csrf_token %}
+						<fieldset>
+							<div id="div_id_login" class="form-element">
+								<label for="id_login">
+									<input id="id_login" autofocus="autofocus" maxlength="30" name="login" placeholder="Username" type="text" value="{{ form.login.value|default_if_none:'' }}"/>
+								</label>
+							{% if form.login.errors %}
+							    {% for error in form.login.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+							{% endif %}
+							</div>	
+							<div id="div_id_password" class="form-element">
+								<label for="id_password">
+									<input id="id_password" name="password" placeholder="Password" type="password"/>
+								</label>
+							{% if form.password.errors %}
+							    {% for error in form.password.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+							{% endif %}	
+							{% for error in form.non_field_errors %}
+								<span class="errormsg">{{ error }}</span>
+							{% endfor %}				
+							</div>		
+							<div id="div_id_remember" class="form-element lH-1">
+								<label for="id_remember">				
+									<input id="id_remember" name="remember" type="checkbox" />
+									<span>{{form.remember.label}}</span>
+								</label>
+							</div>
+						  {% if redirect_field_value %}
+						  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+						  {% endif %}		
+						<fieldset>
+						<div class="">
+							<button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Sign In</button> 
+						</div> 
+						{% comment %}  
+					  	<a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+					  	{% endcomment %}
+					</form>
 
-<h1>{% trans "Sign In" %}</h1>
-
-{% get_providers as socialaccount_providers %}
-
-{% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
-
-<div class="socialaccount_ballot">
-
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
-
-  <div class="login-or">{% trans 'or' %}</div>
-
+				</div>
+			</div>
+		</section>			
+	</div>		
 </div>
-
-{% include "socialaccount/snippets/login_extra.html" %}
-
-{% else %}
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-{% endif %}
-
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-</form>
-
 {% endblock %}

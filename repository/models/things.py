@@ -246,9 +246,6 @@ class CreativeWorkManager(ThingManager):
         
         if 'creator' in kwargs:
             q_objects &= Q(creator__id=kwargs['creator'])
-        if 'contributors' in kwargs:
-            print contributors
-            q_objects &= Q(contributor__in=kwargs['contributors'])#FIXME
         if 'publisher' in kwargs:
             print publisher
             q_objects &= Q(publisher__id=kwargs['publisher'])            
@@ -270,31 +267,13 @@ class CreativeWork(Thing):
     @see: http://schema.org/CreativeWork
     @note: 
 
-    '''    
-    
-    # file will be saved to MEDIA_ROOT/uploads/2015/01/
-    media = models.FileField(upload_to='repository/uploads/%Y/%m/',
-                             null=True, blank=True,
-                             help_text=_('A media for this creative work.')
-                             )
+    '''
     
     creator = models.ForeignKey(Person,
                                 on_delete=models.SET_NULL,
                                 related_name="%(class)s_created",
                                 null=True, blank=True,
                                 help_text=_('The creator/author of this content.')
-                                )
-    
-    contributor = models.ManyToManyField(Person,
-                                         related_name="%(class)s_contributed",
-                                         blank=True,
-                                         help_text=_('A secondary contributor to the creative work.')
-                                         )#TODO make it contributors
-    
-    references = models.ForeignKey(Reference,
-                                   on_delete=models.SET_NULL,
-                                   null=True, blank=True,
-                                   help_text=_('Resource(s) used in the creation of this resource. A citation or reference to another creative work, such as another publication, web page, scholarly article, etc.')
                                 )
     
     date_published = models.DateTimeField(null=True, blank=True,

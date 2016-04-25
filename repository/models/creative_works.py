@@ -8,12 +8,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.utils.html import strip_tags
 from django.db.models import Q
+from common.utils import truncatelines
 
-from things import CreativeWork, CreativeWorkManager
+from things import CreativeWork, CreativeWorkManager, Person
 
 # Create your models here.
 
-class LiteratureManager(CreativeWorkManager):
+class PoetryManager(CreativeWorkManager):
     '''
     @summary: The default manager for `Book` and `Article` class
     '''
@@ -24,9 +25,25 @@ class LiteratureManager(CreativeWorkManager):
         if 'language' in kwargs:
             q_objects &= Q(language=kwargs['language'])           
         
-        return super(LiteratureManager, self).apply_filter(*args, **kwargs).filter(q_objects)
+        return super(PoetryManager, self).apply_filter(*args, **kwargs).filter(q_objects)
+
     
+class ArticleManager(CreativeWorkManager):
+    '''
+    @summary: The default manager for Article class
+    '''
     
+    def apply_filter(self, *args, **kwargs):        
+        q_objects = Q()
+        
+        if 'language' in kwargs:
+            q_objects &= Q(language=kwargs['language']) 
+        if 'contributors' in kwargs:
+            print contributors
+            q_objects &= Q(contributors__in=kwargs['contributors'])            
+        
+        return super(ArticleManager, self).apply_filter(*args, **kwargs).filter(q_objects)    
+
     
 class Book(CreativeWork):
     '''
@@ -46,7 +63,13 @@ class Book(CreativeWork):
                            help_text=_('The ISBN of the book.')
                         )
     
-    objects = LiteratureManager()    
+    contributors = models.ManyToManyField(Person,
+                                         related_name="%(class)s_contributed",
+                                         blank=True,
+                                         help_text=_('Secondary contributors to the creative work.')
+                                         )    
+    
+    objects = ArticleManager()    
     
     def get_language(self):
         '''
@@ -74,7 +97,19 @@ class Article(CreativeWork):
                             help_text=_('The actual body of the article.')
                             )
     
-    objects = LiteratureManager()
+    # file will be saved to MEDIA_ROOT/uploads/2015/01/
+    media = models.FileField(upload_to='repository/uploads/%Y/%m/',
+                             null=True, blank=True,
+                             help_text=_('A media for this creative work.')
+                             )
+    
+    contributors = models.ManyToManyField(Person,
+                                         related_name="%(class)s_contributed",
+                                         blank=True,
+                                         help_text=_('Secondary contributors to the creative work.')
+                                         )
+      
+    objects = ArticleManager()
     
     class Meta:
         abstract = True        
@@ -92,4 +127,38 @@ class Article(CreativeWork):
         else:
             return strip_tags(self.body)[:200] + '...'          
                
+ 
+class Poetry(CreativeWork):
+    '''
+    @summary: A poetic article.
+    @note:     
+    '''
+    
+    language = models.CharField(max_length=8, 
+                                choices=LANGUAGES, default='en',
+                                help_text=_('The language of the content.')
+                                )
         
+    body = models.TextField(null=False,
+                            help_text=_('The actual body of the article.')
+                            )
+    
+    objects = PoetryManager()
+        
+    class Meta:
+        verbose_name = _("Poetry")
+        verbose_name_plural = _("Poetries")  
+
+    def get_language(self):
+        '''
+        Returns the language full name
+        '''
+        tmp = dict(LANGUAGES)
+        return tmp[self.language]
+            
+    def summary(self):
+        """
+        Content to share on social media sites
+        e.g. first stanza
+        """
+        return truncatelines(self.body, 4)             

@@ -12,24 +12,6 @@ from creative_works import Article
 
 # Create your models here.
 
-        
-class Poetry(Article):
-    '''
-    @summary: A poetic article.
-    @note: 
-    
-    '''
-    class Meta:
-        verbose_name = _("Poetry")
-        verbose_name_plural = _("Poetries")  
-        
-    def summary(self):
-        """
-        Content to share on social media sites
-        e.g. first stanza
-        """
-        return truncatelines(self.body, 4)          
-    
 
 class Snippet(Article):
     '''

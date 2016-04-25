@@ -1,3 +1,3 @@
-from articles import PoetryForm, SnippetForm
-from creative_works import BookForm
+from articles import SnippetForm
+from creative_works import BookForm, PoetryForm
 from things import OrganizationForm, ProductForm, PersonForm, PlaceForm, EventForm

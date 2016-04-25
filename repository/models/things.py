@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.conf.global_settings import LANGUAGES
 from django.template.defaultfilters import default
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.db.models import Q
 
@@ -160,7 +161,7 @@ class Person(Thing):
         print "DBG:: Model Person clean called"
         # date_death must be greater than date_birth
         if self.date_death is not None and self.date_death is not None:
-            if self.date_death < self.date_birth:
+            if self.date_death <= self.date_birth:
                 raise ValidationError({
                     'date_death': "Foeticide is illegal. Death shouldn't happen before birth."
                 })

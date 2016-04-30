@@ -93,6 +93,13 @@ html, body {
 	font-size: 16px;
 	line-height: 26px;
 }
+.poetry-body {
+	font-size: 16px;
+	line-height: 26px;
+	letter-spacing: 0.01em;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
 
 .author-avatar {
     width: 120px;
@@ -206,6 +213,19 @@ html, body {
 }
 
 /* Banners and Cards */
+.bannerBack {
+	/* Set rules to fill background */
+	min-height: 100%;
+	min-width: 1024px;
+	/* Set up proportionate scaling */
+	width: 100%;
+	height: auto;
+	/* Set up positioning */
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
 .banner {
 	margin-top: calc(10%);
 	border-radius: 8px;
@@ -229,13 +249,28 @@ html, body {
 .login-card {
 	display: flex;
 	flex-direction: column;
-    max-width: 354px;
 	min-height: 200px;
+	max-width: 354px;
     padding: 40px;
 	margin: 1px auto;
 	background: #FFF none repeat scroll 0% 0%;
 	border-radius: 2px;
 	box-sizing: border-box;
+}
+.teaser-card {
+	display: flex;
+	flex-direction: column;
+	min-height: 200px;
+	max-width: 512px;
+    padding: 40px;
+	margin: 1px auto;
+	background-color: transparent;
+	border-radius: 2px;
+	box-sizing: border-box;
+	position: relative;
+}
+.teaser-card.transp {
+	background-color: rgba(255, 255, 255, 0.95);
 }
 .login-card.transp {
 	background-color: rgba(255, 255, 255, 0.8);
@@ -1342,7 +1377,8 @@ html, body {
 	font-family: unset;
 	color: inherit;
 }
-.profile-menu .separator {
+.profile-menu .separator,
+.separator {
 	border-bottom: 1px solid #E9EAED;
 	margin: 5px 7px 6px;
 	padding-top: 1px;

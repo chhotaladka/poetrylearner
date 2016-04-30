@@ -13,6 +13,7 @@ from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.conf.global_settings import LANGUAGES
 import json
+import random
 
 from repository.models import *
 
@@ -302,4 +303,28 @@ def search(request):
         
     r = json.dumps(result)
                   
-    return HttpResponse(r, content_type="application/json")    
+    return HttpResponse(r, content_type="application/json")
+
+
+def get_a_poetry():
+    '''
+    Get a random poetry
+    '''
+    obj_list = Poetry.published.all()
+    count = len(obj_list)    
+    
+    if count:  
+        try:
+            index = random.randint(1, count-1)
+            obj = obj_list[index]
+        except:
+            print ("count", count, "index", index)
+            print ("Error: Unexpected error:", sys.exc_info()[0])
+            for frame in traceback.extract_tb(sys.exc_info()[2]):
+                fname,lineno,fn,text = frame
+                print ("DBG:: Error in %s on line %d" % (fname, lineno))
+            obj = {}
+    else:
+        obj = {}
+           
+    return obj

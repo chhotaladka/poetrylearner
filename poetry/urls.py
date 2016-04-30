@@ -20,13 +20,15 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.i18n import i18n_patterns
 
+from . import views
+
 urlpatterns = i18n_patterns('',
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^c/', include('crawlers.urls', namespace='crawlers')),
     url(r'^r/', include('repository.urls', namespace='repository')),
     url(r'^feedback/', include('feedback.urls', namespace='feedback')),
-    url(r'^', include('common.urls', namespace="common")),
+    url(r'^$', views.welcome, name='welcome'),
 )
 
 # This is only needed when using runserver.

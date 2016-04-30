@@ -1342,9 +1342,6 @@ html, body {
 	font-family: unset;
 	color: inherit;
 }
-.profile-menu a {
-	width: 100%;
-}
 .profile-menu .separator {
 	border-bottom: 1px solid #E9EAED;
 	margin: 5px 7px 6px;
@@ -1529,8 +1526,10 @@ html, body {
 .pB-16 { padding-bottom: 16px; }
 .pB-32 { padding-bottom: 32px; }
 .pB-48 { padding-bottom: 48px; }
-.pL-8 { padding-left: 8px;}
-.pR-8 { padding-right: 8px;}
+.pL-8 { padding-left: 8px !important;}
+.pR-8 { padding-right: 8px !important;}
+.pL-0 { padding-left: 0px !important;}
+.pR-0 { padding-right: 0px !important;}
 
 .wSn { white-space: normal; }
 .wS-pl { white-space: pre-line; }

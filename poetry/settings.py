@@ -132,6 +132,8 @@ SOCIALACCOUNT_PROVIDERS = {
         'METHOD': 'js_sdk'  # instead of 'oauth2'
     }
 }
+ACCOUNT_SESSION_REMEMBER = None
+# Allauth end
 
 WSGI_APPLICATION = 'poetry.wsgi.application'
 

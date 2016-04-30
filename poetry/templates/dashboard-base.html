@@ -29,7 +29,7 @@
 	<div class="mdl-layout mdl-js-layout dashboard-layout
 	            mdl-layout--fixed-header">  
 	  {% block header %}{% comment %} header of a section/app. Modify in the base template of the app {% endcomment %}
-	  <header class="mdl-layout__header page-header mdl-layout__header--waterfall">
+	  <header class="mdl-layout__header page-header">
 	    <div class="mdl-layout__header-row page-header--row">
 	      <span class="mdl-layout-title">{% block page-title %}Page Title{% endblock %}</span>{% comment %} Define at each page to set its title {% endcomment %}
 	      <div class="mdl-layout-spacer"></div>
@@ -60,22 +60,31 @@
 	      <nav class="mdl-navigation page-header--nav">
 	      {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
 	      	<!--<a class="mdl-navigation__link" href="{% url 'repository:view' %}">View</a>-->      
-	        <a id="id-user-submenu" class="mdl-navigation__link oN" href="#"><i class="material-icons icons user" role="presentation">person</i></a>	        
+	        <a id="id-profile-menu" class="mdl-navigation__link oN" href="#">
+	        	<i class="material-icons icons user" role="presentation">person</i>
+	        </a>	        
 	       {% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
 	      </nav>
-	    </div>		
-	    {% comment %} User icon submenu {% endcomment %}
-	    <div class="nav-submenu">
-			<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu"
-			    for="id-user-submenu">
-			  <li class="mdl-menu__item">Some Action</li>
-			  <li class="mdl-menu__item">Another Action</li>
-			  <li disabled class="mdl-menu__item">Disabled Action</li>
-			  <li class="mdl-menu__item">Yet Another Action</li>
-			</ul>
-		</div>
+		  {% comment %} User profile submenu {% endcomment %}
+		  <div>
+		  	<ul class="profile-menu mdl-menu mdl-menu--bottom-right mdl-js-menu" for="id-profile-menu">
+	  			<li class="mdl-menu__item">
+	  				<a class="oN" href="#">View Profile</a>
+	  			</li>
+	  			{% comment %}<li disabled class="mdl-menu__item">Disabled Action</li>{% endcomment %}
+	  			<li class="separator"></li>
+	  			<li class="mdl-menu__item">
+	  				<form method="post" action="{% url 'account_logout' %}">
+	  					{% csrf_token %}
+	  					<input type="hidden" name="next" value="{{ request.path }}"/>
+	  					<button class="oN"type="submit">Log Out</button>
+	  				</form>	  				
+	  			</li>
+			</ul>    
+		  </div> 	      
+	    </div>
 	  </header>
-	  {% endblock %}{% comment %} end of header block {% endcomment %}
+	  {% endblock %}{% comment %} end of header block {% endcomment %}	     
 	  
 	  <div class="mdl-layout__drawer mdl-color--white mdl-color-text--grey-700">
 	    <span class="mdl-layout-title lH-46">Title</span>	        
@@ -86,7 +95,7 @@
 	    	<a class="mdl-navigation__link section {% block is-users-active %}{% endblock %}" href="/admin">Admin</a>
 	    </nav>
     
-	  </div>
+	  </div>	  
 		<main class="mdl-layout__content">
 		{% block messages %}
 		{% include "common/include/message-panel.html" with messages=messages only %}

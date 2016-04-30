@@ -1,17 +1,20 @@
 {% extends "account/base.html" %}
-
+{% load staticfiles %}
 {% load account socialaccount %}
 
 {% block title %}Login to{% endblock %}
 
-{% block body %}	
+{% block body %}
+{% block messages %}
+{% include "common/include/message-panel.html" with messages=messages only %}
+{% endblock %}	
 <div id="priSect" class="pT-8 pB-16">
 	<div class="_layout layout-L mdl-grid">			
 		<section class="__c mdl-cell mdl-cell--12-col pA-0">
-			<div class="banner">
-				<div class="login-card bS-1 wFull">
+			<div class="banner" style="background: url('/static/img/ddd.jpg') top / cover;">
+				<div class="login-card transp bS-1 wFull">
 				
-					<h1>Sign in</h1>
+					<h1>Log in</h1>
 	
 					{% get_providers as socialaccount_providers %}
 					
@@ -67,7 +70,7 @@
 						  {% endif %}		
 						<fieldset>
 						<div class="">
-							<button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Sign In</button> 
+							<button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Log In</button> 
 						</div> 
 						{% comment %}  
 					  	<a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
@@ -75,6 +78,9 @@
 					</form>
 
 				</div>
+			</div>
+			<div class="tAr">
+				<a href="http://pyrotensive.deviantart.com/art/Lez-Dreux-197143237" target="_blank">Image</a>
 			</div>
 		</section>			
 	</div>		

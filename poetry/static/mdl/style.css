@@ -205,7 +205,27 @@ html, body {
     color: inherit;
 }
 
-/* CARDS */
+/* Banners and Cards */
+.banner {
+	margin-top: calc(10%);
+	border-radius: 8px;
+	padding: 8px;
+}
+.banner h1 {
+    font-family: "Open Sans",arial;
+    color: #555;
+    font-size: 32px;
+    font-weight: 300;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+.banner h2 {
+    font-family: "Open Sans",arial;
+    color: #555;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
 .login-card {
 	display: flex;
 	flex-direction: column;
@@ -216,6 +236,9 @@ html, body {
 	background: #FFF none repeat scroll 0% 0%;
 	border-radius: 2px;
 	box-sizing: border-box;
+}
+.login-card.transp {
+	background-color: rgba(255, 255, 255, 0.8);
 }
 .login-btn {
 	background-color: #19A36C !important;
@@ -1292,6 +1315,7 @@ html, body {
 	max-width: 1080px;
 	width: 100%;
 	margin: 0px auto;
+	position: relative;
 }
 .page-header--row.mdl-layout__header-row > * {
     flex-shrink: 1;
@@ -1300,6 +1324,32 @@ html, body {
   position: absolute;
   right: 16px;
   top: 16px; }
+
+.profile-menu .mdl-menu__item {
+	height: 30px;
+	line-height: 30px;
+	padding: 0px 22px;
+}
+.profile-menu button {
+	width: 100%;
+	display: inline-block;
+	border: none;
+	outline: 0px none;
+	cursor: pointer;
+	background: transparent;
+	text-align: inherit;
+	padding: 0px;
+	font-family: unset;
+	color: inherit;
+}
+.profile-menu a {
+	width: 100%;
+}
+.profile-menu .separator {
+	border-bottom: 1px solid #E9EAED;
+	margin: 5px 7px 6px;
+	padding-top: 1px;
+}
 
 /* icons & symbols */
 .icons {
@@ -1626,25 +1676,6 @@ a:visited {
 a.mdl-menu__item:hover,
 a.md-tabs__tab:hover {
 	text-decoration: none;
-}
-
-.banner {
-	margin-top: calc(10%);
-}
-.banner h1 {
-    font-family: "Open Sans",arial;
-    color: #555;
-    font-size: 32px;
-    font-weight: 300;
-    margin-top: 0px;
-    margin-bottom: 20px;
-}
-.banner h2 {
-    font-family: "Open Sans",arial;
-    color: #555;
-    font-size: 18px;
-    font-weight: 400;
-    margin-bottom: 20px;
 }
 
 /*

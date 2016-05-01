@@ -258,8 +258,8 @@ class PublishedManager(models.Manager):
     '''
     @summary: Returns Published `CreativeWork`s
     '''    
-    def get_query_set(self):
-        return super(PublishedManager, self).get_queryset().exclude(date_published=None)    
+    def get_queryset(self):
+        return super(PublishedManager, self).get_queryset().filter(date_published__isnull=False)    
     
 
 class CreativeWork(Thing):

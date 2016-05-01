@@ -5,6 +5,7 @@
 {% endcomment %}
 {% load staticfiles %}
 {% load humanize %}
+{% load common_tags %}
 
 <div class="mdl-card poetry-card wFull bS-1">
 {% with poetry_url=poetry.get_absolute_url %}
@@ -30,10 +31,10 @@
 				<b>{{ tag }}</b>
 			</a>
 			{% endfor %}
-			{% if poetry.is_published %}{% comment %} TODO make it visible only to admin {% endcomment %}
-			<i id="id-pub" class="material-icons publish">assignment_turned_in</i>
-			<span for="id-pub" class="mdl-tooltip">Published</span>
-			{% endif %}								
+			{% if request.user|has_group:"administrator,editor" %}
+			{% if poetry.is_published %}
+			<i id="id-pub" class="material-icons publish" title="Published">assignment_turned_in</i>			
+			{% endif %}{% endif %}								
 		</span>			
 	</div>
 

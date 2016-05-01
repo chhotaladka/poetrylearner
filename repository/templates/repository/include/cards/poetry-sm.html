@@ -3,6 +3,7 @@
 	Requires:   css and js of static/mdl/*
 	Note:       xxx
 {% endcomment %}
+{% load common_tags %}
 
 <div class="mdl-card poetry poetry-card mH-auto wFull bS-1">
 	<div class="mdl-card__supporting-text">
@@ -17,13 +18,21 @@
 				{{ poetry.creator.name }}
 			</a>{% endif %}
 		</div>	
-		<div>												
+		<div>
+			<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">
+				<s>#</s>
+				<b>{{ poetry.get_language }}</b>
+			</a>														
 			{% for tag in poetry.get_tags_slugs %}
 	 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-poetry' slug=tag %}">
 	 			<s>#</s>
 				<b>{{ tag }}</b>
 			</a>
-			{% endfor %}								
+			{% endfor %}
+			{% if request.user|has_group:"administrator,editor" %}
+			{% if poetry.is_published %}
+			<i class="material-icons publish icon" title="Published">assignment_turned_in</i>
+			{% endif %}{% endif %}											
 		</div>						
 	</div>
 	<div class="mdl-card__supporting-text">	

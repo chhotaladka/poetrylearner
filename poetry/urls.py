@@ -26,8 +26,9 @@ urlpatterns = i18n_patterns('',
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^c/', include('crawlers.urls', namespace='crawlers')),
+    url(r'^feedback/', include('feedback.urls', namespace='feedback')),    
     url(r'^r/', include('repository.urls', namespace='repository')),
-    url(r'^feedback/', include('feedback.urls', namespace='feedback')),
+    url(r'^u/', include('dashboard.urls', namespace='dashboard')),    
     url(r'^$', views.welcome, name='welcome'),
 )
 

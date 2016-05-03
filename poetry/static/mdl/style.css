@@ -982,7 +982,6 @@ html, body {
 	font-size: 13px;
 	margin: 0px;
 	display: block;
-	color: #FFF;
 	line-height: 46px;
 	padding: 0px 16px;
 }
@@ -1388,7 +1387,6 @@ html, body {
 
 /* icons & symbols */
 .icons {
-	color: #818181 !important;
 	line-height: inherit !important;
 	vertical-align: bottom;
 }

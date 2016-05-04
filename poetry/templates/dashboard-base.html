@@ -78,7 +78,7 @@
 		  <div>
 		  	<ul class="profile-menu mdl-menu mdl-menu--bottom-right mdl-js-menu" for="id-profile-menu">
 		  	{% if request.user.is_authenticated %}
-	  			<a class="mdl-menu__item oN" href="#">View Profile</a>	  			
+	  			<a class="mdl-menu__item oN" href="{% url 'dashboard:user-profile' user_id=request.user.id %}">View Profile</a>	  			
 	  			{% comment %}<li disabled class="mdl-menu__item">Disabled Action</li>{% endcomment %}
 	  			<li class="separator"></li>
 	  			<li class="mdl-menu__item">

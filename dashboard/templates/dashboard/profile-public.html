@@ -1,0 +1,30 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}{{ profile.get_name }}{% endblock %}
+
+{% block main %}	
+<div class="pT-8 pB-16">
+	<div class="_layout layout-L mdl-grid">			
+		<section class="__c mdl-cell mdl-cell--12-col pA-0">
+
+			<div class="mdl-card author-card--lg bS-1 wFull">
+				<div class="mdl-card__title column bg-person">
+					{% with profile_img_url=profile.get_avatar_url %}
+					{% if profile_img_url %}
+					<img class="avatar border" width="120" height="120" src={{ profile_img_url }}>
+					{% else %}
+					<i class="avatar material-icons icon">person</i>
+					{% endif %}					
+					{% endwith %}					
+					<div class="title-text">																					
+						{{ profile.get_name }}
+					</div>										
+				</div>					
+				<div class="mdl-card__supporting-text">
+				</div>
+			</div>
+
+		</section>			
+	</div>		
+</div>
+{% endblock %}

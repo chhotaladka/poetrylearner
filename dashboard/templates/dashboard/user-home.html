@@ -1,0 +1,24 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}{{ profile.get_name }}{% endblock %}
+
+{% block main %}	
+<section class="pT-8 pB-16">
+	<div class="_layout layout-L mdl-grid">			
+		<div class="__c mdl-cell mdl-cell--12-col pA-0">
+
+			<div class="author-card--lg bC-none wFull">
+				<div class="card__title column center pB-16">					
+					<div class="title-text dark">																					
+						Hey {{ profile.get_first_name }}!
+					</div>												
+				</div>					
+				<div class="mdl-card__supporting-text">
+					We are still trying to figure out what to put here. Meanwhile, why don't we take you <a href="/">back</a>.
+				</div>
+			</div>
+
+		</div>			
+	</div>		
+</section>
+{% endblock %}

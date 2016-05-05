@@ -71,12 +71,12 @@
 	  			<li class="mdl-menu__item">
 	  				<form method="post" action="{% url 'account_logout' %}">
 	  					{% csrf_token %}
-	  					<input type="hidden" name="next" value="{{ request.path }}"/>
+	  					<input type="hidden" name="next" value={% block header-logout-redirect %}"/"{% endblock %}/>
 	  					<button class="oN"type="submit">Log Out</button>
 	  				</form>	  				
 	  			</li>
 	  		{% else %}
-				<a class="mdl-menu__item oN" href="{% url 'account_login' %}?next={{ request.path }}">Login</a>	  		
+				<a class="mdl-menu__item oN" href="{% url 'account_login' %}?next={% block header-login-redirect %}{% url 'dashboard:user-home' %}{% endblock %}">Login</a>	  		
 	  		{% endif %}
 			</ul>    
 		  </div> 	      

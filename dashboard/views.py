@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 import os, sys, traceback
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.signals import user_logged_in
@@ -53,10 +54,24 @@ def user_home(request, user_id):
     '''
     Home page of the user
     '''  
-    
+    profile = UserProfile.objects.get(user=request.user.id)
+
+    social_accounts = []
+    providers = ["Facebook", "Google", "Twitter"]
+    for provider in providers:
+        if profile.is_social_account_exist(provider):
+            extra_context = {}
+            extra_context['provider_name'] = profile.get_provider_name(provider)
+            extra_context['profile_image'] = profile.get_avatar_url(provider)
+            extra_context['profile_username'] = profile.get_name(provider)
+            extra_context['profile_gender'] = profile.get_gender(provider)
+            extra_context['profile_url'] = profile.get_social_url(provider)
+            extra_context['profile_email'] = profile.get_email(provider)
+            social_accounts.append(extra_context)
+                
     ## Make the context and render     
-    context = {}
-    template = 'dashboard/base.html'
+    context = {'profile': profile, 'social_accounts': social_accounts}    
+    template = 'dashboard/user-home.html'
     
     return render(request, template, context)
 
@@ -117,8 +132,14 @@ def public_profile(request, user_id):
     '''
     print "DBG:: public profile"
     user = get_object_or_404(User, pk=user_id)
-    profile = UserProfile.objects.get(user=user) or None #FIXME: giving error when entry does not exist
+    try:
+        profile = UserProfile.objects.get(user=user)
     
+    except ObjectDoesNotExist:
+        print "ERR:: No profile entry found for user", user, user_id
+        profile = None
+        raise Http404
+                
     ## Make the context and render     
     context = {'profile': profile}
     template = 'dashboard/profile-public.html'

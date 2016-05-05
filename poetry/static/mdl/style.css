@@ -281,7 +281,8 @@ html, body {
 	background-color: #19A36C !important;
 	color: white !important;
 }
-.mdl-card__title {
+.mdl-card__title,
+.card__title {
 	min-height: 176px;
 }
 .wide-card {
@@ -553,6 +554,9 @@ html, body {
 	justify-content: flex-end;
 	align-items: flex-start;
 }
+.center {
+	align-items: center;
+}
 .columnC {
 	display: flex;
 	flex-direction: column;
@@ -596,6 +600,7 @@ html, body {
 	font-size: 90px;
 	color: rgba(0, 0, 0, 0.34);
 }
+.title-text.dark { color: rgba(0, 0, 0, 0.87); }
 .author-card--sm .title-text,
 .author-card--md .title-text {
     color: rgba(0, 0, 0, 0.87);

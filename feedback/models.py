@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib import auth
-from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
@@ -60,7 +60,7 @@ class Feedback(models.Model):
                                      null=True, blank=True,
                                     )
     object_id = models.PositiveIntegerField(null=True, blank=True)
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    content_object = GenericForeignKey('content_type', 'object_id')
 
 
     class Meta:

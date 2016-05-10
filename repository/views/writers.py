@@ -12,6 +12,7 @@ from django.utils.decorators import method_decorator
 from django.utils import timezone
 import json
 
+from common.decorators import group_required
 from repository.models import *
 from repository.forms import *
 
@@ -33,7 +34,6 @@ class CreateThingView(View):
         obj = form.save(self.request.user)
         return HttpResponseRedirect(obj.get_absolute_url()) 
     
-    #@login_required(function, redirect_field_name, login_url)
     def get(self, request, *args, **kwargs):
         # Check the parameters passed in the URL and process accordingly
         # Prepare the cancel_url for 'Cancel button' to be passed with the context    
@@ -105,16 +105,28 @@ class CreateThingView(View):
                         
         return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url, 'item_type': self.item_type})
 
-  
+
 class AddItem(CreateThingView):
     '''
     Add/Edit an Item
     '''
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        ##
+        # Check for permission
+        allowed_groups = ['administrator', 'editor']
+        if request.user.is_authenticated():
+            if bool(request.user.groups.filter(name__in=allowed_groups)) | request.user.is_superuser:
+                pass
+            else:
+                raise PermissionDenied  
+        else:
+            # In case `login_required` decorator is removed accidently
+            raise PermissionDenied
+        
         type = kwargs.get('type', None)
         self.item_type = type
-        print "DBG: requested content type > ", type
+
         # Check the type i.e. item_type and derive the data model etc.
         if type == Snippet.item_type():
             self.model = Snippet
@@ -170,7 +182,9 @@ class AddItem(CreateThingView):
                 
         return super(self.__class__, self).dispatch(request, *args, **kwargs) 
 
-      
+
+@login_required 
+@group_required('administrator', 'editor')      
 def add(request):
     '''
     Add an item
@@ -181,7 +195,9 @@ def add(request):
     template = "repository/items/add.html"  
     return render(request, template, context)    
  
-    
+
+@login_required 
+@group_required('administrator', 'editor')    
 def publish(request, type, pk, slug):
     """
     Publish or unpublish a creative work type item

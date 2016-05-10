@@ -74,6 +74,7 @@ INSTALLED_APPS = (
     'repository',
     'feedback',
     'dashboard',
+    'bookmarks',
 )
 
 TEMPLATE_LOADERS = (

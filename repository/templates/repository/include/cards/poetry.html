@@ -1,7 +1,7 @@
 {% comment %}
 	Info:       Poetry full detail Card
-	Requires:   css and js of static/mdl/*
-	Note:       xxx
+	Requires:   1) css and js of static/mdl/*
+				2) bookmark.js(bookmark-button.html), like.js(like-button.html)
 {% endcomment %}
 {% load staticfiles %}
 {% load humanize %}
@@ -41,19 +41,15 @@
 	<div id="articleContent" class="poetry-body mdl-color-text--grey-800">{{ poetry.body }}</div>
 		
 	<div class="action-panel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
-		<button id="shareBtn" class="action-button" title="Worth sharing?" 
+		<button id="shareBtn" class="action-button oN" title="Worth sharing?" 
 			onclick="document.getElementById('sharePanel').classList.toggle('hidden'); return false;">
             <i class="material-icons" role="presentation">share</i>
             <span class="action-button__text">Share</span>	                
 		</button>									
-		<button id="favBtn" class="action-button" title="I love this">							
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="action-button__text">Favorite</span>			                            
-		</button>		
-		<button id="bookmarkBtn" class="action-button" title="Send to my Bookmarks to read later">
-            <i class="material-icons color-used" role="presentation">free_breakfast</i>
-            <span class="action-button__text">Read later</span>			                
-		</button>							
+		{% comment %}  Include LIKE button {% endcomment %}
+		{% include "repository/include/misc/like-button.html" with item=poetry %}		
+		{% comment %}  Include BOOKMARK button {% endcomment %}
+		{% include "repository/include/misc/bookmark-button.html" with item=poetry %}									
 	</div>
 
 	{% comment %}  Include share panel {% endcomment %}

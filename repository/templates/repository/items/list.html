@@ -1,4 +1,9 @@
 {% extends "repository/base.html" %}
+{% comment %}
+	Info:       List of items
+	Requires:   1) css and js of static/mdl/*
+				2) bookmark.js(list/poetry.html)
+{% endcomment %}
 {% block title %}List of items{% endblock title %}
 
 {% block breadcrumbs %}
@@ -25,3 +30,8 @@
 		</div>	
 	</section>
 {% endblock %}
+{% block scripts %}
+{% if item_type == 'poetry' %}
+	{% include "repository/include/misc/bookmark-button-js.html" %}
+{% endif %}
+{% endblock %}	

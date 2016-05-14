@@ -1,4 +1,9 @@
 {% extends "repository/base.html" %}
+{% comment %}
+	Info:       Person
+	Requires:   1) css and js of static/mdl/*
+				2) bookmark.js(poetry-sm.html)
+{% endcomment %}
 {% load staticfiles %}
 {% load poetry_tags %}
 
@@ -70,4 +75,7 @@
 	    <i class="material-icons" role="presentation">add</i>
 	    <span class="visuallyhidden">Add</span>
 	</a>	
-{% endblock %}		    				    																
+{% endblock %}
+{% block scripts %}
+	{% include "repository/include/misc/bookmark-button-js.html" %}
+{% endblock %}	    				    																

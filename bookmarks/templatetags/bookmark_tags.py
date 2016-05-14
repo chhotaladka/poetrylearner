@@ -68,7 +68,7 @@ def do_bookmarks_by_user(parser, token):
         raise template.TemplateSyntaxError("'%s' tag takes exactly three arguments" % bits[0])
     if bits[2] != 'as':
         raise template.TemplateSyntaxError("second argument to '%s' tag must be 'as'" % bits[0])
-    return BookmarksByUserNode(bits[1], bits[3], bits[5])
+    return BookmarksByUserNode(bits[1], bits[3])
 
 
 register.tag('bookmark_by_user', do_bookmark_by_user)

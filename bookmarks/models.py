@@ -126,7 +126,7 @@ class Bookmark(models.Model):
         return self.get_content_url()  
 
     def title(self):
-        return self.content_object.title #TODO: do it without using content_object's title function    
+        return self.content_object.title() #TODO: do it without using content_object's title function    
 
     def save(self, *args, **kwargs):
         super(Bookmark, self).save(*args, **kwargs)

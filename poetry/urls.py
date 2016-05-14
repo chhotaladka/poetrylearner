@@ -25,6 +25,7 @@ from . import views
 urlpatterns = i18n_patterns('',
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^bookmark/', include('bookmarks.urls', namespace='bookmark')),
     url(r'^c/', include('crawlers.urls', namespace='crawlers')),
     url(r'^feedback/', include('feedback.urls', namespace='feedback')),    
     url(r'^r/', include('repository.urls', namespace='repository')),

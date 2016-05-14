@@ -722,9 +722,6 @@ html, body {
 .mdl-poetry .action-panel .material-icons {
 	font-size: 20px;
 }
-.mdl-poetry .action-panel .material-icons.color-used { 
-	color: #ED4255;
-}
 .poetry-card:hover .action-panel.hide {
 	opacity: 1 !important;
 	transition: opacity .55s ease-in-out;
@@ -776,6 +773,12 @@ html, body {
 }
 .action-button--small:hover {
 	color: #616161;
+}
+.bookmark-btn.true .icon { 
+	color: rgba(237, 66, 85, 0.9) !important;
+}
+.bookmark-btn.true:hover .icon { 
+	color: rgba(237, 66, 85, 1) !important;
 }
 .random-btn {
 	position: fixed;

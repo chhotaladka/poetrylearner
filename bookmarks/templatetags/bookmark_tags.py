@@ -1,5 +1,5 @@
 from django import template
-from Bookmarks.models import Bookmark
+from bookmarks.models import Bookmark
 
 register = template.Library()
 

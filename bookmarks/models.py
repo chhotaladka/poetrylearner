@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your models here.
 
@@ -25,7 +26,7 @@ class BookmarkManager(models.Manager):
             obj = self.get(user=user, content_type=content_object, object_id=obj._get_pk_val())
       
         except ObjectDoesNotExist:
-            print 'No bookmark by {user} on {object}'.format(user=user, object=obj)
+            print 'No bookmark by {user} on {object}'.format(user=user, object=obj.id)
             return None
             
         return obj
@@ -56,7 +57,7 @@ class BookmarkManager(models.Manager):
                 bookmark_obj = self.create(user=user, content_type=content_type, object_id=obj._get_pk_val())                        
             except:
                 print 'ERR:: something went wrong in creating a bookmark object. {file}:{line}'.format(file=str('__FILE__'), line=str('__LINE__'))
-                raise ObjectDoesNotExist  
+                bookmark_obj = None
         
         return bookmark_obj
     
@@ -70,13 +71,14 @@ class BookmarkManager(models.Manager):
         # If it does, then just update the previous one
         try:
             bookmark_obj = self.get(user=user, content_type=content_type, object_id=obj._get_pk_val())
+            bookmark_id = bookmark_obj.id
             bookmark_obj.delete()
                 
         except ObjectDoesNotExist:
             print 'WARNING:: Bookmark does not exist.'
             raise ObjectDoesNotExist  
         
-        return True 
+        return bookmark_id 
     
     def get_bookmarks_count(self, obj):
         '''
@@ -128,8 +130,6 @@ class Bookmark(models.Model):
 
     def save(self, *args, **kwargs):
         super(Bookmark, self).save(*args, **kwargs)
-        print "DBG:: dashboard:bookmark created", self.id
         
     def delete(self):
         super(Bookmark, self).delete()
-        print "DBG:: dashboard:bookmark deleted", self.id

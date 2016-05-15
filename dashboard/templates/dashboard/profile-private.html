@@ -1,4 +1,5 @@
 {% extends "dashboard/base.html" %}
+{% load bookmark_tags %}
 
 {% block title %}{{ profile.get_name }} | profile{% endblock %}
 
@@ -32,6 +33,38 @@
 					<div class="separator wFull"></div>									
 				</div>					
 				<div class="mdl-card__supporting-text">
+				</div>
+			</div>
+			
+			{% bookmarks_by_user request.user as bookmarks %}
+			{% comment %} Bookmark list table {% endcomment %}
+			<div class="poetry-card bC-none wFull mdl-color-text--grey-600">
+				<div class="table--large">
+				<table class="mdl-data-table mdl-js-data-table wSn">
+					<thead>
+						<tr>
+					    	<th class="mdl-data-table__cell--non-numeric bC-none">
+					    		<span class="bookmark-btn true">
+        						<i class="material-icons icons icon" role="presentation">free_breakfast</i>		                
+								</span>								
+					    		<span>My bookmarks ({{ bookmarks|length }})</span>					    		
+					    	</th>
+					    </tr>
+					</thead>										
+					<tbody>
+						{% for bookmark in bookmarks %}
+						<tr>
+							<td class="mdl-data-table__cell--non-numeric">
+								<a href="{{ bookmark.get_absolute_url }}">
+								<span>{{ bookmark.title }}</span>
+								<span> by </span>
+								<i>{{ bookmark.content_object.get_author.title }}</i>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 				</div>
 			</div>
 

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from allauth.socialaccount.models import SocialAccount
 
+from common.slugify import slugify
 
 # Create your models here.
 
@@ -29,7 +30,7 @@ class UserProfile(models.Model):
     
 
     def get_absolute_url(self):        
-        kwargs = {'user_id': self.user.id}
+        kwargs = {'user_id': self.user.id, 'slug': self.get_slug()}
         return reverse('dashboard:user-profile', kwargs=kwargs)
         
     def _get_social_account(self, provider=None):
@@ -56,8 +57,6 @@ class UserProfile(models.Model):
             if len(account_uid):
                 return account_uid[0]
         except:
-            return None
-        else:
             return None
     
     def is_social_account_exist(self, provider):
@@ -135,6 +134,18 @@ class UserProfile(models.Model):
 
         else:
             return self.user.last_name
+    
+    def get_slug(self):
+        return slugify(self.get_name())
+        
+    def is_slug_valid(self, slug):
+        '''
+        Validate the slug
+        '''
+        if slug == self.get_slug():
+            return True
+        else:
+            return False            
 
     def get_gender(self, provider=None):
         '''

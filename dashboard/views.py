@@ -50,7 +50,7 @@ def CreateProfile(sender, request, user,**kwargs):
 
 
 @login_required
-def user_home(request, user_id):
+def user_home(request):
     '''
     Home page of the user
     '''  
@@ -74,28 +74,6 @@ def user_home(request, user_id):
     template = 'dashboard/user-home.html'
     
     return render(request, template, context)
-
-
-def user_profile(request, user_id):
-    '''
-    Profile page of the user
-    '''
-    print "user profile of ", user_id
-    try:
-        user_id = int(user_id) # required for comparision
-    except ValueError:
-        print "DBG:: invalid request for user_id ", user_id
-        raise Http404
-            
-    if request.user.is_authenticated():
-        if request.user.id == user_id:
-            scope = request.GET.get('viewas', None)
-            if scope == 'public':
-                return public_profile(request, user_id)
-            else:
-                return private_profile(request)
-
-    return public_profile(request, user_id)
         
 
 @login_required
@@ -120,13 +98,13 @@ def private_profile(request):
             social_accounts.append(extra_context)
                 
     ## Make the context and render     
-    context = {'profile': profile, 'social_accounts': social_accounts}
+    context = {'social_accounts': social_accounts}
     template = 'dashboard/profile-private.html'
     
     return render(request, template, context)
 
     
-def public_profile(request, user_id):
+def public_profile(request, user_id, slug):
     '''
     Public profile of the user
     '''
@@ -139,20 +117,24 @@ def public_profile(request, user_id):
         print "ERR:: No profile entry found for user", user, user_id
         profile = None
         raise Http404
+    
+    if profile.is_slug_valid(slug) is False:
+        raise Http404
                 
     ## Make the context and render     
-    context = {'profile': profile}
+    context = {'public_profile': profile}
     template = 'dashboard/profile-public.html'
     
     return render(request, template, context)
-    
 
-def user_bookmarks(request, user_id):
+    
+@login_required
+def user_bookmarks(request):
     '''
     Bookmarks by the user
     '''
     
-    user = get_object_or_404(User, pk=user_id)
+    profile = UserProfile.objects.get(user=request.user.id)
     
     ## Make the context and render     
     context = {}
@@ -161,12 +143,13 @@ def user_bookmarks(request, user_id):
     return render(request, template, context)
 
 
-def user_favorites(request, user_id):
+@login_required
+def user_favorites(request):
     '''
     Favorites of the user
     '''
     
-    user = get_object_or_404(User, pk=user_id)
+    profile = UserProfile.objects.get(user=request.user.id)
     
     ## Make the context and render     
     context = {}

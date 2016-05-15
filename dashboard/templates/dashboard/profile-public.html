@@ -1,6 +1,6 @@
 {% extends "dashboard/base.html" %}
 
-{% block title %}{{ profile.get_name }} | profile{% endblock %}
+{% block title %}{{ public_profile.get_name }} | profile{% endblock %}
 
 {% block main %}	
 <div class="pT-8 pB-16">
@@ -9,7 +9,7 @@
 
 			<div class="author-card--lg bC-none wFull">
 				<div class="column center">
-					{% with profile_img_url=profile.get_avatar_url %}
+					{% with profile_img_url=public_profile.get_avatar_url %}
 					{% if profile_img_url %}
 					<img class="avatar border" width="120" height="120" src={{ profile_img_url }}>
 					{% else %}
@@ -17,7 +17,7 @@
 					{% endif %}					
 					{% endwith %}					
 					<div class="title-text dark">																					
-						{{ profile.get_name }}
+						{{ public_profile.get_name }}
 					</div>	
 					<div class="separator wFull"></div>									
 				</div>					

@@ -65,7 +65,12 @@
 		  <div>
 		  	<ul class="profile-menu mdl-menu mdl-menu--bottom-right mdl-js-menu" for="id-profile-menu">
 		  	{% if request.user.is_authenticated %}
-	  			<a class="mdl-menu__item oN" href="{% url 'dashboard:user-profile' user_id=request.user.id %}">View Profile</a>	  			
+	  			<a class="mdl-menu__item oN" href="{% url 'dashboard:private-profile' %}">
+	  				<div>	  					
+	  					<div>{% if profile %}{{ profile.get_first_name }}{% else %}{{ request.user|title }}{% endif %}</div>
+	  					<div class="light-txt">View Profile</div>
+	  				</div>
+	  			</a>  			
 	  			{% comment %}<li disabled class="mdl-menu__item">Disabled Action</li>{% endcomment %}
 	  			<li class="separator"></li>
 	  			<li class="mdl-menu__item">
@@ -79,8 +84,7 @@
 				<a class="mdl-menu__item oN" href="{% url 'account_login' %}?next={% block header-login-redirect %}{% url 'dashboard:user-home' %}{% endblock %}">Login</a>	  		
 	  		{% endif %}
 			</ul>    
-		  </div> 	      
-	    </div>
+		  </div>
 	  </header>
 	  {% endblock %}{% comment %} end of header block {% endcomment %}	     
 	  	  

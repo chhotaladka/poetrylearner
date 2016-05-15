@@ -1381,9 +1381,9 @@ html, body {
   top: 16px; }
 
 .profile-menu .mdl-menu__item {
-	height: 30px;
-	line-height: 30px;
-	padding: 0px 22px;
+	height: auto;
+	line-height: 16px;
+	padding: 5px 22px;
 }
 .profile-menu button {
 	width: 100%;

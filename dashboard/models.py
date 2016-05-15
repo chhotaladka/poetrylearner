@@ -31,7 +31,7 @@ class UserProfile(models.Model):
 
     def get_absolute_url(self):        
         kwargs = {'user_id': self.user.id, 'slug': self.get_slug()}
-        return reverse('dashboard:user-profile', kwargs=kwargs)
+        return reverse('dashboard:public-profile', kwargs=kwargs)
         
     def _get_social_account(self, provider=None):
         '''

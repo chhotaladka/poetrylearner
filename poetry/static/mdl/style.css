@@ -1924,14 +1924,20 @@ a.md-tabs__tab:hover {
 	background-color: #ff5722 !important;/*deep-orange-500*/
 	color: white;	
 }
-.publish {
+.publish,
+.publish svg {
 	font-size: 13px !important;
 	color: #A5A5A5 !important;
-	line-height: inherit !important;
+	line-height: 18px;
+}
+i.publish {
 	vertical-align: bottom;
 }
 i.publish:hover {
 	color: #66B5D2 !important;
+}
+.publish:hover svg {
+	fill: #0084B4 !important;
 }
 
 /* CARDS */

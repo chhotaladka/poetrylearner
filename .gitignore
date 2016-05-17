@@ -56,3 +56,5 @@ docs/_build/
 #media folder
 poetry/media/
 
+#settings.py
+poetry/settings.py

@@ -10,16 +10,16 @@
 	    
 		{% block meta %}{% comment %} Write down all meta here {% endcomment %}{% endblock %}
 		
-	    <title>{% block title %} Home {% endblock title %} - siteName.org </title>
+	    <title>{% block title %} Home {% endblock title %} - poetrylearner.com </title>
 	    
-	    <!-- Bootstrap CSS -->
+	    {% comment %} Base CSS {% endcomment %}
 	    <link rel="stylesheet" href="{% static "mdl/material.min.css" %}">
 	    <link rel="stylesheet" href="{% static "mdl/style.css" %}">
 	    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 	    {% block extra-style %}{% comment %} Include here extra css style {% endcomment %}{% endblock %} 
 	
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		{% comment %} jQuery (necessary for Bootstrap's JavaScript plugins) {% endcomment %}
     	<script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
     	<script type="text/javascript" src="{% static 'mdl/material.min.js' %}"></script>
    
@@ -32,13 +32,14 @@
 	  {% block header %}{% comment %} header of a section/app. Modify in the base template of the app {% endcomment %}
 	  <header class="mdl-layout__header page-header">
 	  	<div class="mdl-layout__drawer-button">
-	  		<!--<i class="material-icons">menu</i>-->
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50" width="24" height="24" style="fill: rgb(51, 51, 51);vertical-align: initial;">
 			    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 0 9 L 0 11 L 50 11 L 50 9 L 0 9 z M 0 24 L 0 26 L 50 26 L 50 24 L 0 24 z M 0 39 L 0 41 L 50 41 L 50 39 L 0 39 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
 			</svg>	  		
 	  	</div>
 	    <div class="mdl-layout__header-row page-header--row">
-	      <span class="mdl-layout-title">{% block page-title %}Page Title{% endblock %}</span>{% comment %} Define at each page to set its title {% endcomment %}
+	      <div class="mdl-layout-title logo site-name">
+	      	<a href="/">poetry learner</a>
+	      </div>
 	      <div class="mdl-layout-spacer"></div>
 	      {% block search %}{% comment %} Modify the search block as per the current page {% endcomment %} 
 		  <div id="id-search-box" class="site-search-row"> 	    	  
@@ -46,7 +47,6 @@
 		    	action="{% block search-form-action %}{% endblock %}" method="get">
 			  <button class="search-btn" id="search-btn" type="submit" tabindex="2" dir="ltr" 
 			  	onclick="if (document.getElementById('id-search-term').value == '') return false; document.getElementById('id-search-form').submit(); return false;;return true;">
-				<!--<i class="material-icons icons search" role="presentation">search</i>-->
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50" style="fill: rgb(51, 51, 51);">
 					<path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 21 3 C 11.623004 3 4 10.623004 4 20 C 4 29.376996 11.623004 37 21 37 C 24.709505 37 28.140329 35.803849 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460556 28.087561 38 24.221313 38 20 C 38 10.623004 30.376996 3 21 3 z M 21 5 C 29.296116 5 36 11.703884 36 20 C 36 28.296116 29.296116 35 21 35 C 12.703884 35 6 28.296116 6 20 C 6 11.703884 12.703884 5 21 5 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
 				</svg>				
@@ -58,14 +58,12 @@
 			<div class="">
 				<a id="id-sOn" class="search-box-btn" href="#" 
 					onclick="this.classList.toggle('hidden');document.getElementById('id-search-box').classList.toggle('search-box');document.getElementById('id-search-form').classList.toggle('hidden'); document.getElementById('id-sOff').classList.toggle('hidden');return false;">
-					<!--<i class="material-icons icons" role="presentation">search</i>-->
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50" style="fill: rgb(51, 51, 51);">
     					<path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 21 3 C 11.623004 3 4 10.623004 4 20 C 4 29.376996 11.623004 37 21 37 C 24.709505 37 28.140329 35.803849 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460556 28.087561 38 24.221313 38 20 C 38 10.623004 30.376996 3 21 3 z M 21 5 C 29.296116 5 36 11.703884 36 20 C 36 28.296116 29.296116 35 21 35 C 12.703884 35 6 28.296116 6 20 C 6 11.703884 12.703884 5 21 5 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
 					</svg>
 				</a>
 		      	<a id="id-sOff" class="search-box-btn hidden" href="#" 
 		      		onclick="this.classList.toggle('hidden');document.getElementById('id-search-form').classList.toggle('hidden');document.getElementById('id-search-box').classList.toggle('search-box');document.getElementById('id-sOn').classList.toggle('hidden');return false;">
-		      		<!--<i class="material-icons icons search" role="presentation">close</i>-->
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50" style="fill: rgb(51, 51, 51);">
 					    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 L 7.71875 6.28125 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
 					</svg>		      		
@@ -75,27 +73,33 @@
 		  {% endblock %}{% comment %} end of search block {% endcomment %}	         
 	      <nav class="mdl-navigation page-header--nav">
 	      {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
-	      	<!--<a class="mdl-navigation__link" href="{% url 'repository:view' %}">View</a>--> 
-	      	{% if request.user.is_authenticated %} 
-	        <a id="id-profile-menu" class="mdl-navigation__link oN" href="#" 
-	        	title="{{ request.user|title }} : {{ request.user.email }}">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="30" height="30" style="fill: rgb(51, 51, 51);">
-				    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 16 4 C 12.145852 4 9 7.1458513 9 11 C 9 13.393064 10.220383 15.517805 12.0625 16.78125 C 8.485554 18.302923 6 21.859881 6 26 L 8 26 C 8 21.533333 11.533333 18 16 18 C 20.466667 18 24 21.533333 24 26 L 26 26 C 26 21.859881 23.514446 18.302923 19.9375 16.78125 C 21.779617 15.517805 23 13.393064 23 11 C 23 7.1458513 19.854148 4 16 4 z M 16 6 C 18.773268 6 21 8.2267317 21 11 C 21 13.773268 18.773268 16 16 16 C 13.226732 16 11 13.773268 11 11 C 11 8.2267317 13.226732 6 16 6 z" color="#000" overflow="visible" font-family="Bitstream Vera Sans"/>
-				</svg>	        	
-	        </a>	        
+	      	{% if request.user.is_authenticated %}
+	      	<div id="id-profile-menu" class="mdl-navigation__link">
+		        <button class="action-button oN"
+		        	title="{{ request.user|title }} : {{ request.user.email }}">
+		        	{% if profile.get_avatar_url %}
+		        	<div>
+		        		<img class="circle" width="36" height="36" src="{{ profile.get_avatar_url }}"></img>
+		        	</div>
+		        	{% else %}
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="30" height="30" style="fill: rgb(51, 51, 51);">
+					    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 16 4 C 12.145852 4 9 7.1458513 9 11 C 9 13.393064 10.220383 15.517805 12.0625 16.78125 C 8.485554 18.302923 6 21.859881 6 26 L 8 26 C 8 21.533333 11.533333 18 16 18 C 20.466667 18 24 21.533333 24 26 L 26 26 C 26 21.859881 23.514446 18.302923 19.9375 16.78125 C 21.779617 15.517805 23 13.393064 23 11 C 23 7.1458513 19.854148 4 16 4 z M 16 6 C 18.773268 6 21 8.2267317 21 11 C 21 13.773268 18.773268 16 16 16 C 13.226732 16 11 13.773268 11 11 C 11 8.2267317 13.226732 6 16 6 z" color="#000" overflow="visible" font-family="Bitstream Vera Sans"/>
+					</svg>
+					{% endif %}      	
+		        </button>
+	        </div>
 	        {% else %}
-	        <a id="id-profile-menu" class="mdl-navigation__link oN" href="#" title="">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="30" height="30" style="fill: rgb(51, 51, 51);">
-				    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 16 4 C 12.145852 4 9 7.1458513 9 11 C 9 13.393064 10.220383 15.517805 12.0625 16.78125 C 8.485554 18.302923 6 21.859881 6 26 L 8 26 C 8 21.533333 11.533333 18 16 18 C 20.466667 18 24 21.533333 24 26 L 26 26 C 26 21.859881 23.514446 18.302923 19.9375 16.78125 C 21.779617 15.517805 23 13.393064 23 11 C 23 7.1458513 19.854148 4 16 4 z M 16 6 C 18.773268 6 21 8.2267317 21 11 C 21 13.773268 18.773268 16 16 16 C 13.226732 16 11 13.773268 11 11 C 11 8.2267317 13.226732 6 16 6 z" color="#000" overflow="visible" font-family="Bitstream Vera Sans"/>
-				</svg>
-	        </a>	        
+	        <div class="mdl-navigation__link wS-nw">
+				<a class="oN" href="{% url 'account_login' %}?next={% block header-login-redirect %}{% url 'dashboard:user-home' %}{% endblock %}">
+					Log in
+				</a>	        
+	        </div>	  			        
 	        {% endif %}        
 	       {% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
 	      </nav>
 		  {% comment %} User profile submenu {% endcomment %}
-		  <div>
-		  	<ul class="profile-menu mdl-menu mdl-menu--bottom-right mdl-js-menu" for="id-profile-menu">
-		  	{% if request.user.is_authenticated %}
+		  {% if request.user.is_authenticated %}
+		  	<ul class="dropdown-menu profile-menu mdl-menu mdl-menu--bottom-right mdl-js-menu" for="id-profile-menu">
 	  			<a class="mdl-menu__item oN" href="{% url 'dashboard:private-profile' %}">
 	  				<div>	  					
 	  					<div>{% if profile %}{{ profile.get_first_name }}{% else %}{{ request.user|title }}{% endif %}</div>
@@ -110,12 +114,9 @@
 	  					<input type="hidden" name="next" value={% block header-logout-redirect %}"/"{% endblock %}/>
 	  					<button class="oN"type="submit">Log Out</button>
 	  				</form>	  				
-	  			</li>
-	  		{% else %}
-				<a class="mdl-menu__item oN" href="{% url 'account_login' %}?next={% block header-login-redirect %}{% url 'dashboard:user-home' %}{% endblock %}">Login</a>	  		
-	  		{% endif %}
+	  			</li>	  		
 			</ul>    
-		  </div> 	      
+		  {% endif %} 	      
 	    </div>
 	  </header>
 	  {% endblock %}{% comment %} end of header block {% endcomment %}	     

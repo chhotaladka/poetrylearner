@@ -857,7 +857,20 @@ html, body {
 }
 .meta-edit a,
 .light-txt a {
-	/*color: #ED4255;*/
+	color: #3F51B5;
+}
+.breadcrumbs {
+	margin-left: 8px;
+	margin-right: 8px;
+    font-size: 12px;
+    line-height: 17px;
+    font-weight: 300;
+	color: #757575;
+}
+.breadcrumbs a {
+	color: inherit;
+}
+.breadcrumbs a:hover {
 	color: #3F51B5;
 }
 .summary-txt {
@@ -1747,6 +1760,8 @@ right: 30px;
 .wS-pl { white-space: pre-line; }
 .wS-nw { white-space: nowrap; }
 
+.mT0 {margin-top:0px !important;}
+.mB0 {margin-bottom:0px !important;}
 .mR-8 { margin-right: 8px; }
 .mL-8 { margin-left: 8px; }
 .mT-8 { margin-top: 8px; }
@@ -1814,11 +1829,6 @@ right: 30px;
 
 .oN {outline:none !important;}
 .oN::-moz-focus-inner {border: 0;}
-
-.breadcrumbs {
-	margin-left: 8px;
-	margin-right: 8px;
-}
 
 .person .highlight,
 .bg-person {

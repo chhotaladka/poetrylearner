@@ -1,7 +1,7 @@
 import scrapy
 import re
 
-class WikiSpider(scrapy.Spider):
+class WikiBot(scrapy.Spider):
     """
     Crawl the wikipedia page, 
     extract the basic info from the page like first paragraph and

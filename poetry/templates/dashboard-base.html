@@ -120,7 +120,7 @@
 	    </div>
 	  </header>
 	  {% endblock %}{% comment %} end of header block {% endcomment %}	     
-	  
+	  {% if request.user.is_authenticated %}
 	  <div class="mdl-layout__drawer mdl-color--white mdl-color-text--grey-700">
 	    <span class="mdl-layout-title lH-46">Title</span>	        
 	    <nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800">	    
@@ -130,9 +130,9 @@
 	    	<a class="mdl-navigation__link section {% block is-feed-active %}{% endblock %}" href="{% url 'feedback:list' %}">Feedbacks</a>    		  		   	
 	    	<a class="mdl-navigation__link section {% block is-users-active %}{% endblock %}" href="/admin">Admin</a>
 	    	{% endif %}
-	    </nav>
-    
-	  </div>	  
+	    </nav>    
+	  </div>
+	  {% endif %}  
 		<main class="mdl-layout__content">
 		{% block messages %}
 		{% include "common/include/message-panel.html" with messages=messages only %}

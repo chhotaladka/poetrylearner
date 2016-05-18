@@ -9,22 +9,22 @@
 	<div class="_layout layout-L mdl-grid">			
 		<section class="__c mdl-cell mdl-cell--12-col pA-0">
 			<!--<div class="bannerBack" style="background: url('/static/img/bbb.jpg') center / cover;"></div>-->
-			<div class="banner">
+			<div class="banner">				
+				{% if 0 %}
 				<div class="teaser-card tAc bS-1 transp wFull">
-				{% if poetry %}
 					<h1 class="">{{ poetry.creator.title }}</h1>
 					{% comment %}  Include meta panel {% endcomment %}
 					{% if request.user|has_group:"administrator,editor" %}
 					{% include "repository/include/misc/meta-panel2.html" with item=poetry %}
-					{% else %}
-					<div class="separator"></div>
 					{% endif %}					
-					<div class="poetry-body mdl-color-text--grey-800">{{ poetry.body }}</div>	
+					<div class="poetry-body mdl-color-text--grey-800">{{ poetry.body }}</div>
+				</div>						
 				{% else %}
+				<div class="teaser-card tAc transp wFull" style="background-color: transparent;">
 					<h1>memory is an autumn leaf that murmurs in the wind and then is heard no more.</h1>
-					<h2 class="tAr">Kahlil Gibran</h2>				
+					<h2 class="tAr">Kahlil Gibran</h2>
+				</div>									
 				{% endif %}
-				</div>
 			</div>
 		</section>			
 	</div>		

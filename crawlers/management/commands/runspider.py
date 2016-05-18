@@ -6,19 +6,18 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 
-from crawlers.spiders.wiki import WikiSpider
+from crawlers.spiders.wiki import WikiBot
 
-from crawlers.spiders.secret.kk import KavitakoshSpider
-from crawlers.spiders.secret.kk_author import KavitakoshAuthorSpider
-from crawlers.spiders.secret.urdupoetry import UrdupoetrySpider
-
+from crawlers.spiders.secret.kangaroo import KangarooBot
+from crawlers.spiders.secret.umbrellabird import UmbrellabirdBot
+from crawlers.spiders.secret.reindeer import ReindeerBot
 
 
 class Command(BaseCommand):
-    help = 'Start running spiders; OPTIONS: kk - kavitakosh; kk_auth; upoetry - urdupoetry'
+    help = 'Start running spiders; OPTIONS: kangaroo/umbrellabird/reindeer'
 
     def add_arguments(self, parser):
-        parser.add_argument('site', nargs='+', type=str)
+        parser.add_argument('run', nargs='+', type=str)
 
     def handle(self, *args, **options):
         flag = False
@@ -32,29 +31,29 @@ class Command(BaseCommand):
             'REDIRECT_ENABLED': False
         })
         
-        for site in options['site']:
+        for run in options['run']:
             try:
-                if site == "kk":
-                    process.crawl(KavitakoshSpider)
+                if run == "kangaroo":
+                    process.crawl(KangarooBot)
                     flag = True
-                elif site == "kk_auth":
-                    process.crawl(KavitakoshAuthorSpider)
+                elif run == "wiki":
+                    process.crawl(WikiBot)
                     flag = True
-                elif site == "wiki":
-                    process.crawl(WikiSpider)
+                elif run == "umbrellabird":
+                    process.crawl(UmbrellabirdBot)
                     flag = True
-                elif site == "upoetry":
-                    process.crawl(UrdupoetrySpider)
-                    flag = True
+                elif run == "reindeer":
+                    process.crawl(ReindeerBot)
+                    flag = True                    
                 else:
-                    print ('ERROR: Command argument "%s" does not exist' % site)
+                    print ('ERROR: Command argument "%s" does not exist' % run)
                     
             except:
                 print "Unexpected error:", sys.exc_info()[0]
                 for frame in traceback.extract_tb(sys.exc_info()[2]):
                     fname,lineno,fn,text = frame
                     print "Error in %s on line %d" % (fname, lineno)
-                raise CommandError('Command "%s" failed to execute' % site)
+                raise CommandError('Command "%s" failed to execute' % run)
         
         # Start the spider if any match found
         if flag:

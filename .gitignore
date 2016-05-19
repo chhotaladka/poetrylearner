@@ -60,4 +60,4 @@ poetry/media/
 poetry/settings.py
 
 #other
-crawlers/spiders/secret
+#crawlers/spiders/secret

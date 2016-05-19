@@ -35,6 +35,7 @@ def raw_article_list(request):
     
     """    
     q_objects = Q()
+    result_title = 'Articles'
     
     ##
     # Check the parameters passed in the URL and process accordingly    
@@ -49,27 +50,31 @@ def raw_article_list(request):
         # Supported filters are: valid, invalid
         if 'valid' in filters:
             q_objects &= Q(valid=True)
+            result_title = result_title + ', valid'
         elif 'invalid' in filters:
             q_objects &= Q(valid=False)
-    
+            result_title = result_title + ', invalid'
     
     if source:
         source = source.strip()
         # filter the source_url
         q_objects &= Q(source_url__icontains=source)
+        result_title = result_title + ', ' + source
 
     if author:
         author = author.strip()
         # filter the source_url
         q_objects &= Q(author__icontains=author)
+        result_title = result_title + ', ' + author
     
     if q:
         q = q.strip()
         # TODO make it more perfect 
-        q_objects &= Q(source_url__icontains=q) | Q(author__icontains=q) | Q(title__icontains=q) | Q(content__icontains=q)      
+        q_objects &= Q(source_url__icontains=q) | Q(author__icontains=q) | Q(title__icontains=q) | Q(content__icontains=q)
+        result_title = result_title + ', ' + q      
         
     # Get all articles              
-    obj_list = RawArticle.objects.all().filter(q_objects)
+    obj_list = RawArticle.objects.all().filter(q_objects)        
        
     ##
     # Check for permissions and render the list of articles
@@ -87,7 +92,8 @@ def raw_article_list(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         articles = paginator.page(paginator.num_pages)
             
-    context = {'articles': articles}
+    context = {'articles': articles,
+               'result_title': result_title}
     template = 'crawlers/article-list.html'    
 
     return render(request, template, context)
@@ -215,6 +221,7 @@ def raw_author_list(request):
     List view
     """    
     q_objects = Q()
+    result_title = 'Authors'
     
     ##
     # Check the parameters passed in the URL and process accordingly    
@@ -227,8 +234,10 @@ def raw_author_list(request):
         # Supported filters are: valid or invalid, birth or nobirth, death or nodeath
         if 'valid' in filters:
             q_objects &= Q(valid=True)
+            result_title = result_title + ', valid'
         elif 'invalid' in filters:
             q_objects &= Q(valid=False)
+            result_title = result_title + ', invalid'
         if 'birth' in filters:
             # get the authors whom birth info is known
             q_objects &= ~Q(birth=None)
@@ -246,14 +255,16 @@ def raw_author_list(request):
         source = source.strip()  
         # filter with source_url
         q_objects &= Q(source_url__icontains=source)
-
+        result_title = result_title + ', ' + source
+        
     if q:
         q = q.strip()      
         # get the authors with 'name'        
         q_objects &= Q(name__icontains=q) | Q(source_url__icontains=q)      
+        result_title = result_title + ', ' + q
                 
     # Get all authors           
-    obj_list = RawAuthor.objects.all().filter(q_objects)
+    obj_list = RawAuthor.objects.all().filter(q_objects)        
     
     ##
     # Check for permissions and render the list of authors
@@ -271,7 +282,8 @@ def raw_author_list(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         authors = paginator.page(paginator.num_pages)
             
-    context = {'authors': authors}
+    context = {'authors': authors,
+               'result_title': result_title}
     template = 'crawlers/author-list.html'    
 
     return render(request, template, context)

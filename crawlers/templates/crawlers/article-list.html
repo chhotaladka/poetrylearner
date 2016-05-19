@@ -128,9 +128,15 @@
 				</div>
 				{% endif %}
 {% else %}  {% comment %} Display the notification {% endcomment %}
-				<div class="mdl-card__supporting-text oops-message">
-					<i class="material-icons md-48">error_outline</i>	            
-					<h6>Oops!! No data found for this query.</h6>
+				<div class="">
+					<div class="search-stats">        
+						Sorry! No result for
+					</div>
+					<div class="search-title">
+						<h3>{{result_title}}</h3>
+					</div>
+					<div class="search-stats oops-message">	            
+					</div>
 				</div>
 {% endif %}					
 			</div>					

@@ -21,8 +21,18 @@ class ArticleManager(models.Manager):
     
     def invalid(self):
         qs = self.get_queryset().filter(valid=False)
-        return qs  
-    
+        return qs
+
+    def source_url(self, url):
+        '''
+        Get RawArticle having `source_url`` = url
+        '''
+        objs = self.filter(source_url=url)            
+        if objs:
+            # return first match.
+            # we assume here that there will be no multiple entries for a url.
+            return objs[0]
+        return None    
        
 #
 # Crawled articles from accros the web by web spiders (scrapy)

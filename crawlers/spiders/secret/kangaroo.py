@@ -5,7 +5,7 @@ import json
 from crawlers.save import save_to_db_poem, save_to_db_author
 
 
-class KavitakoshSpider(scrapy.Spider):
+class KangarooBot(scrapy.Spider):
     """
     Crawl the kavitakosh pages.
     

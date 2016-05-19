@@ -4,7 +4,7 @@ import json
 from crawlers.save import save_to_db_poem
 
 
-class UrdupoetrySpider(scrapy.Spider):
+class UmbrellabirdBot(scrapy.Spider):
     """
     Crawl the urdupoetry.com pages.
     It starts crwaling from the "poet list" page.

@@ -69,7 +69,7 @@ class ReindeerBot(scrapy.Spider):
         ABCD = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u',
                 'v','x','y','z',]
 
-        for alphabet in ['a']:
+        for alphabet in ABCD:
             print "Listing poets", alphabet
             url = self.domain_name + self.API_POETS_READ + '?' + '&sort=SortName-asc' + '&page=1' + '&lang=1' + '&pageSize=10000' + '&startsWith=' + alphabet
 

@@ -1,7 +1,7 @@
 {% extends "crawlers/base.html" %}
 {% load staticfiles %}
 
-{% block title %}{{ author.get_name }} - crawled author{% endblock %}
+{% block title %}{{ author.get_name }} | Crawled Author{% endblock %}
 {% block breadcrumbs %}
 <div class="pT-8 pB-8">
 	<div class="_layout">					
@@ -45,13 +45,13 @@
 						<div>Birth: <span>{{ author.get_birth_date }}</span></div>
 						<div>Death: <span>{{ author.get_death_date }}</span></div>						
 						<div>
-							<span>Reference	<a title="Visit the source to know more" href={{ author.source_url }} target="_blank">URL</a>
-							(Source of the data)</span>
+							<span>Reference:</span>
+							<a title="{{ author.source_url }}" href="{{ author.source_url }}">URL of the source</a>
 						</div>
 						<div>Added at <span>{{ author.added_at }}</span></div>					
 						<div>Validity <span id="id-validity">{{ author.valid }}</span></div>										
 				</div>
-				<div class="action-panel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
+				<div class="action-panel mdl-card__actions mdl-card--border">
 					<a href="{% url 'crawlers:article-list' %}?author={{ author.get_name }}">
 						<button id="id-list-btn" class="action-button" title="List crawled articles by {{ author.get_name }}">
 			                <i class="material-icons" role="presentation">list</i>
@@ -62,7 +62,7 @@
 					{% comment %} Provide a button to add this author to main database i.e. projects.Author {% endcomment %}					
 					<button id="id-add-btn" class="action-button" title="Add {{ author.get_name }} to main database">						
 		                <i class="material-icons" role="presentation">person_add</i>
-		                <span class="action-button__text">Add author to poetry repository</span>		                
+		                <span class="action-button__text">Add author to person@repository</span>		                
 					</button>
 					{% else %}
 					{% comment %}  Auhtor is valid. So, there should be her/his entry in main database of Author i.e. projects.Author. Take me there {% endcomment %}

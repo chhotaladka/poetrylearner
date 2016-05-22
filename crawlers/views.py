@@ -81,7 +81,7 @@ def raw_article_list(request):
     
     
     # Pagination
-    paginator = Paginator(obj_list, 20) # Show 20 articles per page    
+    paginator = Paginator(obj_list, 40) # Show 40 articles per page    
     page = request.GET.get('page')
     try:
         articles = paginator.page(page)
@@ -271,7 +271,7 @@ def raw_author_list(request):
     
     
     # Pagination
-    paginator = Paginator(obj_list, 20) # Show 20 authors per page    
+    paginator = Paginator(obj_list, 40) # Show 40 authors per page    
     page = request.GET.get('page')
     try:
         authors = paginator.page(page)

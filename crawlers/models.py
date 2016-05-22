@@ -2,9 +2,12 @@ from django.db import models
 from datetime import datetime
 from django.contrib import auth
 from django.core.urlresolvers import reverse
+from django.conf.global_settings import LANGUAGES
 from django.contrib.contenttypes.models import ContentType
 import json
 from urlparse import urlparse
+
+from crawlers.wrapper import insert_lang_attribute, get_lang_attributes
 
 # Create your models here.
 
@@ -25,14 +28,23 @@ class ArticleManager(models.Manager):
 
     def source_url(self, url):
         '''
-        Get RawArticle having `source_url`` = url
+        Objects with `source_url`` = url
         '''
-        objs = self.filter(source_url=url)            
-        if objs:
-            # return first match.
-            # we assume here that there will be no multiple entries for a url.
-            return objs[0]
-        return None    
+        objs = self.filter(source_url=url)
+        return objs
+    
+    def get_languages_for_url(self, url):
+        '''
+        Returns the list of languages in which the contents of objects are available 
+        for source_url = ``url``
+        '''
+        objs = self.filter(source_url=url)
+        list = []
+        for obj in objs:
+            list.append(obj.language)
+        
+        return list
+      
        
 #
 # Crawled articles from accros the web by web spiders (scrapy)
@@ -45,7 +57,8 @@ class RawArticle(models.Model):
     content = models.TextField(null=False)
     added_at = models.DateTimeField(auto_now_add=True)
     valid = models.BooleanField(default=False) # Valid true means, this article once has been added to `Repository`
-    
+    language = models.CharField(max_length=8, choices=LANGUAGES, default='en')
+        
     objects = ArticleManager()
     
     class Meta:
@@ -85,6 +98,13 @@ class RawArticle(models.Model):
     def get_poem(self):        
         return self.content
     
+    def get_language(self):
+        '''
+        Returns the language full name
+        '''
+        tmp = dict(LANGUAGES)
+        return tmp[self.language]    
+    
     def save(self, *args, **kwargs):
         print "Model RawArticle save called"
               
@@ -116,7 +136,14 @@ class AuthorManager(models.Manager):
 
     def nodate(self):
         qs = super(AuthorManager, self).get_queryset().filter(birth=None, death=None)
-        return qs 
+        return qs
+    
+    def source_url(self, url):
+        '''
+        Objects with `source_url`` = url
+        '''
+        objs = self.filter(source_url=url)
+        return objs    
                        
 #
 # Crawled authors from accros the web by web spiders (scrapy)

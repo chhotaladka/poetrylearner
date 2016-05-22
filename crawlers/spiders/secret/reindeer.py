@@ -4,7 +4,7 @@ import json
 import os, sys, traceback
 
 try:
-    from crawlers.save import save_to_db_poem, save_to_db_author, save_to_db_poem_multiple
+    from crawlers.utils import save_to_db_poem, save_to_db_author, get_language_list_for_url
 except ImportError:    
     def save_to_db_poem(data):
         print data
@@ -12,8 +12,8 @@ except ImportError:
     def save_to_db_author(data):
         print data
         
-    def save_to_db_poem_multiple(data, language):
-        print data
+    def get_language_list_for_url(url):
+        print url
          
 
 def remove_tags(html, tags):
@@ -43,7 +43,7 @@ class ReindeerBot(scrapy.Spider):
     BASE_URL_POETS = "https://rekhta.org/poets/"
     
     # languages of the poetry to be crawled: hindi, urdu or english(default)
-    LANGUAGES = ['hindi', 'english', 'urdu']
+    LANGUAGES = ['hi', 'en', 'ur']
 
     ##
     # APIs
@@ -132,21 +132,22 @@ class ReindeerBot(scrapy.Spider):
             content_slug = poetry['ContentSlug']
             type_slug = poetry['TypeSlug']
 
-            # Crate url and crawl poetry page
+            # Crate url
             url = self.domain_name + type_slug + '/' + content_slug
-            if 'hindi' in self.LANGUAGES:
-                url_t = url + '?lang=hi'
-                yield scrapy.Request(url_t, callback=self.l4_parse_poetry)
-            if 'urdu' in self.LANGUAGES:
-                url_t = url + '?lang=ur'
-                yield scrapy.Request(url_t, callback=self.l4_parse_poetry)
-            if 'english' in self.LANGUAGES:
-                url_t = url + '?lang=en'
-                yield scrapy.Request(url_t, callback=self.l4_parse_poetry)
-            else:
-                # default english
-                url_t = url + '?lang=en'
-                yield scrapy.Request(url_t, callback=self.l4_parse_poetry)                
+            
+            # Check if the entry for ``url`` exist in db,
+            # Also find out the list of languages in which the content is there.
+            lang_list = get_language_list_for_url(url)
+            
+            # Now crawl poetry page only for remaining langauge
+            for lang in (x for x in self.LANGUAGES if x not in lang_list):
+                    url_t = url + '?lang=' + lang
+                    yield scrapy.Request(url_t, callback=self.l4_parse_poetry)                    
+                        
+#             for lang in self.LANGUAGES:
+#                 if lang not in lang_list:
+#                     url_t = url + '?lang=' + lang
+#                     yield scrapy.Request(url_t, callback=self.l4_parse_poetry)                          
                             
 
     def l4_parse_poetry(self, response):
@@ -159,7 +160,14 @@ class ReindeerBot(scrapy.Spider):
             # extract data    
             content = response.xpath("//div[@id='ImageHost']//div[@class='PoemDisplay']/span").extract()[0]
             title = response.xpath("//div[@class='shayariContainerDiv']/div[@class='left_pan_shayari']/div[@class='shayari_first']/h1/text()").extract()[0]
-            poet = response.xpath("//div[@class='artist_img_descrpt']/div[@class='about_artist']/h2/text()").extract()[0]
+            
+            #poet = response.xpath("//div[@class='artist_img_descrpt']/div[@class='about_artist']/h2/text()").extract()[0]
+            # poet name must be in english, that is why we have to discard the previous one. 
+            poet_href = response.xpath("//div[@class='artist_img']//a/@href").extract()[0]
+            p = re.compile(ur'poets/(.+)/') #href="/poets/anjum-tarazi/?lang=Hi"
+            poet = p.search(poet_href).group(1)
+            poet = poet.replace('-', ' ')
+            
             poem = remove_tags(content, 'span')                    
 
         except:
@@ -172,23 +180,17 @@ class ReindeerBot(scrapy.Spider):
             tmp = response.url
             tmp = tmp.split('?')
             url = tmp[0]
-            language = tmp[1].split('=')[1]
-            
-            if language == 'hi':
-                poem = '<div class="language hindi">' + poem + '</div>'
-            elif language == 'en':
-                poem = '<div class="language english">' + poem + '</div>'
-            elif language == 'ur':
-                poem = '<div class="language urdu">' + poem + '</div>'
+            language = tmp[1].split('=')[1]            
                                             
             data = {}
             data['poem'] = poem
             data['url'] = url
             data['title'] = title
             data['author'] = poet.title()
+            data['language'] = language
  
             # Store these information in DB
-            save_to_db_poem_multiple(data, language)
+            save_to_db_poem(data)
 
         except:
             print("ERROR: l4_parse_poetry: Unexpected error:", sys.exc_info()[0])

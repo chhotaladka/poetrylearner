@@ -1,7 +1,18 @@
 import scrapy
 import re
 import json
-from crawlers.save import save_to_db_poem
+
+try:
+    from crawlers.utils import save_to_db_poem, save_to_db_author, get_language_list_for_url
+except ImportError:    
+    def save_to_db_poem(data):
+        print data
+        
+    def save_to_db_author(data):
+        print data
+        
+    def get_language_list_for_url(url):
+        print url
 
 
 class UmbrellabirdBot(scrapy.Spider):

@@ -2,7 +2,18 @@ import scrapy
 import re
 from datetime import datetime
 import json
-from crawlers.save import save_to_db_poem, save_to_db_author
+
+try:
+    from crawlers.utils import save_to_db_poem, save_to_db_author, get_language_list_for_url
+except ImportError:    
+    def save_to_db_poem(data):
+        print data
+        
+    def save_to_db_author(data):
+        print data
+        
+    def get_language_list_for_url(url):
+        print url
 
 
 class KangarooBot(scrapy.Spider):
@@ -26,13 +37,11 @@ class KangarooBot(scrapy.Spider):
     # used to build the hrefs
     domain_name = "http://www.kavitakosh.org"
     
-    count_parse_author = 0
-    count_valid = 0
-    count_invalid_yr = 0
-    count_articles= 0
+    # languages of the poetry to be crawled: hindi, urdu or english(default)
+    # for this site, only hindi contents are worth crawling 
+    LANGUAGES = ['hi']
     
     def parse(self, response):
-        #print response.body
 
         links = response.xpath("//div[@id='mw-content-text']/table//td[2]//a/@href").extract()
         author_links = [self.domain_name+x for x in links]        
@@ -54,11 +63,7 @@ class KangarooBot(scrapy.Spider):
         # date of birth
         birth = None
         # date of death
-        death = None
-        
-        self.count_parse_author = self.count_parse_author + 1
-        
-        print "Parsing author No. ", self.count_parse_author
+        death = None        
 
         try:
             name = response.xpath("//h1[@id='firstHeading']//text()").extract()[0]    
@@ -80,33 +85,32 @@ class KangarooBot(scrapy.Spider):
         
            
         data = {}
-        data['index'] = self.count_parse_author
         data['name'] = name
         data['birth'] = birth
         data['death'] = death
         data['url'] = response.url.encode('utf-8')
         
         # Store these information in DB
-        print "> Saving author ", self.count_parse_author, "to DB."
         save_to_db_author(data)
 
         ##
         # Parse the page, find out the articles list, generate request for each article
         # Extract article links from the Author page and generate request for each        
         try:
-            print "Extracting poem links from Author page"
+            print "DBG:: Extracting poem links from Author page"
             articles = response.xpath("//div[@id='mw-content-text']/ul/li/a/@href").extract()
     
             articles_links = [self.domain_name+x for x in articles]
             for url in articles_links:
-                print "Visiting Article: ", url
-                yield scrapy.Request(url, callback=self.parse_article_page)
+                # Check if the entry for ``url`` exist in db,
+                # Also find out the list of languages in which the content is there.
+                lang_list = get_language_list_for_url(url)
+                # Now crawl poetry page only for remaining langauge
+                for lang in (x for x in self.LANGUAGES if x not in lang_list):                                  
+                    #print "Visiting Article: ", url
+                    yield scrapy.Request(url, callback=self.parse_article_page)
         except:
-            print "Nothing found in Author page!!!"            
-                        
-        #print "-----------------------------------------"
-        #print "Parsed: ", self.count_parse_author        
-        #print "-----------------------------------------"
+            print "Nothing found in Author page!!!"
         
 
     def parse_article_page(self,response):
@@ -122,19 +126,16 @@ class KangarooBot(scrapy.Spider):
             try:
                 h1 = response.xpath("//h1[@id='firstHeading']//text()").extract()[0].encode('utf-8')
                 title = h1
-                author = h1.split('/')[-1]
-                
-                self.count_articles = self.count_articles + 1
+                author = h1.split('/')[-1]                
                 
                 data = {}
-                data['index'] = self.count_articles
-                data['title'] = title
-                data['author'] = author
                 data['poem'] = poem
-                data['url'] = response.url.encode('utf-8')
+                data['url'] = response.url.encode('utf-8')        
+                data['title'] = title
+                data['author'] = author.title()                
+                data['language'] = 'hi'# Content of this site are in hindi
                 
                 # Store these information in DB
-                print "> Saving article ", self.count_articles, "to DB."
                 save_to_db_poem(data)
 
             except:
@@ -147,7 +148,12 @@ class KangarooBot(scrapy.Spider):
         
                 articles_links = [self.domain_name+x for x in articles]
                 for url in articles_links:
-                    print "Visiting Article: ", url
-                    yield scrapy.Request(url, callback=self.parse_article_page)
+                    # Check if the entry for ``url`` exist in db,
+                    # Also find out the list of languages in which the content is there.
+                    lang_list = get_language_list_for_url(url)                
+                    # Now crawl poetry page only for remaining langauge
+                    for lang in (x for x in self.LANGUAGES if x not in lang_list):                                  
+                        #print "Visiting Article: ", url
+                        yield scrapy.Request(url, callback=self.parse_article_page)
             except:
                 print "Nothing found in Author page!!!"            

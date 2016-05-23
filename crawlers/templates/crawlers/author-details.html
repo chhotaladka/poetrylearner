@@ -55,7 +55,10 @@
 					<a href="{% url 'crawlers:article-list' %}?author={{ author.get_name }}">
 						<button id="id-list-btn" class="action-button" title="List crawled articles by {{ author.get_name }}">
 			                <i class="material-icons" role="presentation">list</i>
-			                <span class="action-button__text mdl-badge mdl-badge--no-background" data-badge="{{ articles.total }}">List crawled articles</span>
+			                <span class="action-button__text">List crawled articles</span>
+			                <span class="action-button__text">(</span>
+			                <span class="action-button__text"><b>{{ articles.total }}</b></span>
+			                <span class="action-button__text">)</span>
 						</button>
 					</a>					
 					{% if not author.get_validity %}

@@ -1,6 +1,6 @@
 import scrapy
 import re
-from datetime import datetime
+import os, sys, traceback
 import json
 
 try:
@@ -13,7 +13,7 @@ except ImportError:
         print data
         
     def get_language_list_for_url(url):
-        print url
+        return []
 
 
 class KangarooBot(scrapy.Spider):
@@ -39,19 +39,18 @@ class KangarooBot(scrapy.Spider):
     
     # languages of the poetry to be crawled: hindi, urdu or english(default)
     # for this site, only hindi contents are worth crawling 
-    LANGUAGES = ['hi']
+    LANGUAGES = ['hi',]
     
     def parse(self, response):
-
-        links = response.xpath("//div[@id='mw-content-text']/table//td[2]//a/@href").extract()
-        author_links = [self.domain_name+x for x in links]        
+        
+        links = response.xpath("//div[@id='mw-content-text']//div[@class='poet-list-section']//ul//li//a/@href").extract()
+        author_links = [self.domain_name+x for x in links]               
         
         for url in author_links:
             print "Visiting poet's URL : ", url
-            yield scrapy.Request(url, callback=self.parse_author_page)        
+            yield scrapy.Request(url, callback=self.l2_parse_author_page)
 
-
-    def parse_author_page(self, response):
+    def l2_parse_author_page(self, response):
         """
         Parse the author page
         1. Extract Date of birth and date of death
@@ -97,7 +96,7 @@ class KangarooBot(scrapy.Spider):
         # Parse the page, find out the articles list, generate request for each article
         # Extract article links from the Author page and generate request for each        
         try:
-            print "DBG:: Extracting poem links from Author page"
+            print "DBG:: l2_parse_author_page: Extracting poem links from Author page"
             articles = response.xpath("//div[@id='mw-content-text']/ul/li/a/@href").extract()
     
             articles_links = [self.domain_name+x for x in articles]
@@ -106,21 +105,25 @@ class KangarooBot(scrapy.Spider):
                 # Also find out the list of languages in which the content is there.
                 lang_list = get_language_list_for_url(url)
                 # Now crawl poetry page only for remaining langauge
-                for lang in (x for x in self.LANGUAGES if x not in lang_list):                                  
+                for lang in (x for x in self.LANGUAGES if x not in lang_list):                                 
                     #print "Visiting Article: ", url
-                    yield scrapy.Request(url, callback=self.parse_article_page)
+                    yield scrapy.Request(url, callback=self.l3_parse_article_page)
         except:
-            print "Nothing found in Author page!!!"
+            print "l2_parse_author_page: Nothing found in Author page!!!"
+            print("ERROR: l2_parse_author_page: Unexpected error:", sys.exc_info()[0])
+            for frame in traceback.extract_tb(sys.exc_info()[2]):
+                fname,lineno,fn,text = frame
+                print ("DBG:: Error in %s on line %d" % (fname, lineno))            
         
 
-    def parse_article_page(self,response):
+    def l3_parse_article_page(self,response):
         """
         First check for the page containing div[@class='poem'] in the XPATH
         1. If found then extract the poem and save in the database
-        2. If not found call parse_author_page again because it contains list of poems in a journal 
+        2. If not found call l2_parse_author_page again because it contains list of poems in a journal 
         """
         try:
-            print "Extracting poem from Article page"
+            print "DBG:: l3_parse_article_page: Extracting poem from Article page"
             p = response.xpath("//div[@id='mw-content-text']/div[@class='poem']//p").extract()
             poem = " ".join(x.encode('utf-8') for x in p)
             try:
@@ -139,11 +142,11 @@ class KangarooBot(scrapy.Spider):
                 save_to_db_poem(data)
 
             except:
-                print "Title not found"
+                print "ERROR:: l3_parse_article_page: Title not found"
         except:
             # Extract article links from the Author page and generate request for each            
             try:
-                print "Extracting poem links from Author page"
+                print "DBG:: l3_parse_article_page: Extracting poem links from Author page"
                 articles = response.xpath("//div[@id='mw-content-text']/ul/li/a/@href").extract()
         
                 articles_links = [self.domain_name+x for x in articles]
@@ -154,6 +157,10 @@ class KangarooBot(scrapy.Spider):
                     # Now crawl poetry page only for remaining langauge
                     for lang in (x for x in self.LANGUAGES if x not in lang_list):                                  
                         #print "Visiting Article: ", url
-                        yield scrapy.Request(url, callback=self.parse_article_page)
+                        yield scrapy.Request(url, callback=self.l3_parse_article_page)
             except:
-                print "Nothing found in Author page!!!"            
+                print "DBG:: Nothing found in Author page!!!" 
+                print("ERROR: l3_parse_article_page: Unexpected error:", sys.exc_info()[0])
+                for frame in traceback.extract_tb(sys.exc_info()[2]):
+                    fname,lineno,fn,text = frame
+                    print ("DBG:: Error in %s on line %d" % (fname, lineno))                           

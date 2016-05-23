@@ -13,7 +13,7 @@ except ImportError:
         print data
         
     def get_language_list_for_url(url):
-        print url
+        return []
          
 
 def remove_tags(html, tags):

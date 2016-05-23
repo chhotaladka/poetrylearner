@@ -51,7 +51,7 @@ class ArticleManager(models.Manager):
 #
 class RawArticle(models.Model):
             
-    source_url = models.URLField(null=False, max_length=1000)
+    source_url = models.URLField(null=False, max_length=1000, db_index=True)
     title = models.CharField(max_length=200, null=True, blank=True)
     author = models.CharField(max_length=100, null=True, blank=True)
     content = models.TextField(null=False)
@@ -150,7 +150,7 @@ class AuthorManager(models.Manager):
 #
 class RawAuthor(models.Model):
             
-    source_url = models.URLField(null=False, max_length=1000)
+    source_url = models.URLField(null=False, max_length=1000, db_index=True)
     name = models.CharField(max_length=200)
     birth = models.CharField(max_length=100, null=True, blank=True)
     death = models.CharField(max_length=100, null=True, blank=True)    

@@ -1934,17 +1934,27 @@ a.md-tabs__tab:hover {
 .pagination {
 	padding-left: 0px;
 }
+.pagination .prev {
+	margin-right: 16px;
+}
+.pagination .next {
+	margin-left: 16px;
+}
 .pagination li {
 	float: left;
 	font-size: 1.2rem;
-	padding: 0 10px;
+	/*padding: 0 10px;*/
 	line-height: 30px;
 	border-radius: 2px;
 	text-align: center;
 	list-style-type: none;
+	min-width: 32px;
 }
 .pagination li a {
     color: #444;
+}
+.pagination li svg {
+    fill: #444;
 }
 .pagination li.active a {
     color: #fff;
@@ -1952,9 +1962,13 @@ a.md-tabs__tab:hover {
 .pagination li.active {
     background-color: #ee6e73;
 }
-.pagination li.disabled a {
+.pagination li.disabled a,
+.pagination li.disabled svg {
     cursor: default;
     color: #999;
+}
+.pagination li.disabled svg {
+    fill: #999 !important;
 }
 .pagination li i {
     font-size: 2rem;
@@ -1976,6 +1990,9 @@ a.md-tabs__tab:hover {
     vertical-align: middle;
     z-index: 1;
     transition: all 0.3s ease-out 0s;
+}
+a svg:hover {
+	text-decoration: none;
 }
 
 /* Alerts, status */

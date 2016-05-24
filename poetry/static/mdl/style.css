@@ -574,6 +574,9 @@ html, body {
 .row.fill {
 	justify-content: space-between;
 }
+.row.center {
+	justify-content: center;
+}
 .circle {
     border-radius: 50%;
     display: block;
@@ -1492,6 +1495,18 @@ right: 30px;
     margin-right: 40px;
     margin-bottom: 40px;
     z-index: 900;
+}
+.social-icon {
+
+}
+.social-icon.facebook {
+
+}
+.social-icon.google {
+
+}
+.social-icon.twitter {
+
 }
 
 /* Tooltip */

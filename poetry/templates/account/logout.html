@@ -3,29 +3,18 @@
 
 {% block title %}Log Out{% endblock %}
 
-{% block body %}
-{% block messages %}
-{% include "common/include/message-panel.html" with messages=messages only %}
-{% endblock %}
-<div id="priSect" class="pT-8 pB-16">
-	<div class="_layout layout-L mdl-grid">			
-		<section class="__c mdl-cell mdl-cell--12-col pA-0">
-			<div class="banner" style="background: url('/static/img/bbb.jpg') top / cover;">
-				<div class="login-card transp bS-1 wFull">
-					
-					<h1>Log Out</h1>
-					<p>Are you sure you want to log out?</p>
-					<form class="a-mdl-form" method="post" action="{% url 'account_logout' %}">
-					  {% csrf_token %}
-					  {% if redirect_field_value %}
-					  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-					  {% endif %}
-					  <button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Log Out</button>
-					</form>
-
-				</div>
-			</div>
-		</section>			
-	</div>		
-</div>
+{% block main %}
+	<div class="login-card transp bS-1 wFull">
+		<div class="tAc">
+			<h1>Log Out</h1>
+			<p>Are you sure you want to log out?</p>
+		</div>
+		<form class="a-mdl-form" method="post" action="{% url 'account_logout' %}">
+		  {% csrf_token %}
+		  {% if redirect_field_value %}
+		  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+		  {% endif %}
+		  <button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Log Out</button>
+		</form>
+	</div>
 {% endblock %}

@@ -4,85 +4,62 @@
 
 {% block title %}Login to{% endblock %}
 
-{% block body %}
-{% block messages %}
-{% include "common/include/message-panel.html" with messages=messages only %}
-{% endblock %}	
-<div id="priSect" class="pT-8 pB-16">
-	<div class="_layout layout-L mdl-grid">			
-		<section class="__c mdl-cell mdl-cell--12-col pA-0">
-			<div class="banner" style="background: url('{% static "img/ddd.jpg" %}') top / cover;">
-				<div class="login-card transp bS-1 wFull">
-				
-					<h1>Log in</h1>
-	
-					{% get_providers as socialaccount_providers %}
-					
-					{% if socialaccount_providers %}
-					{% comment %} 
-					<div class="socialaccount_ballot">
-					
-					  <ul class="socialaccount_providers">
-					    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-					  </ul>
-					
-					  <div class="login-or">{% trans 'or' %}</div>
-					
-					</div>
-					{% include "socialaccount/snippets/login_extra.html" %}
-					{% endcomment %}
-					{% else %}
-					<p>If you have not created an account yet, then please
-					<a href="{{ signup_url }}">sign up</a> first.</p>
-					{% endif %}
-	
-		
-					<form class="login a-mdl-form" method="POST" action="{% url 'account_login' %}">
-						{% csrf_token %}
-						<fieldset>
-							<div id="div_id_login" class="form-element">
-								<label for="id_login">
-									<input id="id_login" autofocus="autofocus" maxlength="30" name="login" placeholder="Username" type="text" value="{{ form.login.value|default_if_none:'' }}"/>
-								</label>
-							{% if form.login.errors %}
-							    {% for error in form.login.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
-							{% endif %}
-							</div>	
-							<div id="div_id_password" class="form-element">
-								<label for="id_password">
-									<input id="id_password" name="password" placeholder="Password" type="password"/>
-								</label>
-							{% if form.password.errors %}
-							    {% for error in form.password.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
-							{% endif %}	
-							{% for error in form.non_field_errors %}
-								<span class="errormsg">{{ error }}</span>
-							{% endfor %}				
-							</div>		
-							<div id="div_id_remember" class="form-element lH-1">
-								<label for="id_remember">				
-									<input id="id_remember" name="remember" type="checkbox" />
-									<span>{{form.remember.label}}</span>
-								</label>
-							</div>
-						  {% if redirect_field_value %}
-						  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-						  {% endif %}		
-						<fieldset>
-						<div class="">
-							<button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Log In</button> 
-						</div> 
-						{% comment %}  
-					  	<a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-					  	{% endcomment %}
-					</form>
+{% block main %}
+<!--<div class="banner" style="background: url('{% static "img/ddd.jpg" %}') top / cover;">-->
+	<div class="login-card transp bS-1 wFull">						
+	{% get_providers as socialaccount_providers %}					
+	{% if socialaccount_providers %}
+		<h1 class="tAc">Log in with</h1>
+		{% include "socialaccount/snippets/provider_list.html" with process="login" %}
+		{% include "socialaccount/snippets/login_extra.html" %}				
+		<div class="row center pT-8">
+			<span class="separator wFull"></span>
+			<span>or</span>
+			<span class="separator wFull"></span>
+		</div>						
+	{% else %}
+		<h1 class="tAc">Log in</h1>
+	{% endif %}
 
+		<form class="login a-mdl-form" method="POST" action="{% url 'account_login' %}">
+			{% csrf_token %}
+			<fieldset>
+				<div id="div_id_login" class="form-element">
+					<label for="id_login">
+						<input id="id_login" autofocus="autofocus" maxlength="30" name="login" placeholder="Username" type="text" value="{{ form.login.value|default_if_none:'' }}"/>
+					</label>
+				{% if form.login.errors %}
+				    {% for error in form.login.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+				{% endif %}
+				</div>	
+				<div id="div_id_password" class="form-element">
+					<label for="id_password">
+						<input id="id_password" name="password" placeholder="Password" type="password"/>
+					</label>
+				{% if form.password.errors %}
+				    {% for error in form.password.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+				{% endif %}	
+				{% for error in form.non_field_errors %}
+					<span class="errormsg">{{ error }}</span>
+				{% endfor %}				
+				</div>		
+				<div id="div_id_remember" class="form-element lH-1">
+					<label for="id_remember">				
+						<input id="id_remember" name="remember" type="checkbox" />
+						<span>{{form.remember.label}}</span>
+					</label>
 				</div>
-			</div>
-			<div class="tAr credit-txt">
-				<a href="http://pyrotensive.deviantart.com/art/Lez-Dreux-197143237" target="_blank">Image credit</a>
-			</div>
-		</section>			
-	</div>		
-</div>
+			  {% if redirect_field_value %}
+			  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+			  {% endif %}		
+			<fieldset>
+			<div class="">
+				<button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Log In</button> 
+			</div> 
+			{% comment %}  
+		  	<a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+		  	{% endcomment %}
+		</form>
+
+	</div>
 {% endblock %}

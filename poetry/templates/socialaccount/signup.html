@@ -1,22 +1,24 @@
 {% extends "socialaccount/base.html" %}
 
-{% load i18n %}
+{% block title %}Sign up{% endblock %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
-
-{% block content %}
-    <h1>{% trans "Sign Up" %}</h1>
-
-<p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
-{{site_name}}. As a final step, please complete the following form:{% endblocktrans %}</p>
-
-<form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form>
-
+{% block main %}
+<div class="login-card transp bS-1 tAc wFull">
+    <h1>Sign Up</h1>	
+	<div class="info-txt">
+	{% with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
+	{{site_name}}. As a final step, please complete the following form:{% endwith %}
+	</div>
+	
+	<form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+		{% csrf_token %}
+		{{ form.as_p }}
+		{% if redirect_field_value %}
+		<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+		{% endif %}
+		<div class="p-8">
+			<button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Sign Up</button> 
+		</div>
+	</form>
+</div>
 {% endblock %}

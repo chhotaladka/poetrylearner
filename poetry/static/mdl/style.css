@@ -248,16 +248,22 @@ html, body {
     font-weight: 400;
     margin-bottom: 20px;
 }
-.login-card {
+.login-card,
+.notice-card {
 	display: flex;
 	flex-direction: column;
 	min-height: 200px;
-	max-width: 354px;
     padding: 40px;
-	margin: 1px auto;
-	background: #FFF none repeat scroll 0% 0%;
+	margin: 1px auto;	
 	border-radius: 2px;
 	box-sizing: border-box;
+}
+.login-card {
+	background: #FFF none repeat scroll 0% 0%;
+	max-width: 354px;
+}
+.notice-card {
+	max-width: 512px;
 }
 .teaser-card {
 	display: flex;
@@ -280,6 +286,10 @@ html, body {
 .login-btn {
 	background-color: #19A36C !important;
 	color: white !important;
+}
+.red-btn {
+    background-color: #DB4437 !important;
+    color: #FFF !important;
 }
 .mdl-card__title,
 .card__title {
@@ -857,10 +867,17 @@ html, body {
     font-size: 12px;
     line-height: 17px;
     font-weight: 300;
-	color: #757575;
+	color: #757575 !important;
+}
+.info-txt {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 300;
+	color: #757575 !important;
 }
 .meta-edit a,
-.light-txt a {
+.light-txt a,
+.info-txt a {
 	color: #3F51B5;
 }
 .breadcrumbs {
@@ -880,6 +897,9 @@ html, body {
 .summary-txt {
 	font-size: 14px;
 	white-space: pre-line;
+}
+.col-err {
+	color: #DB4437 !important;
 }
 
 .mdl-poetry .mdl-card a {
@@ -1480,6 +1500,18 @@ right: 30px;
 .logo a:hover,
 .site-name a:hover {
 	text-decoration: none;
+}
+/* Footer */
+.mdl-mini-footer {
+	background-color: transparent;
+	justify-content: center;
+}
+.mdl-logo {
+	color: inherit;
+}
+ul.mdl-mini-footer__link-list {
+    font-size: 12px;
+	line-height: 1.4;
 }
 
 /* icons & symbols */

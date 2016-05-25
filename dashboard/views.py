@@ -7,8 +7,34 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 from allauth.socialaccount.models import SocialAccount
+from allauth.account.adapter import DefaultAccountAdapter
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 from dashboard.models import UserProfile, GENDER_UNSPECIFIED
+
+# Overriding/altering allauth default methods
+
+class CustomAccountAdapter(DefaultAccountAdapter):
+    '''
+    @summary: custom account adapter class. To make it work,
+    add following line in settings.py 
+    ACCOUNT_ADAPTER='dashboard.views.CustomAccountAdapter'
+    '''    
+    def is_open_for_signup(self, request):
+        # To disable account signup, return False. Otherwise return True(Default). 
+        return False
+
+
+class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
+    '''
+    @summary: custom social account adapter class. To make it work,
+    add following line in settings.py 
+    SOCIALACCOUNT_ADAPTER = 'dashboard.views.CustomSocialAccountAdapter'
+    '''
+    def is_open_for_signup(self, request):
+        # To disable social account signup, return False. Otherwise return True(Default). 
+        return True    
+
 
 # Create your views here.
 

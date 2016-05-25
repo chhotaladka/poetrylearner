@@ -7,6 +7,9 @@ from allauth.socialaccount.models import SocialAccount
 
 from common.slugify import slugify
 
+# Default ``gender`` value if not specified in data from social account
+GENDER_UNSPECIFIED = "---"
+
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -17,7 +20,6 @@ class UserProfile(models.Model):
     date_birth = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=20, blank=True, null=True)
     signup_date = models.DateTimeField(auto_now_add=True)
-
 
     def __str__(self):          # on Python 3
         return "{}'s profile".format(self.user.username)
@@ -149,16 +151,21 @@ class UserProfile(models.Model):
 
     def get_gender(self, provider=None):
         '''
-        Return the gender from social account Facebook, Google and Twitter in that order, if provider is None.
-        TODO: return default last name from User model if no social account is found.
+        Return the gender from social account Facebook, Google and Twitter in that order.
         '''
         profile = self._get_social_account(provider)
         if profile != None:
             if self.get_provider_name(profile.provider) == 'twitter':
-                return "---"
-            return profile.extra_data['gender']
+                # Twitter do not provide gender information
+                return GENDER_UNSPECIFIED
+            try:
+                # extra_data may not have gender information
+                gender = profile.extra_data['gender']
+            except:
+                gender = GENDER_UNSPECIFIED
+            return gender
         else:
-            return "---"
+            return GENDER_UNSPECIFIED
 
     def get_email(self, provider=None):
         '''

@@ -8,7 +8,7 @@ from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 from allauth.socialaccount.models import SocialAccount
 
-from dashboard.models import UserProfile
+from dashboard.models import UserProfile, GENDER_UNSPECIFIED
 
 # Create your views here.
 
@@ -21,7 +21,6 @@ def CreateProfile(sender, request, user,**kwargs):
     '''
     try:        
         profile = UserProfile.objects.get(user=user)
-        print "DBG:: User profile exist, do nothing"
     except UserProfile.DoesNotExist:
         print "DBG:: User profile does not exist, create a new one"
   
@@ -29,7 +28,7 @@ def CreateProfile(sender, request, user,**kwargs):
         profile.user = user
         try:
             sociallogin = SocialAccount.objects.get(user=user)
-            print "DBG:: Caught the signal--> Printing extra data of the account: \n", sociallogin.extra_data
+            print "DBG:: extra data of the account: \n", sociallogin.extra_data
             if('google' == sociallogin.provider ):
                 user.first_name = sociallogin.extra_data['given_name']
                 user.last_name = sociallogin.extra_data['family_name']
@@ -38,13 +37,17 @@ def CreateProfile(sender, request, user,**kwargs):
                 user.first_name = sociallogin.extra_data['first_name']
                 user.last_name = sociallogin.extra_data['last_name']
                 user.save()
-            profile.gender = sociallogin.extra_data['gender']
+            try:                
+                profile.gender = sociallogin.extra_data['gender']
+            except:
+                print "DBG:: Gender does not exist in social account"
+                profile.gender = GENDER_UNSPECIFIED
+                
         except:
             print ("Error:: Unexpected error:", sys.exc_info()[0])
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
-                print ("DBG:: Error in %s on line %d" % (fname, lineno))           
-            print "DBG:: Gender does not exist in social account"
+                print ("DBG:: Error in %s on line %d" % (fname, lineno))            
             
         profile.save()
 
@@ -59,14 +62,14 @@ def user_home(request):
     social_accounts = []
     providers = ["Facebook", "Google", "Twitter"]
     for provider in providers:
-        if profile.is_social_account_exist(provider):
+        if profile.is_social_account_exist(provider):            
             extra_context = {}
             extra_context['provider_name'] = profile.get_provider_name(provider)
             extra_context['profile_image'] = profile.get_avatar_url(provider)
-            extra_context['profile_username'] = profile.get_name(provider)
-            extra_context['profile_gender'] = profile.get_gender(provider)
+            extra_context['profile_username'] = profile.get_name(provider)                
             extra_context['profile_url'] = profile.get_social_url(provider)
             extra_context['profile_email'] = profile.get_email(provider)
+            extra_context['profile_gender'] = profile.get_gender(provider)        
             social_accounts.append(extra_context)
                 
     ## Make the context and render     
@@ -92,9 +95,9 @@ def private_profile(request):
             extra_context['provider_name'] = profile.get_provider_name(provider)
             extra_context['profile_image'] = profile.get_avatar_url(provider)
             extra_context['profile_username'] = profile.get_name(provider)
-            extra_context['profile_gender'] = profile.get_gender(provider)
             extra_context['profile_url'] = profile.get_social_url(provider)
             extra_context['profile_email'] = profile.get_email(provider)
+            extra_context['profile_gender'] = profile.get_gender(provider)            
             social_accounts.append(extra_context)
                 
     ## Make the context and render     

@@ -7,8 +7,6 @@ from django.contrib.contenttypes.models import ContentType
 import json
 from urlparse import urlparse
 
-from crawlers.wrapper import insert_lang_attribute, get_lang_attributes
-
 # Create your models here.
 
 class ArticleManager(models.Manager):

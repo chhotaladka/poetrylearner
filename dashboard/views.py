@@ -31,7 +31,7 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
     add following line in settings.py 
     SOCIALACCOUNT_ADAPTER = 'dashboard.views.CustomSocialAccountAdapter'
     '''
-    def is_open_for_signup(self, request):
+    def is_open_for_signup(self, request, sociallogin):
         # To disable social account signup, return False. Otherwise return True(Default). 
         return True    
 

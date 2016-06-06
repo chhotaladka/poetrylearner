@@ -167,7 +167,7 @@ def user_bookmarks(request):
     
     ## Make the context and render     
     context = {}
-    template = 'dashboard/base.html'
+    template = 'dashboard/bookmarks.html'
     
     return render(request, template, context)
 

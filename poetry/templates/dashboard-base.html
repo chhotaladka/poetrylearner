@@ -108,6 +108,10 @@
 	  			</a>  			
 	  			{% comment %}<li disabled class="mdl-menu__item">Disabled Action</li>{% endcomment %}
 	  			<li class="separator"></li>
+	  			<a class="mdl-menu__item oN" href="{% url 'dashboard:user-bookmarks' %}">
+					Bookmarks
+	  			</a>
+	  			<li class="separator"></li>	  			
 	  			<li class="mdl-menu__item">
 	  				<form method="post" action="{% url 'account_logout' %}">
 	  					{% csrf_token %}

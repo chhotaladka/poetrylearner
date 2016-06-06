@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 import os, sys, traceback
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from bookmarks.models import Bookmark 
 
@@ -79,3 +80,46 @@ def remove_bookmark(request):
     
     else:
         raise PermissionDenied
+
+
+@login_required
+def list_bookmark(request):
+    '''
+    List all bookmarks by the user
+    '''
+    obj_list = Bookmark.objects.get_all_for_user(request.user)
+    
+    # Pagination
+    paginator = Paginator(obj_list, 20) # Show 20 entries per page    
+    page = request.GET.get('page')
+    try:
+        objs = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        objs = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        objs = paginator.page(paginator.num_pages)
+    
+    type = 'Bookmarks'
+    result_title = ''
+    
+    # Construct dictionary
+    bookmarks = []
+    for obj in objs:
+        print obj
+        b = {}
+        b['title'] = obj.content_object.__unicode__()
+        b['url'] = obj.get_absolute_url()
+        b['author'] = obj.content_object.__unicode__()
+        bookmarks.append(b)
+                
+    data = {'bookmarks': bookmarks,
+            'item_count': len(objs),
+            'item_type': type,
+            'page': page if page else 1,
+            'num_pages': paginator.num_pages,
+            'result_title': result_title,            
+            }
+
+    return JsonResponse(data) 

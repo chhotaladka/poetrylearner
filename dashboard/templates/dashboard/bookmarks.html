@@ -11,18 +11,16 @@
 			{% bookmarks_by_user request.user as bookmarks %}
 			{% comment %} Bookmark list table {% endcomment %}
 			<div class="poetry-card bC-none wFull mdl-color-text--grey-600">
+				<div class="section-title wFull">
+					<h3>
+						<span class="bookmark-btn true">
+        					<i class="material-icons icons icon" role="presentation">free_breakfast</i>		                
+						</span>								
+					    <span>My bookmarks ({{ bookmarks|length }})</span>
+					</h3>	
+				</div>	
 				<div class="table--large">
-				<table class="mdl-data-table mdl-js-data-table wSn">
-					<thead>
-						<tr>
-					    	<th class="mdl-data-table__cell--non-numeric bC-none">
-					    		<span class="bookmark-btn true">
-        						<i class="material-icons icons icon" role="presentation">free_breakfast</i>		                
-								</span>								
-					    		<span>My bookmarks ({{ bookmarks|length }})</span>					    		
-					    	</th>
-					    </tr>
-					</thead>										
+				<table class="mdl-data-table mdl-js-data-table wSn">										
 					<tbody>
 						{% for bookmark in bookmarks %}
 						<tr>

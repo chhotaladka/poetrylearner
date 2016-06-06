@@ -999,7 +999,8 @@ html, body {
 
 /* Site search related */
 .site-search-row {
-	height: 46px;
+	height: 100%;
+	min-height: 46px;
 	display: flex;
 	flex-flow: row nowrap;
 	flex-shrink: 0;
@@ -1344,13 +1345,21 @@ html, body {
 
 /* Layouts: drawer/search/header related */
 .dashboard-layout .mdl-layout__drawer-button {
-	/*position: relative;*/
-	font-size: inherit;
-	margin: 7px 12px;
 }
 .dashboard-layout .mdl-layout__drawer {
 	box-shadow: none;
 	background-color: transparent;
+	padding: 0px 40px;
+	width: 400px;
+	transform: translateX(-410px);
+/*	min-width: 400px;
+	padding: 110px 80px;*/
+}
+.mdl-navigation.dashboard-navigation {
+	padding-top: 32px;
+}
+.mdl-layout__drawer.is-visible {
+    transform: translateX(0px);
 }
 .dashboard-layout .mdl-layout__drawer > .search-box {
 	padding: 8px 0px;
@@ -1361,11 +1370,31 @@ html, body {
 .dashboard-layout .mdl-layout__drawer > .search-box .mdl-textfield__input {
 	border-width: 0px;	
 }
+.mdl-layout__drawer > .mdl-layout__title, 
+.mdl-layout__drawer > .mdl-layout-title {
+    line-height: 64px;
+    padding-left: 40px;
+}
+.mdl-layout__drawer .mdl-mini-footer {
+	padding: 16px 40px;
+	justify-content: flex-start;
+}
+@media screen and (max-width: 1024px) {
+	.mdl-layout__drawer .mdl-mini-footer {
+          padding: 16px 16px; }
+}
+.mdl-layout__obfuscator.is-visible {
+    /*background-color: rgba(0, 0, 0, 0.5);*/
+	background-color: transparent;
+    visibility: visible;
+}
 
 .dashboard-navigation.mdl-navigation > .mdl-navigation__link {
-	font-weight: 500;
-	font-size: 14px;
+	font-weight: 700;
+	font-size: 16px;
 	color: inherit;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
 }
 .dashboard-navigation.mdl-navigation .mdl-navigation__link:hover {
     background-color: transparent;
@@ -1373,16 +1402,9 @@ html, body {
 }
 .mdl-navigation__link.section {
 	font-weight: 600 !important;
-	border-bottom: 1px solid #E0E0E0;
 }
 .dashboard-navigation > a:hover {
 	text-decoration: none;
-}
-.dashboard-navigation.mdl-navigation .active,
-.dashboard-navigation.mdl-navigation .active:hover {
-/*    background-color: rgb(149, 54, 140);*/
-	background-color: rgb(221,221,221);
-    
 }
 
 .page-header.mdl-layout__header {
@@ -1396,26 +1418,24 @@ html, body {
     max-height: 46px;
 }
 .page-header .mdl-layout__drawer-button {
-	width: 32px;
+	/*XX width: 32px;
 	height: 32px;
-	line-height: 46px;
+	 line-height: 46px;*/
 	color: #616161;
 }
 .page-header--nav.mdl-navigation > .mdl-navigation__link {
 	font-weight: 500;
 	color: inherit;
 	font-size: 13px;
-	line-height: 52px;/*46*/
+	/*XX line-height: 52px;*/
 }
 .page-header--nav a:hover {
 	text-decoration: none;
 	color: #19A36C;
 }
 .page-header--row.mdl-layout__header-row {
-	height: 46px;
-	max-width: 1170px;
+/*XX	height: 46px;*/
 	width: 100%;
-	margin: 0px auto;
 	position: relative;
 }
 .page-header--row.mdl-layout__header-row > * {

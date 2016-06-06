@@ -116,21 +116,38 @@
 	  				</form>	  				
 	  			</li>	  		
 			</ul>    
-		  {% endif %} 	      
+		  {% endif %}
 	    </div>
 	  </header>
 	  {% endblock %}{% comment %} end of header block {% endcomment %}	     
 	  {% if request.user.is_authenticated %}
-	  <div class="mdl-layout__drawer mdl-color--white mdl-color-text--grey-700">
-	    <span class="mdl-layout-title lH-46">Title</span>	        
+	  <div id="id-drawer" class="mdl-layout__drawer mdl-color--white mdl-color-text--grey-700">
+		<div class="mdl-layout__drawer-button"
+			onclick="document.getElementById('id-drawer').classList.remove('is-visible');document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove('is-visible');return false;">
+			<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 50 50" style="fill: rgb(51, 51, 51);">
+			    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 L 7.71875 6.28125 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
+			</svg>	
+		</div>
+	  	  <div class="mdl-layout-title logo site-name">
+	      	<a href="/">poetry learner</a>
+	      </div>	        
 	    <nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800">	    
-	    	<a class="mdl-navigation__link section {% block is-repo-active %}{% endblock %}" href="{% url 'repository:home' %}">Repository</a>
+	    	<a class="mdl-navigation__link" href="{% url 'repository:home' %}">Repository</a>
 	    	{% if request.user|has_group:'administrator' %}    		
-	    	<a class="mdl-navigation__link section {% block is-crawlers-active %}{% endblock %}" href="{% url 'crawlers:dashboard' %}">Crawled data</a> 
-	    	<a class="mdl-navigation__link section {% block is-feed-active %}{% endblock %}" href="{% url 'feedback:list' %}">Feedbacks</a>    		  		   	
-	    	<a class="mdl-navigation__link section {% block is-users-active %}{% endblock %}" href="/admin">Admin</a>
+	    	<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}">Crawled data</a> 
+	    	<a class="mdl-navigation__link" href="{% url 'feedback:list' %}">Feedbacks</a>    		  		   	
+	    	<a class="mdl-navigation__link" href="/admin">Admin</a>
 	    	{% endif %}
-	    </nav>    
+	    </nav>
+		<footer class="mdl-mini-footer">
+			<div class="mdl-mini-footer__left-section">
+				<ul class="mdl-mini-footer__link-list">
+			    	<li><a href="#">About</a></li>
+			    	<li><a href="#">Privacy & Terms</a></li>
+			    	<li><a href="#">Help</a></li>
+			    </ul>
+			</div>
+		</footer>	        
 	  </div>
 	  {% endif %}  
 		<main class="mdl-layout__content">

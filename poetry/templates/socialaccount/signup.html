@@ -22,3 +22,24 @@
 	</form>
 </div>
 {% endblock %}
+
+
+<div class="login-card transp bS-1 tAc wFull">
+    <h1>Sign Up</h1>	
+	<div class="info-txt">
+	You are about to use your Google account to login to
+	poetrylearner. As a final step, please complete the following form:
+	</div>
+	
+	<form class="signup" id="signup_form" method="post" action="/en/accounts/social/signup/">
+		<input type='hidden' name='csrfmiddlewaretoken' value='MO3VyxZrBOJ0BmWdsTlwntbRtgSRJZJp' />
+		<ul class="errorlist"><li>This username is already taken. Please choose another.</li></ul>
+<p><label for="id_username">Username:</label> <input autofocus="autofocus" id="id_username" name="username" placeholder="Username" type="text" value="chhotaladka" /></p>
+<ul class="errorlist"><li>An account already exists with this e-mail address. Please sign in to that account first, then connect your Google account.</li></ul>
+<p><label for="id_email">E-mail (optional):</label> <input id="id_email" name="email" placeholder="E-mail address" type="email" value="chhotaladka02@gmail.com" /></p>
+		
+		<div class="p-8">
+			<button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Sign Up</button> 
+		</div>
+	</form>
+</div>

@@ -93,30 +93,30 @@
 						<thead>
 							<tr>
 						    	<th>ID</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Date</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Page</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Given by</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Feedback</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Action taken</th>
+						    	<th class="non-numeric">Date</th>
+						    	<th class="non-numeric">Page</th>
+						    	<th class="non-numeric">Given by</th>
+						    	<th class="non-numeric">Feedback</th>
+						    	<th class="non-numeric">Action taken</th>
 						    </tr>
 						</thead>						
 						<tbody id="id-tbody">
 							{% for feedback in feedbacks %}
 							<tr data-id={{ feedback.id }}>
 								<td>{{ forloop.counter }}</td>
-								<td class="mdl-data-table__cell--non-numeric">
+								<td class="non-numeric">
 									<a href="{{ feedback.get_absolute_url }}" title="View details">{{ feedback.date_added }}</a>
 								</td>								
-								<td class="mdl-data-table__cell--non-numeric">
+								<td class="non-numeric">
 									<a href="{{ feedback.get_page_url }}" title="{{ feedback.get_page_url }}">url</a>
 									{% if feedback.content_object %}
 									<span> | </span>
 									<a href="{{ feedback.get_content_url }}" title="{{ feedback.get_content_url }}">content</a>
 									{% endif %}
 								</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ feedback.get_user_email }}</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ feedback.get_text|truncatewords:10 }}</td>								
-								<td class="mdl-data-table__cell--non-numeric">
+								<td class="non-numeric">{{ feedback.get_user_email }}</td>
+								<td class="non-numeric">{{ feedback.get_text|truncatewords:10 }}</td>								
+								<td class="non-numeric">
 									{{ feedback.get_action_taken|truncatewords:10 }}
 								</td>
 							</tr>

@@ -77,10 +77,13 @@ html, body {
     font-size: 14px;
 }
 
-.mdl-poetry .table--large .mdl-data-table {
+.table--large .mdl-data-table {
   width: 100%;
   width: -moz-available;          /* WebKit-based browsers will ignore this. */
   width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+}
+.mdl-data-table .non-numeric {
+	text-align: left;
 }
 
 .mdl-poetry .mdl-card .mdl-card__supporting-text {
@@ -89,9 +92,10 @@ html, body {
 	width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
 }
 
-.mdl-poetry .article-content {
+.article-content {
 	font-size: 16px;
 	line-height: 26px;
+	color: #212121 !important;
 }
 .poetry-body,
 .article-body {
@@ -284,7 +288,7 @@ html, body {
 	background-color: rgba(255, 255, 255, 0.8);
 }
 .login-btn {
-	background-color: #19A36C !important;
+	background-color: #4285F4 !important;
 	color: white !important;
 }
 .red-btn {
@@ -687,13 +691,20 @@ html, body {
 	}
 }
 
-.info-list {
+.info-box {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: left;
     justify-content: flex-start;
-    height: auto;
+	color: #616161 !important;
+	font-size: 13px;
+	line-height: 18px;
+	overflow: hidden;
+	padding: 16px;
+}
+.info-box strong {
+	color: #424242;
 }
 
 .article-info {
@@ -898,7 +909,8 @@ html, body {
 	font-size: 14px;
 	white-space: pre-line;
 }
-.col-err {
+.col-err,
+.err {
 	color: #DB4437 !important;
 }
 
@@ -1431,7 +1443,7 @@ html, body {
 }
 .page-header--nav a:hover {
 	text-decoration: none;
-	color: #19A36C;
+	color: #212121;
 }
 .page-header--row.mdl-layout__header-row {
 /*XX	height: 46px;*/
@@ -1508,13 +1520,13 @@ right: 30px;
 .logo,
 .site-name {
 	white-space: nowrap;
-	color: #19A36C !important;
+	color: #212121 !important;
 	outline: none;
 }
 .logo a,
 .site-name a {
 	white-space: nowrap;
-	color: #19A36C !important;
+	color: #212121 !important;
 	outline: none;
 }
 .logo a:hover,
@@ -2063,6 +2075,14 @@ a svg:hover {
 }
 
 /* Alerts, status */
+.div-status {
+	font-size: 14px;
+	line-height: normal;
+	box-sizing: border-box;
+	align-items: center;
+	width: 100%;
+	padding: 16px;
+}
 .alert-danger {
 	color: #f44336;
 }
@@ -2070,7 +2090,7 @@ a svg:hover {
 	color: #8bc34a;
 }
 .status-success {
-	background-color: #8bc34a;/*light-green-500*/
+	background-color: #689F38;/*light-green-700*/
 	color: white;	
 }
 .status-failure {

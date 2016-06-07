@@ -27,41 +27,40 @@
 			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">
 {% if authors %} {% comment %} Display the list {% endcomment %}			
 				<div class="mdl-card__supporting-text stats-text">		            
-					Got {{ authors.paginator.count }} crawled authors.
+					{{ authors.paginator.count }} results
 				</div>
 				{% if authors.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
 					{% include "common/include/pagination.html" with obj_list=authors getvars=getvars only %}
 				</div>
-				{% endif %}
-				<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-					<div class="table--large">
+				{% endif %}				
+				<div class="table--large mdl-color-text--grey-800 mT-16">
 					<table class="mdl-data-table mdl-js-data-table wSn">
 						<thead>
 							<tr>
 						    	<th>ID</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Name</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Birth</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Death</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Source</th>
+						    	<th class="non-numeric">Name</th>
+						    	<th class="non-numeric">Birth</th>
+						    	<th class="non-numeric">Death</th>
+						    	<th class="non-numeric">Source</th>
 						    	<th>Added at</th>
-						    	<th class="mdl-data-table__cell--non-numeric" title="Whether the author has been updated in main db?">Valid</th>						    	
+						    	<th class="non-numeric" title="Whether the author has been updated in main db?">Valid</th>						    	
 						    </tr>
 						</thead>						
 						<tbody>
 							{% for author in authors %}
 							<tr>
 								<td>{{ forloop.counter }}</td>
-								<td class="mdl-data-table__cell--non-numeric">
+								<td class="non-numeric">
 									<a href="{{author.get_absolute_url}}" title="View author">{{ author.get_name }}</a>
 								</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ author.get_birth_date }}</td>
-								<td class="mdl-data-table__cell--non-numeric">{{ author.get_death_date }}</td>
-								<td class="mdl-data-table__cell--non-numeric">
+								<td class="non-numeric">{{ author.get_birth_date }}</td>
+								<td class="non-numeric">{{ author.get_death_date }}</td>
+								<td class="non-numeric">
 									<a href="{{ author.get_source_url }}" title="Visit source" target="_blank">{{ author.get_source_name }}</a>
 								</td>
 								<td title="{{author.added_at}}">{{ author.added_at | date }}</td>
-								<td class="mdl-data-table__cell--non-numeric" title="{{author.get_validity}}">
+								<td class="non-numeric" title="{{author.get_validity}}">
 								{% if author.get_validity %}<i class="material-icons" role="presentation">done</i>
 								{% else %}False
 								{% endif %}
@@ -70,7 +69,6 @@
 							{% endfor %}
 						</tbody>
 					</table>
-					</div>
 				</div>
 				{% if authors.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            

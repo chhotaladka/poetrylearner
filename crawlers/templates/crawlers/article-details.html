@@ -20,13 +20,15 @@
 		<section class="__c mdl-cell mdl-cell--12-col pA-0">
 			
 			<div class="mdl-card poetry-card wFull bS-1">
-				<div class="article-info mdl-card__supporting-text mdl-color-text--grey-500 mT-16">
-					<div>ID <b>{{article.id}}</b></div>
-					<div id="cTitleId">Title: {{ article.get_title }}</div>
+				<div class="info-box mT-16">
+					<div>ID <span>{{article.id}}</span></div>
+					<div id="cTitleId">Title: <strong>{{ article.get_title }}</strong></div>
 					<div id="cAuthorId">
 						<span>Author:</span>
 						{% if article.get_author %}
+						<strong>
 						<a href="{% url 'crawlers:author-list'%}/?q={{ article.get_author }}" title="Search in crawled authors">{{ article.get_author }}</a>
+						</strong>
 						{% else %}
 						<span class="mdl-color-text--red-600">Not available</span>
 						<div class="notice">
@@ -48,7 +50,7 @@
 					<div id="cValidId">Validity {{ article.get_validity }}</div>						
 				</div>
 				<hr />					
-				<div id="cPoemId" class="article-content mdl-card__supporting-text mdl-color-text--grey-700">											
+				<div id="cPoemId" class="article-content p-16">											
 					{% autoescape off %}					
 					{{ article.get_poem }}
 					{% endautoescape %}

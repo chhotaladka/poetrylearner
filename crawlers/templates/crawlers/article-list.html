@@ -30,7 +30,7 @@
 {% if articles %} {% comment %} Display the list {% endcomment %}
 				{% comment %} Pagination {% endcomment %}				
 				<div class="mdl-card__supporting-text stats-text">		            
-					Got {{ articles.paginator.count }} crawled articles.
+					{{ articles.paginator.count }} results
 				</div>
 				{% if articles.paginator.num_pages > 1 %}
 				<div class="mdl-card__supporting-text pTB-0 mdl-color-text--grey-600">		            
@@ -39,7 +39,7 @@
 				{% endif %}
 				
 				{% comment %} Add to repository panel {% endcomment %}
-				<div class="mdl-card wFull mH-auto">
+				<div class="mdl-card wFull mH-auto mT-16">
 					<div id="id-div-action" class="mdl-card__supporting-text">
 						<form id="id-person-search" class="a-mdl-form">
 							<div class="row aI-c fW-w jC-fs">
@@ -55,7 +55,7 @@
 							</div>
 						</form>					
 					</div>
-					<div id="id-div-status" class="row mdl-card__actions hidden">
+					<div id="id-div-status" class="div-status row hidden">
 						<div>
 							<i id="id-status-icon" class="material-icons icon" role="presentation"></i>
 						</div>
@@ -79,34 +79,33 @@
 				</div>
 				
 				{% comment %} Article list table {% endcomment %}
-				<div class="mdl-color-text--grey-600">
-					<div class="table--large">
+				<div class="table--large mdl-color-text--grey-800">
 					<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable wSn">
 						<thead>
 							<tr>
 						    	<th>ID</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Title</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Author</th>
-						    	<th class="mdl-data-table__cell--non-numeric">Source</th>
+						    	<th class="non-numeric">Title</th>
+						    	<th class="non-numeric">Author</th>
+						    	<th class="non-numeric">Source</th>
 						    	<th>Added at</th>
-						    	<th class="mdl-data-table__cell--non-numeric" title="Article once has been added to Repository">Valid</th>						    	
+						    	<th class="non-numeric" title="Article once has been added to Repository">Valid</th>						    	
 						    </tr>
 						</thead>						
 						<tbody id="id-tbody">
 							{% for article in articles %}
 							<tr data-id={{ article.id }}>
 								<td>{{ forloop.counter }}</td>
-								<td class="mdl-data-table__cell--non-numeric">
+								<td class="non-numeric">
 									<a href="{{article.get_absolute_url}}" title="View article">{{ article.get_title }}</a>
 								</td>
-								<td class="mdl-data-table__cell--non-numeric">
+								<td class="non-numeric">
 									<a href="{% url 'crawlers:author-list'%}/?q={{ article.get_author }}" title="Search in crawled authors">{{ article.get_author }}</a>
 								</td>
-								<td class="mdl-data-table__cell--non-numeric">
+								<td class="non-numeric">
 									<a href="{{ article.get_source_url }}" title="Visit source" target="_blank">{{ article.get_source_name }}</a>
 								</td>
 								<td title="{{article.added_at}}">{{ article.added_at | date }}</td>
-								<td class="mdl-data-table__cell--non-numeric">
+								<td class="non-numeric">
 									{% if article.get_validity %}
 									<a href="#" title="View in repository">{{ article.get_validity }}</a>
 									{% endif %}
@@ -115,7 +114,6 @@
 							{% endfor %}
 						</tbody>
 					</table>
-					</div>
 				</div>
 				{% comment %} Pagination {% endcomment %}
 				{% if articles.paginator.num_pages > 1 %}

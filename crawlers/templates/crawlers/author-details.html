@@ -39,17 +39,17 @@
 					{% endwith %}
 					
 				</div>	
-				<div class="info-list mdl-card__supporting-text mdl-color-text--grey-500">					
-						<div>ID <b>{{author.id}}</b></div>
-						<div>Name: <span id="id-author-name">{{ author.get_name }}</span></div>
-						<div>Birth: <span>{{ author.get_birth_date }}</span></div>
-						<div>Death: <span>{{ author.get_death_date }}</span></div>						
-						<div>
-							<span>Reference:</span>
-							<a title="{{ author.source_url }}" href="{{ author.source_url }}">URL of the source</a>
-						</div>
-						<div>Added at <span>{{ author.added_at }}</span></div>					
-						<div>Validity <span id="id-validity">{{ author.valid }}</span></div>										
+				<div class="info-box">					
+					<div>ID <span>{{author.id}}</span></div>
+					<div>Name: <strong id="id-author-name">{{ author.get_name }}</strong></div>
+					<div>Birth: <span>{{ author.get_birth_date }}</span></div>
+					<div>Death: <span>{{ author.get_death_date }}</span></div>						
+					<div>
+						<span>Source:</span>						
+						<a href="{{ author.get_source_url }}" title="{{ author.source_url }}">{{ author.get_source_name }}</a>
+					</div>
+					<div>Added at <span>{{ author.added_at }}</span></div>					
+					<div>Validity <span id="id-validity">{{ author.valid }}</span></div>										
 				</div>
 				<div class="action-panel mdl-card__actions mdl-card--border">
 					<a href="{% url 'crawlers:article-list' %}?author={{ author.get_name }}">

@@ -124,6 +124,8 @@ $(document).ready(function(){
 		});				
 		if (count == 0) {
 			$('#id-status-text').text('Select at least one article.');
+			$('#id-div-status').addClass('status-failure');
+			$('#id-div-status').removeClass('status-success');
 			$('#id-div-status').removeClass('hidden');
 			return false;			
 		}
@@ -132,6 +134,8 @@ $(document).ready(function(){
 		var selected = $('#id_creator').val();
 		if (selected == null) {
 			$('#id-status-text').text('Search and select author of the selected articles from repository.');
+			$('#id-div-status').addClass('status-failure');
+			$('#id-div-status').removeClass('status-success');
 			$('#id-div-status').removeClass('hidden');
 			return false;				
 		}

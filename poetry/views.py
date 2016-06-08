@@ -25,25 +25,25 @@ def poetry(request, pk, slug):
     '''
     Returns the poetry from the repository
     '''    
-    return readers.item(request, 'poetry', pk, slug)
+    return readers.item(request, 'poetry', pk, slug, src='public_url')
 
 
 def poet(request, pk, slug):
     '''
     Returns the person from the repository
     '''    
-    return readers.item(request, 'person', pk, slug)
+    return readers.item(request, 'person', pk, slug, src='public_url')
 
 
 def list_poetry(request):
     '''
     Returns the list of poetries from the repository
     '''    
-    return readers.list(request, 'poetry')
+    return readers.list(request, 'poetry', src='public_url')
 
 
 def list_poet(request):
     '''
     Returns the list of persons from the repository
     '''    
-    return readers.list(request, 'person')
+    return readers.list(request, 'person', src='public_url')

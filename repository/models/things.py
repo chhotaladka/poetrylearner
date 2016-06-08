@@ -249,7 +249,15 @@ class CreativeWorkManager(ThingManager):
             q_objects &= Q(creator__id=kwargs['creator'])
         if 'publisher' in kwargs:
             print publisher
-            q_objects &= Q(publisher__id=kwargs['publisher'])            
+            q_objects &= Q(publisher__id=kwargs['publisher'])
+            
+        if 'published' in kwargs:
+            if kwargs['published'] is True:
+                # published items
+                q_objects &= Q(date_published__isnull=False)
+            else:
+                # unpublished items
+                q_objects &= Q(date_published__isnull=True)                        
         
         return super(CreativeWorkManager, self).apply_filter(*args, **kwargs).filter(q_objects)
 

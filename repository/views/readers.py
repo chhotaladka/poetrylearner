@@ -18,6 +18,7 @@ import random
 from repository.models import *
 
 from common.search import get_query
+from common.utils import user_has_group
 from meta_tags.views import Meta
 
 # Create your views here.
@@ -76,11 +77,13 @@ def _resolve_item_type(type, list=False):
     return item_cls, template    
 
 
-def item(request, type, pk, slug):
+def item(request, type, pk, slug, src=None):
     '''
-    Details of an item
+    @summary: Details of an item
+    
+    @src: Source of access. It may be used to manipulate the context/templates.
+        eg. src='public_url' means this view is being accessed using some public url.
     '''
-    print "DBG: requested content type > ", type
 
     item_cls, template = _resolve_item_type(type)    
     if item_cls is None:
@@ -89,6 +92,13 @@ def item(request, type, pk, slug):
                                        
     # Get the object from the `pk`, raises a Http404 if not found
     obj = get_object_or_404(item_cls, pk=pk)
+    
+    # Check for permissions
+    if type == 'poetry' or type == 'snippet':
+        if user_has_group(request.user, ['Administrator', 'Editor']) is False:
+            # Do not show unpublished `poetry`, `snippet` 
+            if obj.is_published() is False:
+                raise Http404        
         
     ##
     # Check, if `slug` is different from what it is expected,
@@ -109,7 +119,8 @@ def item(request, type, pk, slug):
     
     ##
     # Make the context and render  
-    context = {'obj': obj, 'meta': meta, 'item_type': type}    
+    context = {'obj': obj, 'meta': meta, 'item_type': type, 
+               'src': src}    
     return render(request, template, context)
 
 
@@ -130,8 +141,14 @@ def items(request):
     '''
     count = {}
     
-    count['snippet'] = Snippet.objects.all().count
-    count['poetry'] = Poetry.objects.all().count
+    if user_has_group(request.user, ['Administrator', 'Editor']):
+        count['snippet'] = Snippet.objects.all().count
+        count['poetry'] = Poetry.objects.all().count
+    else:
+        # Show the count of published items only
+        count['snippet'] = Snippet.published.all().count
+        count['poetry'] = Poetry.published.all().count
+        
     count['person'] = Person.objects.all().count
     count['place'] = Place.objects.all().count
     count['product'] = Product.objects.all().count
@@ -147,9 +164,12 @@ def items(request):
     return render(request, template, context) 
 
 
-def list(request, type):
+def list(request, type, src=None):
     '''
-    List the data item of `type`
+    @summary: List the data item of `type`
+    
+    @src: Source of access. It may be used to manipulate the context/templates.
+        eg. src='public_url' means this view is being accessed using some public url.    
     '''    
     
     item_cls, list_template = _resolve_item_type(type, list=True)    
@@ -192,7 +212,13 @@ def list(request, type):
         if language in tmp:
             kwargs['language'] = language
             result_title += ', #' + tmp[language]                        
-        
+
+    # Check for permissions
+    if type == 'poetry' or type == 'snippet':    
+        if user_has_group(request.user, ['Administrator', 'Editor']) is False:
+            # Show only published `poetry`, `snippet` 
+            kwargs['published'] = True        
+
     obj_list = item_cls.objects.apply_filter(**kwargs).order_by('-date_modified')
              
                 
@@ -227,28 +253,36 @@ def list(request, type):
         objs = paginator.page(paginator.num_pages)
             
     context = {'items': objs, 'list_template': list_template, 
-               'item_type': type, 'result_title': result_title}
+               'item_type': type, 'result_title': result_title,
+               'src': src}
     template = 'repository/items/list.html'    
 
     return render(request, template, context)
 
 
-def tagged_items(request, slug, type):
+def tagged_items(request, slug, type, src=None):
     """
-    Views the list of Items tagged using 'slug'
-    TODO:: Order the list using some criteria
+    @summary: Views the list of Items tagged using 'slug'
+        TODO:: Order the list using some criteria
+    
+    @src: Source of access. It may be used to manipulate the context/templates.
+        eg. src='public_url' means this view is being accessed using some public url.        
     """
-
+    
+    if type == Snippet.item_type():
+        item_cls = Snippet
+        list_template = "repository/include/list/snippet.html"        
+    else:
+        # Currently, tagging is supported only on Snippet & Poetry
+        item_cls = Poetry
+        list_template = "repository/include/list/poetry.html"
+    
     try:
-        if type == Snippet.item_type():
-            item_cls = Snippet
-            list_template = "repository/include/list/snippet.html" 
-            
+        if user_has_group(request.user, ['Administrator', 'Editor']):    
+            obj_list = item_cls.objects.filter(keywords__slug=slug)
         else:
-            item_cls = Poetry
-            list_template = "repository/include/list/poetry.html"
-            
-        obj_list = item_cls.objects.filter(keywords__slug=slug)
+            # Show only published `poetry`, `snippet`
+            obj_list = item_cls.published.filter(keywords__slug=slug)
     except:
         print ("Error: Unexpected error:", sys.exc_info()[0])
         for frame in traceback.extract_tb(sys.exc_info()[2]):
@@ -271,15 +305,19 @@ def tagged_items(request, slug, type):
         objs = paginator.page(paginator.num_pages)
             
     context = {'items': objs, 'tag': slug, 'list_template': list_template, 
-               'item_type': type, 'result_title': result_title}
+               'item_type': type, 'result_title': result_title, 
+               'src': src}
     template = 'repository/items/tagged-list.html'    
 
     return render(request, template, context)
 
 
-def search(request):
+def search(request, src=None):
     '''
-    For ajax search of Person select field
+    @summary: For ajax search of Person select field
+    
+    @src: Source of access. It is being used to manipulate the context/templates.
+        eg. src='public_url' means this view is being accessed using some public url.    
     '''
 
     # Search query

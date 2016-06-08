@@ -91,4 +91,14 @@ def html_to_plain_text(str):
             print ("DBG:: Error in %s on line %d" % (fname, lineno))
                  
     return str
-        
+
+
+def user_has_group(user, groups):
+    '''
+    @summary: returns True if user is in given ``groups`` list
+        like ['Administrator', 'Editor']
+    '''
+    if user.is_authenticated():       
+        if bool(user.groups.filter(name__in=groups)) | user.is_superuser:
+            return True
+    return False        

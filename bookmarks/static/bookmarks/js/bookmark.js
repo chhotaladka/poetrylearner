@@ -57,9 +57,9 @@ $(document).ready(function(){
 		console.log(contentType, id, bookmarkId);
 		
 		if (bookmarkId != 0) {
-			postUrl = window.location.origin + '/en/bookmark/remove/';
+			postUrl = window.location.origin + '/bookmark/remove/';
 		} else {
-			postUrl = window.location.origin + '/en/bookmark/add/';
+			postUrl = window.location.origin + '/bookmark/add/';
 		}
 		
 		var fd = new FormData()

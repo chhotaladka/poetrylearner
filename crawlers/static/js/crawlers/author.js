@@ -270,7 +270,7 @@ $(document).ready(function(){
 	var pageClickAct = function(){
 			
 		console.log("pageClickAct: In");
-		data_attributes.url = window.location.origin + '/en/r/add/person/';
+		data_attributes.url = window.location.origin + '/r/add/person/';
 		loadForm();
 	};
 	

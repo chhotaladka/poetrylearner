@@ -22,16 +22,21 @@ from django.conf.urls.i18n import i18n_patterns
 
 from . import views
 
-urlpatterns = i18n_patterns('',
+urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^bookmark/', include('bookmarks.urls', namespace='bookmark')),
     url(r'^c/', include('crawlers.urls', namespace='crawlers')),
     url(r'^feedback/', include('feedback.urls', namespace='feedback')),    
     url(r'^r/', include('repository.urls', namespace='repository')),
-    url(r'^u/', include('dashboard.urls', namespace='dashboard')),    
+    url(r'^u/', include('dashboard.urls', namespace='dashboard')),
+    
+    url(r'^poetry/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.poetry, name='poetry'),
+    url(r'^poetry/?$', views.list_poetry, name='list-poetry'),
+    url(r'^poets/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.poet, name='poet'),
+    url(r'^poets/?$', views.list_poet, name='list-poet'),
     url(r'^$', views.welcome, name='welcome'),
-)
+]
 
 # This is only needed when using runserver.
 if settings.DEBUG:

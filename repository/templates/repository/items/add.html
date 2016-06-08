@@ -1,5 +1,6 @@
 {% extends "repository/base.html" %}
 {% load staticfiles %}
+{% load common_tags %}
 
 {% block title %}Add an item to Repository{% endblock %}
 {% block headbanner %}
@@ -62,7 +63,7 @@
 					</a>		
 				</div>					
 			</div>
-
+{% if request.user|has_group:'administrator' %}{% comment %} Not in use {% endcomment %}
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
 					<a href="{% url 'repository:add-item' type='snippet' %}?cancel={{request.path}}" class="member">						
@@ -119,7 +120,7 @@
 			</div>							
 
 		</div>
-
+{% endif %}
 	</div>	
 </section>
 		

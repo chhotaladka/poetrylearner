@@ -4,19 +4,7 @@
 {% block title %}{{ obj.name }} | product {% endblock %}
 
 {% block breadcrumbs %}
-<div class="pT-8 pB-8">
-	<div class="_layout mW-512">					
-		<div class="breadcrumbs wFull">
-			<a href="{% url 'repository:home' %}">Repository</a>
-			<span> / </span>
-			<a href="{% url 'repository:view' %}">data</a>
-			<span> / </span>
-			<a href="{% url 'repository:list' type=item_type %}">{{ item_type }}</a>
-			<span> / </span>
-			<span>{{ obj.headline }}</span>			 	
-		</div>					
-	</div>	
-</div>
+{% include "repository/include/misc/breadcrumb_for_item.html" %}
 {% endblock %}
 
 {% block main %}

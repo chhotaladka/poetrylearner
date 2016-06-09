@@ -37,7 +37,7 @@ class CreateThingView(View):
     def get(self, request, *args, **kwargs):
         # Check the parameters passed in the URL and process accordingly
         # Prepare the cancel_url for 'Cancel button' to be passed with the context    
-        self.cancel_url = request.GET.get('cancel', '/') 
+        self.cancel_url = request.GET.get('cancel', '/')
         
         if request.is_ajax():
             self.template_name = self.ajax_template_name
@@ -53,7 +53,9 @@ class CreateThingView(View):
         return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url, 'item_type': self.item_type})
 
     def post(self, request, *args, **kwargs):
-        print "Post data"
+        # Prepare the cancel_url for 'Cancel button' to be passed with the context    
+        self.cancel_url = request.POST.get('cancel', '/')
+                
         if request.is_ajax():
             self.template_name = self.ajax_template_name
                     

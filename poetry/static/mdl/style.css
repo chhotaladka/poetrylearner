@@ -1211,6 +1211,13 @@ a.action-button:hover {
 	-moz-border-radius: 1px;
 	border-radius: 1px;
 }
+.form-element input[type=file] {
+	-webkit-appearance: none;
+	appearance: none;
+	display: inline-block;
+	width: 100%;
+	margin: 0;
+}
 .form-element input {
 	height: 29px;
 	padding: 0px 8px;

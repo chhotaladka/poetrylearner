@@ -8,7 +8,8 @@
 	<div class="mdl-card__title column">
 		{% with person_img_url=person.get_image_url %}
 		{% if person_img_url %}
-		<img class="avatar" width="90" height="90" src={{ person_img_url }}>
+		<div class="avatar md border" style="background: url('{{ person_img_url }}') center / cover;">			
+		</div>		
 		{% else %}
 		<i class="avatar material-icons icon">person</i>
 		{% endif %}		

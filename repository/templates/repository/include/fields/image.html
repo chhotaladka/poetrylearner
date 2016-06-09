@@ -9,7 +9,7 @@
 				<strong>{{form.image.label}}</strong>
 			</label>
 			{% if form.image.value %}
-			<img id="preview" class="image" src="/media/{{ form.image.value }}"></img>				 
+			<img id="preview" class="image" src="{{MEDIA_URL}}{{ form.image.value }}"></img>				 
 			<label for="image-clear_id" class="mdl-checkbox mdl-js-checkbox">
 				<input id="image-clear_id" name="image-clear" type="checkbox" class="mdl-checkbox__input" />
 				<span class="mdl-checkbox__label">Clear</span>

@@ -1,7 +1,6 @@
 {% comment %}
 	Info:       Person full detail Card
 	Requires:   css and js of static/mdl/*
-	Note:       xxx
 {% endcomment %}
 {% load staticfiles %}
 {% load humanize %}
@@ -10,17 +9,18 @@
 	<div class="mdl-card__title column bg-person">
 		{% with person_img_url=person.get_image_url %}
 		{% if person_img_url %}
-		<div class="avatar md">
-			<img src={{ person_img_url }}>
+		<div class="avatar lg border" style="background: url('{{ person_img_url }}') center / cover;">			
 		</div>
 		{% else %}
 		<i class="avatar material-icons icon">person</i>
-		{% endif %}
-		
+		{% endif %}		
 		{% endwith %}					
 		<div class="title-text">																					
-			{{ person.name }}{% if person.additional_name %} ({{ person.additional_name }}){% endif %}
+			{{ person.name }}
 		</div>
+		<div class="extras">
+			<span class="text">{{person.additional_name}}</span>
+		</div>		
 		<div class="extras">
 		{% if person.date_birth %}
 			<span title="Birth">{{ person.date_birth }}</span> 
@@ -30,10 +30,8 @@
 		{% endif %}
 		</div>					
 	</div>					
-	<div class="mdl-card__supporting-text">
-		{% if person.similar_item_url %}					
+	<div class="mdl-card__supporting-text">					
 		<p>{{ person.description }}</p>
-		{% endif %}
 	</div>
 	{% comment %}  Include meta panel {% endcomment %}
 	{% include "repository/include/misc/meta-panel.html" with item=person %}

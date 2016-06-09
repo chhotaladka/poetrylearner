@@ -142,8 +142,10 @@
 	    	{% endif %}
 	    	{% if request.user|has_group:'administrator' %}    		
 	    	<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}">Crawled data</a> 
-	    	<a class="mdl-navigation__link" href="{% url 'feedback:list' %}">Feedbacks</a>    		  		   	
-	    	<a class="mdl-navigation__link" href="/admin">Admin</a>
+	    	<a class="mdl-navigation__link" href="{% url 'feedback:list' %}">Feedbacks</a>	    	
+	    	{% endif %}
+	    	{% if request.user.is_staff %}
+	    	<a class="mdl-navigation__link" href="{% url 'admin:index' %}">Admin</a>
 	    	{% endif %}
 	    </nav>
 		<footer class="mdl-mini-footer">

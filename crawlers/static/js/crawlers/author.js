@@ -125,7 +125,7 @@ $(document).ready(function(){
 		console.log("submitForm: In");		
 
 		// Create a new FormData object.
-		var formData = new FormData(document.getElementById('id-person-form'));
+		var formData = new FormData(document.getElementById('id-add-item-form'));
 
 		/* POST it now!
 		 * Form Validation goes here....
@@ -202,14 +202,14 @@ $(document).ready(function(){
 		console.log("renderForm: In");
 		var html = $.parseHTML(data);
 		var body = $("#id-div-form-body");
-		$("#id-div-form-body").off('submit', "#id-person-form");//Remove event listner
+		$("#id-div-form-body").off('submit', "#id-add-item-form");//Remove event listner
 		body.children().remove();
 		body.append(html);
 
 		componentHandler.upgradeDom();// Register new mdl elements
 		
 		$('#id-form-submit').prop( "onclick", null );
-		$("#id-div-form-body").on('submit', "#id-person-form", function(e){
+		$("#id-div-form-body").on('submit', "#id-add-item-form", function(e){
 			e.defaultPrevented;
 			e.stopPropagation();   		
 			submitForm(e);

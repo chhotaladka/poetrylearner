@@ -606,7 +606,12 @@ html, body {
 .author-card--lg .avatar {
     border-radius: 50%;
     margin: 24px auto 12px;
-    display: block;	
+    display: block;
+	overflow: hidden;
+}
+.avatar.md {
+	width: 120px;
+	height: 120px;
 }
 .avatar.border {
 	border: 2px solid #FFF;
@@ -793,6 +798,9 @@ html, body {
 }
 .action-button:hover {
 	color: #616161;
+}
+a.action-button:hover {
+	text-decoration: none;
 }
 .action-button--small {
     background: none repeat scroll 0px 0px transparent;
@@ -989,26 +997,6 @@ html, body {
 	background-color: white;
 }*/
 
-/* forms */
-.mdl-poetry .a-mdl-form {
-	margin: 16px;
-}
-.mdl-poetry .a-mdl-form .mdl-textfield {
-	width: 100%;
-	display: block;
-}
-.mdl-poetry .a-mdl-form .error-text {
-  color: rgb(222, 50, 38);
-  position: relative;
-  font-size: 12px;
-  margin-top: 3px;
-  display: block;
-}
-.select2__label {
-    color: #3F51B5;
-    font-size: 12px;
-}
-
 /* Site search related */
 .site-search-row {
 	height: 100%;
@@ -1115,7 +1103,29 @@ html, body {
 	box-shadow: 0px 1px 2px #CCC inset;
 }
 
-/* Forms gmail style */
+/* forms gmail style */
+.a-mdl-form {
+	padding: 16px;
+}
+.a-mdl-form.error {
+	border-left: 2px solid #DD4B39;
+}
+.a-mdl-form .mdl-textfield {
+	width: 100%;
+	display: block;
+}
+.a-mdl-form .error-text {
+  color: rgb(222, 50, 38);
+  position: relative;
+  font-size: 12px;
+  margin-top: 3px;
+  display: block;
+}
+.select2__label {
+    color: #3F51B5;
+    font-size: 12px;
+}
+
 .form-element {
     position: relative;
     margin: 0px 0px 1em;
@@ -1149,12 +1159,16 @@ html, body {
 	color: #999;
 	display: none;
 }
-.form-element .errormsg {
+.form-element .errormsg,
+.a-mdl-form .errormsg {
     margin: 0.5em 0px 0px;
     display: block;
     color: #DD4B39;
     font-size: 13px;
 	line-height: 18px;
+}
+.errormsg ul {
+	list-style: none;
 }
 .form-element select {
     display: inline-block;
@@ -1775,6 +1789,10 @@ ul.mdl-mini-footer__link-list {
     margin: 0px auto;
 }
 .b { font-weight: 600;}
+.bold {
+	color: #222;
+	font-weight: 600;
+}
 .fS-13 {
 	font-size: 13px !important;
 	line-height: 18px;

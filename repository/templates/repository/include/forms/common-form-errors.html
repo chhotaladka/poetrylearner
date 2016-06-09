@@ -1,0 +1,9 @@
+{% comment %} Common form errors to be displayed on top {% endcomment %}
+	<div class="pB-16">
+		{% for error in form.non_field_errors %}
+	    <span class="errormsg">{{ error }}</span>
+		{% endfor %}
+		{% if form.errors %}
+		<span class="errormsg">Please correct the errors and try again.</span>
+		{% endif %}
+	</div>

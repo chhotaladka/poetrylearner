@@ -4,18 +4,18 @@
 	Note:       xxx
 {% endcomment %}
 
-<form id="id-snippet-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
+<form id="id-add-item-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
 	{% csrf_token %} 
-	<span class="errormsg">{{ form.non_field_errors }}</span>
+	{% include "repository/include/forms/common-form-errors.html" %}
 	<fieldset>
 		{% include "repository/include/fields/name.html" %}
 		{% include "repository/include/fields/isbn.html" %}
 		{% include "repository/include/fields/creator.html" %}
 		{% include "repository/include/fields/publisher.html" %}
-		<div class="mB-16">
-			<a class="action-button" title="Add more fields" onclick="document.getElementById('id-extra-fields').classList.toggle('hidden'); this.classList.add('hidden'); return false;">							
+		<div id="id-extra-btn" class="mB-16">
+			<a class="action-button wFull tAl" title="Add more fields">							
 	            <i class="material-icons" role="presentation">more_horiz</i>
-	            <span class="action-button__text">More fields</span>			                            
+	            <span class="action-button__text bold">Add some more fields</span>			                            
 			</a>
 		</div>
 		<div id="id-extra-fields" class="hidden">				
@@ -32,3 +32,5 @@
 		<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;"/>
 	</div>
 </form>
+{% comment %} Common add-item-form script {% endcomment %}
+{% include "repository/include/forms/common-form-scripts.html" %}

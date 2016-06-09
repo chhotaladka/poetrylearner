@@ -6,6 +6,7 @@ from django.conf import settings
 
 from taggit.managers import TaggableManager
 from taggit.models import TagBase, GenericTaggedItemBase
+from mhlib import PATH
 
 # Create your models here.
        
@@ -70,4 +71,7 @@ def image_upload_path(instance, filename):
     new_name = new_name.lower() + '.' + file_type
     
     print( "saving item image " + filename + " as " + new_name)
-    return 'repository/images/{c}_{name}'.format(c=type(instance).__name__.lower(), name=new_name)    
+    path = 'repository/images/' + type(instance).__name__.lower() + '_' + new_name
+    return path
+
+    

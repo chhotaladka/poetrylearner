@@ -160,7 +160,7 @@ class Person(Thing):
     def clean(self):
         print "DBG:: Model Person clean called"
         # date_death must be greater than date_birth
-        if self.date_death is not None and self.date_death is not None:
+        if self.date_birth is not None and self.date_death is not None:
             if self.date_death <= self.date_birth:
                 raise ValidationError({
                     'date_death': "Foeticide is illegal. Death shouldn't happen before birth."

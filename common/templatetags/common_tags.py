@@ -55,9 +55,9 @@ def has_group(user, groups):
     
     e.g. {{ user|has_group:"Administrator, Editor" }}
     '''
-    if user.is_authenticated():       
+    if user:       
         group_list = [s for s in groups.split(',')]     
         if user.is_authenticated():
             if bool(user.groups.filter(name__in=group_list)) | user.is_superuser:
                 return True
-        return False
+    return False

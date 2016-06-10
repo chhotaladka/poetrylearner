@@ -12,7 +12,11 @@
 		<div class="avatar lg border" style="background: url('{{ person_img_url }}') center / cover;">			
 		</div>
 		{% else %}
-		<i class="avatar material-icons icon">person</i>
+		<div class="avatar lg">
+			<svg height="120" width="120" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+				<path d="M24 8c-4.42 0-8 3.58-8 8 0 4.41 3.58 8 8 8s8-3.59 8-8c0-4.42-3.58-8-8-8zm0 20c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/><path d="M0 0h48v48h-48z" fill="none"/>
+			</svg>
+		</div>
 		{% endif %}		
 		{% endwith %}					
 		<div class="title-text">																					
@@ -20,15 +24,19 @@
 		</div>
 		<div class="extras">
 			<span class="text">{{person.additional_name}}</span>
-		</div>		
+		</div>
+		{% if person.date_birth or person.date_death %}	
 		<div class="extras">
+			<span>(</span>
 		{% if person.date_birth %}
-			<span title="Birth">{{ person.date_birth }}</span> 
+			<span title="Birth">{{ person.date_birth|date:"Y" }}</span> 
 		{% endif %}
 		{% if person.date_death %}					
-			<span title="Death">- {{ person.date_death }}</span>
+			<span title="Death">- {{ person.date_death|date:"Y" }}</span>
 		{% endif %}
-		</div>					
+			<span>)</span>
+		</div>
+		{% endif %}					
 	</div>					
 	<div class="mdl-card__supporting-text">					
 		<p>{{ person.description }}</p>
@@ -38,12 +46,11 @@
 
 	<div class="mdl-card__menu">
 		<a href="{% url 'repository:add-item' type=person.item_type pk=person.id %}/?cancel={{request.path}}" title="Edit to improve.">
-		<button class="mdl-button mdl-button--icon" id="btn1">
-          	<!--<i class="material-icons mdl-color-text--white">edit</i>-->
-			<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 50 50" style="fill: rgb(255, 255, 255);">
-				<path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 43.125 2 C 41.87925 2.00025 40.638 2.4875 39.6875 3.4375 L 38.875 4.25 L 45.75 11.125 C 45.745 11.129 46.5625 10.3125 46.5625 10.3125 C 48.4635 8.4115 48.4615 5.3375 46.5625 3.4375 C 45.611 2.4865 44.37075 1.99975 43.125 2 z M 37.34375 6.03125 A 1.0001 1.0001 0 0 0 36.75 6.34375 L 4.3125 38.8125 A 1.0001 1.0001 0 0 0 4.03125 39.25 L 2.03125 46.75 A 1.0001 1.0001 0 0 0 3.25 47.96875 L 10.75 45.96875 A 1.0001 1.0001 0 0 0 11.1875 45.6875 L 43.65625 13.25 A 1.0054782 1.0054782 0 1 0 42.25 11.8125 L 9.96875 44.09375 L 5.90625 40.03125 L 38.1875 7.75 A 1.0001 1.0001 0 0 0 37.4375 6.03125 A 1.0001 1.0001 0 0 0 37.34375 6.03125 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
-			</svg>          
-		</button>
+			<button class="mdl-button mdl-button--icon" id="btn1">          	
+				<svg height="22" width="22" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" style="fill: rgb(255, 255, 255);">
+					<path d="M6 34.5v7.5h7.5l22.13-22.13-7.5-7.5-22.13 22.13zm35.41-20.41c.78-.78.78-2.05 0-2.83l-4.67-4.67c-.78-.78-2.05-.78-2.83 0l-3.66 3.66 7.5 7.5 3.66-3.66z"/><path d="M0 0h48v48h-48z" fill="none"/>
+				</svg>
+			</button>
 		</a>
 	</div>
 </div>

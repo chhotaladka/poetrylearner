@@ -4,36 +4,41 @@
 	Note:       xxx
 {% endcomment %}
 {% load staticfiles %}
-<div class="mdl-card author-card--sm bS-1 wFull">
-	<div class="mdl-card__title column">
-		{% with person_img_url=person.get_image_url %}
-		{% if person_img_url %}
-		<div class="avatar md border" style="background: url('{{ person_img_url }}') center / cover;">			
-		</div>		
-		{% else %}
-		<i class="avatar material-icons icon">person</i>
-		{% endif %}		
-		{% endwith %}					
-		<div class="title-text">
-			<a href="{{person.get_absolute_url}}" title="View Person">														
-				{{ person.name }}
-			</a>
+<div class="content-wrapper">
+	<a class="card" href="{{person.get_absolute_url}}">
+		<div class="mdl-card author-card--sm bS-1 wFull">
+			<div class="p-16 column center">
+				{% with person_img_url=person.get_image_url %}
+				{% if person_img_url %}
+				<div class="avatar md border" style="background: url('{{ person_img_url }}') center / cover;">			
+				</div>		
+				{% else %}
+				<div class="avatar md border">
+					<svg height="90" width="90" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+						<path d="M24 8c-4.42 0-8 3.58-8 8 0 4.41 3.58 8 8 8s8-3.59 8-8c0-4.42-3.58-8-8-8zm0 20c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/><path d="M0 0h48v48h-48z" fill="none"/>
+					</svg>
+				</div>
+				{% endif %}		
+				{% endwith %}					
+				<div class="title-text">														
+					{{ person.name }}
+				</div>
+				<div class="extras">
+					<span class="text">{{person.additional_name}}</span>
+				</div>
+				{% if person.date_birth or person.date_death %}
+				<div class="extras fS-12">
+					<span>(</span>
+				{% if person.date_birth %}
+					<span title="Birth">{{ person.date_birth|date:"Y" }}</span> 
+				{% endif %}
+				{% if person.date_death %}					
+					<span title="Death">- {{ person.date_death|date:"Y" }}</span>
+				{% endif %}
+					<span>)</span>				
+				</div>
+				{% endif %}				
+			</div>
 		</div>
-		<div class="extras">
-			<span class="text">{{person.additional_name}}</span>
-		</div>		
-		<div class="extras">
-		{% if person.date_birth %}
-			<span class="fS-12" title="Birth">{{ person.date_birth }}</span> 
-		{% endif %}
-		{% if person.date_death %}					
-			<span class="fS-12" title="Death">- {{ person.date_death }}</span>
-		{% endif %}
-		</div>					
-	</div>
-	<div class="mdl-card__actions action-panel">
-		<a href="{{person.get_absolute_url}}" class="action mdl-button c-blue wFull">
-			View more					
-		</a>
-	</div>
+	</a>
 </div>

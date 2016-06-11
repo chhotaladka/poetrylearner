@@ -10,10 +10,7 @@ from feedback.models import Feedback
 class FeedbackForm(forms.ModelForm):
     '''
     A feedback form with modern spam protection.
-    :url: Field to trap spam bots.
     '''
-    
-    url = forms.URLField(required=False)
 
     def __init__(self, user=None, url=None, prefix='feedback',
                  content_object=None, *args, **kwargs):
@@ -26,7 +23,8 @@ class FeedbackForm(forms.ModelForm):
             self.instance.added_by = user
             del self.fields['email']
         else:
-            self.fields['email'].required = True
+            # Let the email field remain optional
+            self.fields['email'].required = False
 
     def save(self):
         print "DBG:: FeedbackForm  save."

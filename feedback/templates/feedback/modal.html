@@ -1,0 +1,32 @@
+{% comment %}  
+	Info:       Feedback related stuff		
+	Requires:   Elemnet having id="feedbackBtn" to bind the action.
+				Element should have: 
+					1) data-url="{% url 'feedback:add_for_content' ctype_id=content_type_id obj_id=obj_id %}"
+{% endcomment %}
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static "css/modal.css" %}">
+<script type="text/javascript" src="{% static 'feedback/js/feedback.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/modal.js' %}"></script>
+
+<div class="modal fade" id="id-feedback-modal" role="dialog">
+	<div class="modal-dialog modal-l">      
+		<div class="modal-content">
+	
+			<div class="mdl-card feedback-card card-l wFull">							
+				{% comment %}<div class="modal-header">				
+					<div class="modal-title">Feedback</div>
+				</div>{% endcomment %}
+				<div id="id-div-form-body" class="modal-body">			
+				</div>				
+				<div class="mdl-card__menu">
+				    <button data-dismiss="modal" class="mdl-button mdl-button--icon mdl-js-button">
+						<i class="material-icons">close</i>
+				    </button>					  
+				</div>				
+			</div>
+			
+      </div>      
+	</div>
+</div>			

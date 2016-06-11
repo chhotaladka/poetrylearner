@@ -1,38 +1,33 @@
-{% comment %}  
-{% if content_object %}
-    <form method="post" action="{% url "feedback:add_for_content" ctype_id=ctype_id obj_id=content_object.id %}">
-        {% csrf_token %}
-        <p>How can we make this page better for you?</p>
-        <p>Your suggestion, ideas, complaints will greatly help us.</p>
-        {{ form.as_p }}
-        <input type="submit" value="Send Feedback" />
-    </form>
-{% else %}
-    <a id="feedbackSnippet" href="{% url "feedback:add" %}"></a>
-    <p id="feedbackSuccess">Thank you!</p>
-    <form id="feedbackForm" method="post" action="{% url "feedback:add" %}">
-        {% include "feedback/form_content.html" %}
-    </form>
-{% endif %}
-{% endcomment %}
-
 <form id="id-feedback-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
 	{% csrf_token %} 
 	<span class="errormsg">{{ form.non_field_errors }}</span>
 	<fieldset>
 		<div class="form-element">
-			<textarea class="form-input" name="feedback-text" rows="3" maxlength=2000 required>{{ form.text.value|default_if_none:'' }}</textarea>
-			<span class="help-text">Write the feedback.</span>											
-		
+			<label for="id-feedback-text">
+				<strong>Feedback?</strong>
+				<textarea id="id-feedback-text" class="form-input" name="feedback-text" rows="3" maxlength=2000 required>{{ form.text.value|default_if_none:'' }}</textarea>							
+			</label>
+			<span class="helptext">Write down your commnets and suggestions.</span>
+		</div>
+		{% if request.user.is_authenticated == False %}
 		<div class="form-element">
-			<label for="id_email">
-				<strong>Email</strong>
+			<label for="id-email">
+				<strong>Your Email? (optional)</strong>
 				<input id="id-email" maxlength="254" name="feedback-email" type="email"/>
 			</label>
-			<span class="helptext">Email field, if user isn't logged in and wants to send her email.</span>
-		</div>	
+			<span class="helptext">It would be safe with us untill we get robbed.</span>
+		</div>		
+		<div class="form-element">
+			<label for="id-xx">
+				<strong></strong>
+				<input id="id-xx" name="xx" type="text"/>
+			</label>
+			<span class="helptext">Leave it blank if you are Human.</span>
+		</div>
+		<input id="id-yy" name="yy" type="hidden"/>
+		{% endif %}		
 	</fieldset>
 	<div class="tAr">
-		<input id="id-form-submit" class="mdl-button mdl-button--raised mdl-button--colored" type="submit" value="Send"/> 
+		<input id="id-feedback-form-submit" class="mdl-button mdl-button--raised mdl-button--colored" type="submit" value="Send"/> 
 	</div>
 </form>

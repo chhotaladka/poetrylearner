@@ -72,9 +72,40 @@
   filter: alpha(opacity=50);
   opacity: .5;
 }
+.modal-header {
+  min-height: 16.42857143px;
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.modal-header .close {
+  margin-top: -2px;
+}
+.modal-title {
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 16px;
+    line-height: 20px;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .modal-body {
   position: relative;
   padding: 15px;
+}
+.modal-footer {
+  padding: 15px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+.modal-footer .btn + .btn {
+  margin-bottom: 0;
+  margin-left: 5px;
+}
+.modal-footer .btn-group .btn + .btn {
+  margin-left: -1px;
+}
+.modal-footer .btn-block + .btn-block {
+  margin-left: 0;
 }
 .modal-scrollbar-measure {
   position: absolute;
@@ -95,10 +126,16 @@
   .modal-sm {
     width: 300px;
   }
+  .modal-l {
+    width: 512px;
+  }
 }
 @media (min-width: 992px) {
-  .modal-lg {
-    width: 900px;
+  .modal-l {
+    width: 512px;
+  }
+  .modal-xl {
+    width: 620px;
   }
 }
 

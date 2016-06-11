@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 from django.views.generic import CreateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
@@ -24,6 +26,7 @@ class FeedbackCreateView(CreateView):
     form_class = FeedbackForm
     #template_name = 'feedback/feedback_form.html'
     ajax_template = 'feedback/form.html'
+    thanks_template = 'feedback/include/thanks.html'
 
     def dispatch(self, request, *args, **kwargs):
         print "FeedbackCreateView dispatch."
@@ -32,6 +35,12 @@ class FeedbackCreateView(CreateView):
                 content_type = ContentType.objects.get_for_id(kwargs['ctype_id'])
                 print content_type
             except ContentType.DoesNotExist:
+                if request.is_ajax():
+                    # Create JSON response and send
+                    res = {}
+                    res['result'] = 'failure'
+                    res['status'] = '404'
+                    return JsonResponse(res)
                 raise Http404
             
             try:
@@ -39,6 +48,12 @@ class FeedbackCreateView(CreateView):
                 self.ctype_id = kwargs['ctype_id']                
 
             except ObjectDoesNotExist:
+                if request.is_ajax():
+                    # Create JSON response and send
+                    res = {}
+                    res['result'] = 'failure'
+                    res['status'] = '404'
+                    return JsonResponse(res)                
                 raise Http404
             
         return super(FeedbackCreateView, self).dispatch(request, *args, **kwargs)
@@ -59,6 +74,7 @@ class FeedbackCreateView(CreateView):
     def get_template_names(self):
         print "FeedbackCreateView get_template_names."
         if self.request.is_ajax():
+            print "ajax request"
             return self.ajax_template
         
         return super(FeedbackCreateView, self).get_template_names()
@@ -75,8 +91,56 @@ class FeedbackCreateView(CreateView):
             
         return context
 
+    def post(self, request, *args, **kwargs):
+        '''
+        Check for spam
+        '''
+        xx = request.POST.get('xx', None)
+        yy = request.POST.get('yy', None)
+        if xx or yy:
+            print "WARN:: spam detected."
+            if request.is_ajax():
+                # Create JSON response and send
+                res = {}
+                res['result'] = 'failure'
+                res['status'] = '400'
+                return JsonResponse(res)
+            raise Http404
+        
+        return super(FeedbackCreateView, self).post(request, *args, **kwargs)
+    
+    def form_valid(self, form):
+        """
+        If the form is valid-
+            1. save the associated model
+            2. redirect to the supplied URL.
+        """
+        self.object = form.save()
+        
+        if self.request.is_ajax():
+            # Create JSON response and send
+            res = {}
+            res['result'] = 'success'
+            res['status'] = '200'
+            res['html'] = render_to_string(self.thanks_template)
+            return JsonResponse(res)        
+        return HttpResponseRedirect(self.get_success_url())
+   
+    def form_invalid(self, form):
+        """
+        If the form is invalid, re-render the context data with the
+        data-filled form and errors.
+        """
+        if self.request.is_ajax():
+            # Create JSON response and send
+            res = {}
+            res['result'] = 'failure'
+            res['status'] = '40011'
+            return JsonResponse(res)        
+        return self.render_to_response(self.get_context_data(form=form))
+    
     def get_success_url(self):
-        return reverse('feedback:add')
+        return '/'
    
 
 @group_required('administrator')

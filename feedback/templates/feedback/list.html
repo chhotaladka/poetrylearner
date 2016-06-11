@@ -2,48 +2,6 @@
 {% load staticfiles %}
 
 {% block title %}Feedbacks{% endblock %}
-{% block modal %}
-	<div id="imgModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	
-	    <!-- Modal content-->
-	    <div class="modal-content">
-    		<div class="mdl-card mdl-cell mdl-cell--12-col mdl-color-text--grey-600">
-				<div class="mdl-card__title mdl-card--border ">
-					<h3 class="mdl-card__subtitle-text mdl-color-text--teal-400">Upload scanned page image</h3>
-				</div>
-				<div class="mdl-card__supporting-text flash-msg">
-					<div id="modal-flashMsg" role="alert">
-					  <i class="material-icons"></i>
-					  <span class="message"></span>
-					</div>
-				</div>
-				<div class="mdl-card__supporting-text">
-					<div id="imgModalBody">
-						<p>Let there be light!</p>
-					</div>
-				</div>				
-				<div class="mdl-card__menu">
-				    <button data-dismiss="modal" class="mdl-button mdl-button--icon mdl-js-button">
-						<i class="material-icons">close</i>
-				    </button>					  
-				</div>					
-			</div>
-	    </div>
-	
-	  </div>
-	</div> <!-- /imgModal -->
-{% endblock %}
-
-{% block extra-style %}
-	<link rel="stylesheet" href="{% static "css/modal.css" %}">
-{% endblock %}
-		
-{% block scripts %}
-	{{ block.super }}
-	<script type="text/javascript" src="{% static 'feedback/js/feedback.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/modal.js' %}"></script>			
-{% endblock %}
 
 {% block headbanner %}
 <section id="id-head" class="centered">

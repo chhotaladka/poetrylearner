@@ -90,7 +90,7 @@ html, body {
 }
 
 .mdl-poetry .mdl-card .mdl-card__supporting-text {
-	width: 100%;
+	width: auto;
 	width: -moz-available;          /* WebKit-based browsers will ignore this. */
 	width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
 }
@@ -306,14 +306,26 @@ html, body {
 	max-width: 620px;
 	margin: 1px auto;
 }
+.feedback-card {	
+}
+.card-m {
+	max-width: 512px;
+	margin: 0px auto;
+}
+.card-l {
+	max-width: 512px;
+	margin: 0px auto;
+}
+.card-xl {
+	max-width: 620px;
+	margin: 0px auto;
+}
 .poetry-card {
 	max-width: 512px;
 	margin: 1px auto;
 }
 .poetry-card .mdl-card__title {
 	height: 176px;
-/*height: 128px;*/
-/*background: url('../img/header6.jpg') top / cover;*/
 }
 .wide-card .mdl-card__title-text,
 .poetry-card .mdl-card__title-text {
@@ -890,6 +902,9 @@ a.action-button:hover {
 	display: inline-block;
 }
 
+.feedback.link {
+	padding: 4px 16px;
+}
 .panel,
 .meta-panel,
 .meta-panel {
@@ -897,7 +912,8 @@ a.action-button:hover {
 }
 .meta-edit,
 .light-txt,
-.credit-txt {
+.credit-txt,
+.feedback.link {
     font-size: 12px;
     line-height: 17px;
     font-weight: 300;
@@ -911,7 +927,8 @@ a.action-button:hover {
 }
 .meta-edit a,
 .light-txt a,
-.info-txt a {
+.info-txt a,
+.feedback.link a {
 	color: #3F51B5;
 }
 .breadcrumbs {
@@ -1865,6 +1882,7 @@ ul.mdl-mini-footer__link-list {
 .pLR-16 { padding-left: 16px;padding-right:16px;}
 .p-8 { padding:8px;}
 .p-16 { padding:16px;}
+.p-32 { padding:32px;}
 .pT-8 { padding-top: 8px; }
 .pT-16 { padding-top: 16px; }
 .pT-48 { padding-top: 48px; }

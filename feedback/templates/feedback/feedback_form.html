@@ -1,15 +1,7 @@
-{% extends "dashboard-base.html" %}
+{% extends "feedback/base.html" %}
 
-{% block extra-style %}
-{{ form.media.css }}
-{% endblock %}
-
-{% block body %}
+{% block main %}
 <div id="feedbackDisplayWrapper">
     {% include "feedback/form.html" %}
 </div>
-{% endblock %}
-
-{% block scripts %}
-{{ form.media.js }}
 {% endblock %}

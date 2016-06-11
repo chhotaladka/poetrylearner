@@ -3,3 +3,8 @@
 
 {% comment %} To set the main nav link active throughout the views of this app {% endcomment %}
 {% block is-repo-active %}active{% endblock %}
+
+{% comment %} This app requires feedback {% endcomment %}
+{% block feedback %}
+{% include "feedback/modal.html" %}
+{% endblock %}

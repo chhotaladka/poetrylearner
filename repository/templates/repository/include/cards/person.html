@@ -5,7 +5,7 @@
 {% load staticfiles %}
 {% load humanize %}
 
-<div class="mdl-card author-card--lg bS-1 wFull">
+<div class="mdl-card card-l author-card--lg bS-1 wFull">
 	<div class="mdl-card__title column bg-person">
 		{% with person_img_url=person.get_image_url %}
 		{% if person_img_url %}
@@ -19,7 +19,7 @@
 		</div>
 		{% endif %}		
 		{% endwith %}					
-		<div class="title-text">																					
+		<div class="title-text tAc">																					
 			{{ person.name }}
 		</div>
 		<div class="extras">
@@ -37,7 +37,7 @@
 			<span>)</span>
 		</div>
 		{% endif %}					
-	</div>					
+	</div>
 	<div class="mdl-card__supporting-text">					
 		<p>{{ person.description }}</p>
 	</div>
@@ -52,5 +52,10 @@
 				</svg>
 			</button>
 		</a>
+	</div>
+</div>
+<div class="card-l">
+	<div class="feedback link tAr">
+		<a id="feedbackBtn" data-url="{% url 'feedback:add_for_content' ctype_id=person.get_content_type.id obj_id=person.id %}" href="#">Feedback</a>
 	</div>
 </div>

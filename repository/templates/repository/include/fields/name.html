@@ -7,7 +7,7 @@
 		<div id="div_id_name" class="form-element">
 			<label for="id_name">
 				<strong>{{form.name.label}}</strong>
-				<input id="id_name" class="form-input" name="name" type="text" spellcheck="false" autocomplete="off" maxlength="300" value="{{ form.name.value|default_if_none:'' }}" required/>
+				<input id="id_name" class="translit form-input" name="name" type="text" spellcheck="false" autocomplete="off" maxlength="300" value="{{ form.name.value|default_if_none:'' }}" required/>
 			</label>			
 		{% if form.name.errors %}
 		    {% for error in form.name.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}

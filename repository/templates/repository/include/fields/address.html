@@ -7,7 +7,7 @@
 		<div id="div_id_address" class="form-element">
 			<label for="id_address">
 				<strong>{{form.address.label}}</strong>
-				<textarea id="id_address" class="form-input" name="address" rows="2">{{ form.address.value|default_if_none:'' }}</textarea>
+				<textarea id="id_address" class="translit form-input" name="address" rows="2">{{ form.address.value|default_if_none:'' }}</textarea>
 			</label>			
 		{% if form.address.errors %}
 		    {% for error in form.address.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}

@@ -7,6 +7,11 @@
 {% include "repository/include/misc/breadcrumb_for_add_item.html" %}
 {% endblock %}
 
+{% block extra-style %}
+{% comment %} Transliteration CSS {% endcomment %}
+	<link rel="stylesheet" href="{% static "js/ime/css/jquery.ime.css" %}"/>	
+{% endblock %}
+
 {% block main %}	
 <section id="priSect" class="pT-8 pB-48">
 	<div class="_layout layout-sLs mdl-grid">		
@@ -31,4 +36,20 @@
 		</section>				
 	</div>		
 </section>	
+{% endblock %}
+
+{% block scripts %} 
+{% comment %} Transliteration JS {% endcomment %}
+	<script type="text/javascript" src="{% static "js/ime/libs/rangy/rangy-core.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.selector.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.preferences.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.inputmethods.js" %}"></script>	
+	<script>
+		$( document ).ready( function () {
+			// All input fields having "translit" class require transliteration
+			$('.translit').ime();
+			/*$('#id_body, #id_title').ime();*/
+		} );
+	</script>
 {% endblock %}

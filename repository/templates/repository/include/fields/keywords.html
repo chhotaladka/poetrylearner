@@ -7,7 +7,7 @@
 		<div id="div_id_keywords" class="form-element">
 			<label for="id_keywords">
 				<strong>{{form.keywords.label}}</strong>
-				<input id="id_keywords" class="form-input" name="keywords" type="text" maxlength="300" 
+				<input id="id_keywords" class="translit form-input" name="keywords" type="text" maxlength="300" 
 				value="{% for taggeditem in form.keywords.value %}{{taggeditem.tag.name}}{% if not forloop.last %}, {% endif %}{% endfor %}"/>
 			</label>			
 		{% if form.keywords.errors %}

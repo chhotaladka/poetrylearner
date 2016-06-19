@@ -201,6 +201,7 @@ def article_to_poetry(request):
                         poetry = Poetry()
                         
                         poetry.name = article.title
+                        poetry.language = article.language
                         poetry.body = html_to_plain_text(article.content)
                         poetry.creator = person
                         poetry.same_as = article.source_url

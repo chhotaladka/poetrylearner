@@ -38,22 +38,24 @@ def raw_article_list(request):
     result_title = 'Articles'
     
     ##
-    # Check the parameters passed in the URL and process accordingly    
-    source = request.GET.get('source', None)
-    author = request.GET.get('author', None)
-    q = request.GET.get('q', None)
-    filters = request.GET.get('filters', None)
+    # Check the parameters passed in the URL and process accordingly
     
-    if filters:
-        filters = filters.split(',')
-        print filters
-        # Supported filters are: valid, invalid
-        if 'valid' in filters:
-            q_objects &= Q(valid=True)
-            result_title = result_title + ', valid'
-        elif 'invalid' in filters:
-            q_objects &= Q(valid=False)
-            result_title = result_title + ', invalid'
+    # Query tab
+    q_tab = request.GET.get('tab', None)
+    # source url    
+    source = request.GET.get('source', None)
+    # author name
+    author = request.GET.get('author', None)
+    # search string
+    q = request.GET.get('q', None)    
+
+    # Process get queries
+    if q_tab == 'all':
+        q_objects = q_objects
+    elif q_tab == 'valid':
+        q_objects &= Q(valid=True)
+    elif q_tab == 'invalid':
+        q_objects &= Q(valid=False)            
     
     if source:
         source = source.strip()
@@ -76,8 +78,32 @@ def raw_article_list(request):
     # Get all articles              
     obj_list = RawArticle.objects.all().filter(q_objects)        
        
-    ##
-    # Check for permissions and render the list of articles
+    # Create tab list and populate
+    query_tabs = []    
+    
+    tab = {
+           'name': 'all',
+           'help_text': 'Recent items',
+           'url': request.path + '?tab=all' + '&q=' + (q if q else '') + '&author=' + (author if author else ''),
+           'css': 'is-active' if q_tab == 'all' or q_tab is None else '',
+        }
+    query_tabs.append(tab)
+    
+    tab = {
+           'name': 'valid',
+           'help_text': 'Itmes which have been added to repository',
+           'url': request.path + '?tab=valid' + '&q=' + (q if q else '') + '&author=' + (author if author else ''),
+           'css': 'is-active' if q_tab == 'valid' else '',
+        }
+    query_tabs.append(tab)
+    
+    tab = {
+           'name': 'invalid',
+           'help_text': 'Itmes which have not added to repository',
+           'url': request.path + '?tab=invalid' + '&q=' + (q if q else '') + '&author=' + (author if author else ''),
+           'css': 'is-active' if q_tab == 'invalid' else '',
+        }
+    query_tabs.append(tab)
     
     
     # Pagination
@@ -93,6 +119,7 @@ def raw_article_list(request):
         articles = paginator.page(paginator.num_pages)
             
     context = {'articles': articles,
+               'query_tabs': query_tabs,
                'result_title': result_title}
     template = 'crawlers/article-list.html'    
 
@@ -224,32 +251,30 @@ def raw_author_list(request):
     result_title = 'Authors'
     
     ##
-    # Check the parameters passed in the URL and process accordingly    
-    source = request.GET.get('source', None)
-    q = request.GET.get('q', None)    
-    filters = request.GET.get('filters', None)
+    # Check the parameters passed in the URL and process accordingly
     
-    if filters:
-        filters = filters.split(',')        
-        # Supported filters are: valid or invalid, birth or nobirth, death or nodeath
-        if 'valid' in filters:
-            q_objects &= Q(valid=True)
-            result_title = result_title + ', valid'
-        elif 'invalid' in filters:
-            q_objects &= Q(valid=False)
-            result_title = result_title + ', invalid'
-        if 'birth' in filters:
-            # get the authors whom birth info is known
-            q_objects &= ~Q(birth=None)
-        elif 'nobirth' in filters:
-            # get the authors whom birth info is not known
-            q_objects &= Q(birth=None)
-        if 'death' in filters:
-            # get the authors whom death info is known
-            q_objects &= ~Q(death=None)
-        elif 'nodeath' in filters:
-            # get the authors whom death info is not known
-            q_objects &= Q(death=None)            
+    # Query tab
+    q_tab = request.GET.get('tab', None)
+    # source url
+    source = request.GET.get('source', None)
+    # search string
+    q = request.GET.get('q', None)
+
+    # Process get queries
+    if q_tab == 'all':
+        q_objects = q_objects
+    elif q_tab == 'valid':
+        q_objects &= Q(valid=True)
+    elif q_tab == 'invalid':
+        q_objects &= Q(valid=False)
+    elif q_tab == 'birth':
+        # get the authors whom birth info is known
+        q_objects &= ~Q(birth=None)
+        q_objects &= ~Q(birth=u'')
+    elif q_tab == 'death':
+        # get the authors whom death info is known
+        q_objects &= ~Q(death=None)
+        q_objects &= ~Q(death=u'')          
 
     if source:
         source = source.strip()  
@@ -266,8 +291,47 @@ def raw_author_list(request):
     # Get all authors           
     obj_list = RawAuthor.objects.all().filter(q_objects)        
     
-    ##
-    # Check for permissions and render the list of authors
+    # Create tab list and populate
+    query_tabs = []    
+    tab = {
+           'name': 'all',
+           'help_text': 'Recent items',
+           'url': request.path + '?tab=all' + '&q=' + (q if q else ''),
+           'css': 'is-active' if q_tab == 'all' or q_tab is None else '',
+        }
+    query_tabs.append(tab)
+    
+    tab = {
+           'name': 'valid',
+           'help_text': 'Itmes which have been added to repository',
+           'url': request.path + '?tab=valid' + '&q=' + (q if q else ''),
+           'css': 'is-active' if q_tab == 'valid' else '',
+        }
+    query_tabs.append(tab)
+    
+    tab = {
+           'name': 'invalid',
+           'help_text': 'Itmes which have not added to repository',
+           'url': request.path + '?tab=invalid' + '&q=' + (q if q else ''),
+           'css': 'is-active' if q_tab == 'invalid' else '',
+        }
+    query_tabs.append(tab)
+    
+    tab = {
+           'name': 'birth known',
+           'help_text': 'Birth date info available',
+           'url': request.path + '?tab=birth' + '&q=' + (q if q else ''),
+           'css': 'is-active' if q_tab == 'birth' else '',
+        }
+    query_tabs.append(tab)
+    
+    tab = {
+           'name': 'death known',
+           'help_text': 'Death date info available',
+           'url': request.path + '?tab=death' + '&q=' + (q if q else ''),
+           'css': 'is-active' if q_tab == 'death' else '',
+        }
+    query_tabs.append(tab)        
     
     
     # Pagination
@@ -283,6 +347,7 @@ def raw_author_list(request):
         authors = paginator.page(paginator.num_pages)
             
     context = {'authors': authors,
+               'query_tabs': query_tabs,
                'result_title': result_title}
     template = 'crawlers/author-list.html'    
 

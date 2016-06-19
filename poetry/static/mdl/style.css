@@ -1977,11 +1977,17 @@ ul.mdl-mini-footer__link-list {
 	background-color: #DB4437 !important;/*red*/
 	color: white;
 }
+.bg-person svg {
+	fill: white !important;
+}
 .C-person {color: #DB4437 !important;}
 .event .highlight,
 .bg-event {
 	background-color: #00D4DE !important;
 	color: white;
+}
+.bg-event svg {
+	fill: white;
 }
 .C-event {color: #00D4DE !important;}
 .org .highlight,
@@ -1989,11 +1995,17 @@ ul.mdl-mini-footer__link-list {
 	background-color: #42A5F5 !important;/*blue-400*/
 	color: white;
 }
+.bg-org svg {
+	fill: white !important;
+}
 .C-organization {color: #42A5F5 !important;}
 .place .highlight,
 .bg-place {
 	background-color: #4CAF50 !important;/*green-500*/
 	color: white;
+}
+.bg-place svg {
+	fill: white !important;
 }
 .C-place {color: #4CAF50 !important;}
 .product .highlight,
@@ -2001,11 +2013,17 @@ ul.mdl-mini-footer__link-list {
 	background-color: #9C27B0 !important;/*purple-500*/
 	color: white;
 }
+.bg-product svg {
+	fill: white !important;
+}
 .C-product {color: #9C27B0 !important;}
 .poetry .highlight,
 .bg-poetry {
 	background-color: white;
 	color: #424242 !important;/*grey-800*/
+}
+.bg-poetry svg {
+	fill: #424242 !important;
 }
 .C-poetry {}
 .snippet .highlight {
@@ -2016,11 +2034,17 @@ ul.mdl-mini-footer__link-list {
 	background-color: white;
     color: #424242 !important;/*grey-800*/
 }
+.bg-snippet svg {	
+    fill: #424242 !important;/*grey-800*/
+}
 .C-snippet {}
 .book .highlight,
 .bg-book {
 	background-color: #F4B400 !important;/*yellow-600*/
     color: #424242 !important;/*grey-800*/
+}
+.bg-book svg {
+    fill: #424242 !important;
 }
 .C-book {color: #F4B400 !important;}
 
@@ -2064,6 +2088,15 @@ a.md-tabs__tab:hover {
 /* Rules for using icons as white on a dark background */
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+.mdl-button--fab svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-12px, -12px);
+    line-height: 24px;
+    width: 24px;
+}
 
 /*
  * Pagination

@@ -116,7 +116,7 @@
 	  				<form method="post" action="{% url 'account_logout' %}">
 	  					{% csrf_token %}
 	  					<input type="hidden" name="next" value={% block header-logout-redirect %}"/"{% endblock %}/>
-	  					<button class="oN"type="submit">Log Out</button>
+	  					<button class="oN" type="submit">Log Out</button>
 	  				</form>	  				
 	  			</li>	  		
 			</ul>    

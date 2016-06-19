@@ -21,9 +21,6 @@
 		</div>		
 	</section>
 
-	<a id="floating-btn-bottom" href="{% url 'repository:add-item' type='snippet' %}?cancel={{request.path}}"
-		class="bg-snippet mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-shadow--4dp">
-	    <i class="material-icons" role="presentation">add</i>
-	    <span class="visuallyhidden">Add</span>
-	</a>	
+	{% include "repository/include/misc/button-floating-add.html" with item_type=item_type %}
+
 {% endblock %}		    				    																

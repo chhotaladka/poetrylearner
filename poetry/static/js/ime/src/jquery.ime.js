@@ -425,8 +425,8 @@
 
 	// default options
 	$.ime.defaults = {
-		//imePath: '../' //FIXED Relative path Commented, changed to absolute path
-		imePath: '/static/js/ime/', // Relative/Absolute path for the rules folder of jquery.ime
+		//imePath: '../', //FIXED Relative path Commented, changed to absolute path
+		imePath: '/static/static/js/ime/', //Relative/Absolute path for the rules folder of jquery.ime
 		languages: [], // Languages to be used- by default all languages
 		helpHandler: null // Called for each ime option in the menu
 	};

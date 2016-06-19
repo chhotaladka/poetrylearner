@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 	var feedback_attributes = {};
 	feedback_attributes.url = '';
+	feedback_attributes.sending_started = false;
 
 	/**
 	 * Iska hum kuchh nahi kar sakte !!
@@ -41,16 +42,18 @@ $(document).ready(function(){
 		} else if (data.result == 'failure') {
 			var str = '<div class="tAc p-32 err">Error! (' + data.status + ')</div>';
 			var html = $.parseHTML(str);
-			body.append(html);
+			body.append(html);			
 		} else {
 	
-		}	
+		}
+		feedback_attributes.sending_started = false; //So that next message can be sent	
 	}
 		
 	/**
 	 * POST Feedback form data
 	 */
-	var submitFeedbackForm = function(e){	
+	var submitFeedbackForm = function(e){
+		feedback_attributes.sending_started = true;
 		e.defaultPrevented;
 		e.stopPropagation();
 		console.log( "submitFeedbackForm: IN");
@@ -111,8 +114,10 @@ $(document).ready(function(){
 		$('#id-feedback-form-submit').prop( "onclick", null);
 		$("#id-div-form-body").on('submit', "#id-feedback-form", function(e){
 			e.defaultPrevented;
-			e.stopPropagation();   		
-			submitFeedbackForm(e);
+			e.stopPropagation(); 
+			if (feedback_attributes.sending_started == false) {  		
+				submitFeedbackForm(e);
+			}
 			return false;
 		});
 		//$('[id="id-feedback-form-submit"]').on('click', submitFeedbackForm);
@@ -134,8 +139,6 @@ $(document).ready(function(){
 	 */
 	var loadFeedbackForm = function() {
 		console.log("loadFeedbackForm: IN");
-		feedback_attributes.url = window.location.origin + $('#feedbackBtn').data('url');
-		console.log("loadFeedbackForm: url ", feedback_attributes.url);
 		
 		$.ajax({
 				    
@@ -173,10 +176,12 @@ $(document).ready(function(){
 	 * Page Click Actions
 	 */
 	var pageClickAct = function() {
-		console.log( "pageClickAct: IN");		
+		console.log( "pageClickAct: IN");
+		feedback_attributes.url = window.location.origin + $(this).data('url');
 		loadFeedbackForm();
 	}
-
-	$("#feedbackBtn").on('click', pageClickAct);
+	//var nodes = document.querySelectorAll('*[id^="feedbackBtn"]');//for new browsers
+	var nodes = $('*[id^="feedbackBtn"]'); //old browser
+	nodes.on('click', pageClickAct);//old browser	
 
 });

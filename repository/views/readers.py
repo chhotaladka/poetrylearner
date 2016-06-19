@@ -353,10 +353,10 @@ def get_a_poetry():
     
     if count:  
         try:
-            index = random.randint(1, count-1)
+            index = random.randint(0, count-1)
             obj = obj_list[index]
         except:
-            print ("count", count, "index", index)
+            print ("count", count)
             print ("Error: Unexpected error:", sys.exc_info()[0])
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame

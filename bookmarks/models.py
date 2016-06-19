@@ -26,7 +26,7 @@ class BookmarkManager(models.Manager):
             obj = self.get(user=user, content_type=content_object, object_id=obj._get_pk_val())
       
         except ObjectDoesNotExist:
-            print 'No bookmark by {user} on {object}'.format(user=user, object=obj.id)
+            #print 'No bookmark by {user} on {object}'.format(user=user, object=obj.id)
             return None
             
         return obj

@@ -151,9 +151,10 @@
 		<footer class="mdl-mini-footer">
 			<div class="mdl-mini-footer__left-section">
 				<ul class="mdl-mini-footer__link-list">
-			    	<li><a href="#">About</a></li>
+			    	<!--<li><a href="#">About</a></li>
 			    	<li><a href="#">Privacy & Terms</a></li>
-			    	<li><a href="#">Help</a></li>
+			    	<li><a href="#">Help</a></li>-->
+			    	<li><a id="feedbackBtn-site" data-url="{% url 'feedback:add' %}" href="#">Feedback</a></li>
 			    </ul>
 			</div>
 		</footer>	        
@@ -164,25 +165,15 @@
 		{% endblock %}
 		{% block headbanner %}{% endblock %}
 		{% block breadcrumbs %}{% endblock %}		
-		{% block main %}{% comment %} Put the main content in this block {% endcomment %}{% endblock %}		   	
-		{% block footer %}{% comment %} write down footer code in this block {% endcomment %}
-		{% comment %}  
-		<footer class="mdl-mini-footer">
-		  <div class="mdl-mini-footer__left-section">
-		    <div class="mdl-logo">Title</div>
-		    <ul class="mdl-mini-footer__link-list">
-		      <li><a href="#">Help</a></li>
-		      <li><a href="#">Privacy & Terms</a></li>
-		    </ul>
-		  </div>
-		</footer>{% endcomment %}
-		{% endblock %}{% comment %} end of footer {% endcomment %}
+		{% block main %}{% comment %} Put the main content in this block {% endcomment %}{% endblock %}
 		</main>
 	</div>
 	{% endblock %}{% comment %} end of body {% endcomment %}
 	
  	{% block modal %}{% comment %} Modal code {% endcomment %}{% endblock %}
- 	{% block feedback %}{% comment %} Feedback related css, modal, and script {% endcomment %}{% endblock %}	
+ 	{% block feedback %}{% comment %} Feedback related css, modal, and script {% endcomment %}
+ 		{% include "feedback/modal.html" %}
+ 	{% endblock %}	
 	{% block scripts %}{% comment %} extra scripts {% endcomment %}{% endblock %}
 		
 	</body>

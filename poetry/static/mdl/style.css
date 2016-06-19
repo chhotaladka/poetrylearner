@@ -180,7 +180,7 @@ html, body {
 	color: white !important;
 }
 .head__banner.repository {
-	background-color: #42C2B4 !important;
+	background-color: #19A36C !important;
 	color: white !important;
 }
 .head__title h3 {
@@ -1899,6 +1899,7 @@ ul.mdl-mini-footer__link-list {
 .wS-pl { white-space: pre-line; }
 .wS-nw { white-space: nowrap; }
 
+.m8 {margin:8px;}
 .mT0 {margin-top:0px !important;}
 .mB0 {margin-bottom:0px !important;}
 .mR-8 { margin-right: 8px; }

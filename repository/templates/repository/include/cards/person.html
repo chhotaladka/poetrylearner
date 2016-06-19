@@ -39,7 +39,11 @@
 		{% endif %}					
 	</div>
 	<div class="mdl-card__supporting-text">					
-		<p>{{ person.description }}</p>
+		<p>{{ person.description }}
+		{% if person.similar_item_url %}
+			<span class="info-txt"><a href="{{ person.similar_item_url }}">More</a></span>
+		{% endif %}
+		</p>
 	</div>
 	{% comment %}  Include meta panel {% endcomment %}
 	{% include "repository/include/misc/meta-panel.html" with item=person %}

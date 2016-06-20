@@ -925,6 +925,7 @@ a.action-button:hover {
     font-weight: 300;
 	color: #757575 !important;
 }
+.clg {color: #90949C !important;}/* very light grey */
 .meta-edit a,
 .light-txt a,
 .info-txt a,

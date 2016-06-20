@@ -4,6 +4,8 @@
 	Note:       xxx
 {% endcomment %}
 {% load staticfiles %}
+{% load poetry_tags %}
+{% get_poetry_count by person as poetry_count %}
 <div class="content-wrapper">
 	<a class="card" href="{{person.get_absolute_url}}">
 		<div class="mdl-card author-card--sm bS-1 wFull">
@@ -38,6 +40,11 @@
 					<span>)</span>				
 				</div>
 				{% endif %}				
+			</div>
+			<div class="pos-RB">
+				<div class="info-panel">
+					<div class="light-txt clg">{{ poetry_count }} poetry</div>					
+				</div>		
 			</div>
 		</div>
 	</a>

@@ -2128,6 +2128,7 @@ a.md-tabs__tab:hover {
 }
 .pagination li a {
     color: #444;
+	display: block;
 }
 .pagination li svg {
     fill: #444;

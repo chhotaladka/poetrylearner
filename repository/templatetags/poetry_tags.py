@@ -40,7 +40,7 @@ class RecentPoetryNode(Node):
         # Check the 2nd argument
         if tokens[2] == 'as':
             correct_syntax = "'%s [count] as [varname]'" % tokens[0]
-            print "case 1"
+
             return cls(
                        count=count, 
                        varname = tokens[3]
@@ -53,8 +53,7 @@ class RecentPoetryNode(Node):
             
             if tokens[4] != 'as':
                 raise template.TemplateSyntaxError, "Forth argument must be 'as'. Correct syntax is " + correct_syntax
-            
-            print "case 2"
+
             return cls(
                        count=count, 
                        varname = tokens[5],
@@ -68,8 +67,7 @@ class RecentPoetryNode(Node):
             
             if tokens[4] != 'as':
                 raise template.TemplateSyntaxError, "Forth argument must be 'as'. Correct syntax is " + correct_syntax
-            
-            print "case 3"    
+
             return cls(
                        count=count, 
                        varname = tokens[5],
@@ -83,8 +81,7 @@ class RecentPoetryNode(Node):
             
             if tokens[4] != 'as':
                 raise template.TemplateSyntaxError, "Forth argument must be 'as'. Correct syntax is " + correct_syntax
-            
-            print "case 4"    
+  
             return cls(
                        count=count, 
                        varname = tokens[5],
@@ -98,8 +95,7 @@ class RecentPoetryNode(Node):
             
             if tokens[3] != 'as':
                 raise template.TemplateSyntaxError("Third argument must be 'as'. Correct syntax is " + correct_syntax)
-            
-            print "case 5"
+
             return cls(
                        count=count, 
                        varname = tokens[4],
@@ -112,6 +108,9 @@ class RecentPoetryNode(Node):
     def render(self, context):
         q_objects = Q()
         try:
+            # poetries which are published
+            q_objects &= Q(date_published__isnull=False)
+            
             if self.creator:
                 creator = self.creator.resolve(context)
                 q_objects &= Q(creator__id=creator.id)
@@ -121,9 +120,6 @@ class RecentPoetryNode(Node):
                 
             if self.tag:
                 q_objects &= Q(keywords__slug=self.tag)
-            
-            if self.published:
-                q_objects &= Q(date_published__isnull=False)
                                 
             context[self.varname] = Poetry.objects.filter(q_objects).order_by('-date_modified')[:self.count]
         
@@ -200,7 +196,7 @@ class SimilarPoetryNode(Node):
 @register.tag
 def get_recent_poetries(parser, token):
     """
-    Get the list of recent poetries
+    Get the list of recent poetries (published only)
     
     Syntax::
         case 1: {% get_recent_poetries [count] as [varname] %}

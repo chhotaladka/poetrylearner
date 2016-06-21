@@ -13,7 +13,7 @@
 		{% csrf_token %}
 		<fieldset>
 			{% if form.non_field_errors %}
-			<div id="errorMsg">{{ form.non_field_errors }}</div>
+			<div id="errorMsg" class="errormsg">{{ form.non_field_errors }}</div>
 			{% endif %}
 
 			{% for base_account in form.accounts %}

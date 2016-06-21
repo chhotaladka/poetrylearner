@@ -10,7 +10,7 @@
 	{{site_name}}. As a final step, please complete the following form:{% endwith %}
 	</div>
 	
-	<form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+	<form class="signup a-mdl-form" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
 		{% csrf_token %}
 		<fieldset>				
 			<div id="div_id_username" class="form-element">
@@ -18,7 +18,7 @@
 					<input autofocus="autofocus" id="id_username" name="username" placeholder="Username" type="text" value="{{ form.username.value|default_if_none:'' }}"/>
 				</label>
 			{% if form.username.errors %}
-			    {% for error in form.username.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+			    {% for error in form.username.errors %}<span class="errormsg tAl">{{ error|escape }}</span>{% endfor %}
 			{% endif %}
 			</div>		
 			<div id="div_id_email" class="form-element">
@@ -26,14 +26,14 @@
 					<input id="id_email" name="email" placeholder="E-mail address" type="email" value="{{ form.email.value|default_if_none:'' }}"/>
 				</label>
 			{% if form.email.errors %}
-			    {% for error in form.email.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+			    {% for error in form.email.errors %}<span class="errormsg tAl">{{ error|escape }}</span>{% endfor %}
 			{% endif %}
 			</div>
 		</fieldset>
 		{% if redirect_field_value %}
 		<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
 		{% endif %}
-		<div class="p-8">
+		<div class="">
 			<button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Sign Up</button> 
 		</div>
 	</form>

@@ -5,7 +5,7 @@
 {% block title %}Login to{% endblock %}
 
 {% block main %}
-<!--<div class="banner" style="background: url('{% static "img/ddd.jpg" %}') top / cover;">-->
+{% comment %}<div class="banner" style="background: url('{% static "img/ddd.jpg" %}') top / cover;">{% endcomment %}
 	<div class="login-card transp bS-1 wFull">						
 	{% get_providers as socialaccount_providers %}					
 	{% if socialaccount_providers %}
@@ -52,7 +52,7 @@
 			  {% if redirect_field_value %}
 			  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
 			  {% endif %}		
-			<fieldset>
+			</fieldset>
 			<div class="">
 				<button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Log In</button> 
 			</div> 

@@ -6,7 +6,7 @@
 {% include "meta.html" with meta=meta only %}
 {% endblock %}
 
-{% block title %}{{ obj.name }} | poetry {% endblock %}
+{% block title %}{{ obj.name }}, poetry by {{ obj.creator }} - {{ sitename }}{% endblock %}
 
 {% block breadcrumbs %}
 {% include "repository/include/misc/breadcrumb_for_item.html" %}

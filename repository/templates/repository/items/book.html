@@ -1,7 +1,7 @@
 {% extends "repository/base.html" %}
 {% load staticfiles %}
 
-{% block title %}{{ obj.name }} | book {% endblock %}
+{% block title %}{{ obj.name }} - {{ sitename }}{% endblock %}
 
 {% block breadcrumbs %}
 {% include "repository/include/misc/breadcrumb_for_item.html" %}

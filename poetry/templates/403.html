@@ -1,6 +1,6 @@
 {% extends "dashboard-base.html" %}
 
-{% block title %}Permission Denied, 403{% endblock %}
+{% block title %}Permission Denied, 403 - {{ sitename }}{% endblock %}
 
 {% block main %}
 <div class="pT-8 pB-48">
@@ -10,7 +10,7 @@
 				<h1>403</h1>
 				<h2>Permission Denied</h2>
 				<p>You don't have permission of requested page. 
-				If you think this is a problem, contact us at support@sitename.org
+				If you think this is a problem, contact us at support@{{ site }}
 				</p>
 
 			</div>

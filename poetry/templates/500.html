@@ -1,6 +1,6 @@
 {% extends "dashboard-base.html" %}
 
-{% block title %}Internal Server Error, 403{% endblock %}
+{% block title %}Internal Server Error, 500 - {{ sitename }}{% endblock %}
 
 {% block main %}
 <div class="pT-8 pB-48">
@@ -10,7 +10,7 @@
 				<h1>500</h1>
 				<h2>Internal Server Error</h2>
 				<p>The server encountered an unexpected condition which prevented it from fulfilling the request. 
-				To report this problem, contact us at support@sitename.org
+				To report this problem, contact us at support@{{ site }}
 				</p>
 			</div>
 		</section>			

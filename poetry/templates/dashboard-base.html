@@ -8,9 +8,11 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    {% comment %} The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags {% endcomment %}
 	    
-		{% block meta %}{% comment %} Write down all meta here {% endcomment %}{% endblock %}
+		{% block meta %}{% comment %} Write down all meta here {% endcomment %}
+		<meta name="description" content="Archive of poetry.">
+		{% endblock %}
 		
-	    <title>{% block title %} Home {% endblock title %} | poetrylearner.com </title>
+	    <title>{% block title %}Abode of the world's greatest collection of poetry - {{ sitename }}{% endblock title %}</title>
 	    
 	    {% comment %} Base CSS {% endcomment %}
 	    <link rel="stylesheet" href="{% static "mdl/material.min.css" %}">

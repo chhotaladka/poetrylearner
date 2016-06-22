@@ -1,6 +1,6 @@
 {% extends "dashboard-base.html" %}
 
-{% block title %}Page unavailable, 404{% endblock %}
+{% block title %}Page unavailable, 404 - {{ sitename }}{% endblock %}
 
 {% block main %}
 <div class="pT-8 pB-48">
@@ -10,7 +10,7 @@
 				<h1>404</h1>
 				<h2>Page unavailable</h2>
 				<p>The document you requested either no longer exists or is not currently available. 
-				To report this problem, contact us at support@sitename.org
+				To report this problem, contact us at support@{{ site }}
 				</p>
 
 			</div>

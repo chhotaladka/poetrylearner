@@ -11,7 +11,7 @@
 {% include "meta.html" with meta=meta only %}
 {% endblock %}
 
-{% block title %}{{ obj.name }} | person {% endblock %}
+{% block title %}{{ obj.name }} - {{ sitename }}{% endblock %}
 
 {% block breadcrumbs %}
 {% include "repository/include/misc/breadcrumb_for_item.html" %}

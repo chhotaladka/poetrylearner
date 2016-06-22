@@ -43,37 +43,7 @@
 	      <div class="mdl-layout-title logo site-name">
 	      	<a href="/">poetry learner</a>
 	      </div>
-	      <div class="mdl-layout-spacer"></div>
-	      {% block search %}{% comment %} Modify the search block as per the current page {% endcomment %} 
-		  <div id="id-search-box" class="site-search-row"> 	    	  
-		    <form id="id-search-form" class="site-search hidden" onsubmit="if (document.getElementById('id-search-term').value == '') return false;" 
-		    	action="{% block search-form-action %}{% endblock %}" method="get">
-			  <button class="search-btn" id="search-btn" type="submit" tabindex="2" dir="ltr" 
-			  	onclick="if (document.getElementById('id-search-term').value == '') return false; document.getElementById('id-search-form').submit(); return false;;return true;">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50" style="fill: rgb(51, 51, 51);">
-					<path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 21 3 C 11.623004 3 4 10.623004 4 20 C 4 29.376996 11.623004 37 21 37 C 24.709505 37 28.140329 35.803849 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460556 28.087561 38 24.221313 38 20 C 38 10.623004 30.376996 3 21 3 z M 21 5 C 29.296116 5 36 11.703884 36 20 C 36 28.296116 29.296116 35 21 35 C 12.703884 35 6 28.296116 6 20 C 6 11.703884 12.703884 5 21 5 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
-				</svg>				
-			  </button>
-			  <input class="search-input" id="id-search-term" name="q" type="text" value="" spellcheck="false" autocomplete="off" 
-			  	onkeydown="if (!this.value &amp;&amp; (event.keyCode == 40 || event.keyCode == 32 || event.keyCode == 34)) {this.onkeydown = null; this.blur();}"  
-			  	tabindex="1" placeholder="Search" title="Search"/>						    	
-			</form>
-			<div class="">
-				<a id="id-sOn" class="search-box-btn" href="#" 
-					onclick="this.classList.toggle('hidden');document.getElementById('id-search-box').classList.toggle('search-box');document.getElementById('id-search-form').classList.toggle('hidden'); document.getElementById('id-sOff').classList.toggle('hidden');return false;">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50" style="fill: rgb(51, 51, 51);">
-    					<path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 21 3 C 11.623004 3 4 10.623004 4 20 C 4 29.376996 11.623004 37 21 37 C 24.709505 37 28.140329 35.803849 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460556 28.087561 38 24.221313 38 20 C 38 10.623004 30.376996 3 21 3 z M 21 5 C 29.296116 5 36 11.703884 36 20 C 36 28.296116 29.296116 35 21 35 C 12.703884 35 6 28.296116 6 20 C 6 11.703884 12.703884 5 21 5 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
-					</svg>
-				</a>
-		      	<a id="id-sOff" class="search-box-btn hidden" href="#" 
-		      		onclick="this.classList.toggle('hidden');document.getElementById('id-search-form').classList.toggle('hidden');document.getElementById('id-search-box').classList.toggle('search-box');document.getElementById('id-sOn').classList.toggle('hidden');return false;">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50" style="fill: rgb(51, 51, 51);">
-					    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 L 7.71875 6.28125 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
-					</svg>		      		
-		      	</a>
-	      	</div>	      						
-		  </div>
-		  {% endblock %}{% comment %} end of search block {% endcomment %}	         
+	      <div class="mdl-layout-spacer"></div>	         
 	      <nav class="mdl-navigation page-header--nav">
 	      {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
 	      	{% if request.user.is_authenticated %}
@@ -166,6 +136,7 @@
 		{% block messages %}
 		{% include "common/include/message-panel.html" with messages=messages only %}
 		{% endblock %}
+		{% block search %}{% endblock %}
 		{% block headbanner %}{% endblock %}
 		{% block tabs %}{% comment %} Navigation tabs {% endcomment %}{% endblock %}
 		{% block breadcrumbs %}{% endblock %}		

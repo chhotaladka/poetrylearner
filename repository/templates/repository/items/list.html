@@ -6,6 +6,9 @@
 {% endcomment %}
 {% block title %}{{ result_title }} - {{ sitename }}{% endblock title %}
 
+{% block search-placeholder %}{{result_title}}{% endblock %}
+{% block search-action %}/{% endblock %}
+
 {% block breadcrumbs %}
 {% include "repository/include/misc/breadcrumb_for_list.html" %}
 {% endblock %}

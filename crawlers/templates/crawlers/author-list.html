@@ -1,13 +1,10 @@
 {% extends "crawlers/base.html" %}
 
 {% block title %}Crawled Authors - {{ sitename }}{% endblock %}
-{% block headbanner %}
-<section id="id-head" class="centered">
-	<div class="head__banner small crawler">
-		<div class="head__subtitle">Crawled Authors</div>
-	</div>				
-</section>
-{% endblock %}
+
+{% block search-placeholder %}{{result_title}}{% endblock %}
+{% block search-action %}{% endblock %}
+
 {% block tabs %}
 <div class="pT-8 pB-8">
 	<div class="_layout">

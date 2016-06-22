@@ -1,6 +1,9 @@
 {% extends "repository/base.html" %}
 {% block title %}#{{tag}} - {{ sitename }}{% endblock %}
 
+{% block search-placeholder %}{{result_title}}{% endblock %}
+{% block search-action %}/{% endblock %}
+
 {% block breadcrumbs %}
 <div class="pT-8 pB-8">
 	<div class="_layout mW-512">					

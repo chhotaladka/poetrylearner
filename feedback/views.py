@@ -252,8 +252,11 @@ def feedback_list(request):
         obj_list = Feedback.objects.all()
  
     else:
-        # Default: Most recent feedbacks
-        obj_list = Feedback.objects.all()
+        # Default: Feedbacks to which we have not responded
+        obj_list = Feedback.objects.all().filter(
+                                                  Q(action__isnull=True) | 
+                                                  Q(action=u'')
+                                                  )
           
     
     # Create tab list and populate
@@ -263,7 +266,7 @@ def feedback_list(request):
            'name': 'all',
            'help_text': 'Recent feedbacks',
            'url': request.path + '?tab=all',
-           'css': 'is-active' if q_tab == 'all' or q_tab is None else '',
+           'css': 'is-active' if q_tab == 'all' else '',
         }
     query_tabs.append(tab)
     
@@ -271,7 +274,7 @@ def feedback_list(request):
            'name': 'pending',
            'help_text': 'Feedbacks to which we have not responded',
            'url': request.path + '?tab=pending',
-           'css': 'is-active' if q_tab == 'pending' else '',
+           'css': 'is-active' if q_tab == 'pending' or q_tab is None else '',
         }
     query_tabs.append(tab)
     

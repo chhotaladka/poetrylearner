@@ -225,10 +225,14 @@ def publish(request, type, pk, slug):
     if request.method == "POST":
         action = request.POST.get('submit')
         if action == 'Publish':
-            obj.date_published = timezone.now()
+            obj.modified_by = request.user
+            obj.date_published = timezone.now()            
+            obj.save()
         elif action == 'Unpublish':
+            obj.modified_by = request.user
             obj.date_published = None
-        obj.save()
+            obj.save()
+
         messages.success(request, 'Changes on item %s are successful! '%obj.name)
         return HttpResponseRedirect(obj.get_absolute_url())                                   
            

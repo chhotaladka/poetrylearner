@@ -1,5 +1,10 @@
 {% extends "dashboard/base.html" %}
 
+{% block meta %}
+	<meta name="robots" content="noindex">
+	<meta name="googlebot" content="noindex">
+{% endblock %}
+
 {% block title %}{{ public_profile.get_name }} - {{ sitename }}{% endblock %}
 
 {% block main %}	
@@ -19,7 +24,7 @@
 					</div>
 					<div class="extras">
 						<span>Joined</span>
-						<span>{{ request.user.date_joined|date:"d M, Y" }}</span>					
+						<span>{{ public_profile.user.date_joined|date:"d M, Y" }}</span>					
 					</div>													
 				</div>					
 				<div class="mdl-card__supporting-text">

@@ -23,6 +23,42 @@ from meta_tags.views import Meta
 
 # Create your views here.
 
+def _create_query_tabs(request_path='/', q_tab=None, extra_get_queries=[]):
+    '''
+    Return query tab object for poetry
+    '''
+    get_query = ''.join(extra_get_queries)
+    
+    # Create tab list and populate
+    query_tabs = []    
+    
+    tab = {
+           'name': 'all',
+           'help_text': 'Recent items',
+           'url': request_path + '?tab=all' + get_query,
+           'css': 'is-active' if q_tab == 'all' or q_tab is None else '',
+        }
+    query_tabs.append(tab)
+    
+    tab = {
+           'name': 'published',
+           'help_text': 'Itmes which are published',
+           'url': request_path + '?tab=pub' + get_query,
+           'css': 'is-active' if q_tab == 'pub' else '',
+        }
+    query_tabs.append(tab)
+    
+    tab = {
+           'name': 'unpublished',
+           'help_text': 'Itmes which are not published',
+           'url': request_path + '?tab=unpub' + get_query,
+           'css': 'is-active' if q_tab == 'unpub' else '',
+        }
+    query_tabs.append(tab)
+    
+    return query_tabs
+        
+
 def _resolve_item_type(type, list=False):
     '''
     Check the type i.e. item_type and retunr the model class and template.
@@ -181,7 +217,10 @@ def list(request, type, src=None):
     
     ##
     # Check the parameters passed in the URL and process accordingly
-    
+
+    # Query tab
+    q_tab = request.GET.get('tab', None)
+        
     # Creator id (valid for items derived from `CreativeWork`)
     creator = request.GET.get('creator', None)
     # Language (valid for items derived from `CreativeWork`)
@@ -196,28 +235,54 @@ def list(request, type, src=None):
     obj_list = []
     result_title = item_cls._meta.verbose_name_plural.title()
     kwargs = {}
-    
+    query_tabs = []
+    extra_get_queries = []
+
+    #
+    ## Process get queries
+    if q_tab:
+        if q_tab == 'all':
+            pass
+        elif q_tab == 'pub':
+            kwargs['published'] = True
+        elif q_tab == 'unpub':
+            kwargs['published'] = False
+        else:
+            # Set the q_tab to None: ignore other values
+            q_tab = None        
+            
     # Get the items having creator.id = creator
     if creator:
         try:
+            q_string = '&creator=' + creator
+            extra_get_queries.append(q_string)
             creator = int(creator)
             result_title = get_object_or_404(Person, pk=creator).title() 
-            kwargs['creator'] = creator  
+            kwargs['creator'] = creator
+
         except (TypeError, ValueError):
             print 'Error: That creator_id is not an integer, pass silently'
-            raise Http404
+            pass
 
     if language:        
         tmp = dict(LANGUAGES)
         if language in tmp:
+            q_string = '&lan=' + language
+            extra_get_queries.append(q_string)            
             kwargs['language'] = language
-            result_title += ', #' + tmp[language]                        
+            result_title += ', #' + tmp[language]                         
 
-    # Check for permissions
-    if type == 'poetry' or type == 'snippet':    
-        if user_has_group(request.user, ['Administrator', 'Editor']) is False:
+    # Only for ``poetry`` and ``snippet``
+    if type == 'poetry' or type == 'snippet':
+        # Check for permissions
+        if user_has_group(request.user, ['Administrator', 'Editor']):
+            # Create ``query_tabs`` for user of Administrator and Editor groups
+            query_tabs = _create_query_tabs(request.path, q_tab, extra_get_queries)
+        else:
+            # Create ``query_tabs`` for public users
+            query_tabs = []                        
             # Show only published `poetry`, `snippet` 
-            kwargs['published'] = True        
+            kwargs['published'] = True      
 
     obj_list = item_cls.objects.apply_filter(**kwargs).order_by('-date_modified')
              
@@ -254,6 +319,7 @@ def list(request, type, src=None):
             
     context = {'items': objs, 'list_template': list_template, 
                'item_type': type, 'result_title': result_title,
+               'query_tabs': query_tabs,
                'src': src}
     template = 'repository/items/list.html'    
 

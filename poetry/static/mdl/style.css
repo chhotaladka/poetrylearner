@@ -458,7 +458,7 @@ html, body {
   -webkit-align-items: flex-start;
       -ms-flex-align: start;
           align-items: flex-start;
-  height: 48px;
+  height: 46px;
   padding: 0 0 0 0;
   margin: 0;
   border-bottom: 1px solid rgb(224,224,224); 
@@ -473,14 +473,14 @@ html, body {
   display: block;
   color: red;
   text-decoration: none;
-  height: 48px;
-  line-height: 48px;
+  height: 46px;
+  line-height: 46px;
   text-align: center;
   font-weight: 500;
   font-size: 14px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   color: rgba(0,0,0, 0.54);
-  overflow: hidden; 
+  overflow: hidden;
 }
 .md-tabs .md-tabs__tab.is-active {
     color: rgba(0,0,0, 0.87); 

@@ -1,10 +1,15 @@
 {% comment %}  
 	Floating Add item button(circle), displayed at the right bottom
 {% endcomment %}
-<a id="floating-btn-bottom" href="{% url 'repository:add-item' type=item_type %}?cancel={{request.path}}"
-	class="bg-{{item_type}} mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-shadow--4dp">
-	<svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24" enable-background="new 0 0 24 24" width="24" height="24" style="fill: #616161;">
-	    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 11 5 L 11 11 L 5 11 L 5 13 L 11 13 L 11 19 L 13 19 L 13 13 L 19 13 L 19 11 L 13 11 L 13 5 L 11 5 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
-	</svg>
-    <span class="visuallyhidden">Add</span>
-</a>
+{% if request.user.is_authenticated %}
+<div class="floating-btn-bottom">
+	<a href="{% url 'repository:add-item' type=item_type %}?cancel={{request.path}}">
+		<button class="bg-{{item_type}} mdl-button mdl-js-button mdl-button--fab mdl-shadow--4dp">
+			<svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24" enable-background="new 0 0 24 24" width="24" height="24" style="fill: #616161;">
+			    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 11 5 L 11 11 L 5 11 L 5 13 L 11 13 L 11 19 L 13 19 L 13 13 L 19 13 L 19 11 L 13 11 L 13 5 L 11 5 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
+			</svg>
+		    <span class="visuallyhidden">Add</span>
+	    </button>
+	</a>
+</div>
+{% endif %}

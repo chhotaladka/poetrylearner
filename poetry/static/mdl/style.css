@@ -1679,14 +1679,18 @@ ul.mdl-mini-footer__link-list {
 	line-height: inherit !important;
 	vertical-align: bottom;
 }
-#floating-btn-bottom {
+.floating-btn-bottom {
     position: fixed;
-    display: block;
     right: 0px;
     bottom: 0px;
-    margin-right: 40px;
-    margin-bottom: 40px;
-    z-index: 900;
+    padding: 23px 12px 23px 15px;
+    white-space: nowrap;
+    z-index: 21;
+}
+@media all and (min-width: 935px) {
+	.floating-btn-bottom {
+		padding-right: 23px;
+	}
 }
 .social-icon {
 

@@ -3,7 +3,7 @@
 {% block title %}{{ article.get_title }} - Crawled Article - {{ sitename }}{% endblock %}
 
 {% block search-placeholder %}Articles{% endblock %}
-{% block search-action %}{% endblock %}
+{% block search-action %}{% url 'crawlers:article-list' %}{% endblock %}
 
 {% block breadcrumbs %}
 <div class="pT-8 pB-8">

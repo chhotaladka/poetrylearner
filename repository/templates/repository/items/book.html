@@ -3,6 +3,9 @@
 
 {% block title %}{{ obj.name }} - {{ sitename }}{% endblock %}
 
+{% block search-placeholder %}{{ item_type }}{% endblock %}
+{% block search-action %}/{% endblock %}
+
 {% block breadcrumbs %}
 {% include "repository/include/misc/breadcrumb_for_item.html" %}
 {% endblock %}

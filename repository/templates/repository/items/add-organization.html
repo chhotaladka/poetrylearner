@@ -3,6 +3,9 @@
 
 {% block title %}Add an {{ item_type }} to repository - {{ sitename }}{% endblock %}
 
+{% block search-placeholder %}{{ item_type }}{% endblock %}
+{% block search-action %}/{% endblock %}
+
 {% block breadcrumbs %}
 {% include "repository/include/misc/breadcrumb_for_add_item.html" %}
 {% endblock %}

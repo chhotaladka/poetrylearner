@@ -49,9 +49,7 @@
 			onclick="document.getElementById('sharePanel').classList.toggle('hidden'); return false;">
             <i class="material-icons" role="presentation">share</i>
             <span class="action-button__text">Share</span>	                
-		</button>									
-		{% comment %}  Include LIKE button {% endcomment %}
-		{% include "repository/include/misc/like-button.html" with item=poetry %}		
+		</button>		
 		{% comment %}  Include BOOKMARK button {% endcomment %}
 		{% include "repository/include/misc/bookmark-button.html" with item=poetry %}									
 	</div>

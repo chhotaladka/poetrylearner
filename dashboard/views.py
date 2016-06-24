@@ -178,17 +178,3 @@ def user_bookmarks(request):
     
     return render(request, template, context)
 
-
-@login_required
-def user_favorites(request):
-    '''
-    Favorites of the user
-    '''
-    
-    profile = UserProfile.objects.get(user=request.user.id)
-    
-    ## Make the context and render     
-    context = {}
-    template = 'dashboard/base.html'
-    
-    return render(request, template, context)

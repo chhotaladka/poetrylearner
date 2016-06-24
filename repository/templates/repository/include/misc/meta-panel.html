@@ -7,19 +7,6 @@
 <div class="meta-panel mdl-card__actions mdl-card--border">	
 	<div id="metaPanelData" class="hidden">
 		<div class="row fill mB-8">
-			<div class="light-txt">
-				<span>Similar item:</span>
-				<a title="Reference web page that unambiguously indicates the item's identity." href="{{ item.similar_item_url }}">
-					{{ item.similar_item_name }}
-				</a>
-			</div>
-			<div class="mdl-layout-spacer"></div>
-			<div class="light-txt">
-				<span>Total views: </span>
-				<span class="bignum">12,234,002</span>	                                       
-			</div>			
-		</div>
-		<div class="row fill">
 			<div class="light-txt">				
 				<div>
 					<span>Last edited by</span> 
@@ -28,10 +15,9 @@
 					</a>			
 				</div>
 				<div>
-					<span title="Last edited at {{ item.get_last_edit_time }}">{{ item.get_last_edit_time |naturaltime }}</span>
+					<span title="Last edited at {{ item.get_last_edit_time }} IST">{{ item.get_last_edit_time |naturaltime }}</span>
 				</div>
-			</div>	
-			<div class="mdl-layout-spacer"></div>
+			</div>
 			<div class="light-txt">				
 				<div>
 					<span>Added by</span> 
@@ -40,9 +26,21 @@
 					</a>			
 				</div>
 				<div>
-					<span title="Added at {{ item.get_first_edit_time }}">{{ item.get_first_edit_time }}</span>
+					<span title="Added at {{ item.get_first_edit_time }} IST">{{ item.get_first_edit_time }}</span>
 				</div>
 			</div>
+		</div>
+		<div class="row fill">
+			<div class="light-txt mB4">
+				<span>Similar item:</span>
+				<a title="Reference web page that unambiguously indicates the item's identity." href="{{ item.similar_item_url }}">
+					{{ item.similar_item_name }}
+				</a>
+			</div>
+			<div class="light-txt mB4">
+				<span>Views: </span>
+				<span class="bignum">12,234,002</span>	                                       
+			</div>			
 		</div>
 		<div id="metaPanelBtnL" class="tAc mT-8">
 			<button class="action-button wFull oN" title="Hide meta data"

@@ -332,9 +332,6 @@ html, body {
 	max-width: 512px;
 	margin: 1px auto;
 }
-.poetry-card .mdl-card__title {
-	height: 176px;
-}
 .wide-card .mdl-card__title-text,
 .poetry-card .mdl-card__title-text {
 	font-size: 32px;
@@ -608,6 +605,7 @@ html, body {
     display: flex;
     flex-direction: row;
     align-items: left;
+	flex-wrap: wrap;
 }
 .row.fill {
 	justify-content: space-between;
@@ -747,16 +745,22 @@ html, body {
 	color: #424242;
 }
 
-.article-info {
+.article-info,
+.details {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: left;
     justify-content: flex-start;
     height: auto;
-}
-.article-info.mdl-card__supporting-text {
 	padding: 0px 16px;
+	font-size: 13px;
+	line-height: 18px;
+	overflow: hidden;
+	color: #757575;
+}
+.title .title-text {
+	color: #313131 !important;
 }
 
 .meta {
@@ -957,6 +961,14 @@ a.action-button:hover {
 .summary-txt {
 	font-size: 14px;
 	white-space: pre-line;
+}
+.poetry-stanza {
+	white-space: pre-wrap;
+	color: #292F33 !important;
+}
+p.poetry-stanza,
+.poetry-stanza p {
+	margin: 0px;
 }
 .col-err,
 .err {
@@ -1904,6 +1916,11 @@ ul.mdl-mini-footer__link-list {
     line-height: 16px;
     font-weight: 300;
 }
+.fS16 {
+	font-size: 16px;
+	line-height: 22px;
+	font-weight: 400;
+}
 .fS-12 {
     font-size: 12px !important;
     line-height: 18px;
@@ -1965,6 +1982,8 @@ ul.mdl-mini-footer__link-list {
 .m8 {margin:8px;}
 .mT0 {margin-top:0px !important;}
 .mB0 {margin-bottom:0px !important;}
+.mT4 {margin-top:4px !important;}
+.mB4 {margin-bottom:4px !important;}
 .mR-8 { margin-right: 8px; }
 .mL-8 { margin-left: 8px; }
 .mT-8 { margin-top: 8px; }
@@ -2017,6 +2036,7 @@ ul.mdl-mini-footer__link-list {
 .lH-i {line-height: inherit !important;}
 .lH-1 {line-height: 1 !important;}
 
+.dB {display:block;}
 .fD-c {flex-direction: column;}
 .fD-r {flex-direction: row;}
 .aI-c {align-items: center;}

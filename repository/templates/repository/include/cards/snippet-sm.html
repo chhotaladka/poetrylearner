@@ -10,8 +10,8 @@
 			<a href="{{ snippet.get_absolute_url }}" title="View full article">{{ snippet.headline }}</a>
 		</div>
 	</div>		
-	<div class="mdl-card__supporting-text mdl-color-text--grey-600 article-info">
-		<div class="row fill">
+	<div class="article-info">
+		<div class="row fill mB4">
 			<div>
 				<a title="Click here to view source" href="{{ snippet.similar_item_url }}" target="_blank">
 					{{ snippet.similar_item_name }}
@@ -19,11 +19,11 @@
 			</div>
 			{% if snippet.is_published %}
 			<div class="publish">
-				<a title="Last updated" href="#">{{ snippet.get_last_edit_time|date }}</a>
+				<a title="Published at {{ snippet.date_published }} IST" href="#">{{ snippet.date_published|date }}</a>
 			</div>
 			{% endif %}			
 		</div>	
-		<div>												
+		<div class="mB4">												
 			{% for tag in snippet.get_tags_slugs %}
 	 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-snippet' slug=tag %}">
 	 			<s>#</s>

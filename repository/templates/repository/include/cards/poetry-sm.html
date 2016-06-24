@@ -6,19 +6,19 @@
 {% load common_tags %}
 
 <div class="mdl-card poetry poetry-card mH-auto wFull bS-1">
-	<div class="mdl-card__supporting-text">
-		<div class="fS-28 mdl-color-text--grey-700">	
-			<a href="{{ poetry.get_absolute_url }}" title="View full article">{{ poetry.headline }}</a>
+	<div class="title p-16">
+		<div class="fS-28 title-text">	
+			<a class="dB oN" href="{{ poetry.get_absolute_url }}" title="Read poetry">{{ poetry.headline }}</a>
 		</div>
 	</div>		
-	<div class="mdl-card__supporting-text mdl-color-text--grey-600 article-info">
-		<div>{% if item_type != 'person' %}
+	<div class="details">
+		<div class="mB4">{% if item_type != 'person' %}
 			<span>by</span>
 			<a title="View the poet" href="{{ poetry.creator.get_absolute_url }}">
 				{{ poetry.creator.name }}
 			</a>{% endif %}
 		</div>	
-		<div>
+		<div class="mB4">
 			<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">
 				<s>#</s>
 				<b>{{ poetry.get_language }}</b>
@@ -39,8 +39,8 @@
 			{% endif %}{% endif %}											
 		</div>						
 	</div>
-	<div class="mdl-card__supporting-text">	
-		<div class="summary-txt mdl-color-text--grey-800">{% autoescape off %}{{ poetry.summary }}{% endautoescape %}</div>
+	<div class="content p-16">	
+		<p lang="{{ poetry.language }}" class="poetry-stanza fS16">{% autoescape off %}{{ poetry.summary }}{% endautoescape %}</p>
 	</div>	
 	<div class="pos-RB">
 		<div class="action-panel hide">

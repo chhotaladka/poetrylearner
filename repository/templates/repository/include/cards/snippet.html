@@ -13,13 +13,20 @@
 			{{ snippet.headline }}
 		</h2>
 	</div>		
-	<div class="mdl-card__supporting-text mdl-color-text--grey-600 article-info">
-		<div class="">
-			<a title="Click here to view source" href="{{ snippet.similar_item_url }}" target="_blank">
-				{{ snippet.similar_item_name }}
-			</a>
+	<div class="article-info">
+		<div class="row fill mB4">
+			<div>
+				<a title="Click here to view source" href="{{ snippet.similar_item_url }}" target="_blank">
+					{{ snippet.similar_item_name }}
+				</a>
+			</div>
+			{% if snippet.is_published %}
+			<div class="publish">
+				<a title="Published at {{ snippet.date_published }} IST" href="#">{{ snippet.date_published|date }}</a>
+			</div>
+			{% endif %}			
 		</div>	
-		<div>												
+		<div class="mB4">												
 			{% for tag in snippet.get_tags_slugs %}
 	 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-snippet' slug=tag %}">
 	 			<s>#</s>
@@ -27,8 +34,7 @@
 			</a>
 			{% endfor %}
 			{% if snippet.is_published %}{% comment %} TODO make it visible only to admin {% endcomment %}
-			<i id="id-pub" class="material-icons publish">assignment_turned_in</i>
-			<span for="id-pub" class="mdl-tooltip">Published at {{ snippet.date_published }}</span>
+			<i class="material-icons publish">assignment_turned_in</i>
 			{% endif %}								
 		</div>						
 	</div>

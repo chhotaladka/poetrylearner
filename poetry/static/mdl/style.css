@@ -146,13 +146,15 @@ html, body {
     line-height: 18px;
 }
 
-.mdl-poetry .title__extras .mdl-button {
+.title__extras .mdl-button,
+.curve.mdl-button {
 	color: inherit;
 	border-radius: 24px;
 	text-transform: none;
 	background: none repeat scroll 0px 0px rgba(255, 255, 255, 0.4);
 }
-.mdl-poetry .title__extras .mdl-button:hover {
+.title__extras .mdl-button:hover,
+.curve.mdl-button:hover {
 	background: rgba(255, 255, 255, 0.6);
 }
 
@@ -2030,6 +2032,18 @@ ul.mdl-mini-footer__link-list {
 
 .c-blue {color: #3F51B5;}
 .bc-red {background-color: #DB4437;}
+.c-administrator {
+	color: #FFF !important;
+	background-color:#FB0 !important;
+}
+.c-editor {
+	color:#FFF !important;
+	background-color:#005689 !important;
+}
+.c-staff {
+	color:#FFF !important;
+	background-color:#951C55 !important;
+}
 
 .oN {outline:none !important;}
 .oN::-moz-focus-inner {border: 0;}

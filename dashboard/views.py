@@ -125,9 +125,16 @@ def private_profile(request):
             extra_context['profile_email'] = profile.get_email(provider)
             extra_context['profile_gender'] = profile.get_gender(provider)            
             social_accounts.append(extra_context)
+            
+    # Get groups name
+    groups = list(request.user.groups.values_list('name',flat=True))
+    if request.user.is_staff:
+        groups.append(u'staff')
                 
     ## Make the context and render     
-    context = {'social_accounts': social_accounts}
+    context = {'social_accounts': social_accounts,
+               'groups': groups,
+               }
     template = 'dashboard/profile-private.html'
     
     return render(request, template, context)

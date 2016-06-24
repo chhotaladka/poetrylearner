@@ -28,6 +28,12 @@
 					<span>Joined</span>
 					<span>{{ request.user.date_joined|date:"d M, Y" }}</span>					
 				</div>
+				<div class="group mT-16">
+					<span>Role . </span>
+					{% for group in groups %}
+					<button class="curve mdl-button c-{{group}}">{{ group|title }}</button>
+					{% endfor %}					
+				</div>
 				<div class="__row center">
     			{% for account in social_accounts %}
 	    			<div class="social circle">

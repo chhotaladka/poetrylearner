@@ -24,6 +24,15 @@ html, body {
   src: local('Open Sans'), local('OpenSans'), url(//fonts.gstatic.com/s/opensans/v13/cJZKeOuBrn4kERxqtaUH3VtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
 }
 
+::-moz-selection {
+  background: rgba(75, 198, 223, 0.4) none repeat scroll 0% 0%;
+  text-shadow: none;
+}
+::selection {
+  background: rgba(75, 198, 223, 0.4) none repeat scroll 0% 0%;
+  text-shadow: none;
+}
+
 .mdl-poetry .mdl-poetry__post {
     max-width: 1080px;
     padding: 0px;

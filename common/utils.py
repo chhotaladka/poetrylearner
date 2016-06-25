@@ -1,5 +1,6 @@
 import os, sys, traceback
-from django.utils.html import strip_tags
+from django.utils.html import strip_tags, linebreaks
+import re
 
 def format_text_as_html():
     pass
@@ -73,16 +74,21 @@ def html_to_plain_text(str):
     Without disturbing the formatting e.g. change <br> to `/n' etc
     Remove leading and ending white spaces.
     """
-    
+
     try:
         # Make sure it's unicode
         str = unicode(str)
-        # Replace html break line tags with newline '\n'
-        str.replace("<[\s]*\/?br[\s]*\/?>","\n")
+        ## Replace html break line tags with newline '\n'
+        # (?i)<br[^>]*> FOR br tags
+        # (\n)? FOR newline(if any) following br tag also needs to be taken care of
+        str = re.sub(r"(?i)<br[^>]*>(\n)?", u"\n", str)
+        # Add two new lines '\n\n' just after </p> tag: to make the outpur looks like end of paragraph
+        str = re.sub(r"</p>", u"</p>\n\n", str)
         # Strip remaining html
         str = strip_tags(str)
         # Remove leading and ending white spaces
         str = str.strip()
+        ##str = linebreaks(str, autoescape=False)
         
     except:
         print ("Error: Unexpected error:", sys.exc_info()[0])

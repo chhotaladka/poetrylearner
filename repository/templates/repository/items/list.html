@@ -20,12 +20,12 @@
 					<span class="tab-label">{{ tab.name }}</span>
 				</a>
 			{% endfor %}
-			{% if order == 'random' %}
-				<a href="?&o=recent" class="md-tabs__tab is-static" title="Disable shuffle to get recent items">
+			{% if order == 'shuffle' %}
+				<a href="?o=recent" class="md-tabs__tab is-static" title="Disable shuffle to get recent items">
 					<span class="tab-label bL">Shuffle</span>
 				</a>
 			{% else %}
-				<a href="?&o=random" class="md-tabs__tab" title="Enable shuffle to get random items">
+				<a href="?o=shuffle" class="md-tabs__tab" title="Enable shuffle to get random items">
 					<span class="tab-label bL">Shuffle</span>
 				</a>
 			{% endif %}			

@@ -254,7 +254,7 @@ def list(request, type, src=None):
             q_tab = None        
     
     # Set order to its default i.e. `recent` if it is not the expected one.
-    if order != 'random':
+    if order != 'shuffle':
         order = 'recent'
     q_string = '&o=' + order
     extra_get_queries.append(q_string)
@@ -291,26 +291,14 @@ def list(request, type, src=None):
             query_tabs = []                        
             # Show only published `poetry`, `snippet` 
             kwargs['published'] = True      
-
-    obj_list = item_cls.objects.apply_filter(**kwargs).order_by('-date_modified')
-             
-                
-#     # Get all authors sorted and ordered
-#     if sort == 'name':
-#         if order == 'inc':
-#             obj_list = item_cls.objects.all().filter(q_objects).order_by('-name')
-#         else:
-#             obj_list = item_cls.objects.all().filter(q_objects).order_by('name')
-#     elif sort == 'edit':
-#         if order == 'inc':
-#             obj_list = item_cls.objects.all().filter(q_objects).order_by('date_modified')
-#         else:
-#             obj_list = item_cls.objects.all().filter(q_objects).order_by('-date_modified')    
-#     else:
-#         obj_list = item_cls.objects.all().filter(q_objects)
-        
-    ##
-    # Check for permissions and render the list of authors
+    
+    if order == 'shuffle':
+        # Note: order_by('?') queries may be expensive and slow, 
+        # depending on the database backend you are using.
+        # FIXME: It will slow down if table is large. Use some other options.
+        obj_list = item_cls.objects.apply_filter(**kwargs).order_by('?')
+    else:
+        obj_list = item_cls.objects.apply_filter(**kwargs).order_by('-date_modified')                
     
     
     # Pagination

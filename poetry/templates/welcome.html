@@ -11,17 +11,21 @@
 			<!--<div class="bannerBack" style="background: url('/static/img/bbb.jpg') center / cover;"></div>-->
 			<div class="banner">				
 				{% if 0 %}
-				<div class="teaser-card tAc bS-1 transp wFull">
-					<h1 class="">{{ poetry.creator.title }}</h1>
-					{% comment %}  Include meta panel {% endcomment %}
+				<div class="wide-card Column tAc wFull">
+					{% comment %}   Include meta panel 
 					{% if request.user|has_group:"administrator,editor" %}
 					{% include "repository/include/misc/meta-panel2.html" with item=poetry %}
-					{% endif %}					
-					<div class="poetry-body mdl-color-text--grey-800">{{ poetry.body }}</div>
+					{% endif %}		{% endcomment %}
+					<div>
+						<h1 lang="{{ poetry.language }}" class="lang-{{ poetry.language }} wSpw">{{ poetry.summary }}</h1>
+					</div>
+					<div class="tAr wFull">
+						<h2>{{ poetry.creator.title }}</h2>
+					</div>								
 				</div>						
 				{% else %}
-				<div class="teaser-card tAc transp wFull" style="background-color: transparent;">
-					<h1>memory is an autumn leaf that murmurs in the wind and then is heard no more.</h1>
+				<div class="wide-card Column tAc wFull">
+					<h1 lang="en" class="lang-en">Memory is an autumn leaf that murmurs in the wind and then is heard no more.</h1>
 					<h2 class="tAr">Kahlil Gibran</h2>
 				</div>									
 				{% endif %}

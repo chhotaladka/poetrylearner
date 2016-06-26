@@ -33,6 +33,13 @@ html, body {
   text-shadow: none;
 }
 
+/* calligraphy */
+.kallos1 {
+	font-family: "adobe-caslon-pro","Georgia","Times New Roman",serif;
+	letter-spacing: -0.025em;
+	line-height: 1em;
+}
+
 .mdl-poetry .mdl-poetry__post {
     max-width: 1080px;
     padding: 0px;
@@ -267,7 +274,7 @@ html, body {
 }
 .banner h2 {
     font-family: "Open Sans",arial;
-    color: #555;
+    color: #444;
     font-size: 18px;
     font-weight: 400;
     margin-bottom: 20px;
@@ -603,6 +610,10 @@ html, body {
 .author-card--lg .mdl-card__title {
 	flex-direction: column;
 	align-items: center;
+}
+.Column {
+	display: flex;
+	flex-direction: column;
 }
 .column {
 	display: flex;
@@ -2004,6 +2015,7 @@ ul.mdl-mini-footer__link-list {
 
 .wSn { white-space: normal; }
 .wS-pl { white-space: pre-line; }
+.wSpw { white-space: pre-wrap; }
 .wS-nw { white-space: nowrap; }
 
 .m8 {margin:8px;}

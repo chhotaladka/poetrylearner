@@ -34,7 +34,7 @@ def _create_query_tabs(request_path='/', q_tab=None, extra_get_queries=[]):
     
     tab = {
            'name': 'all',
-           'help_text': 'Recent items',
+           'help_text': 'All items',
            'url': request_path + '?tab=all' + get_query,
            'css': 'is-active' if q_tab == 'all' or q_tab is None else '',
         }
@@ -228,9 +228,11 @@ def list(request, type, src=None):
     # Sort the result by: 'name' for `Author.name`, 'edit' for `Author.date_modified`
     # Default is 'edit' i.e. Give recently edited item first
     sort = request.GET.get('sort', 'edit')
-    # Order the result: 'inc' for increasing order; 'dec' for decreasing order
-    # Default is 'dec'
-    order = request.GET.get('order', 'dec')
+    # Order the result: 
+    #    'recent' for recently changed items first;
+    #    'random' for random selection;
+    #    Default is 'recent'
+    order = request.GET.get('o', 'recent')
               
     obj_list = []
     result_title = item_cls._meta.verbose_name_plural.title()
@@ -250,6 +252,12 @@ def list(request, type, src=None):
         else:
             # Set the q_tab to None: ignore other values
             q_tab = None        
+    
+    # Set order to its default i.e. `recent` if it is not the expected one.
+    if order != 'random':
+        order = 'recent'
+    q_string = '&o=' + order
+    extra_get_queries.append(q_string)
             
     # Get the items having creator.id = creator
     if creator:
@@ -319,7 +327,7 @@ def list(request, type, src=None):
             
     context = {'items': objs, 'list_template': list_template, 
                'item_type': type, 'result_title': result_title,
-               'query_tabs': query_tabs,
+               'query_tabs': query_tabs, 'order': order,
                'src': src}
     template = 'repository/items/list.html'    
 

@@ -25,90 +25,10 @@
 {% block main %}
 	<section class="p-8">
 		<div class="_layout mdl-grid">
-			<div class="mdl-cell mdl-cell--12-col">							
-				<div class="table-card bS-1">
-					<div class="row pT-8">
-						<div class="name">ID</div>
-						<div class="data">{{ feedback.id }}</div>						
-					</div>
-					<div class="row">
-						<div class="name">Date</div>
-						<div class="data">{{ feedback.date_added }}</div>						
-					</div>
-					<div class="row">
-						<div class="name">Page</div>
-						<div class="data"><a href="{{ feedback.get_page_url }}">{{ feedback.get_page_url }}</a></div>						
-					</div>
-					<div class="row">
-						<div class="name">Content</div>
-						<div class="data"><a href="{{ feedback.get_content_url }}">{{ feedback.get_content_url }}</a></div>						
-					</div>
-					<div class="row">
-						<div class="name">Given by</div>
-						<div class="data">
-							<span>{{ feedback.get_user_email }}</span>
-							{% if feedback.get_user %}
-							<a href="#" title="Registered user">
-								<button class="action-button">
-							 		<i class="material-icons md-18" role="presentation">person</i>
-								</button>
-							</a>
-							{% endif %}	
-						</div>						
-					</div>	
-					<div class="row pB-8">
-						<div class="name">Feedback text</div>
-						<div class="data">{{ feedback.get_text }}</div>						
-					</div>
-					{% if feedback.is_responded == True %}
-					<div id="id-action1" class="row pT-8 pB-8 __hover">
-						<div id="id-td1" class="name">We responded</div>
-						<div id="id-td2" class="data">
-							<div>{{ feedback.get_action_taken }}</div>
-							<div class="light-txt">[{{ feedback.date_responded }}]</div>
-							<div class="pos-RB0">
-								<button class="action-button" title="Edit response" onclick="document.getElementById('id-action2').classList.toggle('hidden');document.getElementById('id-action1').classList.toggle('hidden');return false;">
-								 	<i class="material-icons md-18" role="presentation">edit</i>
-								</button>
-							</div>
-						</div>
-					</div>							
-					<div id="id-action2" class="row pT-8 pB-8 __hover hidden">
-					{% else %}
-					<div id="id-action2" class="row pT-8 pB-8 __hover">
-					{% endif %}
-						<div class="name">Write response</div>
-						<div class="data">
-							<form id="id-action-form" method="post" class="">
-							{% csrf_token %}								
-								<div class="form-element">
-									<textarea class="form-input" name="action" rows="3" maxlength=900 required>{{ feedback.get_action_taken|default_if_none:'' }}</textarea>
-									<!--<span class="help-text">Write the action taken by you for this feedback.</span>-->											
-								</div>
-								<div class="form-element">
-									<input class="mdl-slider mdl-js-slider" type="range" min="0" max="10" name="rating" value="{{ feedback.get_rating }}" step="1" tabindex="0">
-									<span class="help-text">Give rating to the feedback. Lowest(negative feedback) to highest(positive feedback).</span>
-								</div>								
-								<div class="form-element">
-									<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="id-notify">
-  										<input id="id-notify" type="checkbox" class="mdl-checkbox__input" name="notify" value="1"/>
-  										<span class="">Send notification to user</span>
-									</label>    										
-								</div>
-								<div class="tAr">
-									<input class="mdl-button" type="submit" name="submit" value="submit response" id="id-form-submit"/>
-									{% if feedback.is_responded == True %}
-									<button class="mdl-button mL-16 mR-16" value="cancel" onclick="document.getElementById('id-action2').classList.toggle('hidden');document.getElementById('id-action1').classList.toggle('hidden');return false;">
-										cancel
-									</buton>
-									{% endif %}
-								</div>									
-							</form>
-						</div>								
-					</div>		
-										
-				</div>	
-									
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="wide-card bCw p5 bS-1">
+					{% include "feedback/include/response-card.html" %}
+				</div>
 			</div>					
 		</div>	
 	</section>

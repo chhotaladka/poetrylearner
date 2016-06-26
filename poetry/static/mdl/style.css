@@ -414,28 +414,41 @@ html, body {
 
 /* Data tables */
 .table-card {
-	max-width: 620px;
-	margin: 0px auto;
-    position: relative;
-    border-radius: 2px;
     font-size: 13px;
-    background-color: #FFF;
+	padding: 8px 16px 12px;
+	outline: medium none;
 }
-.table-card .name {
-	font-weight: 400;
-	margin: 4px 16px;
-	width: 20%;
-	text-align: right;
-	color: #616161 !important;
+.table-card table {
+    border-spacing: 0px;
 }
-.table-card .data {
-	margin: 4px 16px;
-	width: 80%;
-	text-align: left;
-	font-size: 14px;
-	color: #424242 !important;
-	position: relative;
+.name {
+    text-align: right;
+    color: #999;
+    white-space: nowrap;
+    vertical-align: top;
+    width: 0%;
+	padding: 6px 16px 6px 0px;
 }
+.gI {
+    vertical-align: top;
+    cursor: auto;
+}
+.gO {
+	vertical-align: top;
+	color: #555 !important;
+}
+.name .gI {
+    white-space: nowrap;
+}
+.data {
+	color: #222;
+    white-space: normal;
+    vertical-align: top;
+	width: auto;
+	padding: 6px 0px;
+}
+
+
 .__hover:hover {
 	background-color: #eee;
 }
@@ -1973,6 +1986,7 @@ ul.mdl-mini-footer__link-list {
 .pLR-0 { padding-left: 0px;padding-right: 0px;}
 .pLR-8 { padding-left: 8px;padding-right:8px;}
 .pLR-16 { padding-left: 16px;padding-right:16px;}
+.p5 { padding:5px;}
 .p-8 { padding:8px;}
 .p-16 { padding:16px;}
 .p-32 { padding:32px;}
@@ -2011,6 +2025,7 @@ ul.mdl-mini-footer__link-list {
 
 .mR-4 { margin-right: 4px; }
 
+.bCw {background-color: #FFF;}
 .bC-grey { background-color: #EEE; }
 .bC-inherit { background-color: inherit; }
 

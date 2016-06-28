@@ -33,7 +33,7 @@ $(document).ready(function(){
 	 */
 	var renderResponseSubmit = function(data){
 		console.log("renderResponseSubmit: IN, ", data.result, data.status);
-		var body = $("#id-div-form-body");
+		var body = $("#id-feedback-form-body");
 		body.children().remove();		
 		// Display success result
 		if (data.result == 'success') {			
@@ -106,13 +106,13 @@ $(document).ready(function(){
 	var renderFeedbackFrom = function(data) {
 		console.log("renderFeedbackFrom: IN");
 		
-		// Update the html inside #id-div-form-body
-		var body = $("#id-div-form-body");		
+		// Update the html inside #id-feedback-form-body
+		var body = $("#id-feedback-form-body");		
 		body.html(data);
 		componentHandler.upgradeDom();// Register new mdl elements
 		
 		$('#id-feedback-form-submit').prop( "onclick", null);
-		$("#id-div-form-body").on('submit', "#id-feedback-form", function(e){
+		$("#id-feedback-form-body").on('submit', "#id-feedback-form", function(e){
 			e.defaultPrevented;
 			e.stopPropagation(); 
 			if (feedback_attributes.sending_started == false) {  		

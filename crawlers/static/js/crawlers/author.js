@@ -94,7 +94,7 @@ $(document).ready(function(){
 		if (data.result == 'success') {
 			//dismissForm();
 			// Display success result
-			var body = $("#id-div-form-body");
+			var body = $("#id-person-form-body");
 			body.children().remove();
 			var str = '<div id="id-flash-icon" class="tAc pT-48"><div class="mdl-spinner mdl-js-spinner is-active"></div></div>'
 					+'<div id="id-flash-msg" class="flash-msg mdl-color-text--grey-600 tAc">'
@@ -163,7 +163,7 @@ $(document).ready(function(){
 		        console.log( "Error: " + errorThrown );
 		        console.log( "Status: " + status );
 		        console.dir( xhr );
-				var body = $("#id-div-form-body");
+				var body = $("#id-person-form-body");
 				body.children().remove();
 				var str = '<div id="id-flash-icon" class="tAc pT-48">'
 							+'<i class="material-icons mdl-color-text--red-700">highlight_off</i>'
@@ -184,7 +184,7 @@ $(document).ready(function(){
 	var dismissForm = function(){
 		console.log("dismissForm: In");
 		// Remove the html inside the div
-		var body = $("#id-div-form-body");
+		var body = $("#id-person-form-body");
 		body.children().remove();
 		$('#id-div-form').addClass('hidden');
 		$('#id-author-card').addClass('wFull');
@@ -201,15 +201,15 @@ $(document).ready(function(){
 	var renderForm = function(data){
 		console.log("renderForm: In");
 		var html = $.parseHTML(data);
-		var body = $("#id-div-form-body");
-		$("#id-div-form-body").off('submit', "#id-add-item-form");//Remove event listner
+		var body = $("#id-person-form-body");
+		$("#id-person-form-body").off('submit', "#id-add-item-form");//Remove event listner
 		body.children().remove();
 		body.append(html);
 
 		componentHandler.upgradeDom();// Register new mdl elements
 		
 		$('#id-form-submit').prop( "onclick", null );
-		$("#id-div-form-body").on('submit', "#id-add-item-form", function(e){
+		$("#id-person-form-body").on('submit', "#id-add-item-form", function(e){
 			e.defaultPrevented;
 			e.stopPropagation();   		
 			submitForm(e);

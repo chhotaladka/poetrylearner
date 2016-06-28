@@ -67,7 +67,7 @@
 							{% for author in authors %}
 							<tr>
 								<td>{{ forloop.counter }}</td>
-								<td class="non-numeric">
+								<td class="non-numeric fS16">
 									<a href="{{author.get_absolute_url}}" title="View author">{{ author.get_name }}</a>
 								</td>
 								<td class="non-numeric">{{ author.get_birth_date }}</td>

@@ -114,10 +114,10 @@
 							{% for article in articles %}
 							<tr data-id={{ article.id }}>
 								<td>{{ forloop.counter }}</td>
-								<td class="non-numeric">
+								<td class="non-numeric fS16">
 									<a href="{{article.get_absolute_url}}" title="View article">{{ article.get_title }}</a>
 								</td>
-								<td class="non-numeric">
+								<td class="non-numeric fS16">
 									<a href="{% url 'crawlers:author-list'%}/?q={{ article.get_author }}" title="Search in crawled authors">{{ article.get_author }}</a>
 								</td>
 								<td class="non-numeric">

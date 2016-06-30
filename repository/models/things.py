@@ -125,17 +125,17 @@ class Person(Thing):
                                          related_name="members",
                                          blank=True,
                                          help_text=_('Organization(s) that this person is affiliated with. For example, a school/university, a club, or a team.')
-                                        )
+                                        )    
     
-    date_birth = models.DateField(_('date of birth'),
-                                  null=True, blank=True,
-                                  help_text=_('YYYY-MM-DD')
-                                  )
+    year_birth = models.SmallIntegerField(_('year of birth'),
+                                          null=True, blank=True,
+                                          help_text=_('For years like 500 BC, use -500.')
+                                          )
     
-    date_death = models.DateField(_('date of death'),
-                                  null=True, blank=True,
-                                  help_text=_('YYYY-MM-DD')
-                                  )
+    year_death = models.SmallIntegerField(_('year of death'),
+                                          null=True, blank=True,
+                                          help_text=_('For years like 500 BC, use -500.')
+                                          )
     
     gender = models.CharField(max_length=2, 
                               choices=GENDER_TYPE, default='m',
@@ -159,11 +159,11 @@ class Person(Thing):
 
     def clean(self):
         print "DBG:: Model Person clean called"
-        # date_death must be greater than date_birth
-        if self.date_birth is not None and self.date_death is not None:
-            if self.date_death <= self.date_birth:
+        # year_death must be greater than year_birth
+        if self.year_birth is not None and self.year_death is not None:
+            if self.year_death <= self.year_birth:
                 raise ValidationError({
-                    'date_death': "Foeticide is illegal. Death shouldn't happen before birth."
+                    'year_death': "Foeticide is illegal. Death shouldn't happen before birth."
                 })
                         
     def save(self, *args, **kwargs):                

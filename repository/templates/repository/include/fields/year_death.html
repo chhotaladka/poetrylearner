@@ -1,0 +1,17 @@
+{% comment %}
+	Info:       Field year_death.
+	Requires:   Can be included in the Form of an item having 'year_death' 
+	Note:       xxx
+{% endcomment %}
+
+		<div id="div_id_year_death" class="form-element">	
+			<label for="id_year_death">
+				<strong>{{form.year_death.label}}</strong>
+				<input id="id_year_death" class="form-input" name="year_death" autocomplete="off" type="text" value={% if form.errors %}"{{ form.year_death.value|default_if_none:'' }}"{% else %}"{{ form.year_death.value|default_if_none:'' }}"{% endif %}/>
+				</label>							
+		{% if form.year_death.errors %}
+		    {% for error in form.year_death.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+		{% endif %}
+			<span class="mdl-textfield__error">Wrong format</span>
+			{% if form.year_death.help_text %}<span class="help-text">{{ form.year_death.help_text|safe }}</span>{% endif %}				
+		</div>

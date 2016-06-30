@@ -87,7 +87,7 @@ class PersonForm(ModelForm):
     class Meta:
         model = Person
         fields = ['name', 'description', 'same_as', # Thing
-                  'additional_name', 'affiliation', 'date_birth', 'date_death', 
+                  'additional_name', 'affiliation', 'year_birth', 'year_death', 
                   'gender', 'image']                # Person
 
     def save(self, owner, commit=True, *args, **kwargs):

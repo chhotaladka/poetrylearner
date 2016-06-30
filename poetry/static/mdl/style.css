@@ -806,7 +806,7 @@ html, body {
 	font-size: 13px;
 	line-height: 18px;
 	overflow: hidden;
-	color: #757575;
+	color: #616161;
 }
 .title .title-text {
 	color: #313131 !important;
@@ -1971,7 +1971,8 @@ ul.mdl-mini-footer__link-list {
 }
 .fS16 {
 	font-size: 16px;
-	line-height: 22px;
+	/*line-height: 22px;*/
+	line-height: 1.6;
 	font-weight: 400;
 }
 .fS-12 {

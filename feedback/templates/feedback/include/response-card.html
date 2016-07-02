@@ -5,7 +5,7 @@
 	<div class="table-card">
 		<table cellpadding="0">
 			<tbody>
-				<tr class="">
+				<tr>
 					<td class="name" colspan="2">
 						<span class="gI">Date</span>
 					</td>
@@ -13,7 +13,7 @@
 						<span class="gI">{{ feedback.date_added }}</span>
 					</td>						
 				</tr>
-				<tr class="">
+				<tr>
 					<td class="name" colspan="2">
 						<span class="gI">Page</span>
 					</td>
@@ -23,7 +23,7 @@
 						</span>
 					</td>						
 				</tr>
-				<tr class="">
+				<tr>
 					<td class="name" colspan="2">
 						<span class="gI">Content</span>
 					</td>
@@ -33,7 +33,7 @@
 						</span>
 					</td>						
 				</tr>
-				<tr class="">
+				<tr>
 					<td class="name" colspan="2">
 						<span class="gI">Given by</span>
 					</td>
@@ -51,7 +51,7 @@
 						</span>	
 					</td>						
 				</tr>	
-				<tr class="">
+				<tr>
 					<td class="name" colspan="2">
 						<span class="gI">Feedback text</span>
 					</td>
@@ -60,7 +60,7 @@
 					</td>						
 				</tr>					
 				{% if feedback.is_responded == True %}
-				<tr id="id-action1" class="">
+				<tr id="id-action1">
 					<td id="id-td1" class="name" colspan="2">
 						<span class="gI">We responded</span>								
 					</td>
@@ -78,14 +78,14 @@
 				</tr>							
 				<tr id="id-action2" class="hidden">
 				{% else %}
-				<tr id="id-action2" class="">
+				<tr id="id-action2">
 				{% endif %}
 					<td class="name" colspan="2">
 						<span class="gI">Write response</span>
 					</td>
 					<td class="data" colspan="2">
 						<div class="gI">
-							<form id="id-action-form" method="post" class="">
+							<form id="id-action-form" method="post">
 							{% csrf_token %}								
 								<div class="form-element">
 									<textarea class="form-input" name="action" rows="3" maxlength=900 required>{{ feedback.get_action_taken|default_if_none:'' }}</textarea>
@@ -98,7 +98,7 @@
 								<div class="form-element">
 									<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="id-notify">
   										<input id="id-notify" type="checkbox" class="mdl-checkbox__input" name="notify" value="1"/>
-  										<span class="">Send notification to user</span>
+  										<span>Send notification to user</span>
 									</label>    										
 								</div>
 								<div class="tAr">

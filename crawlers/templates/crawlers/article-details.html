@@ -21,39 +21,85 @@
 {% block main %}	
 <section id="priSect" class="pT-8 pB-16">
 	<div class="_layout layout-L mdl-grid">			
-		<section class="__c mdl-cell mdl-cell--12-col pA-0">
+		<div class="__c mdl-cell mdl-cell--12-col pA-0">
 			
-			<div class="mdl-card poetry-card wFull bS-1">
-				<div class="info-box mT-16">
-					<div>ID <span>{{article.id}}</span></div>
-					<div id="cTitleId">Title: <strong>{{ article.get_title }}</strong></div>
-					<div id="cAuthorId">
-						<span>Author:</span>
-						{% if article.get_author %}
-						<strong>
-						<a href="{% url 'crawlers:author-list'%}/?q={{ article.get_author }}" title="Search in crawled authors">{{ article.get_author }}</a>
-						</strong>
-						{% else %}
-						<span class="mdl-color-text--red-600">Not available</span>
-						<div class="notice">
-							Our naive web crawler has missed the author name. You may find the name on the reference 
-							<strong><a title="Visit crawled source page" href="{{ article.source_url }}" target="_blank">URL</a></strong> manually.<br /> 
-							If you know the name, click <strong><a href="{{ article.get_admin_url }}">here</a></strong> to add.
-						</div>
-						{% endif %}
-					</div>
-					<div>
-						<span>Language:</span>
-						<span>{{ article.get_language }}</span>
-					</div>
-					<div>
-						<span>Reference:</span>
-						<a id="cUrlId" title="{{ article.source_url }}" href="{{ article.source_url }}">URL of the source</a>
-					</div>	
-					<div id="cDateId">Added at {{ article.added_at }}</div>													
-					<div id="cValidId">Validity {{ article.get_validity }}</div>						
+			<div class="mdl-card poetry-card wFull bS-1">			
+				<div class="table-card">
+					<table cellpadding="0">
+						<tbody>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">ID</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">{{article.id}}</span>
+								</td>						
+							</tr>			
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Title</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">{{ article.get_title }}</span>
+								</td>						
+							</tr>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Author</span>
+								</td>
+								<td class="data" colspan="2">
+									{% if article.get_author %}
+									<span class="gI">
+										<a class="h-link" href="{% url 'crawlers:author-list'%}/?q={{ article.get_author }}" title="Search in crawled authors">{{ article.get_author }}</a>
+									</span>
+									{% else %}
+									<span class="gI mdl-color-text--red-600">Not available</span>
+									<div class="notice">
+										Our naive web crawler has missed the author name. You may find the name on the reference 
+										<a class="h-link" title="Visit crawled source page" href="{{ article.source_url }}" target="_blank">URL</a> manually.<br /> 
+										If you know the name, click <a class="h-link" href="{{ article.get_admin_url }}">here</a> to add.
+									</div>						
+									{% endif %}
+								</td>						
+							</tr>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Language</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">{{ article.get_language }}</span>
+								</td>
+							</tr>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Reference</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">
+										<a class="h-link" title="{{ article.source_url }}" href="{{ article.source_url }}">URL of the source</a>
+									</span>
+								</td>						
+							</tr>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Added at</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">{{ article.added_at }}</span>
+								</td>						
+							</tr>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Validity</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">{{ article.get_validity }}</span>
+								</td>						
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<hr />					
+				<div class="separator"></div>					
 				<div id="cPoemId" class="article-content p-16">											
 					{% autoescape off %}					
 					{{ article.get_poem }}
@@ -61,7 +107,7 @@
 				</div>
 			</div>
 			
-		</section>			
+		</div>			
 	</div>		
 </section>
 

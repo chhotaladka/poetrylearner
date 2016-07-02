@@ -42,18 +42,70 @@
 					</a>
 					{% endwith %}
 					
-				</div>	
-				<div class="info-box">					
-					<div>ID <span>{{author.id}}</span></div>
-					<div>Name: <strong id="id-author-name">{{ author.get_name }}</strong></div>
-					<div>Birth: <span>{{ author.get_birth_date }}</span></div>
-					<div>Death: <span>{{ author.get_death_date }}</span></div>						
-					<div>
-						<span>Source:</span>						
-						<a href="{{ author.get_source_url }}" title="{{ author.source_url }}">{{ author.get_source_name }}</a>
-					</div>
-					<div>Added at <span>{{ author.added_at }}</span></div>					
-					<div>Validity <span id="id-validity">{{ author.valid }}</span></div>										
+				</div>
+				<div class="table-card">
+					<table cellpadding="0">
+						<tbody>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">ID</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">{{author.id}}</span>
+								</td>						
+							</tr>			
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Name</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI" id="id-author-name">{{ author.get_name }}</span>
+								</td>						
+							</tr>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Birth</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">{{ author.get_birth_date }}</span>
+								</td>						
+							</tr>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Death</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">{{ author.get_death_date }}</span>
+								</td>						
+							</tr>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Reference</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">
+										<a class="h-link" title="{{ author.source_url }}" href="{{ author.source_url }}">{{ author.get_source_name }}</a>
+									</span>
+								</td>						
+							</tr>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Added at</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI">{{ author.added_at }} IST</span>
+								</td>						
+							</tr>
+							<tr>
+								<td class="name" colspan="2">
+									<span class="gI">Validity</span>
+								</td>
+								<td class="data" colspan="2">
+									<span class="gI" id="id-validity">{{ author.get_validity }}</span>
+								</td>						
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="action-panel mdl-card__actions mdl-card--border">
 					<a href="{% url 'crawlers:article-list' %}?author={{ author.get_name }}">

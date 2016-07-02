@@ -4,13 +4,16 @@
 	Note:       xxx
 {% endcomment %}
 <div class="mdl-card feedback wide-card mH-auto wFull bS-1">
-	<div class="title p-16">
-		<div class="fS16 b title-text">	
-			<a href="{{ feedback.get_absolute_url }}" title="View feedback">{{ feedback.get_text|truncatewords:10 }}</a>
+	<div class="curP title p-16">
+		<div class="fbless fS14 b title-text">	
+			{{ feedback.get_text|truncatewords:16 }}
 		</div>
-	</div>
-	<div class="details">
-		<div class="mB4">
+		<div class="fbmore fS16 b title-text">	
+			{{ feedback.get_text }}
+		</div>				
+	</div>		
+	<div class="panel row fill">
+		<div class="light-txt">
 			<span>Given by</span>							
 			{% if feedback.get_user %}
 			<a class="h-link" href="{{ feedback.get_user.profile.get_absolute_url }}" title="View user profile">
@@ -20,24 +23,33 @@
 			<span class="b">{{ feedback.email }}</span>								
 			{% else %}
 			<span class="b">Anonymous user</span>
-			{% endif %}					
-		</div>	
-		<div class="mB4">
-			<span>Response: </span>
-			<span>{{ feedback.get_action_taken|truncatewords:10 }}</span>
+			{% endif %}		
 		</div>
-	</div>		
-	<div class="panel row">		
-		<div class="light-txt">
-			<a class="h-link" href="{{ feedback.get_page_url }}" title="{{ feedback.get_page_url }}">url</a>
-			{% if feedback.content_object %}
-			<span> | </span>
-			<a class="h-link" href="{{ feedback.get_content_url }}" title="{{ feedback.get_content_url }}">content</a>
-			{% endif %}
-		</div>
-		<div class="mdl-layout-spacer"></div>
 		<div class="light-txt"> 				
 			<span>{{ feedback.date_added }}</span>			
 		</div>
-	</div>												
+	</div>
+	<div class="fbmore details light-txt">
+		<div class="mB4">
+			<span>Page: </span>
+			<a class="h-link" href="{{ feedback.get_page_url }}" title="{{ feedback.get_page_url }}">view</a>
+		</div>
+		{% if feedback.content_object %}
+		<div class="mB4">
+			<span>Content: </span>
+			<a class="h-link" href="{{ feedback.get_content_url }}" title="{{ feedback.get_content_url }}">view</a>			
+		</div>
+		{% endif %}
+	</div>
+	<div class="fbmore bc mT-8">
+		<div class="row fill fS-13">
+			<div class="w80p">
+				<span class="b">Reply: </span>
+				<span>{{ feedback.get_action_taken }}</span>
+			</div>
+			<div class="b">
+				<a class="dB" href="{{ feedback.get_absolute_url }}" title="Respond to feedback">Edit</a>
+			</div>
+		</div>
+	</div>
 </div>

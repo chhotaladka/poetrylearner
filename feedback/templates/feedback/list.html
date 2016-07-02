@@ -24,14 +24,13 @@
 </div>
 {% endblock %}
 {% block main %}
-
 	<section class="pT-8 pB-16">
 		<div class="_layout layout-L mdl-grid">
 		{% if feedbacks %} {% comment %} Display the list {% endcomment %}		
 			{% include "common/include/pagination-top.html" with items=feedbacks %}	
 					
 			{% for feedback in feedbacks %}
-			<div class="mdl-cell mdl-cell--12-col mT0 mB0">	
+			<div class="feedback-list mdl-cell mdl-cell--12-col mT0 mB0">	
 			{% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}														
 			</div>
 			{% endfor %}
@@ -43,5 +42,15 @@
 		{% endif %}
 		</div>
 	</section>
-
+	<script>
+	$(document).ready(function(){		
+		var toggleView = function(){
+			$('.feedback-list .feedback').removeClass('more');			
+			$(this).toggleClass('more');
+			console.log('toggle');			
+		};
+		var nodes = $('.feedback-list .feedback');
+		nodes.on('click', toggleView);
+	});
+	</script>
 {% endblock %}

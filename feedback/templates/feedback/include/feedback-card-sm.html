@@ -11,20 +11,7 @@
 	</div>
 	<div class="details">
 		<div class="mB4">
-			<a class="h-link" href="{{ feedback.get_page_url }}" title="{{ feedback.get_page_url }}">url</a>
-			{% if feedback.content_object %}
-			<span> | </span>
-			<a class="h-link" href="{{ feedback.get_content_url }}" title="{{ feedback.get_content_url }}">content</a>
-			{% endif %}
-		</div>	
-		<div class="mB4">
-			<span>Response: </span>
-			<span>{{ feedback.get_action_taken|truncatewords:10 }}</span>
-		</div>
-	</div>		
-	<div class="panel row">		
-		<div class="light-txt">
-			<span>by</span>							
+			<span>Given by</span>							
 			{% if feedback.get_user %}
 			<a class="h-link" href="{{ feedback.get_user.profile.get_absolute_url }}" title="View user profile">
 			 	{{ feedback.get_user.username }}
@@ -33,6 +20,19 @@
 			<span class="b">{{ feedback.email }}</span>								
 			{% else %}
 			<span class="b">Anonymous user</span>
+			{% endif %}					
+		</div>	
+		<div class="mB4">
+			<span>Response: </span>
+			<span>{{ feedback.get_action_taken|truncatewords:10 }}</span>
+		</div>
+	</div>		
+	<div class="panel row">		
+		<div class="light-txt">
+			<a class="h-link" href="{{ feedback.get_page_url }}" title="{{ feedback.get_page_url }}">url</a>
+			{% if feedback.content_object %}
+			<span> | </span>
+			<a class="h-link" href="{{ feedback.get_content_url }}" title="{{ feedback.get_content_url }}">content</a>
 			{% endif %}
 		</div>
 		<div class="mdl-layout-spacer"></div>

@@ -396,8 +396,8 @@ def search(request, src=None):
         data['id'] = obj.id
         data['name'] = obj.name
         data['name_en'] = obj.additional_name#TODO change name_en to additional_name, elswhere in javascripts
-        data['birth'] = obj.year_birth.year if obj.year_birth else ''
-        data['death'] = obj.year_death.year if obj.year_death else ''
+        data['birth'] = obj.year_birth if obj.year_birth else ''
+        data['death'] = obj.year_death if obj.year_death else ''
         data['url'] = obj.get_absolute_url()
         result.append(data)
         

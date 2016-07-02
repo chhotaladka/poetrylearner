@@ -1,0 +1,14 @@
+{% comment %}  
+	Pagination information to be displayed at the bottom of the results.
+	Requirement: `items` - list of results from context. 
+				`getvars` - automatically from the common.context_processors.	
+{% endcomment %}
+	<div class="mdl-cell mdl-cell--12-col mT-32">				
+		{% if items.paginator.num_pages > 1 %}
+		<div class="p-card">
+			<div class="pLR-16">		            
+				{% include "common/include/pagination.html" with obj_list=items getvars=getvars only %}
+			</div>
+		</div>
+		{% endif %}
+	</div>

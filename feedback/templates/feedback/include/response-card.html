@@ -39,14 +39,14 @@
 					</td>
 					<td class="data" colspan="2">
 						<span class="gI">
-							<span>{{ feedback.get_user_email }}</span>
-							<span> | </span>							
 							{% if feedback.get_user %}
-							<a class="action-button" href="{{ feedback.get_user.profile.get_absolute_url }}" title="View user profile">
-							 	Registered user
+							<a class="h-link" href="{{ feedback.get_user.profile.get_absolute_url }}" title="View user profile">
+							 	{{ feedback.get_user.username }}
 							</a>
+							{% elif feedback.email %}
+							<span class="b">{{ feedback.email }}</span>								
 							{% else %}
-							<span class="gO">Anonymous user</span>							
+							<span class="b">Anonymous user</span>
 							{% endif %}
 						</span>	
 					</td>						

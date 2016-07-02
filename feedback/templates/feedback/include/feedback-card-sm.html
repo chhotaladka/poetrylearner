@@ -1,0 +1,43 @@
+{% comment %}
+	Info:       Event small Card
+	Requires:   css and js of static/mdl/*
+	Note:       xxx
+{% endcomment %}
+<div class="mdl-card feedback wide-card mH-auto wFull bS-1">
+	<div class="title p-16">
+		<div class="fS16 b title-text">	
+			<a href="{{ feedback.get_absolute_url }}" title="View feedback">{{ feedback.get_text|truncatewords:10 }}</a>
+		</div>
+	</div>
+	<div class="details">
+		<div class="mB4">
+			<a class="h-link" href="{{ feedback.get_page_url }}" title="{{ feedback.get_page_url }}">url</a>
+			{% if feedback.content_object %}
+			<span> | </span>
+			<a class="h-link" href="{{ feedback.get_content_url }}" title="{{ feedback.get_content_url }}">content</a>
+			{% endif %}
+		</div>	
+		<div class="mB4">
+			<span>Response: </span>
+			<span>{{ feedback.get_action_taken|truncatewords:10 }}</span>
+		</div>
+	</div>		
+	<div class="panel row">		
+		<div class="light-txt">
+			<span>by</span>							
+			{% if feedback.get_user %}
+			<a class="h-link" href="{{ feedback.get_user.profile.get_absolute_url }}" title="View user profile">
+			 	{{ feedback.get_user.username }}
+			</a>
+			{% elif feedback.email %}
+			<span class="b">{{ feedback.email }}</span>								
+			{% else %}
+			<span class="b">Anonymous user</span>
+			{% endif %}
+		</div>
+		<div class="mdl-layout-spacer"></div>
+		<div class="light-txt"> 				
+			<span>{{ feedback.date_added }}</span>			
+		</div>
+	</div>												
+</div>

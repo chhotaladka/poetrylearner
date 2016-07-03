@@ -138,7 +138,7 @@ class UserProfile(models.Model):
             return self.user.last_name
     
     def get_slug(self):
-        return slugify(self.get_name())
+        return slugify(self.get_first_name())
         
     def is_slug_valid(self, slug):
         '''

@@ -1757,12 +1757,35 @@ ul.mdl-mini-footer__link-list {
 	line-height: 1.4;
 }
 
-/* icons & symbols */
+/* icons, buttons & symbols */
 .icons {
 	line-height: inherit !important;
 	vertical-align: bottom;
 }
-.floating-btn-bottom {
+.button-fab {
+  background: transparent none repeat scroll 0px 0px;
+  border-radius: 50%;
+  /*font-size: 24px;*/
+  height: 56px;
+  margin: auto;
+  min-width: 56px;
+  width: 56px;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  line-height: normal;
+  outline: medium none;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  text-align: center;
+  line-height: normal;
+  vertical-align: middle;
+  border: medium none;
+}
+.floating-btn.btm {
     position: fixed;
     right: 0px;
     bottom: 0px;
@@ -1770,11 +1793,54 @@ ul.mdl-mini-footer__link-list {
     white-space: nowrap;
     z-index: 21;
 }
+.floating-btn .jB {
+	flex-direction: row-reverse;
+	display: flex;
+}
+.floating-btn .bTag {
+    display: inline-block;
+    margin-right: 8px;
+    opacity: 0;
+    text-align: right;
+    transition: opacity 150ms cubic-bezier(0.4, 0, 1, 1) 0s;
+    -moz-user-select: none;
+	line-height: 56px;
+}
+.floating-btn .bTag > .tv {
+    background: rgba(70, 70, 70, 0.898) none repeat scroll 0% 0%;
+    border-radius: 2px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    color: #ECECEC;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1em;
+    max-width: 200px;
+    overflow: hidden;
+    padding: 6px 8px;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+.floating-btn .y {
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12), 0px 2px 4px -1px rgba(0, 0, 0, 0.2);
+    box-sizing: content-box;
+    padding: 0px;
+    position: relative;
+	border-radius: 50%;
+}
+.floating-btn .y:hover {
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16), 0px 6px 12px rgba(0, 0, 0, 0.32);
+    transition: box-shadow 150ms cubic-bezier(0, 0, 0.2, 1) 0s;
+}
+.floating-btn .y:hover ~ .bTag {
+	opacity: 1;
+	transition: opacity 150ms cubic-bezier(0, 0, 0.2, 1) 0s;
+}
 @media all and (min-width: 935px) {
-	.floating-btn-bottom {
+	.floating-btn.btm {
 		padding-right: 23px;
 	}
 }
+
 .social-icon {
 
 }
@@ -2184,11 +2250,13 @@ ul.mdl-mini-footer__link-list {
 }
 .C-event {color: #00D4DE !important;}
 .org .highlight,
-.bg-org {
+.bg-org,
+.bg-organization {
 	background-color: #42A5F5 !important;/*blue-400*/
 	color: white;
 }
-.bg-org svg {
+.bg-org svg,
+.bg-organization svg {
 	fill: white !important;
 }
 .C-organization {color: #42A5F5 !important;}

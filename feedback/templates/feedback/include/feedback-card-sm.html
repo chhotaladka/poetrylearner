@@ -3,13 +3,15 @@
 	Requires:   css and js of static/mdl/*
 	Note:       xxx
 {% endcomment %}
+{% load common_tags %}
 <div class="mdl-card feedback wide-card mH-auto wFull bS-1">
 	<div class="curP title p-16">
 		<div class="fbless fS14 b title-text">	
 			{{ feedback.get_text|truncatewords:16 }}
 		</div>
 		<div class="fbmore fS16 b title-text">	
-			{{ feedback.get_text }}
+			<span class="id">{{ feedback.id }}.</span>
+			<span>{{ feedback.get_text }}</span>
 		</div>				
 	</div>		
 	<div class="panel row fill">
@@ -32,12 +34,12 @@
 	<div class="fbmore details light-txt">
 		<div class="mB4">
 			<span>Page: </span>
-			<a class="h-link" href="{{ feedback.get_page_url }}" title="{{ feedback.get_page_url }}">view</a>
+			<a class="h-link" href="{{ feedback.get_page_url }}" title="{{ feedback.get_page_url }}">URL</a>
 		</div>
 		{% if feedback.content_object %}
 		<div class="mB4">
 			<span>Content: </span>
-			<a class="h-link" href="{{ feedback.get_content_url }}" title="{{ feedback.get_content_url }}">view</a>			
+			<a class="h-link" href="{{ feedback.get_content_url }}" title="{{ feedback.get_content_url }}">URL</a>			
 		</div>
 		{% endif %}
 	</div>
@@ -45,11 +47,18 @@
 		<div class="row fill fS-13">
 			<div class="w80p">
 				<span class="b">Reply: </span>
+				{% if feedback.get_action_taken %}
 				<span>{{ feedback.get_action_taken }}</span>
+				<div class="light-txt">[{{ feedback.date_responded }} IST]</div>
+				{% else %}
+				<span>Pending</span>
+				{% endif %}
 			</div>
+			{% if request.user|has_group:'administrator' %}
 			<div class="b">
 				<a class="dB" href="{{ feedback.get_absolute_url }}" title="Respond to feedback">Edit</a>
 			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>

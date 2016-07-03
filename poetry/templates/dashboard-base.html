@@ -110,12 +110,12 @@
 	    <nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800">
 	    	<a class="mdl-navigation__link" href="{% url 'list-poetry' %}">Poetry</a>
 	    	<a class="mdl-navigation__link" href="{% url 'list-poet' %}">Poets</a>
+	    	{% if request.user|has_group:'administrator' %}    		
+	    	<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}">Crawled data</a>	    		    	
+	    	{% endif %}	    	
 	    	{% if request.user|has_group:'administrator,editor' %}	    
 	    	<a class="mdl-navigation__link" href="{% url 'repository:home' %}">Repository</a>
-	    	{% endif %}
-	    	{% if request.user|has_group:'administrator' %}    		
-	    	<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}">Crawled data</a> 
-	    	<a class="mdl-navigation__link" href="{% url 'feedback:list' %}">Feedbacks</a>	    	
+	    	<a class="mdl-navigation__link" href="{% url 'feedback:list' %}">Feedbacks</a>
 	    	{% endif %}
 	    	{% if request.user.is_staff %}
 	    	<a class="mdl-navigation__link" href="{% url 'admin:index' %}">Admin</a>

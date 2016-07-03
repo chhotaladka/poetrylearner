@@ -203,7 +203,7 @@ def feedback_response(request, pk):
     return render(request, template, context)    
 
 
-@group_required('administrator')
+@group_required('administrator', 'editor')
 def feedback_list(request):
     '''
     @summary: List all the feedbacks submitted till now by users

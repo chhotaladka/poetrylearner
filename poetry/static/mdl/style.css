@@ -986,6 +986,9 @@ a.action-button:hover {
 .feedback.more .fbmore {
 	display: initial !important;
 }
+.feedback .title .id {
+	color: #4285F4;
+}
 
 .panel,
 .meta-panel,
@@ -995,7 +998,7 @@ a.action-button:hover {
 .bc {
     /*background-color: #4285F4;*/
 	background-color: #F6F6F6;
-	/*color: #FFF;*/
+	color: #333;
     box-sizing: border-box;
     padding: 16px 20px;
     position: relative;

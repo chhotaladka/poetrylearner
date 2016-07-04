@@ -5,7 +5,11 @@
 {% endcomment %}
 {% load common_tags %}
 <div class="mdl-card feedback wide-card mH-auto wFull bS-1">
-	<div class="curP title p-16">
+	{% if feedback.get_action_taken %}
+	<div class="curP closed title p-16" title="Closed.">
+	{% else %}
+	<div class="curP pending title p-16" title="Response is pending.">
+	{% endif %}	
 		<div class="fbless fS14 b title-text">	
 			{{ feedback.get_text|truncatewords:16 }}
 		</div>

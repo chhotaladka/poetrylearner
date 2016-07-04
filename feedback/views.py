@@ -272,7 +272,7 @@ def feedback_list(request):
     
     tab = {
            'name': 'pending',
-           'help_text': 'Feedbacks to which we have not responded',
+           'help_text': 'Feedbacks to which response is awaiting.',
            'url': request.path + '?tab=pending',
            'css': 'is-active' if q_tab == 'pending' or q_tab is None else '',
         }
@@ -280,7 +280,7 @@ def feedback_list(request):
     
     tab = {
            'name': 'closed',
-           'help_text': 'Feedbacks to which we have responded',
+           'help_text': 'Feedbacks to which response has given.',
            'url': request.path + '?tab=closed',
            'css': 'is-active' if q_tab == 'closed' else '',
         }

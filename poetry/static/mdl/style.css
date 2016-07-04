@@ -989,6 +989,12 @@ a.action-button:hover {
 .feedback .title .id {
 	color: #4285F4;
 }
+.feedback .title.pending {
+	border-left: 2px solid rgba(221, 75, 57, 0.60);
+}
+.feedback .title.closed {
+	border-left: 2px solid rgba(139, 195, 74, 0.60);
+}
 
 .panel,
 .meta-panel,

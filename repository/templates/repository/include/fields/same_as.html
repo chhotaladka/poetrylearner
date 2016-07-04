@@ -7,7 +7,7 @@
 		<div id="div_id_same_as" class="form-element">	
 			<label for="id_same_as">
 				<strong>{{form.same_as.label}}</strong>
-				<input autocomplete="off" class="form-input" id="id_same_as" maxlength="200" name="same_as" type="url" value="{{ form.same_as.value|default_if_none:'' }}"/>
+				<input autocomplete="off" class="form-input" id="id_same_as" name="same_as" type="url" value="{{ form.same_as.value|default_if_none:'' }}"/>
 			</label>				
 		{% if form.same_as.errors %}
 		    {% for error in form.same_as.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}

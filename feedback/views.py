@@ -230,7 +230,7 @@ def feedback_list(request):
         obj_list = Feedback.objects.all().exclude(
                                                   Q(action__isnull=True) | 
                                                   Q(action=u'')
-                                                  )
+                                                  ).order_by('-date_responded')
             
     elif q_tab == 'known':
         # User has account or have given email id

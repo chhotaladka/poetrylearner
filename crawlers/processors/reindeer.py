@@ -5,6 +5,7 @@ import requests
 import tempfile
 import difflib
 
+from crawlers.models import RawArticle
 
 def download_image(image_url):
     '''
@@ -68,7 +69,7 @@ def measure_similarity(str1, str2):
     
     d = difflib.SequenceMatcher(None, str1, str2)
     s = round(d.ratio(), 3)
-    print 'DBG: similarity is ', s
+    #print 'DBG: similarity is ', s
     return s
 
 
@@ -81,7 +82,11 @@ def _is_similar(str1, str2):
     
 
 def correct_poetry_lines_order(shuffled_lines, ocr_lines):
-    '''
+    ''' 
+    @summary: Correct the line ordering of shuffled_lines
+    
+    @shuffled_lines: Individual lines are correct, and ordering of lines are incorrect.
+    @ocr_lines: Individual lines are partially correct, and ordering of lines are correct. 
     '''
     
     len_suffled = len(shuffled_lines)
@@ -89,54 +94,71 @@ def correct_poetry_lines_order(shuffled_lines, ocr_lines):
     print 'len_suffled', len_suffled, 'len_ocr', len_ocr
     
     mapping = {}
+    matched_ocr_lines = []
 
     for i in range(0, len_suffled):
-        mapping[i] = {'index': i, 'weight': 0}
-        for j in range(0, len_ocr):
-            s = measure_similarity(shuffled_lines[i], ocr_lines[j])
-            if s > mapping[i]['weight']:
-               mapping[i] = {'index': j, 'weight': s}
+        mapping[i] = {'index': i, 'weight': 0, 'final': -1}
+        for j in range(0, len(ocr_lines)):            
+            if j not in matched_ocr_lines:
+                s = measure_similarity(shuffled_lines[i], ocr_lines[j])
+                if s > mapping[i]['weight'] and s > 0.6:
+                    # Assuming s > 0.6 is very similar
+                   mapping[i] = {'index': j, 'weight': s, 'final': j}
+        
+        # Mark the best match from ocr_lines\
+        if mapping[i]['weight'] > 0:
+            matched_ocr_lines.append(mapping[i]['index'])
                
     print mapping
     
-#http://poetrylearner.com/c/article/82009    
-s1 = 'आबादियों में खो गया सहराओं का जुनून\
-शहरों का जमघटों में गया गाँव का सुकून\
-ये तजरबा भी गर्दिश-ए-हालात से हुआ\
-लो काम होश से ये नया दौर है मतीन\
-कैसे सपेद होता है हर आश्ना का ख़ून\
-फिर उस जगह चलें जहाँ खो आए हैं सुकून\
-बेचैन ज़िंदगी के तक़ाज़े अजीब हैं\
-माज़ी की यादगार मिरे इल्म और फ़ुनून\
-चेहरे पे जिन के दौड़ता था नाज़ुकी का ख़ून\
-हालात के असीर हुए मस्ख़ हो गए\
-तहज़ीब-ए-नौ की रौशनी में जल-बुझे तमाम\
-वहशत न साथ देगी न काम आएगा जुनून'
-
-list1 = s1.split('\n')
-
-s2 = "आबादियो है रपो गया सहराओं का जुनून\
-शहरो का जमघटो है गया गॉव का सुकून\
-\
-हालात के असीर हुए मस्ख तो गए\
-चेहरे पे जिन के दौडता था नाजुकी का खून\
-\
-त्तहजीबच्चोंएच्चोंनां की रोशनी से जल'बुझे तमाम\
-माजी की यादगार मिरे इल्म और फुनून\
-\
-बेचैन जिदगी के तकाजे अजीब है\
-फिर उस जगह चलै जहाँ रपो आए है सुकून\
-\
-है त्तज़रबा गी गर्दिश'ए'हालात से हुआ\
-कैसे सपेद माता है पृष्ट आश्रा का खून\
-\
-लां काम होश से है नया दोर है 'मतीन'\
-वहशत न साथ देगी न काम आएगा जुनून"
-
-list2 = [x for x in s2.split('\n') if len(x) > 1]          
-
-
-            
-            
+    ordered_lines = []
+    for i in range(0, len_suffled):
+        ordered_lines.append('')
         
+    dup_lines = [] # For duplicate entries
     
+    # Detect duplicate mapping and decide the winner(final)
+    for i in range(0, len_suffled):
+        for j in range(i+1, len_suffled):
+            if mapping[i]['index'] == mapping[j]['index']:
+                if mapping[i]['weight'] < mapping[j]['weight']:
+                    mapping[i]['final'] = -1
+                else:
+                    mapping[j]['final'] = -1
+    
+    print mapping            
+    
+    for key, val in mapping.items():
+        if mapping[key]['final'] == -1:
+            dup_lines.append(shuffled_lines[key])
+        else:
+            ordered_lines[val['index']] = shuffled_lines[key]    
+    
+    if len(dup_lines):
+        ordered_lines.append("###")
+    
+    return ordered_lines + dup_lines     
+    
+
+def refine_poetry(poetry, url, language):
+    '''
+    '''
+    
+    # Get image of the poetry
+    
+    # Get text from poetry image : ocr_text
+    
+    # Make list of lines from ``poetry`` and ``ocr_text``
+    
+    # Correct the line order of ``poetry``
+    
+    # Insert html br tags to make stanza
+            
+    # Return    
+
+
+def process_items_by_reindeer():
+    '''
+    Post processing of items crawled by the ``ReindeerBot``
+    '''
+    pass

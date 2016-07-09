@@ -4,13 +4,21 @@ Post processing of data crawled by ``ReindeerBot`` of rekhta.com
 import requests
 import tempfile
 import difflib
+import os
+from django.shortcuts import render, get_object_or_404
 
+from crawlers.processors.tesseract import image_to_text_for_reindeer
 from crawlers.models import RawArticle
+from common.utils import html_to_plain_text
+
 
 def download_image(image_url):
     '''
-    @summary: Returns image downloaded from `image_url`
+    @image_url: Image url
+    
+    @summary: Returns image (full path name) downloaded from `image_url`
     '''
+    print 'Downloading image from', image_url
     # Steam the image from the url
     request = requests.get(image_url, stream=True)
 
@@ -24,7 +32,7 @@ def download_image(image_url):
     file_name = image_url.split('/')[-1]
 
     # Create a temporary file
-    lf = tempfile.NamedTemporaryFile()
+    lf = tempfile.NamedTemporaryFile(delete=False)
 
     # Read the streamed image in sections
     for block in request.iter_content(1024 * 8):
@@ -36,10 +44,9 @@ def download_image(image_url):
         # Write image block to temporary file
         lf.write(block)
 
-    # Print details of file `lf`
-    
-    
-    return lf
+    # Close file and returns it's full path name
+    lf.close()
+    return lf.name
 
 
 def get_poetry_img_url(poetry_url, language):
@@ -88,7 +95,7 @@ def correct_poetry_lines_order(shuffled_lines, ocr_lines):
     @shuffled_lines: Individual lines are correct, and ordering of lines are incorrect.
     @ocr_lines: Individual lines are partially correct, and ordering of lines are correct. 
     '''
-    
+    print 'Correcting poetry lines ordering...'
     len_suffled = len(shuffled_lines)
     len_ocr = len(ocr_lines)
     print 'len_suffled', len_suffled, 'len_ocr', len_ocr
@@ -109,8 +116,7 @@ def correct_poetry_lines_order(shuffled_lines, ocr_lines):
         if mapping[i]['weight'] > 0:
             matched_ocr_lines.append(mapping[i]['index'])
                
-    print mapping
-    
+    #print mapping    
     ordered_lines = []
     for i in range(0, len_suffled):
         ordered_lines.append('')
@@ -126,8 +132,7 @@ def correct_poetry_lines_order(shuffled_lines, ocr_lines):
                 else:
                     mapping[j]['final'] = -1
     
-    print mapping            
-    
+    #print mapping    
     for key, val in mapping.items():
         if mapping[key]['final'] == -1:
             dup_lines.append(shuffled_lines[key])
@@ -140,25 +145,80 @@ def correct_poetry_lines_order(shuffled_lines, ocr_lines):
     return ordered_lines + dup_lines     
     
 
-def refine_poetry(poetry, url, language):
+def refine_poetry(crawled_poetry, url, language):
     '''
     '''
     
     # Get image of the poetry
+    f_image = download_image(get_poetry_img_url(url, language))
+    if f_image is False:
+        print 'ERR:: failed to download image'
+        return False
     
     # Get text from poetry image : ocr_text
+    ret = image_to_text_for_reindeer(f_image, language)
+    if ret is False:
+        print 'ERR: falied to convert image to text'
+        return False
     
-    # Make list of lines from ``poetry`` and ``ocr_text``
+    ocr_text = ret.strip()
     
-    # Correct the line order of ``poetry``
+    # Delete the `f_image` file from the storage
+    try:
+        os.remove(f_image)
+    except:
+        print 'ERR:: failed to delete f_image'
+        pass
     
-    # Insert html br tags to make stanza
-            
-    # Return    
+    # Make list of lines from ``crawled_poetry`` and ``ocr_text``
+    #print ocr_text        
+    ocr_lines = [x for x in ocr_text.split('\n') if len(x) > 0]
+    
+    cp = html_to_plain_text(crawled_poetry)
+    #print cp
+    crawled_lines = [x for x in cp.split('\n') if len(x) > 0]
+
+    # Correct the line order of ``crawled_poetry``
+    poetry_lines = correct_poetry_lines_order(crawled_lines, ocr_lines)    
+    poetry = '\n'.join(poetry_lines)    
+    #print poetry
+    # Return
+    return poetry
 
 
-def process_items_by_reindeer():
+def process_all_articles():
     '''
-    Post processing of items crawled by the ``ReindeerBot``
+    @summary: Post processing of articles crawled by the ``ReindeerBot``
+    Assuming all articles are valid=False. 
+    Process the article, write back to db, set valid=True(so that process can be resumed in case of failure)
     '''
-    pass
+#     obj = get_object_or_404(RawArticle, pk=57771)   
+#     refine_poetry(obj.content, obj.source_url, obj.language)
+#     return True
+
+    count_total = 0
+    count_saved = 0
+    
+    articles = RawArticle.objects.all().filter(valid=False).filter(source_url__icontains='rekhta.org')
+    if articles is not None:
+        for obj in articles:
+            count_total += 1
+            poetry = refine_poetry(obj.content, obj.source_url, obj.language)
+            poetry = True
+            if poetry:
+                obj.content = poetry
+                obj.valid = True
+                obj.save()
+                count_saved += 1
+                
+            # print stats    
+            if count_total % 500 == 0:
+                print "<= %d saved out of %d visited =>"%(count_saved, count_total)
+    
+    # print stats
+    print "<= THE END =>"
+    print "<= %d saved out of %d visited =>"%(count_saved, count_total)
+    
+
+def set_all_invalid():
+    articles = RawArticle.objects.all().filter(valid=False).filter(source_url__icontains='rekhta.org')                

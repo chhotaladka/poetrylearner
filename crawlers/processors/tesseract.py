@@ -23,3 +23,68 @@ For image pre processing to remove rekhta watermark
     # sudo apt-get install imagemagick
     # convert img-in -background white img-out
 '''
+import subprocess
+import os
+import tempfile
+from exceptions import Exception
+import codecs
+
+def image_to_text_for_reindeer(in_image, language):
+    '''
+    @in_image: full path of input image
+    @language: language code for the content in the in_image e.g. hi, en, ur etc.
+    
+    @summary: Convert image to text. Pre-processing of image is tested for reindeer only
+    '''    
+    
+    # Check for language support of tesseract
+    print 'tesseract: checking language support...'
+
+    if language == 'hi':
+        lang = 'hin'
+    elif language == 'en':
+        lang = 'eng'
+    elif language == 'ur':
+        lang = 'urd'
+    else:
+        print 'ERR: language pack for', language, 'is not supported.'
+        return False        
+    
+    # Preprocess image with imageMagick convert, to set background white
+    # <rekhta watermark was creating trouble for tesseract>
+    print 'tesseract: Input image:', in_image
+    print 'tesseract: preprocessing using imageMagick convert...'    
+    try:        
+        retcode = subprocess.check_call(['convert', in_image, '-background', 'white', in_image])
+    except subprocess.CalledProcessError as e:
+        print 'ERR:: convert cmd failed, unexpected error:', e
+        return False        
+    
+    # Now run the tesseract to read the text from image and store it to text file
+    print 'tesseract: converting image to text...'
+        
+    try:
+        tmp_file = tempfile.NamedTemporaryFile(delete=True)
+        out = tmp_file.name # To generate random name, I used temfile
+        retcode = subprocess.check_call(['tesseract', in_image, '-l', lang, out])
+        # output file name will be `out`.txt
+        out_file = out + '.txt'
+        print 'tesseract: output text is', out_file
+        
+    except subprocess.CalledProcessError as e:
+        print 'ERR:: convert cmd failed, unexpected error:', e
+        return False  
+    
+    # Read the text from `out_file`
+    with codecs.open(out_file, 'r', encoding='utf-8') as f:
+        text = f.read()
+    
+    # Delete the `out_file` from the storage
+    try:
+        os.remove(out_file)
+    except:
+        print 'ERR:: failed to delete f_image'
+        pass
+    
+    # Return poetry text
+    return text

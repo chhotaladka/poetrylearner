@@ -95,10 +95,10 @@ def correct_poetry_lines_order(shuffled_lines, ocr_lines):
     @shuffled_lines: Individual lines are correct, and ordering of lines are incorrect.
     @ocr_lines: Individual lines are partially correct, and ordering of lines are correct. 
     '''
-    print 'Correcting poetry lines ordering...'
+        
     len_suffled = len(shuffled_lines)
     len_ocr = len(ocr_lines)
-    print 'len_suffled', len_suffled, 'len_ocr', len_ocr
+    print 'Correcting poetry lines ordering... (shuffled %d <-> ocr %d)'%(len_suffled, len_ocr)
     
     mapping = {}
     matched_ocr_lines = []
@@ -199,7 +199,7 @@ def process_all_articles():
     count_total = 0
     count_saved = 0
     
-    articles = RawArticle.objects.all().filter(valid=False).filter(source_url__icontains='rekhta.org')
+    articles = RawArticle.objects.all().filter(source_url__icontains='rekhta.org').filter(valid=False)
     if articles is not None:
         for obj in articles:
             count_total += 1
@@ -213,12 +213,36 @@ def process_all_articles():
                 
             # print stats    
             if count_total % 500 == 0:
-                print "<= %d saved out of %d visited =>"%(count_saved, count_total)
+                print "> %d saved out of %d processed"%(count_saved, count_total)
     
     # print stats
-    print "<= THE END =>"
-    print "<= %d saved out of %d visited =>"%(count_saved, count_total)
+    print "> THE END"
+    print "> %d saved out of %d processed"%(count_saved, count_total)
     
 
 def set_all_invalid():
-    articles = RawArticle.objects.all().filter(valid=False).filter(source_url__icontains='rekhta.org')                
+    print 'Setting all articles of rekhta.org as invalid...'
+    articles = RawArticle.objects.all().filter(valid=True).filter(source_url__icontains='rekhta.org')
+    if articles is not None:
+        for a in articles:
+            a.valid = False    
+            a.save()
+    print 'Done!'
+    
+
+def cmd_init_reindeer():
+    print '============= Initializing reindeer =============='
+    # Check for 'tesseract' and 'imagemagick' packages
+    
+    set_all_invalid()
+    print '================ init finished ==================='
+    
+def cmd_resume_reindeer():
+    print '=========== Resuming/running reindeer ============'        
+    process_all_articles()
+    print '=============== resume finished =================='
+    
+def cmd_exit_reindeer():
+    print '=============== Exiting reindeer ================='
+    set_all_invalid()
+    print '================= exit finished =================='

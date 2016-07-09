@@ -38,8 +38,7 @@ def image_to_text_for_reindeer(in_image, language):
     '''    
     
     # Check for language support of tesseract
-    print 'tesseract: checking language support...'
-
+    #print 'tesseract: checking language support...'
     if language == 'hi':
         lang = 'hin'
     elif language == 'en':
@@ -52,27 +51,27 @@ def image_to_text_for_reindeer(in_image, language):
     
     # Preprocess image with imageMagick convert, to set background white
     # <rekhta watermark was creating trouble for tesseract>
-    print 'tesseract: Input image:', in_image
+    
+    #print 'tesseract: Input image:', in_image
     print 'tesseract: preprocessing using imageMagick convert...'    
     try:        
         retcode = subprocess.check_call(['convert', in_image, '-background', 'white', in_image])
     except subprocess.CalledProcessError as e:
-        print 'ERR:: convert cmd failed, unexpected error:', e
+        print 'ERR:: "convert" command failed, unexpected error:', e
         return False        
     
     # Now run the tesseract to read the text from image and store it to text file
-    print 'tesseract: converting image to text...'
-        
+    print 'tesseract: converting image to text...'        
     try:
         tmp_file = tempfile.NamedTemporaryFile(delete=True)
         out = tmp_file.name # To generate random name, I used temfile
         retcode = subprocess.check_call(['tesseract', in_image, '-l', lang, out])
         # output file name will be `out`.txt
         out_file = out + '.txt'
-        print 'tesseract: output text is', out_file
+        #print 'tesseract: output text is', out_file
         
     except subprocess.CalledProcessError as e:
-        print 'ERR:: convert cmd failed, unexpected error:', e
+        print 'ERR:: "tesseract" command failed, unexpected error:', e
         return False  
     
     # Read the text from `out_file`
@@ -83,7 +82,7 @@ def image_to_text_for_reindeer(in_image, language):
     try:
         os.remove(out_file)
     except:
-        print 'ERR:: failed to delete f_image'
+        print 'ERR:: failed to delete out_file'
         pass
     
     # Return poetry text

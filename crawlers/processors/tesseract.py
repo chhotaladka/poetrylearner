@@ -29,6 +29,48 @@ import tempfile
 from exceptions import Exception
 import codecs
 
+
+def check_packages():
+    '''
+    @summary: Return True if required packages are installed in system.
+    '''    
+    FNULL = open(os.devnull, 'w')
+    
+    # Check tesseract
+    print 'package check: tesseract...'
+    try:
+        subprocess.call(["tesseract", "-v"], stdout=FNULL)
+    except OSError as e:
+        if e.errno == os.errno.ENOENT:
+            # handle file not found error.
+            print 'ERR: "tesseract" not found on this system.'
+            print 'Installation help: https://github.com/tesseract-ocr/tesseract/blob/master/INSTALL'
+            return False
+        else:
+            # Something else went wrong while trying to run `tesseract`
+            print 'ERR: Something went wrong while trying to run "tesseract".'
+            return False
+        
+    # Check imagemagick convert
+    print 'package check: imagemagick convert...'
+    try:
+        subprocess.call(["convert", "-v"], stdout=FNULL)
+    except OSError as e:
+        if e.errno == os.errno.ENOENT:
+            # handle file not found error.
+            print 'ERR: "convert" not found on this system.'
+            print 'Install "imagemagick" package.'
+            return False
+        else:
+            # Something else went wrong while trying to run `convert`
+            print 'ERR: Something went wrong while trying to run "convert".'
+            return False
+        
+    # All passed, now return True
+    print 'package check: all present.'
+    return True     
+        
+
 def image_to_text_for_reindeer(in_image, language):
     '''
     @in_image: full path of input image

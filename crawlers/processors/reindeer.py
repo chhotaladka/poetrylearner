@@ -7,7 +7,7 @@ import difflib
 import os
 from django.shortcuts import render, get_object_or_404
 
-from crawlers.processors.tesseract import image_to_text_for_reindeer
+from crawlers.processors.tesseract import image_to_text_for_reindeer, check_packages
 from crawlers.models import RawArticle
 from common.utils import html_to_plain_text
 
@@ -233,7 +233,8 @@ def set_all_invalid():
 def cmd_init_reindeer():
     print '============= Initializing reindeer =============='
     # Check for 'tesseract' and 'imagemagick' packages
-    
+    if check_packages() is False:
+        return False    
     set_all_invalid()
     print '================ init finished ==================='
     

@@ -1,7 +1,7 @@
 {% load meta_tags %}
 
 {% if meta %}
-
+{% autoescape off %}
 {% if meta.description %}{% meta_tags 'description' meta.description %}{% endif %}
 {% if meta.keywords %}{% meta_tag_list 'keywords' meta.keywords %}{% endif %}
 {% if meta.publisher_google_id %}{% meta_rel_tags 'publisher' meta.publisher_google_id %}{% endif %}
@@ -35,5 +35,5 @@
 {% if meta.description %}{% googleplus_prop 'description' meta.description %}{% endif %}
 {% if meta.image %}{% googleplus_prop 'image' meta.image %}{% endif %}
 {% endif %}
-
+{% endautoescape %}
 {% endif %}

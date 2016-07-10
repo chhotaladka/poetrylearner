@@ -204,7 +204,6 @@ def process_all_articles():
         for obj in articles:
             count_total += 1
             poetry = refine_poetry(obj.content, obj.source_url, obj.language)
-            poetry = True
             if poetry:
                 obj.content = poetry
                 obj.valid = True

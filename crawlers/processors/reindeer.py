@@ -6,6 +6,7 @@ import tempfile
 import difflib
 import os
 from exceptions import Exception
+from threading import Thread
 from django.shortcuts import render, get_object_or_404
 
 from crawlers.processors.tesseract import image_to_text_for_reindeer, check_packages
@@ -198,23 +199,29 @@ def refine_poetry(crawled_poetry, url, language):
     return poetry
 
 
-def process_all_articles():
+class processArticleThread(Thread):
     '''
-    @summary: Post processing of articles crawled by the ``ReindeerBot``
-    Assuming all articles are valid=False.
-    Process the article, write back to db, set valid=True(so that process can be resumed in case of failure)
-    '''
-    # obj = get_object_or_404(RawArticle, pk=130831)
-    # refine_poetry(obj.content, obj.source_url, obj.language)
-    # return True
+    @summary: process articles in multithreads
+    '''    
+    def __init__(self, threadID, name, articles):
+        Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+        self.articles = articles
+        
+    def run(self):
+        print ">> Starting thread " + self.name
+        process_articles(self.name, self.articles)
+        print ">> Ending thread " + self.name
 
+
+def process_articles(name=None, articles=None):
+    '''
+    Process given list of articles.
+    '''
     count_total = 0
     count_saved = 0
-    # Process only Hindi and English.
-    #TODO Urdu OCR tessdata is not available currently. Add in the list, once it's available.
-    language_list = ['hi', 'en']
-
-    articles = RawArticle.objects.all().filter(source_url__icontains='rekhta.org').filter(valid=False, language__in=language_list)
+        
     if articles is not None:
         for obj in articles:
             count_total += 1
@@ -227,11 +234,51 @@ def process_all_articles():
 
             # print stats
             if count_total % 100 == 0:
-                print "> %d saved out of %d processed"%(count_saved, count_total)
+                print "> thread %s: saved %d out of %d processed"%(name, count_saved, count_total)    
+    
+    
+def process_all_articles(num_thread=1):
+    '''
+    @summary: Post processing of all articles crawled by the ``ReindeerBot``
+    Assuming all articles are valid=False.
+    Process the article, write back to db, set valid=True(so that process can be resumed in case of failure)
+    '''
+    if num_thread < 1:
+        num_thread = 1
+    
+    # Process only Hindi and English.
+    #TODO Urdu OCR tessdata is not available currently. Add in the list, once it's available.
+    language_list = ['hi', 'en']
+
+    total_articles = RawArticle.objects.all().filter(source_url__icontains='rekhta.org').filter(valid=False, language__in=language_list)
+    num_total = total_articles.count()
+    print 'Total articles to be proccessed : %d'%(num_total)
+    print 'Number of threads to be created : %d'%(num_thread)
+    q = num_total / num_thread
+    r = num_total - (q * num_thread)
+        
+    threads = []
+    
+    # Create new threads
+    for i in range(0, num_thread):
+        extra = r if (i == (num_thread - 1)) else 0
+        num_start = i*q
+        num_end = num_start + q + extra
+        thread_name = 'Thread-'+str(i)
+        
+        print 'Starting thread for total_articles[%d : %d]'%(num_start, num_end)
+        
+        t = processArticleThread(i, thread_name, total_articles[num_start : num_end])
+        t.start()
+        threads.append(t)
+    
+    # Wait for all threads to complete
+    for t in threads:
+        t.join()
+    print "Exiting Main Thread"            
 
     # print stats
     print "> THE END"
-    print "> %d saved out of %d processed"%(count_saved, count_total)
 
 
 def set_all_invalid():
@@ -252,12 +299,19 @@ def cmd_init_reindeer():
     set_all_invalid()
     print '================ init finished ==================='
 
-def cmd_resume_reindeer():
+def cmd_resume_reindeer(num_thread=1):
     print '=========== Resuming/running reindeer ============'
-    process_all_articles()
+    process_all_articles(num_thread)
     print '=============== resume finished =================='
 
 def cmd_exit_reindeer():
     print '=============== Exiting reindeer ================='
     set_all_invalid()
     print '================= exit finished =================='
+
+def cmd_test_reindeer():
+    print '=============== Testing reindeer ================='
+    obj = get_object_or_404(RawArticle, pk=130831)
+    poetry = refine_poetry(obj.content, obj.source_url, obj.language)
+    print '================= test finished =================='
+    print poetry

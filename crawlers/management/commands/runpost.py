@@ -35,10 +35,23 @@ class Command(BaseCommand):
             dest='exit',
             default=False,
             help='Exit post processor.',
-        )                        
+        )
+        parser.add_argument(
+            '-t',
+            '--thread',
+            type=int,
+            dest='thread',
+            default=False,
+            help='Number of threads to be created for processing.',
+        )                                
 
     def handle(self, *args, **options):
-       
+        
+        if options['thread'] > 1:
+            num_thread = options['thread']
+        else:
+            num_thread = 1
+                
         if options['init']:
             process = options['init']
             if process == 'reindeer':
@@ -50,7 +63,7 @@ class Command(BaseCommand):
         elif options['resume']:
             process = options['resume']
             if process == 'reindeer':
-                cmd_resume_reindeer()
+                cmd_resume_reindeer(num_thread)
                 
             elif process == 'kangaroo':
                 print 'resume kangaroo'

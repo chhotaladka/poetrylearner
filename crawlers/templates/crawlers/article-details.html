@@ -7,23 +7,23 @@
 
 {% block breadcrumbs %}
 <div class="pT-8 pB-8">
-	<div class="_layout">					
+	<div class="_layout">
 		<div class="breadcrumbs wFull">
 			<a href="{% url 'crawlers:dashboard' %}">Crawled data</a>
 			<span> / </span>
 			<a href="{% url 'crawlers:article-list' %}">article</a>
-			<span> / </span>	
-			<span>{{ article.get_title }}</span>		 	
-		</div>					
-	</div>	
+			<span> / </span>
+			<span>{{ article.get_title }}</span>
+		</div>
+	</div>
 </div>
 {% endblock %}
-{% block main %}	
+{% block main %}
 <section id="priSect" class="pT-8 pB-16">
-	<div class="_layout layout-L mdl-grid">			
+	<div class="_layout layout-L mdl-grid">
 		<div class="__c mdl-cell mdl-cell--12-col pA-0">
-			
-			<div class="mdl-card poetry-card wFull bS-1">			
+
+			<div class="mdl-card poetry-card wFull bS-1">
 				<div class="table-card">
 					<table cellpadding="0">
 						<tbody>
@@ -33,15 +33,15 @@
 								</td>
 								<td class="data" colspan="2">
 									<span class="gI">{{article.id}}</span>
-								</td>						
-							</tr>			
+								</td>
+							</tr>
 							<tr>
 								<td class="name" colspan="2">
 									<span class="gI">Title</span>
 								</td>
 								<td class="data" colspan="2">
 									<span class="gI">{{ article.get_title }}</span>
-								</td>						
+								</td>
 							</tr>
 							<tr>
 								<td class="name" colspan="2">
@@ -55,12 +55,12 @@
 									{% else %}
 									<span class="gI mdl-color-text--red-600">Not available</span>
 									<div class="notice">
-										Our naive web crawler has missed the author name. You may find the name on the reference 
-										<a class="h-link" title="Visit crawled source page" href="{{ article.source_url }}" target="_blank">URL</a> manually.<br /> 
+										Our naive web crawler has missed the author name. You may find the name on the reference
+										<a class="h-link" title="Visit crawled source page" href="{{ article.source_url }}" target="_blank">URL</a> manually.<br />
 										If you know the name, click <a class="h-link" href="{{ article.get_admin_url }}">here</a> to add.
-									</div>						
+									</div>
 									{% endif %}
-								</td>						
+								</td>
 							</tr>
 							<tr>
 								<td class="name" colspan="2">
@@ -78,7 +78,7 @@
 									<span class="gI">
 										<a class="h-link" title="{{ article.source_url }}" href="{{ article.source_url }}">URL of the source</a>
 									</span>
-								</td>						
+								</td>
 							</tr>
 							<tr>
 								<td class="name" colspan="2">
@@ -86,7 +86,7 @@
 								</td>
 								<td class="data" colspan="2">
 									<span class="gI">{{ article.added_at }}</span>
-								</td>						
+								</td>
 							</tr>
 							<tr>
 								<td class="name" colspan="2">
@@ -94,21 +94,19 @@
 								</td>
 								<td class="data" colspan="2">
 									<span class="gI">{{ article.get_validity }}</span>
-								</td>						
+								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				<div class="separator"></div>					
-				<div id="cPoemId" class="article-content p-16">											
-					{% autoescape off %}					
-					{{ article.get_poem }}
-					{% endautoescape %}
+				<div class="separator"></div>
+				<div class="content p-16">
+					<div id="cPoemId" class="poetry-stanza fS16">{% autoescape off %}{{ article.get_poem }}{% endautoescape %}</div>
 				</div>
 			</div>
-			
-		</div>			
-	</div>		
+
+		</div>
+	</div>
 </section>
 
 {% endblock %}

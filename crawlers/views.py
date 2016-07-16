@@ -86,6 +86,7 @@ def raw_article_list(request):
     # search string
     q = request.GET.get('q', None)    
 
+    page_size = 80 # Show 80 articles per page  
     extra_get_queries = []
 
     # Process get queries
@@ -135,7 +136,7 @@ def raw_article_list(request):
     obj_list = RawArticle.objects.all().filter(q_objects)  
     
     # Pagination
-    paginator = Paginator(obj_list, 40) # Show 40 articles per page    
+    paginator = Paginator(obj_list, page_size)  
     page = request.GET.get('page')
     try:
         articles = paginator.page(page)
@@ -288,6 +289,8 @@ def raw_author_list(request):
     source = request.GET.get('source', None)
     # search string
     q = request.GET.get('q', None)
+    
+    page_size = 80 # Show 80 authors per page
 
     # Process get queries
     if q_tab == 'all':
@@ -364,7 +367,7 @@ def raw_author_list(request):
     
     
     # Pagination
-    paginator = Paginator(obj_list, 40) # Show 40 authors per page    
+    paginator = Paginator(obj_list, page_size)    
     page = request.GET.get('page')
     try:
         authors = paginator.page(page)

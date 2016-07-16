@@ -1,4 +1,5 @@
 {% extends "crawlers/base.html" %}
+{% load humanize %}
 
 {% block title %}Crawled Authors - {{ sitename }}{% endblock %}
 
@@ -42,7 +43,7 @@
 			<div class="mdl-card bC-none mdl-cell mdl-cell--12-col">
 {% if authors %} {% comment %} Display the list {% endcomment %}			
 				<div class="mdl-card__supporting-text stats-text">		            
-					<span>{{ authors.paginator.count }} results for </span>
+					<span>{{ authors.paginator.count|intcomma }} results for </span>
 					<strong>{{result_title}}</strong>
 				</div>
 				{% if authors.paginator.num_pages > 1 %}

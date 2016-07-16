@@ -1,6 +1,7 @@
 {% extends "repository/base.html" %}
 {% load staticfiles %}
 {% load common_tags %}
+{% load humanize %}
 
 {% block title %}Explore Repository | {{ sitename }}{% endblock %}
 
@@ -33,7 +34,7 @@
 						<div class="caption">
 							Persons
 						</div>
-						<div class="light-txt">{{ count.person }}</div>					
+						<div class="light-txt">{{ count.person|intcomma }}</div>					
 					</a>		
 				</div>
 			</div>
@@ -45,7 +46,7 @@
 						<div class="caption">
 							Poetries
 						</div>	
-						<div class="light-txt">{{ count.poetry }}</div>				
+						<div class="light-txt">{{ count.poetry|intcomma }}</div>				
 					</a>		
 				</div>																			
 			</div>			
@@ -57,7 +58,7 @@
 						<div class="caption">
 							Books
 						</div>	
-						<div>{{ count.book }}</div>				
+						<div>{{ count.book|intcomma }}</div>				
 					</a>		
 				</div>					
 			</div>
@@ -69,7 +70,7 @@
 						<div class="caption">
 							Snippets
 						</div>	
-						<div>{{ count.snippet }}</div>				
+						<div>{{ count.snippet|intcomma }}</div>				
 					</a>		
 				</div>						
 			</div>
@@ -81,7 +82,7 @@
 						<div class="caption">
 							Organizations
 						</div>	
-						<div>{{ count.organization }}</div>				
+						<div>{{ count.organization|intcomma }}</div>				
 					</a>		
 				</div>																		
 			</div>
@@ -93,7 +94,7 @@
 						<div class="caption">
 							Events
 						</div>	
-						<div>{{ count.event }}</div>				
+						<div>{{ count.event|intcomma }}</div>				
 					</a>		
 				</div>								
 			</div>
@@ -105,7 +106,7 @@
 						<div class="caption">
 							Products
 						</div>	
-						<div>{{ count.product }}</div>				
+						<div>{{ count.product|intcomma }}</div>				
 					</a>		
 				</div>																						
 			</div>	
@@ -117,7 +118,7 @@
 						<div class="caption">
 							Places
 						</div>	
-						<div>{{ count.place }}</div>				
+						<div>{{ count.place|intcomma }}</div>				
 					</a>		
 				</div>																		
 			</div>							

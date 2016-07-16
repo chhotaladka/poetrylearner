@@ -1,5 +1,6 @@
 {% extends "crawlers/base.html" %}
 {% load staticfiles %}
+{% load humanize %}
 
 {% block title %}Crawled Articles - {{ sitename }}{% endblock %}
 
@@ -45,7 +46,7 @@
 {% if articles %} {% comment %} Display the list {% endcomment %}
 				{% comment %} Pagination {% endcomment %}				
 				<div class="mdl-card__supporting-text stats-text">		            
-					<span>{{ articles.paginator.count }} results for </span>
+					<span>{{ articles.paginator.count|intcomma }} results for </span>
 					<strong>{{result_title}}</strong>
 				</div>
 				{% if articles.paginator.num_pages > 1 %}

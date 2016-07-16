@@ -4,7 +4,7 @@
 	<fieldset>
 		<div class="form-element">
 			<label for="id-feedback-text">
-				<strong>Feedback?</strong>
+				<strong>Send Feedback</strong>
 				<textarea id="id-feedback-text" class="form-input" name="feedback-text" rows="3" maxlength=2000 required>{{ form.text.value|default_if_none:'' }}</textarea>							
 			</label>
 			<span class="helptext">Write down your commnets and suggestions.</span>
@@ -28,6 +28,6 @@
 		{% endif %}		
 	</fieldset>
 	<div class="tAr">
-		<input id="id-feedback-form-submit" class="mdl-button mdl-button--raised mdl-button--colored" type="submit" value="Send"/> 
+		<input id="id-feedback-form-submit" class="mdl-button mdl-button--colored" type="submit" value="Send"/> 
 	</div>
 </form>

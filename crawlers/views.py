@@ -16,6 +16,41 @@ from repository.models import Poetry, Person
 
 # Create your views here.
 
+def _create_query_tabs(request_path='/', q_tab=None, extra_get_queries=[]):
+    '''
+    Return query tab object for RawArticles
+    '''
+    get_query = ''.join(extra_get_queries)
+    
+    # Create tab list and populate
+    query_tabs = []    
+
+    tab = {
+           'name': 'all',
+           'help_text': 'Recent items',
+           'url': request_path + '?tab=all' + get_query,
+           'css': 'is-active' if q_tab == 'all' or q_tab is None else '',
+        }
+    query_tabs.append(tab)
+    
+    tab = {
+           'name': 'valid',
+           'help_text': 'Itmes which have been added to repository',
+           'url': request_path + '?tab=valid' + get_query,
+           'css': 'is-active' if q_tab == 'valid' else '',
+        }
+    query_tabs.append(tab)
+    
+    tab = {
+           'name': 'invalid',
+           'help_text': 'Itmes which have not added to repository',
+           'url': request_path + '?tab=invalid' + get_query,
+           'css': 'is-active' if q_tab == 'invalid' else '',
+        }
+    query_tabs.append(tab)
+    
+    return query_tabs
+
 
 """
 Details of the RawArticle
@@ -43,11 +78,15 @@ def raw_article_list(request):
     # Query tab
     q_tab = request.GET.get('tab', None)
     # source url    
-    source = request.GET.get('source', None)
+    source = request.GET.get('src', None)
     # author name
     author = request.GET.get('author', None)
+    # Language
+    lang = request.GET.get('lang', None)    
     # search string
     q = request.GET.get('q', None)    
+
+    extra_get_queries = []
 
     # Process get queries
     if q_tab == 'all':
@@ -56,55 +95,44 @@ def raw_article_list(request):
         q_objects &= Q(valid=True)
     elif q_tab == 'invalid':
         q_objects &= Q(valid=False)            
-    
+
+    if lang:
+        lang = lang.strip()
+        # filter the source_url
+        q_objects &= Q(language=lang)
+        q_string = '&lang=' + lang
+        extra_get_queries.append(q_string)         
+        result_title = result_title + ', ' + lang
+            
     if source:
         source = source.strip()
         # filter the source_url
         q_objects &= Q(source_url__icontains=source)
+        q_string = '&src=' + source
+        extra_get_queries.append(q_string)         
         result_title = result_title + ', ' + source
 
     if author:
         author = author.strip()
         # filter the source_url
         q_objects &= Q(author__icontains=author)
+        q_string = '&author=' + author
+        extra_get_queries.append(q_string)         
         result_title = result_title + ', ' + author
     
     if q:
         q = q.strip()
-        # TODO make it more perfect 
+        # TODO make it better 
         q_objects &= Q(source_url__icontains=q) | Q(author__icontains=q) | Q(title__icontains=q) | Q(content__icontains=q)
+        q_string = '&q=' + q
+        extra_get_queries.append(q_string)        
         result_title = result_title + ', ' + q      
         
+    # Create ``query_tabs``
+    query_tabs = _create_query_tabs(request.path, q_tab, extra_get_queries)
+            
     # Get all articles              
-    obj_list = RawArticle.objects.all().filter(q_objects)        
-       
-    # Create tab list and populate
-    query_tabs = []    
-    
-    tab = {
-           'name': 'all',
-           'help_text': 'Recent items',
-           'url': request.path + '?tab=all' + '&q=' + (q if q else '') + '&author=' + (author if author else ''),
-           'css': 'is-active' if q_tab == 'all' or q_tab is None else '',
-        }
-    query_tabs.append(tab)
-    
-    tab = {
-           'name': 'valid',
-           'help_text': 'Itmes which have been added to repository',
-           'url': request.path + '?tab=valid' + '&q=' + (q if q else '') + '&author=' + (author if author else ''),
-           'css': 'is-active' if q_tab == 'valid' else '',
-        }
-    query_tabs.append(tab)
-    
-    tab = {
-           'name': 'invalid',
-           'help_text': 'Itmes which have not added to repository',
-           'url': request.path + '?tab=invalid' + '&q=' + (q if q else '') + '&author=' + (author if author else ''),
-           'css': 'is-active' if q_tab == 'invalid' else '',
-        }
-    query_tabs.append(tab)
-    
+    obj_list = RawArticle.objects.all().filter(q_objects)  
     
     # Pagination
     paginator = Paginator(obj_list, 40) # Show 40 articles per page    

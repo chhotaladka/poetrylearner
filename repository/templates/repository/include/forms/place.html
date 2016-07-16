@@ -26,8 +26,8 @@
 	<input type="hidden" name="cancel" value="{{ cancel_url }}"/>
 	{% endif %}	
 	<div class="tAr">
-		<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="submit" value="Save changes" id="id-form-submit"/> 
-		<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;"/>
+		<input class="mdl-button" type="button" name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;"/>	
+		<input class="mdl-button mdl-button--colored mL-16 mR-16" type="submit" name="submit" value="Save changes" id="id-form-submit"/> 
 	</div>
 </form>
 {% comment %} Common add-item-form script {% endcomment %}

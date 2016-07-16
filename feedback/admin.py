@@ -10,10 +10,10 @@ class FeedbackAdmin(admin.ModelAdmin):
     @summary: Admin class for the `Feedback` model.
     '''
     
-    list_display = ['date_added', 'user_email', 'url', 'text_excerpt', ]
+    list_display = ['text_excerpt', 'user_email', 'url', 'date_added',]
     
-    list_filter = ['date_added', 'url', ]
-    date_hierarchy = 'date_added'
+    list_filter = ['date_added',]
+    #Giving error: date_hierarchy = 'date_added'
     search_fields = ['added_by__email', 'email', 'url', 'text', ]
 
     def text_excerpt(self, obj):

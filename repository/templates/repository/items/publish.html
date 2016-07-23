@@ -27,20 +27,19 @@
 					{% else %}
 					<div class="mdl-card__supporting-text">
 						Before publishing, kindly make sure of the followings:
-						<br /><strong>1.</strong> There are no useless html tags.
-						<br /><strong>2.</strong> Formatting is perfect.
-						<br /><strong>3.</strong> There are no copyright issues.
-						<br />In doubt? Ok, go to the <a href="{{ obj.get_edit_url }}/?cancel={{ request.path }}"><strong>edit</strong></a> 
-						page and re-check the content. Otheriwse, go ahead.
+						<br /><strong>1.</strong> Title is correct.
+						<br /><strong>2.</strong> Formatting of stanzas are correct (Compare with the source if unsure).						
+						<br /><strong>3.</strong> There are no useless html tags.
+						<br /><strong>4.</strong> There are no copyright issues.
 					</div>
 					{% endif %}
 					<form id="id-snippet-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
 						{% csrf_token %} 
 						<div class="tAr">
-							<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" 
+							<input class="mdl-button" type="button"
+							name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ obj.get_absolute_url }}&#39;"/>						
+							<input class="mdl-button mdl-button--colored mL-16 mR-16" type="submit" 
 							name="submit" {% if is_published %}value="Unpublish"{% else %}value="Publish"{% endif %} id="id-form-submit"/> 
-							<input class="mdl-button mdl-js-button mdl-button--raised mL-16 mR-16" type="button" 
-							name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ obj.get_absolute_url }}&#39;"/>
 						</div>
 					</form>
 				{% endwith %}

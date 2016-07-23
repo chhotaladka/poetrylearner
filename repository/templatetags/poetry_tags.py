@@ -2,6 +2,7 @@ from django import template
 from django.template import Node
 from django.db.models import Q
 import os, sys, traceback
+import random
 from repository.models import Poetry
 
 register = template.Library()
@@ -311,6 +312,68 @@ class PoetryCountNode(Node):
         return ''
 
 
+class PoetryUnpublishedRandomNode(Node):
+    """
+    Render the unpublished poetry list (random order)
+    """
+
+    def __init__(self, count=5, varname=None):
+        self.count = count
+        self.varname = varname           
+
+    @classmethod
+    def handle_token(cls, parser, token):
+        """
+        Class method to parse and return a Node.
+        """
+        tokens = token.split_contents()        
+        
+        if len(tokens) < 4:
+            raise template.TemplateSyntaxError, "%s tag takes at least three arguments" % tokens[0]
+
+        # Check the 1st argument
+        try:
+            count = int(tokens[1])
+            if count < 1:
+                raise template.TemplateSyntaxError, "First argument of %s tag must be a positive integer" % tokens[0]
+        except:
+            raise template.TemplateSyntaxError, "First argument of %s tag must be a positive integer" % tokens[0]
+        
+        # Check the 2nd argument
+        if tokens[2] == 'as':
+            correct_syntax = "'%s [count] as [varname]'" % tokens[0]
+
+            return cls(
+                       count=count, 
+                       varname = tokens[3]
+                    )                  
+        else:
+            raise template.TemplateSyntaxError, "Wrong syntax."
+        
+
+    def render(self, context):
+        q_objects = Q()
+        try:
+            # poetries which are unpublished: [:self.count]
+            q_objects &= Q(date_published__isnull=True)
+            obj_list = Poetry.objects.filter(q_objects)
+            indexes = random.sample(range(len(obj_list)), self.count)
+            result = []
+            for index in indexes:
+                result.append(obj_list[index])
+
+            context[self.varname] = result
+        
+        except:
+            print ("Error: Unexpected error:", sys.exc_info()[0])
+            for frame in traceback.extract_tb(sys.exc_info()[2]):
+                fname,lineno,fn,text = frame
+                print ("DBG:: Error in %s on line %d" % (fname, lineno)) 
+            raise template.TemplateSyntaxError, "Something went wrong. Check the queryset to resolve the error"            
+            
+        return ''
+
+
 @register.tag
 def get_recent_poetries(parser, token):
     """
@@ -370,3 +433,17 @@ def get_poetry_count(parser, token):
     """     
     
     return PoetryCountNode.handle_token(parser, token)
+
+@register.tag
+def get_poetry_unpub_rand(parser, token):
+    """
+    Get the list of unpublished poetries (random order)
+    
+    Syntax::
+        case 1: {% get_poetry_unpub_rand [count] as [varname] %}
+        
+    Example usage::
+        {% get_poetry_unpub_rand 5 as poetry_list %}
+    """     
+    
+    return PoetryUnpublishedRandomNode.handle_token(parser, token)

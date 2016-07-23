@@ -174,10 +174,11 @@ html, body {
 	background: rgba(255, 255, 255, 0.6);
 }
 
-.mdl-poetry .section-title h3 {
+.section-title h3 {
     margin: 0px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 400;
+	line-height: normal;
 }
 .head__banner {
 	display: flex;
@@ -2222,7 +2223,12 @@ ul.mdl-mini-footer__link-list {
 .jC-c {justify-content: center;}
 
 .curP {cursor: pointer;}
-.c-blue {color: #3F51B5;}
+
+/* colors */
+.c-grey1 {color: #292F33 !important;}
+.c-blue {color: #3F51B5 !important;}
+.c-blue2 {color: #167AC6 !important;}
+.c-red {color: #DB4437 !important}
 .bc-red {background-color: #DB4437;}
 .c-administrator {
 	color: #FFF !important;

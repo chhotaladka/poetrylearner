@@ -3,7 +3,7 @@ import sys
 import traceback
 
 from crawlers.processors.reindeer import cmd_init_reindeer, cmd_resume_reindeer, cmd_exit_reindeer
-
+from crawlers.processors.kangaroo import cmd_init_kangaroo, cmd_resume_kangaroo, cmd_exit_kangaroo
 
 class Command(BaseCommand):
     help = 'Run crawlers post processing commands.'
@@ -58,7 +58,7 @@ class Command(BaseCommand):
                 cmd_init_reindeer()
                 
             elif process == 'kangaroo':
-                print 'init kangaroo'
+                cmd_init_kangaroo()
                 
         elif options['resume']:
             process = options['resume']
@@ -66,7 +66,7 @@ class Command(BaseCommand):
                 cmd_resume_reindeer(num_thread)
                 
             elif process == 'kangaroo':
-                print 'resume kangaroo'
+                cmd_resume_kangaroo(num_thread)
                 
         elif options['exit']:
             process = options['exit']
@@ -74,6 +74,6 @@ class Command(BaseCommand):
                 cmd_exit_reindeer()
                 
             elif process == 'kangaroo':
-                print 'exit kangaroo'
+                cmd_exit_kangaroo()
         else:
             raise CommandError('-h or --help for help')       

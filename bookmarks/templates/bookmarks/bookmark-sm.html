@@ -1,0 +1,9 @@
+<tr>
+	<td class="non-numeric">
+		<a href="{{ bookmark.get_absolute_url }}">
+		<span>{{ bookmark.title }}</span>
+		<span> by </span>
+		<i>{{ bookmark.content_object.get_author.title }}</i>
+		</a>
+	</td>
+</tr>

@@ -6,11 +6,10 @@
 {% block main %}	
 <div class="pT-8 pB-16">
 	<div class="_layout layout-L mdl-grid">			
-		<section class="__c mdl-cell mdl-cell--12-col pA-0">
-			
+		<section class="__c mdl-cell mdl-cell--12-col pA-0">			
 			{% bookmarks_by_user request.user as bookmarks %}
 			{% comment %} Bookmark list table {% endcomment %}
-			<div class="poetry-card bC-none wFull mdl-color-text--grey-600">
+			<div class="section-cards">
 				<div class="section-title mB-16 wFull">
 					<h3>
 						<span class="bookmark-btn true">
@@ -18,26 +17,9 @@
 						</span>								
 					    <span class="c-grey1">My bookmarks ({{ bookmarks|length }})</span>
 					</h3>	
-				</div>	
-				<div class="table--large">
-				<table class="mdl-data-table mdl-js-data-table wSn">										
-					<tbody>
-						{% for bookmark in bookmarks %}
-						<tr>
-							<td class="non-numeric">
-								<a href="{{ bookmark.get_absolute_url }}">
-								<span>{{ bookmark.title }}</span>
-								<span> by </span>
-								<i>{{ bookmark.content_object.get_author.title }}</i>
-								</a>
-							</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
 				</div>
+				{% include "bookmarks/list.html" with bookmarks=bookmarks %}
 			</div>
-
 		</section>			
 	</div>		
 </div>

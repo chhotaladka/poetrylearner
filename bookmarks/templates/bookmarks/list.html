@@ -1,0 +1,16 @@
+{% comment %}
+	Info:       Bookmark list
+{% endcomment %}
+{% if bookmarks %} {% comment %} Display the list {% endcomment %}
+	<div class="table--large">
+		<table class="mdl-data-table mdl-js-data-table wSn">										
+			<tbody>
+			{% for b in bookmarks %}
+			{% include "bookmarks/bookmark-sm.html" with bookmark=b %}
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% else %}  {% comment %} Display the notification {% endcomment %}
+	{% include "bookmarks/empty-result.html" %}
+{% endif %}

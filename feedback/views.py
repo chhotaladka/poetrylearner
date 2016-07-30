@@ -12,6 +12,7 @@ from django.db.models import Q
 from django.utils import timezone
 
 from common.decorators import group_required
+from common.utils import user_has_group
 from feedback.forms import FeedbackForm
 from feedback.models import Feedback, FEEDBACK_RATING_MAX, FEEDBACK_RATING_MIN
 
@@ -246,7 +247,11 @@ def feedback_list(request):
                                                  Q(email__isnull=True) | 
                                                  Q(email=u'')
                                                  )        
-    
+    elif q_tab == 'me':
+        # Feedbacks by me i.e. request.user        
+        obj_list = Feedback.objects.all().filter(
+                                                 Q(added_by=request.user)
+                                                 )    
     elif q_tab == 'all':
         # Most recent feedbacks
         obj_list = Feedback.objects.all()
@@ -287,20 +292,29 @@ def feedback_list(request):
     query_tabs.append(tab)
     
     tab = {
-           'name': 'by anonymous',
-           'help_text': 'Feedbacks by anonymous users',
-           'url': request.path + '?tab=anonymous',
-           'css': 'is-active' if q_tab == 'anonymous' else '',
+           'name': 'by me',
+           'help_text': 'My feedbacks',
+           'url': request.path + '?tab=me',
+           'css': 'is-active' if q_tab == 'me' else '',
         }
     query_tabs.append(tab)
     
-    tab = {
-           'name': 'by known',
-           'help_text': 'User has account or have given email id',
-           'url': request.path + '?tab=known',
-           'css': 'is-active' if q_tab == 'known' else '',
-        }
-    query_tabs.append(tab)
+    if user_has_group(request.user, ['Administrator',]):    
+        tab = {
+               'name': 'by anonymous',
+               'help_text': 'Feedbacks by anonymous users',
+               'url': request.path + '?tab=anonymous',
+               'css': 'is-active' if q_tab == 'anonymous' else '',
+            }
+        query_tabs.append(tab)
+        
+        tab = {
+               'name': 'by known',
+               'help_text': 'User has account or have given email id',
+               'url': request.path + '?tab=known',
+               'css': 'is-active' if q_tab == 'known' else '',
+            }
+        query_tabs.append(tab)    
             
     
     # Pagination

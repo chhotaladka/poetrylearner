@@ -684,11 +684,13 @@ html, body {
     display: block;
 	overflow: hidden;
 }
-.avatar.lg {
+.avatar.lg,
+.avatar.lg svg {
 	width: 120px;
 	height: 120px;
 }
-.avatar.md {
+.avatar.md,
+.avatar.md svg {
 	width: 90px;
 	height: 90px;
 }
@@ -891,19 +893,48 @@ html, body {
 .action-button:hover {
 	color: #616161;
 }
+.action-button:active {
+	
+}
 a.action-button:hover {
 	text-decoration: none;
 }
 .action-button--small {
+	display: inline-block;
+	padding: 0px 10px;
     background: none repeat scroll 0px 0px transparent;
     border: medium none;
     cursor: pointer;
     text-align: left;
 	color: #919191;
 	font-size: 10px;
+	outline: none !important;
+	line-height: normal;
+	vertical-align: middle;	
 }
-.action-button--small:hover {
+.action-button--small::-moz-focus-inner {border: 0;}
+.action-button--small svg {
+	fill: #919191 !important;
+}
+.action-button--small:hover,
+.action-button--small:focus {
 	color: #616161;
+}
+.action-button--small:hover svg,
+.action-button--small:focus svg {
+	fill: #616161 !important;
+}
+.action-button--small:active {
+	color: #313131;
+}
+.action-button--small:active svg {
+	fill: #313131 !important;
+}
+.action-button--small:focus:not(:active) {
+    color: #313131;
+}
+.action-button--small:focus:not(:active) svg {
+    fill: #313131;
 }
 .bookmark-btn.true .icon { 
 	color: rgba(237, 66, 85, 0.9) !important;
@@ -1578,7 +1609,9 @@ input.search-input {
 
 
 /* Layouts: drawer/search/header related */
-.dashboard-layout .mdl-layout__drawer-button {
+.dashboard-layout .mdl-layout__drawer-button svg {
+	width: 24px;
+	height: 24px;
 }
 .dashboard-layout .mdl-layout__drawer {
 	box-shadow: none;

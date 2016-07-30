@@ -13,9 +13,7 @@
 		</div>
 		{% else %}
 		<div class="avatar lg">
-			<svg height="120" width="120" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-				<path d="M24 8c-4.42 0-8 3.58-8 8 0 4.41 3.58 8 8 8s8-3.59 8-8c0-4.42-3.58-8-8-8zm0 20c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/><path d="M0 0h48v48h-48z" fill="none"/>
-			</svg>
+			{% include "common/svg/person.html" %}
 		</div>
 		{% endif %}		
 		{% endwith %}					
@@ -51,9 +49,7 @@
 	<div class="mdl-card__menu">
 		<a href="{% url 'repository:add-item' type=person.item_type pk=person.id %}/?cancel={{request.path}}" title="Edit to improve.">
 			<button class="mdl-button mdl-button--icon" id="btn1">          	
-				<svg height="22" width="22" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" style="fill: rgb(255, 255, 255);">
-					<path d="M6 34.5v7.5h7.5l22.13-22.13-7.5-7.5-22.13 22.13zm35.41-20.41c.78-.78.78-2.05 0-2.83l-4.67-4.67c-.78-.78-2.05-.78-2.83 0l-3.66 3.66 7.5 7.5 3.66-3.66z"/><path d="M0 0h48v48h-48z" fill="none"/>
-				</svg>
+				{% include "common/svg/edit.html" %}
 			</button>
 		</a>
 	</div>

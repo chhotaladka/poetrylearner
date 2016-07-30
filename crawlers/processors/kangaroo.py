@@ -15,12 +15,15 @@ def refine_title(article_title):
     Here, we will remove the last part, 'poet'.
     '''
     try:
-        ts = article_title.split('/')[:-1]    
-        t = '/'.join(ts)
+        ts = article_title.split('/')[:-1]
+        if ts:    
+            t = '/'.join(ts)
+        else:
+            t = None
     except Exception as e:
         print 'ERR:: Exception occurred.'
         print e
-        return False
+        return None
         
     return t
 

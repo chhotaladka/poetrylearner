@@ -331,7 +331,8 @@ html, body {
 	max-width: 620px;
 	margin: 1px auto;
 }
-.feedback-card {	
+.feedback-card {
+	min-height: inherit;
 }
 .card-m {
 	max-width: 512px;

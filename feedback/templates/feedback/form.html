@@ -5,29 +5,31 @@
 		<div class="form-element">
 			<label for="id-feedback-text">
 				<strong>Send Feedback</strong>
-				<textarea id="id-feedback-text" class="form-input" name="feedback-text" rows="3" maxlength=2000 required>{{ form.text.value|default_if_none:'' }}</textarea>							
+				<textarea id="id-feedback-text" class="form-input" name="feedback-text"
+				placeholder="Write down your commnets and suggestions." 
+				rows="3" maxlength=2000 required>{{ form.text.value|default_if_none:'' }}</textarea>							
 			</label>
-			<span class="helptext">Write down your commnets and suggestions.</span>
 		</div>
 		{% if request.user.is_authenticated == False %}
 		<div class="form-element">
 			<label for="id-email">
-				<strong>Your Email? (optional)</strong>
-				<input id="id-email" maxlength="254" name="feedback-email" type="email"/>
+				<strong>Your Email?</strong>
+				<input id="id-email" maxlength="254" name="feedback-email" type="email" placeholder="Optional"/>
 			</label>
 			<span class="helptext"></span>
 		</div>		
 		<div class="form-element">
 			<label for="id-xx">
 				<strong></strong>
-				<input id="id-xx" name="xx" type="text"/>
+				<input id="id-xx" name="xx" type="text" autocomplete="off" placeholder="Leave it blank if you are Human."/>
 			</label>
-			<span class="helptext">Leave it blank if you are Human.</span>
 		</div>
 		<input id="id-yy" name="yy" type="hidden"/>
 		{% endif %}		
 	</fieldset>
 	<div class="tAr">
+		<input class="mdl-button" type="button" name="cancel" value="Cancel" 
+		data-dismiss="modal"/>		
 		<input id="id-feedback-form-submit" class="mdl-button mdl-button--colored" type="submit" value="Send"/> 
 	</div>
 </form>

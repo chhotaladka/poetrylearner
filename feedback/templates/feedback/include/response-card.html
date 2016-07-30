@@ -102,12 +102,11 @@
 									</label>    										
 								</div>
 								<div class="tAr">
-									<input class="mdl-button" type="submit" name="submit" value="submit response" id="id-form-submit"/>
 									{% if feedback.is_responded == True %}
-									<button class="mdl-button mL-16 mR-16" value="cancel" onclick="document.getElementById('id-action2').classList.toggle('hidden');document.getElementById('id-action1').classList.toggle('hidden');return false;">
-										cancel
-									</buton>
-									{% endif %}
+									<input class="mdl-button" type="button" name="cancel" value="Cancel"
+									onclick="document.getElementById('id-action2').classList.toggle('hidden');document.getElementById('id-action1').classList.toggle('hidden');return false;"/>
+									{% endif %}								
+									<input class="mdl-button mdl-button--colored" type="submit" name="submit" value="submit response" id="id-form-submit"/>
 								</div>									
 							</form>
 						</div>

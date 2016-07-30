@@ -33,6 +33,53 @@ html, body {
   text-shadow: none;
 }
 
+/* Overriding material.css */
+@media (max-width: 479px) {
+  .mdl-grid {
+    padding: 8px; }
+  .mdl-cell {
+    margin: 0px;
+    width: 100%; }
+  .mdl-cell--hide-phone {
+    display: none !important; }
+  .mdl-cell--1-col,
+  .mdl-cell--1-col-phone.mdl-cell--1-col-phone {
+    width: 25%; }
+  .mdl-cell--2-col,
+  .mdl-cell--2-col-phone.mdl-cell--2-col-phone {
+    width: 50%; }
+  .mdl-cell--3-col,
+  .mdl-cell--3-col-phone.mdl-cell--3-col-phone {
+    width: 75%; }
+  .mdl-cell--4-col,
+  .mdl-cell--4-col-phone.mdl-cell--4-col-phone {
+    width: 100%; }
+  .mdl-cell--5-col,
+  .mdl-cell--5-col-phone.mdl-cell--5-col-phone {
+    width: 100%; }
+  .mdl-cell--6-col,
+  .mdl-cell--6-col-phone.mdl-cell--6-col-phone {
+    width: 100%; }
+  .mdl-cell--7-col,
+  .mdl-cell--7-col-phone.mdl-cell--7-col-phone {
+    width: 100%; }
+  .mdl-cell--8-col,
+  .mdl-cell--8-col-phone.mdl-cell--8-col-phone {
+    width: 100%; }
+  .mdl-cell--9-col,
+  .mdl-cell--9-col-phone.mdl-cell--9-col-phone {
+    width: 100%; }
+  .mdl-cell--10-col,
+  .mdl-cell--10-col-phone.mdl-cell--10-col-phone {
+    width: 100%; }
+  .mdl-cell--11-col,
+  .mdl-cell--11-col-phone.mdl-cell--11-col-phone {
+    width: 100%; }
+  .mdl-cell--12-col,
+  .mdl-cell--12-col-phone.mdl-cell--12-col-phone {
+    width: 100%; }
+}
+
 /* calligraphy */
 .kallos1 {
 	font-family: "adobe-caslon-pro","Georgia","Times New Roman",serif;

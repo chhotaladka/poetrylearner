@@ -102,10 +102,8 @@
 									</label>    										
 								</div>
 								<div class="tAr">
-									{% if feedback.is_responded == True %}
 									<input class="mdl-button" type="button" name="cancel" value="Cancel"
-									onclick="document.getElementById('id-action2').classList.toggle('hidden');document.getElementById('id-action1').classList.toggle('hidden');return false;"/>
-									{% endif %}								
+									onclick="location.href=&#39;{% url 'feedback:list' %}&#39;"/>							
 									<input class="mdl-button mdl-button--colored" type="submit" name="submit" value="submit response" id="id-form-submit"/>
 								</div>									
 							</form>

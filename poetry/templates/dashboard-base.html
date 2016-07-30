@@ -48,7 +48,7 @@
 	      	{% if request.user.is_authenticated %}
 	      	<div id="id-profile-menu" class="mdl-navigation__link">
 		        <button class="action-button oN"
-		        	title="{{ request.user|title }} : {{ request.user.email }}">
+		        	title="{{ request.user|title }} : {{ profile.get_contact }}">
 		        	{% if profile.get_avatar_url %}
 		        	<div>
 		        		<img class="circle" width="36" height="36" src="{{ profile.get_avatar_url }}"></img>

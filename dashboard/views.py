@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 import os, sys, traceback
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
@@ -11,6 +11,7 @@ from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 from dashboard.models import UserProfile, GENDER_UNSPECIFIED
+from common.const import USER_GROUP_DEFAULT
 
 # Overriding/altering allauth default methods
 
@@ -52,9 +53,16 @@ def CreateProfile(sender, request, user,**kwargs):
   
         profile = UserProfile()
         profile.user = user
+        
+        # Add `user` to default User Group
+        try:
+            group = Group.objects.get(name=USER_GROUP_DEFAULT)
+        except Group.DoesNotExist:
+            group = Group.objects.create(name=USER_GROUP_DEFAULT)
+        user.groups.add(group)
+        
         try:
             sociallogin = SocialAccount.objects.get(user=user)
-            print "DBG:: extra data of the account: \n", sociallogin.extra_data
             if('google' == sociallogin.provider ):
                 user.first_name = sociallogin.extra_data['given_name']
                 user.last_name = sociallogin.extra_data['family_name']

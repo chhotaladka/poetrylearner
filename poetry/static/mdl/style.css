@@ -694,6 +694,9 @@ html, body {
 	width: 90px;
 	height: 90px;
 }
+.avatar.user svg {
+	fill: #616161 !important;
+}
 .avatar.border {
 	border: 2px solid #FFF;
 }
@@ -2275,6 +2278,10 @@ ul.mdl-mini-footer__link-list {
 .c-staff {
 	color:#FFF !important;
 	background-color:#951C55 !important;
+}
+.c-reader {
+	background-color: #19A36C !important;
+	color: #FFF !important;
 }
 
 .oN {outline:none !important;}

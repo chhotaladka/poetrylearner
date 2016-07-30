@@ -179,6 +179,18 @@ class UserProfile(models.Model):
             return profile.extra_data['email']
         else:
             return self.user.email
+        
+    def get_contact(self, provider=None):
+        '''
+        Returns Email address. In case of Twitter, returns screen name e.g. @chhotaladka
+        '''
+        profile = self._get_social_account(provider)
+        if profile != None:
+            if self.get_provider_name(profile.provider) == 'twitter':
+                return "@{0}".format(profile.extra_data['screen_name'].encode('utf-8'))
+            return profile.extra_data['email']
+        else:
+            return self.user.email        
 
     def get_social_url(self, provider=None):
         '''
@@ -228,9 +240,6 @@ class UserProfile(models.Model):
     def _get_google_email(self,profile):
         return profile.extra_data['email'].encode('utf-8')
 
-    def _get_google_email(self,profile):
-        return profile.extra_data['email'].encode('utf-8')
-
     def _get_google_username(self,profile):
         return profile.extra_data['given_name'].encode('utf-8')
 
@@ -256,7 +265,11 @@ class UserProfile(models.Model):
         return str(profile.extra_data['name']).split(' ')[0].encode('utf-8')
 
     def _get_tw_lname(self,profile):
-        return str(profile.extra_data['name']).split(' ')[-1].encode('utf-8')
+        names = str(profile.extra_data['name']).split(' ')
+        if len(names) > 1:
+            return names[-1].encode('utf-8')
+        else:
+            return u''
 
     def _get_tw_username(self,profile):
         return profile.extra_data['screen_name'].encode('utf-8')

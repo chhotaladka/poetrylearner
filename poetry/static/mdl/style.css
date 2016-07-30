@@ -370,10 +370,6 @@ html, body {
     background-color: #DB4437 !important;
     color: #FFF !important;
 }
-.mdl-card__title,
-.card__title {
-	min-height: 176px;
-}
 .wide-card {
 	max-width: 620px;
 	margin: 1px auto;
@@ -401,7 +397,17 @@ html, body {
 .poetry-card .mdl-card__title-text {
 	font-size: 32px;
 }
-
+.card__title {
+	line-height: normal;
+	padding: 16px;
+	min-height: 176px;
+	perspective-origin: 165px 56px;
+	transform-origin: 165px 56px 0px;
+	box-sizing: border-box;
+}
+.mdl-card__title {
+	min-height: 176px;
+}
 .poetry-card--md {
 	min-height: auto;
 	max-width: 512px;
@@ -678,28 +684,8 @@ html, body {
 	flex-direction: column;
 	align-items: center;
 }
-.Column {
-	display: flex;
-	flex-direction: column;
-}
-.column {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	align-items: flex-start;
-	height: 100%;
-}
 .center {
 	align-items: center;
-}
-.columnC {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: flex-start;
-}
-.column .mdl-card__title-text {
-    align-self: flex-start;
 }
 .row {
     display: flex;

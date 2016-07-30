@@ -9,7 +9,7 @@
 <div class="content-wrapper">
 	<a class="card" href="{{person.get_absolute_url}}">
 		<div class="mdl-card author-card--sm bS-1 wFull">
-			<div class="p-16 column center">
+			<div class="card__title tAc">
 				{% with person_img_url=person.get_image_url %}
 				{% if person_img_url %}
 				<div class="avatar md border" style="background: url('{{ person_img_url }}') center / cover;">			

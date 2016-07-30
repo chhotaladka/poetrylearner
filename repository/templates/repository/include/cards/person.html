@@ -6,7 +6,7 @@
 {% load humanize %}
 
 <div class="mdl-card card-l author-card--lg bS-1 wFull">
-	<div class="mdl-card__title column bg-person">
+	<div class="card__title tAc bg-person">
 		{% with person_img_url=person.get_image_url %}
 		{% if person_img_url %}
 		<div class="avatar lg border" style="background: url('{{ person_img_url }}') center / cover;">			

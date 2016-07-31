@@ -35,8 +35,7 @@
 	  {% block header %}{% comment %} header of a section/app. Modify in the base template of the app {% endcomment %}
 	  <header class="mdl-layout__header page-header">
 	  	<div class="mdl-layout__drawer-button">
-			{% include "common/svg/menu.html" %}
-			<span class="visuallyhidden">Open Menu</span>	  		
+			{% include "common/svg/menu.html" %}	  		
 	  	</div>
 	    <div class="mdl-layout__header-row page-header--row">
 	      <div class="mdl-layout-title logo site-name">
@@ -102,7 +101,6 @@
 		<div class="mdl-layout__drawer-button"
 			onclick="document.getElementById('id-drawer').classList.remove('is-visible');document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove('is-visible');return false;">
 			{% include "common/svg/close.html" %}
-			<span class="visuallyhidden">Close Menu</span>	
 		</div>
 	  	  <div class="mdl-layout-title logo site-name">
 	      	<a href="/">poetry learner</a>

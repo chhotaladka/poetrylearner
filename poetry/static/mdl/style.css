@@ -852,6 +852,7 @@ html, body {
 /*	margin-bottom: 16px;*/
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
+	margin: 1px auto;
 }
 .author-card--md {
 	min-height: auto;

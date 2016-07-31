@@ -15,11 +15,11 @@
 		</div>
 	</div>		
 	<div class="details">
-		<div class="mB4" itemprop="creator" itemscope itemtype="http://schema.org/Person">{% if item_type != 'person' %}
+		<div class="mB4 {% if item_type == 'person' %}hidden{%endif%}" itemprop="creator" itemscope itemtype="http://schema.org/Person">		
 			<span>by</span>
 			<a title="View the poet" href="{{ poetry.creator.get_absolute_url }}" itemprop="url">
 				<span itemprop="name">{{ poetry.creator.name }}</span>
-			</a>{% endif %}
+			</a>
 		</div>	
 		<div class="mB4">
 			<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">

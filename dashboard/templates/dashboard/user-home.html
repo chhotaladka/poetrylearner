@@ -10,7 +10,7 @@
 		</div>	
 		<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
 			<div class="section-cards">
-				<div class="section-title mB-16 wFull">
+				<div class="section-title">
 					<h3 class="c-grey1">Poetry to review</h3>
 				</div>							
 				{% get_poetry_unpub_rand 5 as poetries %}
@@ -19,8 +19,8 @@
 				{% endfor %}				
 				<div class="mdl-card__actions">
 				{% if poetries %}	
-					<a class="action-button wFull oN" href="{% url 'repository:list' type='poetry' %}" title="Show all poetries">							
-					    Show all		    			                           
+					<a class="light-txt wFull oN" href="{% url 'repository:list' type='poetry' %}" title="Show all poetries">							
+					    Show all
 					</a>
 				{% else %}<span class="action-button wFull">Working on it...</span>{% endif %}
 				</div>

@@ -1,39 +1,86 @@
 {% comment %}
-	Info:       Message/notification displayed on the page.
-				It renders the `messages` passed in the context.
-	Requires:   css and js of static/mdl/*
-	Note:       xxx
+	Info: Message/notification displayed on the page.
+		It renders the `messages` passed in the context.
 {% endcomment %}
-
 {% if messages %}
-	<section id="msgPanel" class="msg-panel pT-8 pB-8 ">
-		<div class="_layout">					
-			<div class="msg-card wFull">
-				<div class="flash-msg">
-	    			{% for message in messages %}
-					<div{% if message.tags %} class="pL-8 {{ message.tags }}"{% endif %}>
-						<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 50 50" style="fill: rgb(255, 255, 255);">
-						    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 25 0 C 11.204726 0 0 11.204726 0 25 C 0 38.795274 11.204726 50 25 50 C 38.795274 50 50 38.795274 50 25 C 50 11.204726 38.795274 0 25 0 z M 25 2 C 37.714394 2 48 12.285606 48 25 C 48 37.714394 37.714394 48 25 48 C 12.285606 48 2 37.714394 2 25 C 2 12.285606 12.285606 2 25 2 z M 23.78125 12.90625 C 23.56625 12.90625 23.4375 13.035 23.4375 13.25 L 23.4375 15.875 C 23.4375 16.09 23.56525 16.25 23.78125 16.25 L 26.21875 16.25 C 26.43275 16.25 26.5625 16.09 26.5625 15.875 L 26.5625 13.25 C 26.5625 13.035 26.43375 12.90625 26.21875 12.90625 L 23.78125 12.90625 z M 23.71875 20.125 C 23.587969 20.175578 23.5 20.3075 23.5 20.46875 L 23.5 36.9375 C 23.5 37.1525 23.62875 37.28125 23.84375 37.28125 L 26.15625 37.28125 C 26.37125 37.28125 26.5 37.1535 26.5 36.9375 L 26.5 20.46875 C 26.5 20.25375 26.37225 20.125 26.15625 20.125 L 23.84375 20.125 C 23.79025 20.125 23.762344 20.108141 23.71875 20.125 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
-						</svg>
-						<span class="pL-8">{{ message }}</span>
-					</div>
-	    			{% endfor %}
-	    		</div>
-				<div class="mdl-layout-spacer"></div>
-				<button id="msgCloseBtn" class="action-button--small" title="Close">
-					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 50 50" style="fill: rgb(255, 255, 255);">
-					    <path style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Bitstream Vera Sans" d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 L 7.71875 6.28125 z" color="#000" overflow="visible" enable-background="accumulate" font-family="Bitstream Vera Sans"/>
-					</svg>    
-				</button>		    		
-			</div>					
-		</div>	
-	</section>
-	<script>
-	$(document).ready(function(){			
-		var hideMsg = function(){			
-			$('#msgPanel').addClass('hidden');
-		};			
-		$('#msgCloseBtn').on('click', hideMsg);
-	});
-	</script>
+{% comment %} 1) ns-attached/ns-growl. 2) ns-effect-flip/ns-effect-scale {% endcomment %}
+<div id="messagePanel" class="ns-box ns-growl ns-effect-scale ns-type-notice hidden">
+	{% for message in messages %}
+	<div class="ns-box-inner {{ message.tags }}">
+		<p>{{ message }}</p>
+	</div>
+	{% endfor %}	
+	<span class="ns-close"></span>
+</div>
+
+<script>
+/** Common, default styles for the notification box **/
+$(document).ready(function(){	
+	/**
+	 * NotificationFx options
+	 */
+	notifix = {
+		// if the user doesn´t close the notification then we remove it 
+		// after the following time
+		ttl : 6000,
+		// exit time
+		etime : 250,
+		// is notification is active
+		active : true,
+	}
+
+	/**
+	 * init function
+	 * initialize and cache some vars
+	 */
+	notifixInit = function() {
+		// dismiss after [options.ttl]ms
+		notifix.dismissttl = setTimeout( function() {
+			if( notifix.active ) {
+				notifixDismiss();
+			}
+		}, notifix.ttl );
+		// show
+		notifixShow();
+		// init events
+		notifixInitEvents();
+	}
+
+	/**
+	 * init events
+	 */
+	notifixInitEvents = function() {
+		// dismiss notification
+		$('#messagePanel .ns-close').on( 'click', function() { notifixDismiss(); } );
+	}
+
+	/**
+	 * show the notification
+	 */
+	notifixShow = function() {
+		notifix.active = true;
+		$('#messagePanel').removeClass('ns-hide');
+		$('#messagePanel').removeClass('hidden');
+		$('#messagePanel').addClass('ns-show');
+	}
+
+	/**
+	 * dismiss the notification
+	 */
+	notifixDismiss = function() {
+		notifix.active = false;
+		clearTimeout( notifix.dismissttl );
+		$('#messagePanel').removeClass('ns-show');
+		setTimeout( function() {
+			$('#messagePanel').addClass('ns-hide');
+
+		}, 25 );
+		setTimeout( function() {
+			$('#messagePanel').addClass('hidden');
+		}, notifix.etime );		
+	}
+	notifixInit();
+	
+});
+</script>
 {% endif %}

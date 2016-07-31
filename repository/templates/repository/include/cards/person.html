@@ -5,7 +5,7 @@
 {% load staticfiles %}
 {% load humanize %}
 
-<div class="mdl-card card-l author-card--lg bS-1 wFull">
+<div class="mdl-card card-l author-card--lg bS-1 wFull" itemscope itemtype="http://schema.org/Person">
 	<div class="card__title tAc bg-person">
 		{% with person_img_url=person.get_image_url %}
 		{% if person_img_url %}
@@ -17,29 +17,32 @@
 		</div>
 		{% endif %}		
 		{% endwith %}					
-		<div class="title-text tAc">																					
+		<div class="title-text tAc" itemprop="name">																					
 			{{ person.name }}
 		</div>
 		<div class="extras">
-			<span class="text">{{person.additional_name}}</span>
+			<span class="text" itemprop="additionalName">{{person.additional_name}}</span>
 		</div>
 		{% if person.year_birth or person.year_death %}	
 		<div class="extras fS-12">
 			<span>(</span>
 		{% if person.year_birth %}
-			<span title="Birth">{{ person.year_birth }}</span> 
+			<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span> 
 		{% endif %}
 		{% if person.year_death %}					
-			<span title="Death">- {{ person.year_death }}</span>
+			<span title="Death">
+				<span>- </span>
+				<span itemprop="deathDate">{{ person.year_death }}</span>
+			</span>
 		{% endif %}
 			<span>)</span>
 		</div>
 		{% endif %}					
 	</div>
 	<div class="mdl-card__supporting-text">					
-		<p>{{ person.description }}
+		<p><span itemprop="description">{{ person.description }}</span>
 		{% if person.similar_item_url %}
-			<span class="info-txt"><a href="{{ person.similar_item_url }}">More</a></span>
+			<span class="info-txt"><a href="{{ person.similar_item_url }}" itemprop="sameAs">More</a></span>
 		{% endif %}
 		</p>
 	</div>

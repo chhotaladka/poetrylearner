@@ -14,8 +14,10 @@
 						{{item.get_last_edit_user}}
 					</a>			
 				</div>
-				<div>
-					<span title="Last edited at {{ item.get_last_edit_time }} IST">{{ item.get_last_edit_time |naturaltime }}</span>
+				<div title="Last edited at {{ item.get_last_edit_time }} IST">
+					<time itemprop="dateModified" datetime="{{ item.get_last_edit_time|date:'c' }}">
+						{{ item.get_last_edit_time |naturaltime }}
+					</time>
 				</div>
 			</div>
 			<div class="light-txt">				
@@ -25,21 +27,24 @@
 						{{item.get_first_edit_user}}
 					</a>			
 				</div>
-				<div>
-					<span title="Added at {{ item.get_first_edit_time }} IST">{{ item.get_first_edit_time }}</span>
+				<div title="Added at {{ item.get_first_edit_time }} IST">
+					<time itemprop="dateCreated" datetime="{{ item.get_first_edit_time|date:'c' }}">
+						{{ item.get_first_edit_time }}
+					</time>
 				</div>
 			</div>
 		</div>
 		<div class="row fill">
 			<div class="light-txt mB4">
 				<span>Similar item:</span>
-				<a title="Reference web page that unambiguously indicates the item's identity." href="{{ item.similar_item_url }}">
+				<a itemprop="sameAs" title="Reference web page that unambiguously indicates the item's identity." href="{{ item.similar_item_url }}">
 					{{ item.similar_item_name }}
 				</a>
 			</div>
-			<div class="light-txt mB4">
+			<div class="light-txt mB4" itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
+				<link itemprop="interactionType" href="http://schema.org/ReadAction"/>
 				<span>Views: </span>
-				<span class="bignum">12,234,002</span>	                                       
+				<span class="bignum" itemprop="userInteractionCount" content="12234002">12,234,002</span>	                                       
 			</div>			
 		</div>
 		<div id="metaPanelBtnL" class="tAc mT-8">

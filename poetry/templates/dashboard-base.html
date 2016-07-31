@@ -107,7 +107,7 @@
 	  	  <div class="mdl-layout-title logo site-name">
 	      	<a href="/">poetry learner</a>
 	      </div>	        
-	    <nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800">
+	    <nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800" itemscope itemtype="http://schema.org/SiteNavigationElement">
 	    	<a class="mdl-navigation__link" href="{% url 'list-poetry' %}">Poetry</a>
 	    	<a class="mdl-navigation__link" href="{% url 'list-poet' %}">Poets</a>
 	    	{% if request.user|has_group:'administrator' %}    		

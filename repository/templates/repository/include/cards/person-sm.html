@@ -6,8 +6,8 @@
 {% load staticfiles %}
 {% load poetry_tags %}
 {% get_poetry_count by person as poetry_count %}
-<div class="content-wrapper">
-	<a class="card" href="{{person.get_absolute_url}}">
+<div class="content-wrapper" itemscope itemtype="http://schema.org/Person">
+	<a class="card" href="{{person.get_absolute_url}}" itemprop="url">
 		<div class="mdl-card author-card--sm bS-1 wFull">
 			<div class="card__title tAc">
 				{% with person_img_url=person.get_image_url %}
@@ -20,20 +20,23 @@
 				</div>
 				{% endif %}		
 				{% endwith %}					
-				<div class="title-text tAc">														
+				<div class="title-text tAc" itemprop="name">														
 					{{ person.name }}
 				</div>
 				<div class="extras">
-					<span class="text">{{person.additional_name}}</span>
+					<span class="text" itemprop="additionalName">{{person.additional_name}}</span>
 				</div>
 				{% if person.year_birth or person.year_death %}
 				<div class="extras fS-12">
 					<span>(</span>
 				{% if person.year_birth %}
-					<span title="Birth">{{ person.year_birth }}</span> 
+					<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span> 
 				{% endif %}
 				{% if person.year_death %}					
-					<span title="Death">- {{ person.year_death }}</span>
+					<span title="Death">
+						<span>- </span>
+						<span itemprop="deathDate">{{ person.year_death }}</span>
+					</span>
 				{% endif %}
 					<span>)</span>				
 				</div>

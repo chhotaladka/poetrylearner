@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load common_tags %}
 
-{% block title %}Abode of the world's greatest collection of poetry{% endblock %}
+{% block title %}poetrylearner{% endblock %}
 
 {% block main %}	
 <div id="priSect" class="pT-8 pB-16">
@@ -11,7 +11,7 @@
 			<!--<div class="bannerBack" style="background: url('/static/img/bbb.jpg') center / cover;"></div>-->
 			<div class="banner">				
 				{% if 0 %}
-				<div class="wide-card Column tAc wFull">
+				<div class="wide-card tAc wFull">
 					{% comment %}   Include meta panel 
 					{% if request.user|has_group:"administrator,editor" %}
 					{% include "repository/include/misc/meta-panel2.html" with item=poetry %}
@@ -24,7 +24,7 @@
 					</div>								
 				</div>						
 				{% else %}
-				<div class="wide-card Column tAc wFull">
+				<div class="wide-card tAc wFull">
 					<h1 lang="en" class="lang-en">Memory is an autumn leaf that murmurs in the wind and then is heard no more.</h1>
 					<h2 class="tAr">Kahlil Gibran</h2>
 				</div>									

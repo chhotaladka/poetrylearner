@@ -157,8 +157,4 @@ class Poetry(CreativeWork):
         return tmp[self.language]
             
     def summary(self):
-        """
-        Content to share on social media sites
-        e.g. first stanza
-        """
-        return truncatelines(self.body, 4)             
+        return self.name + ', a poetry by ' + self.creator.name             

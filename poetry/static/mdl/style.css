@@ -1115,9 +1115,8 @@ html, body {
     /*line-height: 36px;*/
     vertical-align: middle;
 }
-.action-button .action-button__text {
+.action-button > * {
 	vertical-align: middle;
-	padding-bottom: 14px;
 }
 .action-button:hover {
 	color: #616161;

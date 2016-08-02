@@ -144,7 +144,7 @@ def item(request, type, pk, slug, src=None):
 
     # Instantiate the Meta class
     meta = Meta(title = obj.headline(), 
-                description = obj.name + ', a poetry by ' + obj.creator.name, 
+                description = obj.meta_description(), 
                 section= type, 
                 url = obj.get_absolute_url(),                
                 author = obj.get_author(), 

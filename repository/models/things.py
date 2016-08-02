@@ -157,6 +157,10 @@ class Person(Thing):
         else:
             return None
 
+    def meta_description(self):
+        p = 'his' if self.gender == 'm' else 'her'
+        return self.name + ' and ' + p + ' poetry.'
+
     def clean(self):
         print "DBG:: Model Person clean called"
         # year_death must be greater than year_birth

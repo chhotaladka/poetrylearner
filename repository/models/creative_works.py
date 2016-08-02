@@ -161,4 +161,7 @@ class Poetry(CreativeWork):
         Content to share on social media sites
         e.g. first stanza
         """
-        return truncatelines(self.body, 4)                       
+        return truncatelines(self.body, 4)
+
+    def meta_description(self):
+        return self.name + ', a poetry by ' + self.creator.name

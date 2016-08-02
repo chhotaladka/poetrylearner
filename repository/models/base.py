@@ -106,6 +106,13 @@ class Thing(models.Model):
     
     def summary(self):
         return self.description
+
+    def meta_description(self):
+        '''
+        Used for meta tags in templates for SEO.
+        Some derived classes would override this function.
+        '''
+        return self.description
     
     def get_keywords(self):
         '''

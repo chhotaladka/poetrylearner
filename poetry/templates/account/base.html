@@ -1,5 +1,10 @@
 {% extends "dashboard-base.html" %}
 
+{% block meta %}
+	<meta name="robots" content="noindex">
+	<meta name="googlebot" content="noindex">
+{% endblock %}
+
 {% block body %}
 {% block messages %}
 {% include "common/include/message-panel.html" with messages=messages only %}
@@ -9,16 +14,16 @@
 		<div class="mdl-layout-title logo site-name">
 	    	<a href="/">poetry learner</a>
 		</div>
-	</div>				
+	</div>
 </section>
 
 <div id="priSect" class="pT-8 pB-16">
-	<div class="_layout layout-L mdl-grid">			
+	<div class="_layout layout-L mdl-grid">
 		<section class="__c mdl-cell mdl-cell--12-col pA-0">
 			<div class="banner">
-			{% block main %}{% endblock %}		
+			{% block main %}{% endblock %}
 			</div>
-			
+
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer__left-section">
 					<ul class="mdl-mini-footer__link-list">
@@ -26,10 +31,10 @@
 				    	<li><a href="#">Privacy & Terms</a></li>
 				    	<li><a href="#">Help</a></li>
 				    </ul>
-				</div>				
+				</div>
 			</footer>
 
-		</section>			
-	</div>		
+		</section>
+	</div>
 </div>
 {% endblock %}

@@ -11,7 +11,7 @@
 			<!--<div class="bannerBack" style="background: url('/static/img/bbb.jpg') center / cover;"></div>-->
 			<div class="banner">
 				{% if poetry %}
-				<div class="wide-card tAc wFull" itemscope itemtype="http://schema.org/CreativeWork">
+				<div class="wide-card tAc wFull appear" itemscope itemtype="http://schema.org/CreativeWork">
 					<meta itemprop="genre" content="poetry"/>
 					<meta itemprop="url" content="{{poetry.get_absolute_url}}"></meta>
 					{% comment %}   Include meta panel 
@@ -23,12 +23,12 @@
 					</div>
 					<div class="details">
 						<div class="mB4" itemprop="creator" itemscope itemtype="http://schema.org/Person">
-							<span>By</span>
+							<span>by</span>
 							<a title="View the creator" href="{{ poetry.creator.get_absolute_url }}" itemprop="url">
 								<span itemprop="name">{{ poetry.creator.name }}</span>
 							</a>
 						</div>	
-						<div class="mB4">
+						<div class="mB4 appear-item">
 							<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">
 								<s>#</s>
 								<b><meta itemprop="inLanguage" content="{{ poetry.language }}"/>{{ poetry.get_language }}</b>
@@ -40,7 +40,7 @@
 							</a>
 							{% endfor %}
 						</div>
-						<div class="mB4">
+						<div class="mB4 appear-item">
 							<button class="action-button--small" onclick="location.href=&#39;{{poetry.get_absolute_url}}&#39;" title="More info">
 								{% include "common/svg/info_outline.html" %}
 							</button>

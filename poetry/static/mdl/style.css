@@ -1081,13 +1081,15 @@ html, body {
 .mdl-poetry .action-panel .material-icons {
 	font-size: 20px;
 }
-.poetry-card:hover .action-panel.hide {
+.poetry-card:hover .action-panel.hide,
+.appear:hover .appear-item {
 	opacity: 1 !important;
 	transition: opacity .55s ease-in-out;
 	-moz-transition: opacity .55s ease-in-out;
 	-webkit-transition: opacity .55s ease-in-out;
 }
-.action-panel.hide {
+.action-panel.hide,
+.appear .appear-item {
     opacity: 0;
     transition: opacity .55s ease-in-out;
     -moz-transition: opacity .55s ease-in-out;

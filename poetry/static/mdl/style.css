@@ -310,7 +310,7 @@ html, body {
 	z-index: -1;
 }
 .banner {
-	padding-top: calc(8%);
+	padding-top: calc(5%);
 	border-radius: 8px;
 }
 .banner h1 {
@@ -2349,6 +2349,12 @@ ul.mdl-mini-footer__link-list {
 }
 .fS16 {
 	font-size: 16px;
+	/*line-height: 22px;*/
+	line-height: 1.6;
+	font-weight: 400;
+}
+.fS18 {
+	font-size: 18px;
 	/*line-height: 22px;*/
 	line-height: 1.6;
 	font-weight: 400;

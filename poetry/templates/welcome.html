@@ -4,33 +4,57 @@
 
 {% block title %}poetrylearner{% endblock %}
 
-{% block main %}	
+{% block main %}
 <div id="priSect" class="pT-8 pB-16">
-	<div class="_layout layout-L mdl-grid">			
+	<div class="_layout layout-L mdl-grid">
 		<section class="__c mdl-cell mdl-cell--12-col pA-0">
 			<!--<div class="bannerBack" style="background: url('/static/img/bbb.jpg') center / cover;"></div>-->
-			<div class="banner">				
-				{% if 0 %}
-				<div class="wide-card tAc wFull">
+			<div class="banner">
+				{% if poetry %}
+				<div class="wide-card tAc wFull" itemscope itemtype="http://schema.org/CreativeWork">
+					<meta itemprop="genre" content="poetry"/>
+					<meta itemprop="url" content="{{poetry.get_absolute_url}}"></meta>
 					{% comment %}   Include meta panel 
 					{% if request.user|has_group:"administrator,editor" %}
 					{% include "repository/include/misc/meta-panel2.html" with item=poetry %}
 					{% endif %}		{% endcomment %}
-					<div>
-						<h1 lang="{{ poetry.language }}" class="lang-{{ poetry.language }} wSpw">{{ poetry.summary }}</h1>
+					<div class="content p-16">
+						<div lang="{{ poetry.language }}" class="poetry-stanza fS18" itemprop="text">{{ poetry.body }}</div>
 					</div>
-					<div class="tAr wFull">
-						<h2>{{ poetry.creator.title }}</h2>
-					</div>								
-				</div>						
+					<div class="details">
+						<div class="mB4" itemprop="creator" itemscope itemtype="http://schema.org/Person">
+							<span>By</span>
+							<a title="View the creator" href="{{ poetry.creator.get_absolute_url }}" itemprop="url">
+								<span itemprop="name">{{ poetry.creator.name }}</span>
+							</a>
+						</div>	
+						<div class="mB4">
+							<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">
+								<s>#</s>
+								<b><meta itemprop="inLanguage" content="{{ poetry.language }}"/>{{ poetry.get_language }}</b>
+							</a>
+							{% for tag in poetry.get_tags_slugs %}
+					 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-poetry' slug=tag %}">
+					 			<s>#</s>
+								<b itemprop="keywords">{{ tag }}</b>
+							</a>
+							{% endfor %}
+						</div>
+						<div class="mB4">
+							<button class="action-button--small" onclick="location.href=&#39;{{poetry.get_absolute_url}}&#39;" title="More info">
+								{% include "common/svg/info_outline.html" %}
+							</button>
+						</div>
+					</div>
+				</div>
 				{% else %}
 				<div class="wide-card tAc wFull">
 					<h1 lang="en" class="lang-en">Memory is an autumn leaf that murmurs in the wind and then is heard no more.</h1>
 					<h2 class="tAr">Kahlil Gibran</h2>
-				</div>									
+				</div>
 				{% endif %}
 			</div>
-		</section>			
-	</div>		
+		</section>
+	</div>
 </div>
 {% endblock %}

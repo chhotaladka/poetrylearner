@@ -4,6 +4,6 @@ class ActivityConfig(AppConfig):
     name = 'activity'
 
     def ready(self):
-        from activity.signals import action
+        from activity.signals import sig_action
         from activity.handlers import action_handler
-        action.connect(action_handler, dispatch_uid='activity.models')
+        sig_action.connect(action_handler, dispatch_uid='activity.models')

@@ -84,6 +84,10 @@
 	  			<a class="mdl-menu__item oN" href="{% url 'dashboard:user-bookmarks' %}">
 					Bookmarks
 	  			</a>
+	  			<li class="separator"></li>
+	  			<a class="mdl-menu__item oN" href="{% url 'activity:activity-list' %}">
+					Activity Log
+	  			</a>
 	  			<li class="separator"></li>	  			
 	  			<li class="mdl-menu__item">
 	  				<form method="post" action="{% url 'account_logout' %}">

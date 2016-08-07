@@ -25,9 +25,10 @@ from . import views
 urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^activity/', include('activity.urls', namespace='activity')),
     url(r'^bookmark/', include('bookmarks.urls', namespace='bookmark')),
     url(r'^c/', include('crawlers.urls', namespace='crawlers')),
-    url(r'^feedback/', include('feedback.urls', namespace='feedback')),    
+    url(r'^feedback/', include('feedback.urls', namespace='feedback')),
     url(r'^r/', include('repository.urls', namespace='repository')),
     url(r'^u/', include('dashboard.urls', namespace='dashboard')),
     

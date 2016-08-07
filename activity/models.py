@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.urlresolvers import reverse
-from django.utils.encoding import smart_text
 from django.utils.timesince import timesince as djtimesince
 from django.contrib.contenttypes.models import ContentType
 
@@ -11,33 +10,33 @@ from django.contrib.contenttypes.models import ContentType
 ADDITION = 1
 CHANGE = 2
 DELETION = 3
+PUBLISH = 4
+UNPUBLISH = 5
 
 class ActionManager(models.Manager):
     '''
     @summary: Default manager for ``Action``
     '''
+    use_in_migrations = True
 
     def log_action(self,
-                   timestamp=None,
-                   user_id,
-                   target_content_type_id,
+                   user,
+                   target_content_type,
                    target_object_id,
                    target_object_repr,
                    verb,
-                   change_message='',
+                   change_message,
                    public=True,
                 ):
-        print "DBG: log_action creation"
-        e = self.model()
-        if timestamp is not None:
-            e.timestamp = timestamp
-        e.actor = user_id
-        e.target_content_type = target_content_type_id
-        e.target_object_id = smart_text(target_object_id)
-        e.target_object_repr = target_object_repr[:200]
-        e.verb = verb
-        e.change_message = message
-        e.public = bool(public)
+        e = self.model(
+            actor = user,
+            target_content_type = target_content_type,
+            target_object_id = target_object_id,
+            target_object_repr = target_object_repr[:200],
+            verb = verb,
+            change_message = change_message,
+            public = bool(public),
+        )
         e.save()
 
 
@@ -63,7 +62,7 @@ class Action(models.Model):
         chhotaladka added The Prophet 3 days ago
 
     """
-    timestamp = models.DateTimeField(default=timezone.now(),
+    timestamp = models.DateTimeField(auto_now_add=True,
                                      db_index=True)
 
     actor = models.ForeignKey(User,
@@ -73,9 +72,10 @@ class Action(models.Model):
     target_content_type = models.ForeignKey(ContentType,
                                      blank=True, null=True,
                                      db_index=True)
-    target_object_id = models.TextField(blank=True, null=True,
+    target_object_id = models.PositiveIntegerField(blank=True, null=True,
                                  db_index=True)
-    target_object_repr = models.CharField(max_length=200)
+    target_object_repr = models.CharField(max_length=200,
+                                          blank=True, null=True)
 
     verb = models.PositiveSmallIntegerField()
 

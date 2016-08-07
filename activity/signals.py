@@ -1,9 +1,8 @@
 from django.dispatch import Signal
 
-action = Signal(providing_args=['verb',
-                                'content_type_id',
+sig_action = Signal(providing_args=['verb',
+                                'content_type',
                                 'object_id',
                                 'object_repr',
                                 'change_message',
-                                'timestamp',
                                 'public'])

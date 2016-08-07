@@ -37,8 +37,7 @@ class CreateThingView(View):
             change_message.append('Changed %s.' % get_text_list(form.changed_data, 'and'))
         
         change_message = ' '.join(change_message)
-        print change_message
-        return change_message or _('No fields changed.')
+        return change_message or 'No fields changed.'
     
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.

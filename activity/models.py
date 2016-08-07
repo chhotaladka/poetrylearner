@@ -95,10 +95,10 @@ class Action(models.Model):
             'verb': self.get_verb(),
             'target': self.target_object_repr,
             'timesince': self.timesince()
-        }
-        if self.target:
-            return _('%(actor)s %(verb)s %(target)s %(timesince)s ago') % ctx
-        return _('%(actor)s %(verb)s %(timesince)s ago') % ctx
+        }#FIXME error
+        if self.target_object_id:
+            return '%(actor)s %(verb)s %(target)s %(timesince)s ago' % ctx
+        return '%(actor)s %(verb)s %(timesince)s ago' % ctx
 
     def is_addition(self):
         return self.verb == ADDITION
@@ -109,6 +109,12 @@ class Action(models.Model):
     def is_deletion(self):
         return self.verb == DELETION
     
+    def is_publish(self):
+        return self.verb == PUBLISH
+    
+    def is_unpublish(self):
+        return self.verb == UNPUBLISH
+    
     def get_verb(self):
         if self.verb == ADDITION:
             return u'added'
@@ -116,14 +122,22 @@ class Action(models.Model):
             return u'updated'
         elif self.verb == DELETION:
             return u'deleted'
-
+        elif self.verb == PUBLISH:
+            return u'published'
+        elif self.verb == UNPUBLISH:
+            return u'unpublished'
+    
     def actor_url(self):
         return self.actor.profile.get_absolute_url()
 
     def target_url(self):
         "Returns the target (i.e. edited object) represented by this Action"
-        return self.target_content_type.get_object_for_this_type(pk=self.object_id)
-
+        target = self.target_content_type.get_object_for_this_type(pk=self.target_object_id)
+        return target.get_absolute_url()
+    
+    def target_name(self):
+        return self.target_object_repr
+    
     def timesince(self, now=None):
         '''
         Shortcut for the ``django.utils.timesince.timesince`` function of the

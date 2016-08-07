@@ -1,1 +1,26 @@
-hello
+{% extends "activity/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Activity Log | {{ sitename }}{% endblock %}
+
+{% block main %}
+	<section class="pT-8 pB-16">
+		<div class="_layout layout-L mdl-grid">
+		{% if actions %} {% comment %} Display the list {% endcomment %}
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="wide-card">
+					<div class="head-title">Activity Log</div>
+				</div>
+			</div>
+			{% for action in actions %}
+			<div class="mdl-cell mdl-cell--12-col mT0 mB0">
+			{% include "activity/include/activity-card.html" with action=action %}
+			</div>
+			{% endfor %}
+			{% include "common/include/pagination-bottom.html" with items=actions %}
+		{% else %}{% comment %} Display the notification {% endcomment %}
+			{% include "common/include/empty-result.html" with result_title='Activity Log' %}
+		{% endif %}
+		</div>
+	</section>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% comment %}
+	Info: Activity Card
+{% endcomment %}
+<div class="activity wide-card bCw mH-auto wFull bS-1">
+	<div class="title p-16 row">
+		<div class="verb-icon {{ action.get_verb }}">
+			{% if action.is_addition %}
+			{% include "common/svg/plus.html" %}
+			{% else %}
+			{% include "common/svg/edit.html" %}
+			{% endif %}
+		</div>
+		<div>
+			<div class="fS-12 title-text">
+				<a class="h-link" href="{{ action.actor_url }}">{{ action.actor }}</a>
+				<span>{{ action.get_verb }}</span>
+				<a class="h-link" href="{{ action.target_url }}">{{ action.target_name }}</a>.
+			</div>
+			<div class="fS10 light-txt">
+				<span>{{ action.timestamp }}</span>
+			</div>
+			{% if action.change_message %}
+			<div class="fS-12 light-txt">
+				<span>{{ action.change_message }}</span>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>

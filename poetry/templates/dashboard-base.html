@@ -74,29 +74,27 @@
 	  					<div>{% if profile %}{{ profile.get_first_name }}{% else %}{{ request.user|title }}{% endif %}</div>
 	  					<div class="light-txt">View Profile</div>
 	  				</div>
-	  			</a>  			
+	  			</a>
 	  			{% comment %}<li disabled class="mdl-menu__item">Disabled Action</li>{% endcomment %}
 	  			<li class="separator"></li>
 	  			<a class="mdl-menu__item oN" href="{% url 'dashboard:user-home' %}">
 					Home
-	  			</a>	  			
-	  			<li class="separator"></li>
+	  			</a>
 	  			<a class="mdl-menu__item oN" href="{% url 'dashboard:user-bookmarks' %}">
 					Bookmarks
 	  			</a>
-	  			<li class="separator"></li>
 	  			<a class="mdl-menu__item oN" href="{% url 'activity:activity-list' %}">
 					Activity Log
 	  			</a>
-	  			<li class="separator"></li>	  			
+	  			<li class="separator"></li>
 	  			<li class="mdl-menu__item">
 	  				<form method="post" action="{% url 'account_logout' %}">
 	  					{% csrf_token %}
 	  					<input type="hidden" name="next" value={% block header-logout-redirect %}"/"{% endblock %}/>
 	  					<button class="oN" type="submit">Log Out</button>
-	  				</form>	  				
-	  			</li>	  		
-			</ul>    
+	  				</form>
+	  			</li>
+			</ul>
 		  {% endif %}
 	    </div>
 	  </header>

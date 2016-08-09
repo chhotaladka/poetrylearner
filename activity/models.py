@@ -5,13 +5,14 @@ from django.core.urlresolvers import reverse
 from django.utils.timesince import timesince as djtimesince
 from django.contrib.contenttypes.models import ContentType
 
-# Create your models here.
+VERBS = {
+    'ADDITION': u'added',
+    'CHANGE': u'updated',
+    'DELETION': u'deleted',
+    'PUBLISH': u'published',
+    'UNPUBLISH': u'ubpublished',
+}
 
-ADDITION = 1
-CHANGE = 2
-DELETION = 3
-PUBLISH = 4
-UNPUBLISH = 5
 
 class ActionManager(models.Manager):
     '''
@@ -77,7 +78,7 @@ class Action(models.Model):
     target_object_repr = models.CharField(max_length=200,
                                           blank=True, null=True)
 
-    verb = models.PositiveSmallIntegerField()
+    verb = models.CharField(max_length=32)
 
     change_message = models.TextField(blank=True, null=True)
 
@@ -101,31 +102,22 @@ class Action(models.Model):
         return '%(actor)s %(verb)s %(timesince)s ago' % ctx
 
     def is_addition(self):
-        return self.verb == ADDITION
+        return self.verb == VERBS['ADDITION']
 
     def is_change(self):
-        return self.verb == CHANGE
+        return self.verb == VERBS['CHANGE']
 
     def is_deletion(self):
-        return self.verb == DELETION
+        return self.verb == VERBS['DELETION']
     
     def is_publish(self):
-        return self.verb == PUBLISH
+        return self.verb == VERBS['PUBLISH']
     
     def is_unpublish(self):
-        return self.verb == UNPUBLISH
+        return self.verb == VERBS['UNPUBLISH']
     
     def get_verb(self):
-        if self.verb == ADDITION:
-            return u'added'
-        elif self.verb == CHANGE:
-            return u'updated'
-        elif self.verb == DELETION:
-            return u'deleted'
-        elif self.verb == PUBLISH:
-            return u'published'
-        elif self.verb == UNPUBLISH:
-            return u'unpublished'
+        return self.verb
     
     def actor_url(self):
         return self.actor.profile.get_absolute_url()

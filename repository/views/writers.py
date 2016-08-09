@@ -93,12 +93,12 @@ class CreateThingView(View):
                 ##
                 # Send signal to log the action
                 from activity.signals import sig_action
-                from activity.models import CHANGE, ADDITION
+                from activity.models import VERBS
                 if add:
-                    verb = ADDITION
+                    verb = VERBS['ADDITION']
                     change_message = None
                 else:
-                    verb = CHANGE
+                    verb = VERBS['CHANGE']
                     change_message = self.construct_change_message(form)
                 
                 sig_action.send(self.request.user,
@@ -265,12 +265,12 @@ def publish(request, type, pk, slug):
         ##
         # Send signal to log the action
         from activity.signals import sig_action
-        from activity.models import PUBLISH, UNPUBLISH
+        from activity.models import VERBS
         if action == 'Publish':
-            verb = PUBLISH
+            verb = VERBS['PUBLISH']
             public = True
         else:
-            verb = UNPUBLISH
+            verb = VERBS['UNPUBLISH']
             public = False
         
         sig_action.send(request.user,

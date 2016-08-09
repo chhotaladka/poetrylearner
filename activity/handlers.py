@@ -13,6 +13,7 @@ def action_handler(sender, **kwargs):
     """
     kwargs.pop('signal', None)
     verb = kwargs.pop('verb')
+    timestamp = kwargs.pop('timestamp', None)
     public = kwargs.pop('public', True)
     msg = kwargs.pop('change_message', None)
 
@@ -20,12 +21,15 @@ def action_handler(sender, **kwargs):
     object_id = kwargs.pop('object_id', None)
     object_repr = kwargs.pop('object_repr', None)
 
-    Action.objects.log_action(
-        user = sender,
+    act = Action(
+        actor = sender,
         target_content_type = content_type,
         target_object_id = object_id,
-        target_object_repr = object_repr,
-        verb=verb,
-        change_message=msg,
-        public=public,
+        target_object_repr = object_repr[:200],
+        verb = verb,
+        change_message = msg,
+        public = bool(public),
     )
+    if timestamp:
+        act.timestamp = timestamp
+    act.save()

@@ -21,6 +21,7 @@ class ActionManager(models.Manager):
     use_in_migrations = True
 
     def log_action(self,
+                   timestamp,
                    user,
                    target_content_type,
                    target_object_id,
@@ -30,6 +31,7 @@ class ActionManager(models.Manager):
                    public=True,
                 ):
         e = self.model(
+            timestamp = timestamp,
             actor = user,
             target_content_type = target_content_type,
             target_object_id = target_object_id,
@@ -38,6 +40,8 @@ class ActionManager(models.Manager):
             change_message = change_message,
             public = bool(public),
         )
+        if timestamp:
+            e.timestamp = timestamp
         e.save()
 
 
@@ -63,7 +67,7 @@ class Action(models.Model):
         chhotaladka added The Prophet 3 days ago
 
     """
-    timestamp = models.DateTimeField(auto_now_add=True,
+    timestamp = models.DateTimeField(default=timezone.now,
                                      db_index=True)
 
     actor = models.ForeignKey(User,

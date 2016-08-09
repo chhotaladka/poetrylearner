@@ -97,11 +97,14 @@ class CreateThingView(View):
                 if add:
                     verb = VERBS['ADDITION']
                     change_message = None
+                    t = obj.date_added
                 else:
                     verb = VERBS['CHANGE']
                     change_message = self.construct_change_message(form)
+                    t = obj.date_modified
                 
                 sig_action.send(self.request.user,
+                            timestamp = t,
                             verb = verb,
                             content_type = ContentType.objects.get_for_model(obj),
                             object_id = obj.pk,
@@ -274,6 +277,7 @@ def publish(request, type, pk, slug):
             public = False
         
         sig_action.send(request.user,
+                    timestamp = obj.date_published,
                     verb = verb,
                     content_type = ContentType.objects.get_for_model(obj),
                     object_id = obj.pk,

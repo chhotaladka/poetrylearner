@@ -11,34 +11,20 @@
 			<!--<div class="bannerBack" style="background: url('/static/img/bbb.jpg') center / cover;"></div>-->
 			<div class="banner">
 				{% if poetry %}
-				<div class="wide-card tAc wFull appear" itemscope itemtype="http://schema.org/CreativeWork">
-					<meta itemprop="genre" content="poetry"/>
-					<meta itemprop="url" content="{{poetry.get_absolute_url}}"></meta>
+				<div class="wide-card tAc wFull appear">
 					{% comment %}   Include meta panel 
 					{% if request.user|has_group:"administrator,editor" %}
 					{% include "repository/include/misc/meta-panel2.html" with item=poetry %}
 					{% endif %}		{% endcomment %}
 					<div class="content p-16">
-						<div lang="{{ poetry.language }}" class="poetry-stanza fS18" itemprop="text">{{ poetry.body }}</div>
+						<div lang="{{ poetry.language }}" class="poetry-stanza fS18">{{ poetry.body }}</div>
 					</div>
 					<div class="details tAc">
-						<div class="mB4" itemprop="creator" itemscope itemtype="http://schema.org/Person">
+						<div class="mB4">
 							<span>by</span>
-							<a title="View the creator" href="{{ poetry.creator.get_absolute_url }}" itemprop="url">
-								<span itemprop="name">{{ poetry.creator.name }}</span>
+							<a title="View the creator" href="{{ poetry.creator.get_absolute_url }}">
+								<span>{{ poetry.creator.name }}</span>
 							</a>
-						</div>	
-						<div class="mB4 appear-item">
-							<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">
-								<s>#</s>
-								<b><meta itemprop="inLanguage" content="{{ poetry.language }}"/>{{ poetry.get_language }}</b>
-							</a>
-							{% for tag in poetry.get_tags_slugs %}
-					 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-poetry' slug=tag %}">
-					 			<s>#</s>
-								<b itemprop="keywords">{{ tag }}</b>
-							</a>
-							{% endfor %}
 						</div>
 						<div class="mB4 appear-item">
 							<button class="action-button--small" onclick="location.href=&#39;{{poetry.get_absolute_url}}&#39;" title="More info">

@@ -571,14 +571,14 @@ html, body {
   color: rgba(0,0,0, 0.54);
   overflow: hidden;
 }
-.md-tabs .md-tabs__tab.is-active {
+.md-tabs__tab.is-active {
     color: rgba(0,0,0, 0.87); 
 }
-.md-tabs .md-tabs__tab.is-static,
-.md-tabs .md-tabs__tab.enabled {
+.md-tabs__tab.is-static,
+.md-tabs__tab.enabled {
     color: #167AC6; 
 }
-.md-tabs .md-tabs__tab.is-active:after {
+.md-tabs__tab.is-active:after {
     height: 2px;
     width: 100%;
     display: block;
@@ -589,7 +589,8 @@ html, body {
     /*background: rgb(63,81,181);*/
 	background: #167AC6;
 }
-.md-tabs .tab-label {  
+.md-tabs .tab-label,
+.md-tabs__tab .tab-label {  
     padding-left: 24px;
     padding-right: 24px;
 }
@@ -2495,6 +2496,11 @@ ul.mdl-mini-footer__link-list {
     position: absolute;
     right: 0px;
     bottom: 0px;
+}
+.pos-RT {
+    position: absolute;
+    right: 8px;
+    top: 8px;
 }
 
 .bS-1 { box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);}

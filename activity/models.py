@@ -44,6 +44,30 @@ class ActionManager(models.Manager):
             e.timestamp = timestamp
         e.save()
 
+    def public(self, *args, **kwargs):
+        '''
+        Only return public actions
+        '''
+        kwargs['public'] = True
+        return self.filter(*args, **kwargs)
+    
+    def actor(self, user, **kwargs):
+        '''
+        Stream of most recent actions where user is the actor.
+        Keyword arguments will be passed to Action.objects.filter
+        '''
+        return self.filter(actor=user, **kwargs)
+    
+    def target(self, obj, **kwargs):
+        '''
+        Stream of most recent actions where obj is the target.
+        Keyword arguments will be passed to Action.objects.filter
+        '''
+        content_type = ContentType.objects.get_for_model(obj)
+        return self.filter(target_content_type=content_type,
+                           target_object_id = obj.id,
+                           **kwargs)
+
 
 class Action(models.Model):
     """

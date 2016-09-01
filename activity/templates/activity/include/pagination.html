@@ -1,0 +1,24 @@
+{# getvars context contains the queryset passed in url #}
+<ul class="pagination">
+{% if obj_list.has_next %}
+	<li class="next waves-effect">
+		<a href="?page={{ obj_list.next_page_number }}{{getvars}}" aria-label="Next">
+			<svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 0 50 50" enable-background="new 0 0 50 50">
+				<polygon points="35,47.25 37.086,45.164 16.922,25 37.086,4.836 35,2.75 12.75,25 "/>
+			</svg>
+			<span>Older</span>
+		</a>
+	</li>
+{% endif %}
+{% if obj_list.has_previous %}
+<li><span class="waves-effect">|</span></li>
+	<li class="prev waves-effect">
+		<a href="?page={{ obj_list.previous_page_number }}{{getvars}}">
+			<span>Newer</span>
+			<svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 0 50 50" enable-background="new 0 0 50 50">
+				<polygon points="15,2.75 12.914,4.836 33.078,25 12.914,45.164 15,47.25 37.25,25 "/>
+			</svg>
+		</a>
+	</li>
+{% endif %}
+</ul>

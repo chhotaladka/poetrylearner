@@ -1,11 +1,15 @@
 {% comment %}
 	Info: Activity Card
 {% endcomment %}
+{% load common_tags %}
+
 <div class="activity wide-card bCw mH-auto wFull bS-1">
 	<div class="title p-16 row">
 		<div class="verb-icon {{ action.get_verb }}">
 			{% if action.is_addition %}
 			{% include "common/svg/plus.html" %}
+			{% elif action.is_publish %}
+			{% include "common/svg/publish.html" %}
 			{% else %}
 			{% include "common/svg/edit.html" %}
 			{% endif %}
@@ -20,9 +24,11 @@
 				<span>{{ action.timestamp }}</span>
 			</div>
 			{% if action.change_message %}
+			{% if request.user|has_group:'administrator,editor' %}
 			<div class="fS-12 light-txt">
 				<span>{{ action.change_message }}</span>
 			</div>
+			{% endif %}
 			{% endif %}
 		</div>
 	</div>

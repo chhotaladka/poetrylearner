@@ -9,27 +9,27 @@
 	<div class="card__title tAc bg-person">
 		{% with person_img_url=person.get_image_url %}
 		{% if person_img_url %}
-		<div class="avatar lg border" style="background: url('{{ person_img_url }}') center / cover;">			
+		<div class="avatar lg border" style="background: url('{{ person_img_url }}') center / cover;">
 		</div>
 		{% else %}
 		<div class="avatar lg">
 			{% include "common/svg/person.html" %}
 		</div>
-		{% endif %}		
-		{% endwith %}					
-		<div class="title-text tAc" itemprop="name">																					
+		{% endif %}
+		{% endwith %}
+		<div class="title-text tAc" itemprop="name">
 			{{ person.name }}
 		</div>
 		<div class="extras">
 			<span class="text" itemprop="additionalName">{{person.additional_name}}</span>
 		</div>
-		{% if person.year_birth or person.year_death %}	
+		{% if person.year_birth or person.year_death %}
 		<div class="extras fS-12">
 			<span>(</span>
 		{% if person.year_birth %}
-			<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span> 
+			<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span>
 		{% endif %}
-		{% if person.year_death %}					
+		{% if person.year_death %}
 			<span title="Death">
 				<span>- </span>
 				<span itemprop="deathDate">{{ person.year_death }}</span>
@@ -37,9 +37,9 @@
 		{% endif %}
 			<span>)</span>
 		</div>
-		{% endif %}					
+		{% endif %}
 	</div>
-	<div class="mdl-card__supporting-text">					
+	<div class="mdl-card__supporting-text">
 		<p><span itemprop="description">{{ person.description }}</span>
 		{% if person.similar_item_url %}
 			<span class="info-txt"><a href="{{ person.similar_item_url }}" itemprop="sameAs">More</a></span>
@@ -51,7 +51,7 @@
 
 	<div class="mdl-card__menu">
 		<a href="{% url 'repository:add-item' type=person.item_type pk=person.id %}/?cancel={{request.path}}" title="Edit to improve.">
-			<button class="mdl-button mdl-button--icon" id="btn1">          	
+			<button class="mdl-button mdl-button--icon c-white" id="btn1">
 				{% include "common/svg/edit.html" %}
 			</button>
 		</a>

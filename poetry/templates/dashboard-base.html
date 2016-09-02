@@ -35,18 +35,18 @@
 	  {% block header %}{% comment %} header of a section/app. Modify in the base template of the app {% endcomment %}
 	  <header class="mdl-layout__header page-header">
 	  	<div class="mdl-layout__drawer-button">
-			{% include "common/svg/menu.html" %}	  		
+			{% include "common/svg/menu.html" %}
 	  	</div>
 	    <div class="mdl-layout__header-row page-header--row">
 	      <div class="mdl-layout-title logo site-name">
 	      	<a href="/">poetry learner</a>
 	      </div>
-	      <div class="mdl-layout-spacer"></div>	         
+	      <div class="mdl-layout-spacer"></div>
 	      <nav class="mdl-navigation page-header--nav">
 	      {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
 	      	{% if request.user.is_authenticated %}
 	      	<div id="id-profile-menu" class="mdl-navigation__link">
-		        <button class="action-button oN"
+		        <button class="profile-menu-btn oN"
 		        	title="{{ request.user|title }} : {{ profile.get_contact }}">
 		        	{% if profile.get_avatar_url %}
 		        	<div>
@@ -54,23 +54,23 @@
 		        	</div>
 		        	{% else %}
 					{% include "common/svg/user.html" %}
-					{% endif %}      	
+					{% endif %}
 		        </button>
 	        </div>
 	        {% else %}
 	        <div class="mdl-navigation__link wS-nw">
 				<a class="oN" href="{% url 'account_login' %}?next={% block header-login-redirect %}{% url 'dashboard:user-home' %}{% endblock %}">
 					Log in
-				</a>	        
-	        </div>	  			        
-	        {% endif %}        
+				</a>
+	        </div>
+	        {% endif %}
 	       {% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
 	      </nav>
 		  {% comment %} User profile submenu {% endcomment %}
 		  {% if request.user.is_authenticated %}
 		  	<ul class="dropdown-menu profile-menu mdl-menu mdl-menu--bottom-right mdl-js-menu" for="id-profile-menu">
 	  			<a class="mdl-menu__item oN" href="{% url 'dashboard:private-profile' %}">
-	  				<div>	  					
+	  				<div>
 	  					<div>{% if profile %}{{ profile.get_first_name }}{% else %}{{ request.user|title }}{% endif %}</div>
 	  					<div class="light-txt">View Profile</div>
 	  				</div>
@@ -106,14 +106,14 @@
 		</div>
 	  	  <div class="mdl-layout-title logo site-name">
 	      	<a href="/">poetry learner</a>
-	      </div>	        
+	      </div>
 	    <nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800" itemscope itemtype="http://schema.org/SiteNavigationElement">
 	    	<a class="mdl-navigation__link" href="{% url 'list-poetry' %}" itemprop="url">Poetry</a>
 	    	<a class="mdl-navigation__link" href="{% url 'list-poet' %}" itemprop="url">Poets</a>
-	    	{% if request.user|has_group:'administrator' %}    		
-	    	<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}" itemprop="url">Crawled data</a>	    		    	
-	    	{% endif %}	    	
-	    	{% if request.user|has_group:'administrator,editor' %}	    
+	    	{% if request.user|has_group:'administrator' %}
+	    	<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}" itemprop="url">Crawled data</a>
+	    	{% endif %}
+	    	{% if request.user|has_group:'administrator,editor' %}
 	    	<a class="mdl-navigation__link" href="{% url 'repository:home' %}" itemprop="url">Repository</a>
 	    	<a class="mdl-navigation__link" href="{% url 'feedback:list' %}" itemprop="url">Feedbacks</a>
 	    	{% endif %}
@@ -130,7 +130,7 @@
 			    	<li><a id="feedbackBtn-site" data-url="{% url 'feedback:add' %}" href="#">Send feedback</a></li>
 			    </ul>
 			</div>
-		</footer>	        
+		</footer>
 	  </div>
 		<main class="mdl-layout__content">
 		{% block messages %}
@@ -139,7 +139,7 @@
 		{% block search %}{% endblock %}
 		{% block headbanner %}{% endblock %}
 		{% block tabs %}{% comment %} Navigation tabs {% endcomment %}{% endblock %}
-		{% block breadcrumbs %}{% endblock %}		
+		{% block breadcrumbs %}{% endblock %}
 		{% block main %}{% comment %} Put the main content in this block {% endcomment %}{% endblock %}
 		</main>
 	</div>
@@ -150,6 +150,6 @@
  		{% include "feedback/modal.html" %}
  	{% endblock %}	
 	{% block scripts %}{% comment %} extra scripts {% endcomment %}{% endblock %}
-		
+	
 	</body>
 </html>

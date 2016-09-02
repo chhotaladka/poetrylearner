@@ -46,7 +46,7 @@
 	      {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
 	      	{% if request.user.is_authenticated %}
 	      	<div id="id-profile-menu" class="mdl-navigation__link">
-		        <button class="profile-menu-btn oN"
+		        <button class="action-button oN"
 		        	title="{{ request.user|title }} : {{ profile.get_contact }}">
 		        	{% if profile.get_avatar_url %}
 		        	<div>

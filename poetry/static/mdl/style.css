@@ -1095,8 +1095,7 @@ html, body {
     -webkit-transition: opacity .55s ease-in-out;
 }
 
-.action-button,
-.profile-menu-btn {
+.action-button {
     background: none repeat scroll 0px 0px transparent;
     border: medium none;
     border-radius: 2px;
@@ -1117,7 +1116,8 @@ html, body {
     /*line-height: 36px;*/
     vertical-align: middle;
 }
-.action-button svg {
+.action-panel .action-button svg,
+.share-panel .action-button svg {
 	fill: #919191 !important;
 	width: 20px;
 	height: 20px;

@@ -10,7 +10,7 @@ VERBS = {
     'CHANGE': u'updated',
     'DELETION': u'deleted',
     'PUBLISH': u'published',
-    'UNPUBLISH': u'ubpublished',
+    'UNPUBLISH': u'unpublished',
 }
 
 

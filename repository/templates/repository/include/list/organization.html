@@ -1,20 +1,9 @@
 {% comment %}
 	Info:       Organization list as card view
 	Requires:   css and js of static/mdl/*
-	Note:       xxx
 {% endcomment %}
-
-{% if items %} {% comment %} Display the list {% endcomment %}		
-	{% include "repository/include/misc/pagination-top.html" with items=items %}
-			
-	{% for item in items %}
-	<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
-	{% include "repository/include/cards/organization-sm.html" with org=item %}
-	</div>
-	{% endfor%}
-						
-	{% include "repository/include/misc/pagination-bottom.html" with items=items %}
-	
-{% else %}  {% comment %} Display the notification {% endcomment %}
-	{% include "repository/include/misc/empty-result.html" %}
-{% endif %}
+{% for item in items %}
+<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+{% include "repository/include/cards/organization-sm.html" with org=item %}
+</div>
+{% endfor%}

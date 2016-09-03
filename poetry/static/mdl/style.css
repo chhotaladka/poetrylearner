@@ -469,14 +469,15 @@ html, body {
 	margin: 0px auto;
 }
 
-.section-cards .poetry-card {
+.poetry-card.small {
+	cursor: pointer; 
     background-color: rgba(255, 255, 255, 1);
     transition: background-color 1s ease-in-out;
     -moz-transition: background-color 1s ease-in-out;
     -webkit-transition: background-color 1s ease-in-out;
 }
-.section-cards .poetry-card:hover {
-    background-color: rgba(255, 255, 255, 0.8);
+.poetry-card.small:hover {
+    background-color: rgba(255, 255, 255, 0.5);
     transition: background-color .55s ease-in-out;
     -moz-transition: background-color .55s ease-in-out;
     -webkit-transition: background-color .55s ease-in-out;
@@ -889,6 +890,9 @@ html, body {
     align-items: left;
 	flex-wrap: wrap;
 }
+.row.r2l {
+    flex-direction: row-reverse;
+}
 .row.fill {
 	justify-content: space-between;
 }
@@ -1061,23 +1065,23 @@ html, body {
 	color: #616161;
 }
 
-.mdl-poetry .mdl-card__actions.nav-panel {
+.mdl-card__actions.nav-panel {
 	padding: 4px;
 }
-.mdl-poetry .mdl-card__actions.loading-bar {
+.mdl-card__actions.loading-bar {
 	padding: 0px;
 }
-.mdl-poetry .mdl-card__actions.status-panel {
+.mdl-card__actions.status-panel {
 	padding: 8px;
 	font-size: 14px;
 }
-.mdl-poetry .mdl-card__actions.action-panel {	
+.mdl-card__actions.action-panel {	
 	font-size: 14px;
 	display: flex;
 	flex-wrap: wrap-reverse;
 	justify-content: space-between;
 }
-.mdl-poetry .action-panel .material-icons {
+.action-panel .material-icons {
 	font-size: 20px;
 }
 .poetry-card:hover .action-panel.hide,
@@ -1115,6 +1119,9 @@ html, body {
     text-align: center;
     /*line-height: 36px;*/
     vertical-align: middle;
+}
+.bottom-panel {
+	padding: 8px 16px;
 }
 .action-panel .action-button svg,
 .share-panel .action-button svg {
@@ -1181,7 +1188,8 @@ a.action-button:hover {
 	fill: rgba(237, 66, 85, 0.9) !important;
 }
 .bookmark-btn.true:hover .icon,
-.bookmark-btn.true:hover svg { 
+.bookmark-btn.true:hover svg,
+.bookmark-btn:hover svg { 
 	color: rgba(237, 66, 85, 1) !important;
 	fill: rgba(237, 66, 85, 1) !important;
 }
@@ -2431,6 +2439,10 @@ ul.mdl-mini-footer__link-list {
     line-height: 34px;
     font-weight: 300;
     letter-spacing: 0.01em;
+}
+.fullname {
+	font-weight: bold;
+	color: #292F33;
 }
 .wFull { width: 100%; }
 .hFull { height: 100%; }

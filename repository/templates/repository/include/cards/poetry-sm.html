@@ -5,20 +5,11 @@
 {% endcomment %}
 {% load common_tags %}
 
-<div class="mdl-card poetry poetry-card small mH-auto wFull bS-1" data-href="{{ poetry.get_absolute_url }}"
+<div class="mdl-card poetry poetry-card small wFull bS-1" data-href="{{ poetry.get_absolute_url }}"
 	itemscope itemtype="http://schema.org/CreativeWork">
 	<meta itemprop="genre" content="poetry"/>
-	<meta itemprop="url" content="{{ poetry.get_absolute_url }}"/>
 	<meta itemprop="name" content="{{ poetry.headline }}"/>
-	{% comment %}  
-	<div class="title p-16">
-		<div class="fS-28 title-text" itemprop="name">
-			<a class="dB oN" href="{{ poetry.get_absolute_url }}" title="Read poetry" itemprop="url">
-				{{ poetry.headline }}
-			</a>
-		</div>
-	</div>
-	{% endcomment %}
+	<meta itemprop="inLanguage" content="{{ poetry.language }}"/>
 	<div class="details pT-16">
 		<div class="mB4 {% if item_type == 'person' %}hidden{%endif%}" itemprop="creator" itemscope itemtype="http://schema.org/Person">
 			<a title="View the poet" href="{{ poetry.creator.get_absolute_url }}" itemprop="url">
@@ -31,10 +22,6 @@
 	</div>
 	<div class="details">
 		<div class="mB4">
-			<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">
-				<s>#</s>
-				<b><meta itemprop="inLanguage" content="{{ poetry.language }}"/>{{ poetry.get_language }}</b>
-			</a>
 			{% for tag in poetry.get_tags_slugs %}
 	 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-poetry' slug=tag %}">
 	 			<s>#</s>
@@ -42,17 +29,26 @@
 			</a>
 			{% endfor %}
 			{% if request.user|has_group:"administrator,editor" %}
+			<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">
+				<s>#</s>
+				<b>{{ poetry.get_language }}</b>
+			</a>
 			{% if poetry.is_published %}
 			<span class="publish" title="Published">
 				{% include "common/svg/published.html" %}
 			</span>
-			{% endif %}{% endif %}
+			{% endif %}
+			{% endif %}
 		</div>
 	</div>
 	<div class="bottom-panel">
 		<div class="action-panel row r2l">
-		{% comment %}  Include BOOKMARK button {% endcomment %}
-		{% include "repository/include/misc/bookmark-button.html" with item=poetry %}
+			{% comment %}  Include BOOKMARK button {% endcomment %}
+			{% include "repository/include/misc/bookmark-button.html" with item=poetry %}
+			<a class="action-button oN" href="{{ poetry.get_absolute_url }}" title="Read full poetry" itemprop="url">
+				{% include "common/svg/book-open.html" %}
+				<span class="action-button__text">View</span>
+			</a>
 		</div>
 	</div>
 </div>

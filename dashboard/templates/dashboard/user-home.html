@@ -1,22 +1,28 @@
 {% extends "dashboard/base.html" %}
 {% load poetry_tags %}
+{% load common_tags %}
 
 {% block title %}{{ profile.get_name }} - {{ sitename }}{% endblock %}
 
 {% block main %}
 <section class="pT-16 pB-8">
-	<div class="_layout layout-sLs mdl-grid">		
+	<div class="_layout layout-sLs mdl-grid">
 		<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-		</div>	
+		</div>
 		<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
 			<div class="section-cards">
+				{% if request.user|has_group:"administrator,editor" %}
 				<div class="section-title">
 					<h3 class="c-grey1">Poetry to review</h3>
-				</div>							
+				</div>
 				{% get_poetry_unpub_rand 5 as poetries %}
-				{% for p in poetries %}
-				{% include "repository/include/cards/poetry-sm.html" with poetry=p %}
-				{% endfor %}				
+				{% else %}
+				<div class="section-title">
+					<h3 class="c-grey1">Poetry for you</h3>
+				</div>
+				{% get_poetry_pub_rand 5 as poetries %}
+				{% endif %}
+				{% include "repository/include/list/poetry.html" with items=poetries %}
 				<div class="mdl-card__actions">
 				{% if poetries %}	
 					<a class="light-txt wFull oN" href="{% url 'repository:list' type='poetry' %}" title="Show all poetries">							
@@ -24,10 +30,10 @@
 					</a>
 				{% else %}<span class="action-button wFull">Working on it...</span>{% endif %}
 				</div>
-			</div>														
-		</div>				
+			</div>
+		</div>
 		<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-		</div>				
-	</div>		
+		</div>
+	</div>
 </section>
 {% endblock %}

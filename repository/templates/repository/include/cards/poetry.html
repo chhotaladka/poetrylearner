@@ -10,6 +10,7 @@
 <div class="mdl-card card-l poetry-card wFull bS-1" itemscope itemtype="http://schema.org/CreativeWork">
 {% with poetry_url=poetry.get_absolute_url %}
 	<meta itemprop="genre" content="poetry"/>
+	<meta itemprop="inLanguage" content="{{ poetry.language }}"/>
 	<div class="title mdl-card__title mdl-card--expand">
 		<h2 class="title-text mdl-card__title-text" itemprop="name">
 			{{ poetry.headline }}
@@ -25,7 +26,7 @@
 		<div class="mB4">
 			<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">
 				<s>#</s>
-				<b><meta itemprop="inLanguage" content="{{ poetry.language }}"/>{{ poetry.get_language }}</b>
+				<b>{{ poetry.get_language }}</b>
 			</a>
 			{% for tag in poetry.get_tags_slugs %}
 	 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-poetry' slug=tag %}">

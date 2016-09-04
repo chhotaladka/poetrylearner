@@ -312,21 +312,22 @@ class PoetryCountNode(Node):
         return ''
 
 
-class PoetryUnpublishedRandomNode(Node):
+class PoetryRandomNode(Node):
     """
-    Render the unpublished poetry list (random order)
+    Render the poetry list (random order), published/unpublished
     """
 
-    def __init__(self, count=5, varname=None):
+    def __init__(self, published=True, count=5, varname=None):
         self.count = count
-        self.varname = varname           
+        self.varname = varname
+        self.published = published
 
     @classmethod
-    def handle_token(cls, parser, token):
+    def handle_token(cls, parser, token, published=True):
         """
         Class method to parse and return a Node.
         """
-        tokens = token.split_contents()        
+        tokens = token.split_contents()
         
         if len(tokens) < 4:
             raise template.TemplateSyntaxError, "%s tag takes at least three arguments" % tokens[0]
@@ -344,9 +345,10 @@ class PoetryUnpublishedRandomNode(Node):
             correct_syntax = "'%s [count] as [varname]'" % tokens[0]
 
             return cls(
+                       published = published,
                        count=count, 
                        varname = tokens[3]
-                    )                  
+                    )
         else:
             raise template.TemplateSyntaxError, "Wrong syntax."
         
@@ -355,7 +357,11 @@ class PoetryUnpublishedRandomNode(Node):
         q_objects = Q()
         try:
             # poetries which are unpublished: [:self.count]
-            q_objects &= Q(date_published__isnull=True)
+            if self.published is True:
+                q_objects &= Q(date_published__isnull=False)
+            else:
+                q_objects &= Q(date_published__isnull=True)
+            
             obj_list = Poetry.objects.filter(q_objects)
             indexes = random.sample(range(len(obj_list)), self.count)
             result = []
@@ -446,4 +452,18 @@ def get_poetry_unpub_rand(parser, token):
         {% get_poetry_unpub_rand 5 as poetry_list %}
     """     
     
-    return PoetryUnpublishedRandomNode.handle_token(parser, token)
+    return PoetryRandomNode.handle_token(parser, token, False)
+
+@register.tag
+def get_poetry_pub_rand(parser, token):
+    """
+    Get the list of published poetries (random order)
+    
+    Syntax::
+        case 1: {% get_poetry_pub_rand [count] as [varname] %}
+        
+    Example usage::
+        {% get_poetry_pub_rand 5 as poetry_list %}
+    """     
+    
+    return PoetryRandomNode.handle_token(parser, token)

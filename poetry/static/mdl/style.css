@@ -470,17 +470,18 @@ html, body {
 }
 
 .poetry-card.small {
+	min-height: 128px;
 	cursor: pointer; 
     background-color: rgba(255, 255, 255, 1);
-    transition: background-color 1s ease-in-out;
-    -moz-transition: background-color 1s ease-in-out;
-    -webkit-transition: background-color 1s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
+    -moz-transition: background-color 0.3s ease-in-out;
+    -webkit-transition: background-color 0.3s ease-in-out;
 }
 .poetry-card.small:hover {
     background-color: rgba(255, 255, 255, 0.5);
-    transition: background-color .55s ease-in-out;
-    -moz-transition: background-color .55s ease-in-out;
-    -webkit-transition: background-color .55s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+    -moz-transition: background-color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out;
 }
 
 /* Data tables */

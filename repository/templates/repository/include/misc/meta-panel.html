@@ -4,32 +4,33 @@
 	Note:       Use inside mdl-card div
 {% endcomment %}
 {% load humanize %}
-<div class="meta-panel mdl-card__actions mdl-card--border">	
+{% load common_tags %}
+<div class="meta-panel mdl-card__actions mdl-card--border">
 	<div id="metaPanelData" class="hidden">
 		<div class="row fill mB-8">
-			<div class="light-txt">				
+			<div class="light-txt">
 				<div>
 					<span>Last edited by</span> 
 					<a title="View user" href={{ item.get_last_edit_user.profile.get_absolute_url }}>
 						{{item.get_last_edit_user}}
-					</a>			
+					</a>
 				</div>
 				<div title="Last edited at {{ item.get_last_edit_time }} IST">
 					<time itemprop="dateModified" datetime="{{ item.get_last_edit_time|date:'c' }}">
-						{{ item.get_last_edit_time |naturaltime }}
+						{{ item.get_last_edit_time |nicetime }}
 					</time>
 				</div>
 			</div>
-			<div class="light-txt">				
+			<div class="light-txt">
 				<div>
 					<span>Added by</span> 
 					<a title="View user" href={{ item.get_first_edit_user.profile.get_absolute_url }}>
 						{{item.get_first_edit_user}}
-					</a>			
+					</a>
 				</div>
 				<div title="Added at {{ item.get_first_edit_time }} IST">
 					<time itemprop="dateCreated" datetime="{{ item.get_first_edit_time|date:'c' }}">
-						{{ item.get_first_edit_time }}
+						{{ item.get_first_edit_time|niceday }}
 					</time>
 				</div>
 			</div>
@@ -45,23 +46,23 @@
 				<link itemprop="interactionType" href="http://schema.org/ReadAction"/>
 				<span>Views: </span>
 				<span class="bignum" itemprop="userInteractionCount" content="12234002">12,234,002</span>	                                       
-			</div>			
+			</div>
 		</div>
 		<div id="metaPanelBtnL" class="tAc mT-8">
 			<button class="action-button wFull oN" title="Hide meta data"
 				onclick="document.getElementById('metaPanelData').classList.add('hidden');
 						document.getElementById('metaPanelBtnM').classList.remove('hidden');
-						return false;">							
-				{% include "common/svg/expand_less.html" %}			    		    			                           
+						return false;">
+				{% include "common/svg/expand_less.html" %}
 			</button>
-		</div>				
+		</div>
 	</div>
 	<div id="metaPanelBtnM" class="tAc mT-8">
 		<button class="action-button wFull oN" title="Show meta data"
 			onclick="document.getElementById('metaPanelBtnM').classList.add('hidden'); 
 					document.getElementById('metaPanelData').classList.remove('hidden');
-					return false;">							
-			{% include "common/svg/expand_more.html" %}		    	    			                           
+					return false;">
+			{% include "common/svg/expand_more.html" %}
 		</button>
-	</div>			
+	</div>
 </div>

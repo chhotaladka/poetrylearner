@@ -256,36 +256,44 @@ def publish(request, type, pk, slug):
     obj = get_object_or_404(item_cls, pk=pk)
     
     if request.method == "POST":
+        state_changed = False
         action = request.POST.get('submit')
+        # Do the operation, only if current status is different.
         if action == 'Publish':
-            obj.modified_by = request.user
-            obj.date_published = timezone.now()
-            obj.save()
+            if obj.date_published is None:
+                obj.modified_by = request.user
+                obj.date_published = timezone.now()
+                obj.save()
+                state_changed = True
         elif action == 'Unpublish':
-            obj.modified_by = request.user
-            obj.date_published = None
-            obj.save()
+            if obj.date_published:
+                obj.modified_by = request.user
+                obj.date_published = None
+                obj.save()
+                state_changed = True
         ##
         # Send signal to log the action
-        from activity.signals import sig_action
-        from activity.models import VERBS
-        if action == 'Publish':
-            verb = VERBS['PUBLISH']
-            public = True
-        else:
-            verb = VERBS['UNPUBLISH']
-            public = False
+        if state_changed:
+            from activity.signals import sig_action
+            from activity.models import VERBS
+            if action == 'Publish':
+                verb = VERBS['PUBLISH']
+                public = True
+            else:
+                verb = VERBS['UNPUBLISH']
+                public = False
+            
+            sig_action.send(request.user,
+                        timestamp = obj.date_published,
+                        verb = verb,
+                        content_type = ContentType.objects.get_for_model(obj),
+                        object_id = obj.pk,
+                        object_repr = obj.name,
+                        change_message = None,
+                        public=public)
         
-        sig_action.send(request.user,
-                    timestamp = obj.date_published,
-                    verb = verb,
-                    content_type = ContentType.objects.get_for_model(obj),
-                    object_id = obj.pk,
-                    object_repr = obj.name,
-                    change_message = None,
-                    public=public)
-        
-        messages.success(request, 'Changes on item %s are successful! '%obj.name)
+        if state_changed:
+            messages.success(request, 'Changes on item %s are successful! '%obj.name)
         return HttpResponseRedirect(obj.get_absolute_url())
     
     ##

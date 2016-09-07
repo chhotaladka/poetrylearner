@@ -9,7 +9,10 @@
 </div>
 {% endfor %}
 <script>
-$(document).ready(function(){
+{% comment %}
+jquery not required. Using alternate of '$(document).ready()'
+{% endcomment %}
+document.addEventListener('DOMContentLoaded', function () {
 	var poetryClicked = function(e){
 		e.stopPropagation();
 		if($(e.target).is('a') || $(e.target.parentNode).is('a')){
@@ -20,10 +23,5 @@ $(document).ready(function(){
 	};
 	var nodes = $('.poetry-card.small');
 	nodes.on('click', poetryClicked);
-	{% comment %}
-	//for (var i = 0; i < nodes.length; i++) {
-	//	nodes[i].addEventListener('click', poetryClicked, false);//Bubbled propagation
-	//}
-	{% endcomment %}
 });
 </script>

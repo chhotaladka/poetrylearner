@@ -5,6 +5,9 @@
 				2) bookmark.js(list/poetry.html)
 {% endcomment %}
 {% block title %}{{ result_title }} | {{ sitename }}{% endblock title %}
+{% block meta %}
+<meta name="description" content="{{ result_description }}">
+{% endblock %}
 
 {% block search-placeholder %}{{result_title}}{% endblock %}
 {% block search-action %}/{% endblock %}
@@ -52,12 +55,5 @@
 		{% endif %}
 		</div>
 	</section>
-	
 	{% include "repository/include/misc/button-floating-add.html" with item_type=item_type %}
-	
 {% endblock %}
-{% block scripts %}
-{% if item_type == 'poetry' %}
-	{% include "repository/include/misc/bookmark-button-js.html" %}
-{% endif %}
-{% endblock %}	

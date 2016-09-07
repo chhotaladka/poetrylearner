@@ -1,80 +1,15 @@
 {% comment %}
-	Info:       Field creator.
-	Requires:   Can be included in the Form of an item having 'creator' as a ForeignKey 
-	Note:       xxx
+	Info: Search Field for person(creator).
+	Requires: 1) Can be included in the Form of an item having 'creator' as a ForeignKey
+			2) creator-select2-js.html
 {% endcomment %}
 <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 
 <div id="div_id_creator" class="form-element">
 	<label for="id_creator" class="select2__label">
 		<strong>Search person from repository</strong>
-	</label>		
+	</label>
 	<select id="id_creator" class="js-example-responsive" name="creator" required>
-	</select>				
+	</select>
 	<span class="help-text">All selected articles will be added to poetry repository with selected person as creator.</span>			
-</div>	
-
-<script>
-$(document).ready(function(){
-	
-	function formatPerson (person) {
-	  if (!person.id) { return person.text; }
-	  if (person.birth) {var b_str = '<span> Birth ' + person.birth + '</span>';}
-	  else { var b_str = '';}
-	  if (person.death) {var d_str = '<span> Death ' + person.death + '</span>';}
-	  else { var d_str = '';}
-	  var str = 
-	    '<div>'
-	    + '<a href="' + person.url + '" target="_blank">'
-	    + '<span>' + person.name + ' ' + person.additional_name + '</span></a>'	    
-	    + '</div>'
-	    + '<div class="fS-10px">' + b_str + d_str
-	    + '</div>'	    
-	  var $person = $(str);
-	  return $person;
-	};
-	function formatPersonSelection (person) {
-	  if (!person.id) { return person.text; }
-	  if (!person.text) {
-	  	  var $person = $(	  	    
-	    	  '<span>' + person.name + ' ' + person.additional_name + ' </span>'	    	
-	  		);
-	  } else {
-		  var $person = $(
-		    '<span>' + person.text + ' </span>'		    
-		  );
-	  }
-	  return $person;
-	};
-		
-    $("#id_creator").select2({
-      ajax: {
-        url: "/r/search/person/",
-        dataType: 'json',
-        delay: 500,
-        data: function (params) {
-          return {
-            q: params.term, // search term
-          };
-        },
-        processResults: function (data, params) {
-          // parse the results into the format expected by Select2
-          // since we are using custom formatting functions we do not need to
-          // alter the remote JSON data
-          return {
-            results: data,
-          };
-        },
-        cache: true
-      },
-      theme: "classic",
-      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-      minimumInputLength: 3,
-      templateResult: formatPerson,
-      templateSelection: formatPersonSelection,
-      placeholder: "",
-      allowClear: true
-    });
-});
-</script>		
+</div>

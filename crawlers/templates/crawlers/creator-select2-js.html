@@ -1,0 +1,67 @@
+{% comment %}
+	Info: js for creator-select2.html
+{% endcomment %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+<script>
+$(document).ready(function(){
+	
+	function formatPerson (person) {
+	  if (!person.id) { return person.text; }
+	  if (person.birth) {var b_str = '<span> Birth ' + person.birth + '</span>';}
+	  else { var b_str = '';}
+	  if (person.death) {var d_str = '<span> Death ' + person.death + '</span>';}
+	  else { var d_str = '';}
+	  var str = 
+	    '<div>'
+	    + '<a href="' + person.url + '" target="_blank">'
+	    + '<span>' + person.name + ' ' + person.additional_name + '</span></a>'
+	    + '</div>'
+	    + '<div class="fS-10px">' + b_str + d_str
+	    + '</div>'
+	  var $person = $(str);
+	  return $person;
+	};
+	function formatPersonSelection (person) {
+	  if (!person.id) { return person.text; }
+	  if (!person.text) {
+	  	  var $person = $(
+	    	  '<span>' + person.name + ' ' + person.additional_name + ' </span>'
+	  		);
+	  } else {
+		  var $person = $(
+		    '<span>' + person.text + ' </span>'
+		  );
+	  }
+	  return $person;
+	};
+		
+    $("#id_creator").select2({
+      ajax: {
+        url: "/r/search/person/",
+        dataType: 'json',
+        delay: 500,
+        data: function (params) {
+          return {
+            q: params.term, // search term
+          };
+        },
+        processResults: function (data, params) {
+          // parse the results into the format expected by Select2
+          // since we are using custom formatting functions we do not need to
+          // alter the remote JSON data
+          return {
+            results: data,
+          };
+        },
+        cache: true
+      },
+      theme: "classic",
+      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+      minimumInputLength: 3,
+      templateResult: formatPerson,
+      templateSelection: formatPersonSelection,
+      placeholder: "",
+      allowClear: true
+    });
+});
+</script>

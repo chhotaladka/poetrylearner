@@ -5,8 +5,7 @@
 
 {% block tabs %}
 <div class="pB-8">
-	<div class="_layout">					
-
+	<div class="_layout">
 		<div class="md-tabs">
 			<div class="md-tabs__tab-bar">
 				<div class="md-tabs__tab is-static">
@@ -18,20 +17,19 @@
 				</a>
 			{% endfor %}
 			</div>
-		</div>										 	
-				
-	</div>	
+		</div>
+	</div>
 </div>
 {% endblock %}
 {% block main %}
 	<section class="pT-8 pB-16">
 		<div class="_layout layout-L mdl-grid">
-		{% if feedbacks %} {% comment %} Display the list {% endcomment %}		
+		{% if feedbacks %} {% comment %} Display the list {% endcomment %}
 			{% include "common/include/pagination-top.html" with items=feedbacks %}	
-					
+			
 			{% for feedback in feedbacks %}
-			<div class="feedback-list mdl-cell mdl-cell--12-col mT0 mB0">	
-			{% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}														
+			<div class="feedback-list mdl-cell mdl-cell--12-col mT0 mB0">
+			{% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}
 			</div>
 			{% endfor %}
 			
@@ -44,20 +42,20 @@
 	</section>
 	<script>
 	{% comment %} javascript to toggle feedback card view (more/less) {% endcomment %}
-	$(document).ready(function(){
-		var status = false;		
+	document.addEventListener('DOMContentLoaded', function () {
+		var status = false;
 		var toggleView = function(){
 			if ($(this).hasClass('more')){
 				status = true;
 			} else{
 				status = false;
-			}					
+			}
 			$('.feedback-list .feedback').removeClass('more');
 			if (status){
 				$(this).removeClass('more');
 			} else{
 				$(this).addClass('more');
-			}			
+			}
 		};
 		var nodes = $('.feedback-list .feedback');
 		nodes.on('click', toggleView);

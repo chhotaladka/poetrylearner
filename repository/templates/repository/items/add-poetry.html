@@ -12,14 +12,14 @@
 
 {% block extra-style %}
 {% comment %} Transliteration CSS {% endcomment %}
-	<link rel="stylesheet" href="{% static "js/ime/css/jquery.ime.css" %}"/>	
+	<link rel="stylesheet" href="{% static "js/ime/css/jquery.ime.css" %}"/>
 {% endblock %}
 
-{% block main %}	
+{% block main %}
 <section id="priSect" class="pT-8 pB-48">
-	<div class="_layout layout-sLs mdl-grid">		
+	<div class="_layout layout-sLs mdl-grid">
 		<section class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-		</section>	
+		</section>
 		<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
 			<div class="mdl-card author-card--lg bS-1 wFull">
 				<div class="p-16">
@@ -28,18 +28,20 @@
 				{% include "repository/include/forms/poetry.html" %}
 				<div class="mdl-card__menu">
 					<button class="action-button--small" title="Cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;">
-						{% include "common/svg/close.html" %}         
+						{% include "common/svg/close.html" %}
 					</button>
 				</div>
 			</div>
-		</section>				
+		</section>
 		<section class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-		</section>				
-	</div>		
-</section>	
+		</section>
+	</div>
+</section>
 {% endblock %}
 
-{% block scripts %} 
+{% block scripts %}
+{% comment %} Requirements by repository/include/forms/poetry.html {% endcomment %}
+ {% include "repository/include/fields/creator-select2-js.html" %}
 {% comment %} Transliteration JS {% endcomment %}
 	<script type="text/javascript" src="{% static "js/ime/libs/rangy/rangy-core.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.js" %}"></script>
@@ -47,7 +49,7 @@
 	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.preferences.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/ime/src/jquery.ime.inputmethods.js" %}"></script>	
 	<script>
-		$( document ).ready( function () {
+		document.addEventListener('DOMContentLoaded', function () {
 			// All input fields having "translit" class require transliteration
 			$('.translit').ime();
 			/*$('#id_body, #id_title').ime();*/

@@ -7,10 +7,9 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    {% comment %} The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags {% endcomment %}
-	    
+		<meta name="google-site-verification" content="u3Vuy3bHXt4xurDnEsimzk-e4cNpklJSbYYW_bxt94U" />
 		{% block meta %}{% comment %} Write down all meta here {% endcomment %}
 		<meta name="description" content="Building towards an archive for the poetry of every language. Read your next favorite poetry.">
-		<meta name="google-site-verification" content="u3Vuy3bHXt4xurDnEsimzk-e4cNpklJSbYYW_bxt94U" />
 		{% endblock %}
 		
 	    <title>{% block title %}poetrylearner{% endblock title %}</title>
@@ -20,11 +19,7 @@
 	    <link rel="stylesheet" href="{% static "mdl/style.css" %}">
 	    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-	    {% block extra-style %}{% comment %} Include here extra css style {% endcomment %}{% endblock %} 
-	
-		{% comment %} jQuery (necessary for Bootstrap's JavaScript plugins) {% endcomment %}
-    	<script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
-    	<script type="text/javascript" src="{% static 'mdl/material.min.js' %}"></script>
+	    {% block extra-style %}{% comment %} Include here extra css style {% endcomment %}{% endblock %}
    
 	</head>  
  	<body class="mdl-poetry mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
@@ -144,12 +139,16 @@
 		</main>
 	</div>
 	{% endblock %}{% comment %} end of body {% endcomment %}
-	
+	{% comment %} jQuery (necessary for Bootstrap's JavaScript plugins) {% endcomment %}
+	<script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'mdl/material.min.js' %}"></script>
  	{% block modal %}{% comment %} Modal code {% endcomment %}{% endblock %}
  	{% block feedback %}{% comment %} Feedback related css, modal, and script {% endcomment %}
  		{% include "feedback/modal.html" %}
- 	{% endblock %}	
-	{% block scripts %}{% comment %} extra scripts {% endcomment %}{% endblock %}
+ 	{% endblock %}
+	{% block scripts %}{% comment %} extra scripts {% endcomment %}
+	{% include "repository/include/misc/bookmark-button-js.html" %}
+	{% endblock %}
 	
 	</body>
 </html>

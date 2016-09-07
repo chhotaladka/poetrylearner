@@ -23,47 +23,45 @@
 {% block main %}
 
 	<section id="priSect" class="pT-8 pB-16">
-		<div class="_layout layout-sLs mdl-grid">		
+		<div class="_layout layout-sLs mdl-grid">
 			<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
 			</div>	
 			<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
 			{% include "repository/include/cards/person.html" with person=obj %}
-			</div>				
+			</div>
 			<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
-			</div>				
-		</div>		
+			</div>
+		</div>
 	</section>
 
 	<section class="pB-8">
-		<div class="_layout layout-sLs mdl-grid">		
+		<div class="_layout layout-sLs mdl-grid">
 			<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-			</div>	
+			</div>
 			<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
 				<div class="section-cards">
 					<div class="section-title">
 						<h3 class="c-grey1"><a href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}">Poetry by {{ obj.title }}</a></h3>	
-					</div>							
+					</div>
 					{% get_recent_poetries 5 by obj as poetries %}
-					{% for p in poetries %}
-					{% include "repository/include/cards/poetry-sm.html" with poetry=p %}
-					{% endfor %}				
+					{% include "repository/include/list/poetry.html" with items=poetries %}
 					<div class="mdl-card__actions">
-					{% if poetries %}	
+					{% if poetries %}
 						<a class="light-txt wFull oN" href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}" title="Show all poetry by {{ obj.title }}">							
 						    Show all
 						</a>
 					{% else %}<span class="action-button wFull">Working on it...</span>{% endif %}
 					</div>
-				</div>														
-			</div>				
+				</div>
+			</div>
 			<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-			</div>				
-		</div>		
-	</section>	
+			</div>
+		</div>
+	</section>
 
 	{% include "repository/include/misc/button-floating-add.html" with item_type=item_type %}
 
 {% endblock %}
 {% block scripts %}
 	{% include "repository/include/misc/bookmark-button-js.html" %}
-{% endblock %}	    				    																
+{% endblock %}

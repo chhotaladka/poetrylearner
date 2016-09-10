@@ -4,6 +4,8 @@ from django.forms.models import  ModelChoiceField
 from django.core.exceptions import ValidationError
 
 from repository.models import Poetry, Book, Person
+from taggit.forms import TagField
+from taggit.utils import split_strip
 
 class BookForm(ModelForm): 
        
@@ -40,9 +42,25 @@ class Select2ChoiceField(ModelChoiceField):
         return value
 
 
+class TaggitTagField(TagField):
+    '''
+    Added has_changed method in TagField
+    '''
+    def has_changed(self, initial, data):
+        initial_list = [i.tag.name for i in initial]
+        data_list = split_strip(data, ',')
+        
+        if len(initial_list) != len(data_list):
+            return True
+        initial_set = set(value for value in initial_list)
+        data_set = set(value for value in data_list)
+        return data_set != initial_set
+
+
 class PoetryForm(ModelForm): 
     
     creator = Select2ChoiceField(queryset=Person.objects.filter())
+    keywords = TaggitTagField(required=False)
 
     class Meta:
         model = Poetry

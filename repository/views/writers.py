@@ -82,6 +82,8 @@ class CreateThingView(View):
         
         if form.is_valid():
             try:
+                change_message = None if add else self.construct_change_message(form)
+                
                 obj = form.save(self.request.user, commit=False)
                 if not obj.pk:
                     obj.added_by = self.request.user
@@ -96,11 +98,9 @@ class CreateThingView(View):
                 from activity.models import VERBS
                 if add:
                     verb = VERBS['ADDITION']
-                    change_message = None
                     t = obj.date_added
                 else:
                     verb = VERBS['CHANGE']
-                    change_message = self.construct_change_message(form)
                     t = obj.date_modified
                 
                 sig_action.send(self.request.user,

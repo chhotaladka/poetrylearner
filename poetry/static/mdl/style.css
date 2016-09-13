@@ -1210,10 +1210,18 @@ a.action-button:hover {
 		display: none !important; }
 }
 
-.mdl-poetry .share-panel {
-	padding: 4px 16px 4px 16px;
+.share-panel {
+	padding: 12px 16px;
 }
-.mdl-poetry .share-button {
+.share-panel-url {
+    color: #666 !important;
+    font-size: 1.2em !important;
+    padding: 3px;
+    width: 75% !important;
+	padding: 5px 10px 6px !important;
+	height: auto !important;
+}
+.share-button {
     background: none repeat scroll 0px 0px transparent;
     border: medium none;
     cursor: pointer;
@@ -1222,28 +1230,28 @@ a.action-button:hover {
 	color: #919191;
 	font-size: 12px;
 }
-.mdl-poetry .share-button:hover {
+.share-button:hover {
 	color: #616161;
 }
-.mdl-poetry .share-button .share-icon-twitter {
+.share-button .share-icon-twitter {
 	background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -348px;
     width: 32px;
     height: 32px;
 	display: inline-block;
 }
-.mdl-poetry .share-button .share-icon-fb {
+.share-button .share-icon-fb {
     background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -861px;
     width: 32px;
     height: 32px;
 	display: inline-block;
 }
-.mdl-poetry .share-button .share-icon-google {
+.share-button .share-icon-google {
     background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -276px;
     width: 32px;
     height: 32px;
 	display: inline-block;
 }
-.mdl-poetry .share-button .share-icon-mail {
+.share-button .share-icon-mail {
     background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -144px;
     width: 32px;
     height: 32px;

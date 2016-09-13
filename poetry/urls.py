@@ -23,6 +23,7 @@ from django.conf.urls.i18n import i18n_patterns
 from . import views
 
 urlpatterns = [
+    url(r'^$', views.welcome, name='welcome'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^activity/', include('activity.urls', namespace='activity')),
@@ -36,7 +37,8 @@ urlpatterns = [
     url(r'^poetry/?$', views.list_poetry, name='list-poetry'),
     url(r'^poets/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.poet, name='poet'),
     url(r'^poets/?$', views.list_poet, name='list-poet'),
-    url(r'^$', views.welcome, name='welcome'),
+    url(r'^', include('shorturls.urls', namespace='shorturls')),
+    
 ]
 
 # This is only needed when using runserver.

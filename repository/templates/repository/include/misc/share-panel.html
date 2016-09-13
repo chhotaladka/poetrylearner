@@ -3,26 +3,34 @@
 	Requires:   `item` context of an item.
 	Note:       Use inside mdl-card div
 {% endcomment %}
-<div id="sharePanel" class="share-panel row mdl-card__actions mdl-card--border hidden">
-{% if poetry.is_published %}
-	<button id="shareTwitteBtn" class="share-button" title="Share to Twitter" onclick="">
-		<span class="share-icon-twitter"></span>
-	</button>
-	<button id="shareFbBtn" class="share-button" title="Share to Facebook">
-		<span class="share-icon-fb"></span>
-	</button>
-	<button id="shareGoogleBtn" class="share-button" title="Share to Google+">
-		<span class="share-icon-google"></span>
-	</button>
-	<button id="shareMailBtn" class="share-button" title="Mail to">
-		<span class="share-icon-mail"></span>
-	</button>
-{% else %}
-<div class="fS14 c-red">Only published item can be shared.</div>
-{% endif %}
-	<div class="mdl-layout-spacer"></div>
-	<button id="sharePanelCloseBtn" class="action-button oN" title="Close"
-		onclick="document.getElementById('sharePanel').classList.add('hidden'); return false;">
-		{% include "common/svg/close-bold.html" %}
-	</button>
+{% load shorturl %}
+<div id="sharePanel" class="hidden">
+	<div class="share-panel mdl-card__actions mdl-card--border">
+		<div class="row mB-8">
+			{% if poetry.is_published %}
+			<button id="shareTwitteBtn" class="share-button" title="Share to Twitter" onclick="">
+				<span class="share-icon-twitter"></span>
+			</button>
+			<button id="shareFbBtn" class="share-button" title="Share to Facebook">
+				<span class="share-icon-fb"></span>
+			</button>
+			<button id="shareGoogleBtn" class="share-button" title="Share to Google+">
+				<span class="share-icon-google"></span>
+			</button>
+			<button id="shareMailBtn" class="share-button" title="Mail to">
+				<span class="share-icon-mail"></span>
+			</button>
+			{% else %}
+			<div class="fS14 c-red">Only published item can be shared on social media.</div>
+			{% endif %}
+			<div class="mdl-layout-spacer"></div>
+			<button id="sharePanelCloseBtn" class="action-button oN" title="Close"
+			onclick="document.getElementById('sharePanel').classList.add('hidden'); return false;">
+			{% include "common/svg/close-bold.html" %}
+			</button>
+		</div>
+		<div class="mB-8 form-element">
+			<input class="share-panel-url" type="text" title="Share link" value="{% shorturl poetry %}" onclick="this.focus();this.select();"></input>
+		</div>
+	</div>
 </div>

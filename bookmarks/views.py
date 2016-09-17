@@ -94,7 +94,7 @@ def list_bookmarks(request):
     obj_list = [x.content_object for x in bookmarks]
     
     # Pagination
-    paginator = Paginator(obj_list, 20) # Show 20 entries per page    
+    paginator = Paginator(obj_list, 100) # Show 100 entries per page    
     page = request.GET.get('page')
     try:
         objs = paginator.page(page)
@@ -113,4 +113,11 @@ def list_bookmarks(request):
                }
     template = 'bookmarks/list.html'
     return render(request, template, context)
-    
+
+
+@login_required
+def search_bookmarks(request):
+    '''
+    TODO: Search in the bookmarks
+    '''
+    pass

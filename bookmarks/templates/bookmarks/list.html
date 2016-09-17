@@ -20,11 +20,7 @@
 				</div>
 			</div>
 		{% if items %} {% comment %} Display the list {% endcomment %}
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="section-cards">
-				{% include "repository/include/list/poetry.html" with items=items %}
-				</div>
-			</div>
+			{% include "repository/include/list/poetry.html" with items=items %}
 			{% include "common/include/pagination-bottom.html" with items=items %}
 		{% else %}{% comment %} Display the notification {% endcomment %}
 			<div class="mdl-cell mdl-cell--12-col mT0 mB0">

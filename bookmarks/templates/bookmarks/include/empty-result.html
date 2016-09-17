@@ -1,0 +1,21 @@
+{% comment %}
+	Info: Empty Activity Card
+{% endcomment %}
+<div class="section-cards">
+	<div class="title p-16 row">
+		<div class="verb-icon">
+			{% include "common/svg/info_outline.html" %}
+		</div>
+		<div>
+			<div class="fS16 title-text">
+				Your bookmark list is empty.
+			</div>
+			<div class="fS-12 mT4">
+				You have not saved any poetry to read later.
+			</div>
+			<div class="fS14 mT4">
+				<span><a class="h-link" href="{% url 'dashboard:user-home' %}">Checkout</a> some beautiful poetry to start with.</span>
+			</div>
+		</div>
+	</div>
+</div>

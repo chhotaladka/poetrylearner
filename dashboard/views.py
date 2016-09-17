@@ -171,18 +171,3 @@ def public_profile(request, user_id, slug):
     
     return render(request, template, context)
 
-    
-@login_required
-def user_bookmarks(request):
-    '''
-    Bookmarks by the user
-    '''
-    
-    profile = UserProfile.objects.get(user=request.user.id)
-    
-    ## Make the context and render     
-    context = {}
-    template = 'dashboard/bookmarks.html'
-    
-    return render(request, template, context)
-

@@ -8,6 +8,8 @@
 {% include "repository/include/cards/poetry-sm.html" with poetry=item %}
 </div>
 {% endfor %}
+{% comment %} Scripts are not required in case of no items {% endcomment %}
+{% if items %}
 <script>
 {% comment %}
 jquery not required. Using alternate of '$(document).ready()'
@@ -25,3 +27,4 @@ document.addEventListener('DOMContentLoaded', function () {
 	nodes.on('click', poetryClicked);
 });
 </script>
+{% endif %}

@@ -1,16 +1,36 @@
+{% extends "bookmarks/base.html" %}
 {% comment %}
-	Info:       Bookmark list
+	Info: Bookmark list
 {% endcomment %}
-{% if bookmarks %} {% comment %} Display the list {% endcomment %}
-	<div class="table--large">
-		<table class="mdl-data-table mdl-js-data-table wSn">										
-			<tbody>
-			{% for b in bookmarks %}
-			{% include "bookmarks/bookmark-sm.html" with bookmark=b %}
-			{% endfor %}
-			</tbody>
-		</table>
-	</div>
-{% else %}  {% comment %} Display the notification {% endcomment %}
-	{% include "bookmarks/empty-result.html" %}
-{% endif %}
+{% load humanize %}
+{% block title %}My bookmarks | {{ sitename }}{% endblock %}
+
+{% block main %}
+	<section class="pT-8 pB-16">
+		<div class="_layout layout-L mdl-grid">
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="wide-card row fill">
+					<div class="head-title">My bookmarks</div>
+					<div class="head-title">
+						<span class="fS16">{{ items.paginator.count|intcomma }}</span>
+						<span class="bookmark-btn true svg32">
+						{% include "common/svg/bookmark.html" %}
+						</span>
+					</div>
+				</div>
+			</div>
+		{% if items %} {% comment %} Display the list {% endcomment %}
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="section-cards">
+				{% include "repository/include/list/poetry.html" with items=items %}
+				</div>
+			</div>
+			{% include "common/include/pagination-bottom.html" with items=items %}
+		{% else %}{% comment %} Display the notification {% endcomment %}
+			<div class="mdl-cell mdl-cell--12-col mT0 mB0">
+			{% include "bookmarks/include/empty-result.html" %}
+			</div>
+		{% endif %}
+		</div>
+	</section>
+{% endblock %}

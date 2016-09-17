@@ -1292,6 +1292,7 @@ a.action-button:hover {
 	border-left: 2px solid rgba(139, 195, 74, 0.60);
 }
 /* activity */
+.verb-icon,
 .activity .verb-icon {
 	margin-right: 8px;
 }
@@ -1310,6 +1311,7 @@ a.action-button:hover {
 .activity .verb-icon.unpublished {
 
 }
+.verb-icon svg,
 .activity .verb-icon svg {
 	fill: #424242 !important;
 	width: 18px;
@@ -2452,6 +2454,14 @@ ul.mdl-mini-footer__link-list {
 .fullname {
 	font-weight: bold;
 	color: #292F33;
+}
+.svg32 svg {
+	height:32px;
+	width:32px;
+}
+.svg24 svg {
+	height:24px;
+	width:24px;
 }
 .wFull { width: 100%; }
 .hFull { height: 100%; }

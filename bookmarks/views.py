@@ -17,24 +17,24 @@ def add_bookmark(request):
     '''
     if request.method == "POST":
         content_type_id = request.POST.get('content_type')
-        object_id = request.POST.get('object_id')        
+        object_id = request.POST.get('object_id')
         bookmark_id = 0
-        print "DBG:: bookmark add - content_type_id, object_id :", content_type_id, object_id
+        #print "DBG:: bookmark add - content_type_id, object_id :", content_type_id, object_id
 
         # Validate content_type_id and object_id
         try:
-            content_type = ContentType.objects.get_for_id(content_type_id)            
-            content_object = content_type.get_object_for_this_type(pk=object_id)               
+            content_type = ContentType.objects.get_for_id(content_type_id)
+            content_object = content_type.get_object_for_this_type(pk=object_id)
         except ObjectDoesNotExist:
-            print "DBG:: The content of object doesn't exist"
+            print "ERR:: The content of object doesn't exist"
             data = {}
             data['status'] = 404
             data['id'] = bookmark_id
-            return JsonResponse(data)                      
+            return JsonResponse(data)
         
         # Add bookmark
-        obj = Bookmark.objects.add_bookmark(content_object, request.user)        
-        if obj:            
+        obj = Bookmark.objects.add_bookmark(content_object, request.user)
+        if obj:
             status = 200 # OK
             bookmark_id = obj.id
         else:
@@ -48,8 +48,8 @@ def add_bookmark(request):
         return JsonResponse(data)
     
     else:
-        raise PermissionDenied        
-            
+        raise PermissionDenied
+    
 
 @login_required
 def remove_bookmark(request):
@@ -59,14 +59,14 @@ def remove_bookmark(request):
     if request.method == "POST":
         content_type_id = request.POST.get('content_type')
         object_id = request.POST.get('object_id')
-        print "DBG:: bookmark remove - content_type_id, object_id :", content_type_id, object_id
+        #print "DBG:: bookmark remove - content_type_id, object_id :", content_type_id, object_id
 
         # Validate content_type_id and object_id
         try:
-            content_type = ContentType.objects.get_for_id(content_type_id)            
+            content_type = ContentType.objects.get_for_id(content_type_id)
             content_object = content_type.get_object_for_this_type(pk=object_id)
             # Delete bookmark
-            id = Bookmark.objects.remove_bookmark(content_object, request.user)           
+            id = Bookmark.objects.remove_bookmark(content_object, request.user)
         except ObjectDoesNotExist:
             status = 404
         
@@ -83,11 +83,15 @@ def remove_bookmark(request):
 
 
 @login_required
-def list_bookmark(request):
+def list_bookmarks(request):
     '''
     List all bookmarks by the user
     '''
-    obj_list = Bookmark.objects.get_all_for_user(request.user)
+    poetry_ctype = ContentType.objects.get(app_label="repository", model="poetry")
+    
+    bookmarks = request.user.saved_bookmarks.filter(content_type=poetry_ctype)
+    
+    obj_list = [x.content_object for x in bookmarks]
     
     # Pagination
     paginator = Paginator(obj_list, 20) # Show 20 entries per page    
@@ -104,22 +108,9 @@ def list_bookmark(request):
     type = 'Bookmarks'
     result_title = ''
     
-    # Construct dictionary
-    bookmarks = []
-    for obj in objs:
-        print obj
-        b = {}
-        b['title'] = obj.content_object.__unicode__()
-        b['url'] = obj.get_absolute_url()
-        b['author'] = obj.content_object.__unicode__()
-        bookmarks.append(b)
-                
-    data = {'bookmarks': bookmarks,
-            'item_count': len(objs),
-            'item_type': type,
-            'page': page if page else 1,
-            'num_pages': paginator.num_pages,
-            'result_title': result_title,            
-            }
-
-    return JsonResponse(data) 
+    context = {'items': objs,
+               'item_type': type, 'result_title': result_title,
+               }
+    template = 'bookmarks/list.html'
+    return render(request, template, context)
+    

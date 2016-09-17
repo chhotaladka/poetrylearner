@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from activity.models import Action
+from activity.models import Action, VERBS
 
 def _create_query_tabs(request_path='/', q_tab=None, extra_get_queries=[]):
     '''
@@ -40,6 +40,7 @@ def __activity_list(request, show_all=False):
     
     query_tabs = []
     extra_get_queries = []
+    stats = []
     
     if show_all:
         q_tab = 'everything'
@@ -47,7 +48,28 @@ def __activity_list(request, show_all=False):
     else:
         q_tab = 'mylogs'
         obj_list = Action.objects.actor(request.user)
-
+    
+    # Create statistics
+    data = {}
+    data['name'] = 'unpublished'
+    data['value'] = obj_list.filter(verb=VERBS['UNPUBLISH']).count()
+    stats.append(data)
+    
+    data = {}
+    data['name'] = 'published'
+    data['value'] = obj_list.filter(verb=VERBS['PUBLISH']).count()
+    stats.append(data)
+    
+    data = {}
+    data['name'] = 'updated'
+    data['value'] = obj_list.filter(verb=VERBS['CHANGE']).count()
+    stats.append(data)
+    
+    data = {}
+    data['name'] = 'added'
+    data['value'] = obj_list.filter(verb=VERBS['ADDITION']).count()
+    stats.append(data)
+    
     query_tabs = _create_query_tabs(request.path, q_tab, extra_get_queries)
     
     # Pagination
@@ -63,7 +85,8 @@ def __activity_list(request, show_all=False):
         objs = paginator.page(paginator.num_pages)
 
     context = {'actions': objs,
-               'query_tabs': query_tabs,}
+               'query_tabs': query_tabs,
+               'stats': stats,}
     template = 'activity/list.html'
 
     return render(request, template, context)

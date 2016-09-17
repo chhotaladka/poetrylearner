@@ -118,17 +118,28 @@ class Action(models.Model):
     class Meta:
         ordering = ('-timestamp', )
 
-    def __str__(self):
+    def __str__(self): # on Python 3
         ctx = {
             'actor': self.actor,
             'verb': self.get_verb(),
             'target': self.target_object_repr,
             'timesince': self.timesince()
-        }#FIXME error
+        }
         if self.target_object_id:
             return '%(actor)s %(verb)s %(target)s %(timesince)s ago' % ctx
         return '%(actor)s %(verb)s %(timesince)s ago' % ctx
-
+    
+    def __unicode__(self): # on Python 2
+        ctx = {
+            'actor': self.actor,
+            'verb': self.get_verb(),
+            'target': self.target_object_repr,
+            'timesince': self.timesince()
+        }
+        if self.target_object_id:
+            return '%(actor)s %(verb)s %(target)s %(timesince)s ago' % ctx
+        return '%(actor)s %(verb)s %(timesince)s ago' % ctx
+    
     def is_addition(self):
         return self.verb == VERBS['ADDITION']
 

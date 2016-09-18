@@ -50,7 +50,23 @@ def check_packages():
             # Something else went wrong while trying to run `tesseract`
             print 'ERR: Something went wrong while trying to run "tesseract".'
             return False
-        
+    
+    # Check tesseract Language packs
+    print 'package check: tesseract language packs...'
+    try:
+        out = subprocess.check_output(["tesseract", "--list-langs"])
+        #print out
+    except:
+        # handle file not found error.
+        print 'ERR: "No language pack of tesseract found on this system.'
+        print '----->'
+        print '- Download training data from https://github.com/tesseract-ocr/tessdata'
+        print '- and copy the .traineddata file into the "tessdata" directory,' 
+        print '- probably /usr/local/share/tesseract-ocr/tessdata or /usr/local/share/tessdata.'
+        print '- Installation help: https://github.com/tesseract-ocr/tesseract/blob/master/INSTALL'
+        print '----->'
+        return False
+    
     # Check imagemagick convert
     print 'package check: imagemagick convert...'
     try:

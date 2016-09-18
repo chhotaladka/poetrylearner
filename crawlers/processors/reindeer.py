@@ -231,6 +231,8 @@ def process_articles(name=None, articles=None):
                 obj.valid = True
                 obj.save()
                 count_saved += 1
+            else:
+                return False
 
             # print stats
             if count_total % 100 == 0:

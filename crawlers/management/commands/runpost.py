@@ -43,7 +43,7 @@ class Command(BaseCommand):
             dest='thread',
             default=False,
             help='Number of threads to be created for processing.',
-        )                                
+        )
 
     def handle(self, *args, **options):
         
@@ -76,4 +76,4 @@ class Command(BaseCommand):
             elif process == 'kangaroo':
                 cmd_exit_kangaroo()
         else:
-            raise CommandError('-h or --help for help')       
+            raise CommandError('-h or --help for help')

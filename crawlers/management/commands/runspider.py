@@ -11,6 +11,7 @@ from crawlers.spiders.wiki import WikiBot
 from crawlers.spiders.secret.kangaroo import KangarooBot
 from crawlers.spiders.secret.umbrellabird import UmbrellabirdBot
 from crawlers.spiders.secret.reindeer import ReindeerBot
+from crawlers.spiders.secret.reindeer_taming import ReindeerTamingBot
 
 
 class Command(BaseCommand):
@@ -44,7 +45,10 @@ class Command(BaseCommand):
                     flag = True
                 elif run == "reindeer":
                     process.crawl(ReindeerBot)
-                    flag = True                    
+                    flag = True
+                elif run == "reindeerTm":
+                    process.crawl(ReindeerTamingBot)
+                    flag = True
                 else:
                     print ('ERROR: Command argument "%s" does not exist' % run)
                     

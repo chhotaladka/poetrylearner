@@ -118,7 +118,7 @@ class Person(Thing):
         
     additional_name = models.CharField(max_length=200,
                                null=True, blank=True,
-                               help_text=_('An additional name for a Person, can be used for a middle name.')
+                               help_text=_('A popular name or an additional name for the item.')
                             )
     
     affiliation = models.ManyToManyField(Organization,
@@ -147,7 +147,21 @@ class Person(Thing):
                               help_text=_('An image of the item.')
                             ) 
 
+    def popular_name(self):
+        if self.additional_name:
+            return self.additional_name
+        else:
+            return self.name
     
+    def full_name(self):
+        if self.additional_name:
+            return self.name + ' ('+ self.additional_name + ')'
+        else:
+            return self.name
+    
+    def title(self):
+        return self.full_name()
+        
     def get_image_url(self):
         '''
         Return image url of the item. If not exist, return None.
@@ -159,7 +173,7 @@ class Person(Thing):
 
     def meta_description(self):
         p = 'his' if self.gender == 'm' else 'her'
-        return self.name + ' and ' + p + ' poetry.'
+        return self.popular_name() + ' and ' + p + ' poetry.'
 
     def clean(self):
         print "DBG:: Model Person clean called"

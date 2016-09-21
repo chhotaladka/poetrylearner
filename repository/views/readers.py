@@ -143,10 +143,10 @@ def item(request, type, pk, slug, src=None):
         return redirect(obj)
 
     # Instantiate the Meta class
-    meta = Meta(title = obj.headline(), 
+    meta = Meta(title = obj.title(), 
                 description = obj.meta_description(), 
                 section= type, 
-                url = obj.get_absolute_url(),                
+                url = obj.get_absolute_url(),
                 author = obj.get_author(), 
                 date_time = obj.get_last_edit_time(),
                 object_type = 'article',
@@ -265,7 +265,7 @@ def list(request, type, src=None):
             q_string = '&creator=' + creator
             extra_get_queries.append(q_string)
             creator = int(creator)
-            result_title = get_object_or_404(Person, pk=creator).title() 
+            result_title = get_object_or_404(Person, pk=creator).full_name() 
             kwargs['creator'] = creator
 
         except (TypeError, ValueError):

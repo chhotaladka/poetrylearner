@@ -11,10 +11,10 @@
 			<div class="card__title tAc">
 				{% with person_img_url=person.get_image_url %}
 				{% if person_img_url %}
-				<div class="avatar lg border" style="background: url('{{ person_img_url }}') center / cover;">			
+				<div class="avatar md border" style="background: url('{{ person_img_url }}') center / cover;">			
 				</div>
 				{% else %}
-				<div class="avatar lg border">
+				<div class="avatar md border">
 					{% include "common/svg/person.html" %}
 				</div>
 				{% endif %}

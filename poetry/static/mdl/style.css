@@ -925,8 +925,8 @@ html, body {
 }
 .avatar.md,
 .avatar.md svg {
-	width: 90px;
-	height: 90px;
+	width: 110px;
+	height: 110px;
 }
 .avatar.user svg {
 	fill: #616161 !important;

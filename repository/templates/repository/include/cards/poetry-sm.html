@@ -13,7 +13,7 @@
 	<div class="details pT-16">
 		<div class="mB4 {% if item_type == 'person' %}hidden{%endif%}" itemprop="creator" itemscope itemtype="http://schema.org/Person">
 			<a title="View the poet" href="{{ poetry.creator.get_absolute_url }}" itemprop="url">
-				<span class="fullname fS14" itemprop="name">{{ poetry.creator.name }}</span>
+				<span class="fullname fS14" itemprop="name">{{ poetry.creator.popular_name }}</span>
 			</a>
 		</div>
 	</div>

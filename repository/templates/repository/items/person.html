@@ -11,7 +11,7 @@
 {% include "meta.html" with meta=meta only %}
 {% endblock %}
 
-{% block title %}{{ obj.name }} | {{ sitename }}{% endblock %}
+{% block title %}{{ obj.full_name }} | {{ sitename }}{% endblock %}
 
 {% block search-placeholder %}{{ item_type }}{% endblock %}
 {% block search-action %}/{% endblock %}
@@ -41,7 +41,7 @@
 			<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
 				<div class="section-cards">
 					<div class="section-title">
-						<h3 class="c-grey1"><a href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}">Poetry by {{ obj.title }}</a></h3>	
+						<h3 class="c-grey1"><a href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}">Poetry by {{ obj.popular_name }}</a></h3>	
 					</div>
 					{% get_recent_poetries 5 by obj as poetries %}
 					{% include "repository/include/list/poetry.html" with items=poetries %}

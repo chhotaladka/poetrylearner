@@ -9,14 +9,14 @@
 
 {% block breadcrumbs %}
 <div class="pT-8 pB-8">
-	<div class="_layout mW-512">					
+	<div class="_layout mW-512">
 		<div class="breadcrumbs wFull">
 			<a href="{% url 'repository:home' %}">Repository</a>
 			<span> / </span>
 			<a href="{% url 'repository:add' %}">add</a>
-			<span> / </span>			 	
-		</div>					
-	</div>	
+			<span> / </span>
+		</div>
+	</div>
 </div>
 {% endblock %}
 				
@@ -28,95 +28,95 @@
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='person' %}?cancel={{request.path}}" class="member">						
+					<a href="{% url 'repository:add-item' type='person' %}?cancel={{request.path}}" class="member">
 						<i class="material-icons dp48">person</i>
 						<div class="caption">
 							Add Person
-						</div>					
-					</a>		
+						</div>
+					</a>
 				</div>
 			</div>
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='poetry' %}?cancel={{request.path}}" class="member">						
+					<a href="{% url 'repository:add-item' type='poetry' %}?cancel={{request.path}}" class="member">
 						<i class="material-icons dp48">local_library</i>
 						<div class="caption">
 							Add Poetry
-						</div>					
-					</a>		
-				</div>																			
-			</div>			
+						</div>
+					</a>
+				</div>
+			</div>
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='book' %}?cancel={{request.path}}" class="member">						
+					<a href="{% url 'repository:add-item' type='book' %}?cancel={{request.path}}" class="member">
 						<i class="material-icons dp48">book</i>
 						<div class="caption">
 							Add Book
-						</div>					
-					</a>		
-				</div>					
+						</div>
+					</a>
+				</div>
 			</div>
 {% if request.user|has_group:'administrator' %}{% comment %} Not in use {% endcomment %}
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='snippet' %}?cancel={{request.path}}" class="member">						
+					<a href="{% url 'repository:add-item' type='snippet' %}?cancel={{request.path}}" class="member">
 						<i class="material-icons dp48">style</i>
 						<div class="caption">
 							Add Snippet
-						</div>					
-					</a>		
-				</div>						
+						</div>
+					</a>
+				</div>
 			</div>
-						
-			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">	
+			
+			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='organization' %}?cancel={{request.path}}" class="member">						
+					<a href="{% url 'repository:add-item' type='organization' %}?cancel={{request.path}}" class="member">
 						<i class="material-icons dp48">account_balance</i>
 						<div class="caption">
 							Add Organization
-						</div>					
-					</a>		
-				</div>																		
+						</div>
+					</a>
+				</div>
 			</div>
 			
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='event' %}?cancel={{request.path}}" class="member">						
+					<a href="{% url 'repository:add-item' type='event' %}?cancel={{request.path}}" class="member">
 						<i class="material-icons dp48">event</i>
 						<div class="caption">
 							Add Event
-						</div>					
-					</a>		
-				</div>								
+						</div>
+					</a>
+				</div>
 			</div>
 			
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='product' %}?cancel={{request.path}}" class="member">						
+					<a href="{% url 'repository:add-item' type='product' %}?cancel={{request.path}}" class="member">
 						<i class="material-icons dp48">shopping_cart</i>
 						<div class="caption">
 							Add Product
-						</div>					
-					</a>		
-				</div>																						
-			</div>	
+						</div>
+					</a>
+				</div>
+			</div>
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='place' %}?cancel={{request.path}}" class="member">						
+					<a href="{% url 'repository:add-item' type='place' %}?cancel={{request.path}}" class="member">
 						<i class="material-icons dp48">place</i>
 						<div class="caption">
 							Add Place
-						</div>					
-					</a>		
-				</div>																		
-			</div>							
+						</div>
+					</a>
+				</div>
+			</div>
 
 		</div>
 {% endif %}
-	</div>	
+	</div>
 </section>
-		
+
 {% endblock %}

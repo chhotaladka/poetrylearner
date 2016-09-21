@@ -2,18 +2,15 @@
 	Info:       Breadcrumb for an item
 	Requires:   `obj` context of an item, and 'item_type' context.
 {% endcomment %}
-{% load common_tags %}
-{% if request.user|has_group:'administrator,editor' %}
 <div class="pT-8 pB-8">
-	<div class="_layout mW-512">					
+	<div class="_layout mW-512">
 		<div class="breadcrumbs wFull">
 			<a href="{% url 'repository:home' %}">Repository</a>
 			<span> / </span>
 			<a href="{% url 'repository:view' %}">data</a>
 			<span> / </span>
 			<a href="{% url 'repository:list' type=item_type %}">{{ item_type }}</a>
-			<span> / </span>			 	
-		</div>					
-	</div>	
+			<span> / </span>
+		</div>
+	</div>
 </div>
-{% endif %}

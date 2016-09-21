@@ -4,18 +4,18 @@
 
 {% block main %}
 <div class="pT-8 pB-48">
-	<div class="_layout layout-L mdl-grid">			
+	<div class="_layout layout-L mdl-grid">
 		<section class="__c mdl-cell mdl-cell--12-col">
 			<div class="err-card">
 				<h1>403</h1>
 				<h2>Permission Denied</h2>
 				<p>You don't have permission of requested page. 
-				If you think this is a problem, contact us at support@{{ site }}
+				If you think this is a problem, contact us <a class="h-link" id="feedbackBtn-err403" data-url="{% url 'feedback:add' %}" href="#">here</a>.
 				</p>
 
 			</div>
-		</section>			
-	</div>		
+		</section>
+	</div>
 </div>
 
 {% endblock %}

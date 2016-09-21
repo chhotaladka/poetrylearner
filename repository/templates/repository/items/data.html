@@ -10,14 +10,14 @@
 
 {% block breadcrumbs %}
 <div class="pT-8 pB-8">
-	<div class="_layout mW-512">					
+	<div class="_layout mW-512">
 		<div class="breadcrumbs wFull">
 			<a href="{% url 'repository:home' %}">Repository</a>
 			<span> / </span>
 			<a href="{% url 'repository:view' %}">data</a>
-			<span> / </span>			 	
-		</div>					
-	</div>	
+			<span> / </span>
+		</div>
+	</div>
 </div>
 {% endblock %}
 
@@ -29,103 +29,103 @@
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:list' type='person' %}" class="member">						
+					<a href="{% url 'repository:list' type='person' %}" class="member">
 						<i class="material-icons dp48">person</i>
 						<div class="caption">
 							Persons
 						</div>
-						<div class="light-txt">{{ count.person|intcomma }}</div>					
-					</a>		
+						<div class="light-txt">{{ count.person|intcomma }}</div>
+					</a>
 				</div>
 			</div>
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:list' type='poetry' %}" class="member">						
+					<a href="{% url 'repository:list' type='poetry' %}" class="member">
 						<i class="material-icons dp48">local_library</i>
 						<div class="caption">
 							Poetries
-						</div>	
-						<div class="light-txt">{{ count.poetry|intcomma }}</div>				
-					</a>		
-				</div>																			
-			</div>			
+						</div>
+						<div class="light-txt">{{ count.poetry|intcomma }}</div>
+					</a>
+				</div>
+			</div>
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:list' type='book' %}" class="member">						
+					<a href="{% url 'repository:list' type='book' %}" class="member">
 						<i class="material-icons dp48">book</i>
 						<div class="caption">
 							Books
 						</div>	
-						<div>{{ count.book|intcomma }}</div>				
-					</a>		
-				</div>					
+						<div>{{ count.book|intcomma }}</div>
+					</a>
+				</div>
 			</div>
 {% if request.user|has_group:'administrator' %}{% comment %} Not in use {% endcomment %}
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:list' type='snippet' %}" class="member">						
+					<a href="{% url 'repository:list' type='snippet' %}" class="member">
 						<i class="material-icons dp48">style</i>
 						<div class="caption">
 							Snippets
-						</div>	
-						<div>{{ count.snippet|intcomma }}</div>				
-					</a>		
-				</div>						
+						</div>
+						<div>{{ count.snippet|intcomma }}</div>
+					</a>
+				</div>
 			</div>
-						
+			
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">	
 				<div class="links-card">
-					<a href="{% url 'repository:list' type='organization' %}" class="member">						
+					<a href="{% url 'repository:list' type='organization' %}" class="member">
 						<i class="material-icons dp48">account_balance</i>
 						<div class="caption">
 							Organizations
-						</div>	
-						<div>{{ count.organization|intcomma }}</div>				
-					</a>		
-				</div>																		
+						</div>
+						<div>{{ count.organization|intcomma }}</div>
+					</a>
+				</div>
 			</div>
 			
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:list' type='event' %}" class="member">						
+					<a href="{% url 'repository:list' type='event' %}" class="member">
 						<i class="material-icons dp48">event</i>
 						<div class="caption">
 							Events
-						</div>	
-						<div>{{ count.event|intcomma }}</div>				
-					</a>		
-				</div>								
+						</div>
+						<div>{{ count.event|intcomma }}</div>
+					</a>
+				</div>
 			</div>
 			
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:list' type='product' %}" class="member">						
+					<a href="{% url 'repository:list' type='product' %}" class="member">
 						<i class="material-icons dp48">shopping_cart</i>
 						<div class="caption">
 							Products
-						</div>	
-						<div>{{ count.product|intcomma }}</div>				
-					</a>		
-				</div>																						
-			</div>	
+						</div>
+						<div>{{ count.product|intcomma }}</div>
+					</a>
+				</div>
+			</div>
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:list' type='place' %}" class="member">						
+					<a href="{% url 'repository:list' type='place' %}" class="member">
 						<i class="material-icons dp48">place</i>
 						<div class="caption">
 							Places
-						</div>	
-						<div>{{ count.place|intcomma }}</div>				
-					</a>		
-				</div>																		
-			</div>							
+						</div>
+						<div>{{ count.place|intcomma }}</div>
+					</a>
+				</div>
+			</div>
 
 		</div>
 {% endif %}
-	</div>	
+	</div>
 </section>
-		
+
 {% endblock %}

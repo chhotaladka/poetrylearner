@@ -15,12 +15,12 @@
 				<div class="section-title">
 					<h3 class="c-grey1">Poetry to review</h3>
 				</div>
-				{% get_poetry_unpub_rand 5 as poetries %}
+				{% get_poetry_unpub_rand 10 as poetries %}
 				{% else %}
 				<div class="section-title">
 					<h3 class="c-grey1">Poetry for you</h3>
 				</div>
-				{% get_poetry_pub_rand 5 as poetries %}
+				{% get_poetry_pub_rand 10 as poetries %}
 				{% endif %}
 				{% include "repository/include/list/poetry.html" with items=poetries %}
 				<div class="mdl-card__actions">

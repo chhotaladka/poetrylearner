@@ -164,4 +164,4 @@ class Poetry(CreativeWork):
         return truncatelines(self.body, 4)
 
     def meta_description(self):
-        return self.name + ', a poetry by ' + self.creator.name
+        return truncatelines(self.body, 4) + '... a poetry by ' + self.creator.name

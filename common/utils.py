@@ -57,7 +57,7 @@ def truncatelines(str, limit=4):
     
         # Cut the string
         str = str[:limit]
-        str = '\n'.join(str) + '...'
+        str = '\n'.join(str)
     except:
         print ("Error: Unexpected error:", sys.exc_info()[0])
         for frame in traceback.extract_tb(sys.exc_info()[2]):
@@ -66,7 +66,6 @@ def truncatelines(str, limit=4):
 
     # Join the words and return
     return str
-
 
 def html_to_plain_text(str):
     """

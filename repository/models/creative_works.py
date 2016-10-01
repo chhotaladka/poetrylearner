@@ -147,7 +147,7 @@ class Poetry(CreativeWork):
         
     class Meta:
         verbose_name = _("Poetry")
-        verbose_name_plural = _("Poetries")  
+        verbose_name_plural = _("Poetry")
 
     def get_language(self):
         '''

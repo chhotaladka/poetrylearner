@@ -8,16 +8,11 @@
 <div id="priSect" class="pT-8 pB-16">
 	<div class="_layout layout-L mdl-grid">
 		<section class="__c mdl-cell mdl-cell--12-col pA-0">
-			<!--<div class="bannerBack" style="background: url('/static/img/bbb.jpg') center / cover;"></div>-->
 			<div class="banner">
 				{% if poetry %}
 				<div class="wide-card tAc wFull appear">
-					{% comment %}   Include meta panel 
-					{% if request.user|has_group:"administrator,editor" %}
-					{% include "repository/include/misc/meta-panel2.html" with item=poetry %}
-					{% endif %}		{% endcomment %}
 					<div class="content p-16">
-						<div lang="{{ poetry.language }}" class="poetry-stanza fS18">{{ poetry.body }}</div>
+						<div lang="{{ poetry.language }}" class="poetry-stanza {{ poetry.language }} fS18">{{ poetry.body }}</div>
 					</div>
 					<div class="details tAc">
 						<div class="mB4">

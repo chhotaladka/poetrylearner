@@ -25,6 +25,15 @@ html, body {
   font-weight: 400;
   src: local('Open Sans'), local('OpenSans'), url(//fonts.gstatic.com/s/opensans/v13/cJZKeOuBrn4kERxqtaUH3VtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
 }
+@font-face {
+  font-family: "Noto Sans script=devanagari rev=2";
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/notosans/v6/5pCv5Yz4eMu9gmvX8nNhfVtXRa8TVwTICgirnJhmVJw.woff2") format("woff2");
+}
+.hi {
+	font-family: 'Noto Sans script=devanagari rev=2';
+}
 
 ::-moz-selection {
   background: rgba(75, 198, 223, 0.4) none repeat scroll 0% 0%;
@@ -2074,6 +2083,9 @@ right: 30px;
 	white-space: nowrap;
 	color: #212121 !important;
 	outline: none;
+	font-size: 24px;
+	font-family: 'Satisfy', cursive;
+	text-rendering: optimizelegibility;
 }
 .logo a,
 .site-name a {

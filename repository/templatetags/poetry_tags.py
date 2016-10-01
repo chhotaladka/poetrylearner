@@ -103,7 +103,7 @@ class RecentPoetryNode(Node):
             
             if self.creator:
                 creator = self.creator.resolve(context)
-                q_objects &= Q(creator__id=creator.id)
+                q_objects &= Q(creator_id=creator.id)
             
             if self.language:
                 q_objects &= Q(language=self.language)
@@ -286,7 +286,7 @@ class PoetryCountNode(Node):
         try:                        
             if self.creator:
                 creator = self.creator.resolve(context)
-                q_objects &= Q(creator__id=creator.id)
+                q_objects &= Q(creator_id=creator.id)
             
             elif self.language:
                 q_objects &= Q(language=self.language)

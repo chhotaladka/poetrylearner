@@ -264,10 +264,10 @@ class CreativeWorkManager(ThingManager):
         q_objects = Q()
         
         if 'creator' in kwargs:
-            q_objects &= Q(creator__id=kwargs['creator'])
+            q_objects &= Q(creator_id=kwargs['creator'])
         if 'publisher' in kwargs:
             print publisher
-            q_objects &= Q(publisher__id=kwargs['publisher'])
+            q_objects &= Q(publisher_id=kwargs['publisher'])
             
         if 'published' in kwargs:
             if kwargs['published'] is True:

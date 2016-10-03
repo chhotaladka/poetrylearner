@@ -320,31 +320,27 @@ html, body {
 	left: 0;
 	z-index: -1;
 }
-.banner {
-	padding-top: calc(5%);
-	border-radius: 8px;
-}
 .banner h1 {
-    font-family: "Open Sans",arial;
-    color: #555;
-    font-size: 32px;
-    font-weight: 300;
-    margin-top: 0px;
-    margin-bottom: 20px;
+	font-family: "Open Sans",arial;
+	color: #555;
+	font-size: 32px;
+	font-weight: 300;
+	margin-top: 0px;
+	margin-bottom: 20px;
 }
 .banner h2 {
-    font-family: "Open Sans",arial;
-    color: #444;
-    font-size: 18px;
-    font-weight: 400;
-    margin-bottom: 20px;
+	font-family: "Open Sans",arial;
+	color: #444;
+	font-size: 18px;
+	font-weight: 400;
+	margin-bottom: 20px;
 }
 .login-card,
 .notice-card {
 	display: flex;
 	flex-direction: column;
 	min-height: 200px;
-    padding: 40px;
+	padding: 40px;
 	margin: 1px auto;	
 	border-radius: 2px;
 	box-sizing: border-box;
@@ -377,7 +373,7 @@ html, body {
 	background-color: rgba(255, 255, 255, 0.95);
 }
 .login-card.transp {
-	background-color: rgba(255, 255, 255, 0.8);
+	background-color: transparent;
 }
 .login-btn {
 	background-color: #4285F4 !important;

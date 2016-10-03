@@ -10,32 +10,30 @@
 {% block messages %}
 {% include "common/include/message-panel.html" with messages=messages only %}
 {% endblock %}
-<section class="centered">
+<div class="centered">
 	<div class="head__banner small">
 		<div class="mdl-layout-title logo site-name">
-	    	<a href="/">poetry learner</a>
+			<a href="/">poetry learner</a>
 		</div>
 	</div>
-</section>
+</div>
 
-<div id="priSect" class="pT-8 pB-16">
+<div class="pT-48 pB-16">
 	<div class="_layout layout-L mdl-grid">
-		<section class="__c mdl-cell mdl-cell--12-col pA-0">
+		<div class="__c mdl-cell mdl-cell--12-col pA-0">
 			<div class="banner">
 			{% block main %}{% endblock %}
 			</div>
-
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer__left-section">
 					<ul class="mdl-mini-footer__link-list">
-				    	<li><a href="#">About</a></li>
-				    	<li><a href="#">Privacy & Terms</a></li>
-				    	<li><a href="#">Help</a></li>
-				    </ul>
+						<li><a href="#">About</a></li>
+						<li><a href="#">Privacy & Terms</a></li>
+						<li><a href="#">Help</a></li>
+					</ul>
 				</div>
 			</footer>
-
-		</section>
+		</div>
 	</div>
 </div>
 {% endblock %}

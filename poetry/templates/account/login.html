@@ -6,15 +6,15 @@
 
 {% block main %}
 {% comment %}<div class="banner" style="background: url('{% static "img/ddd.jpg" %}') top / cover;">{% endcomment %}
-	<div class="login-card transp bS-1 wFull">						
-	{% get_providers as socialaccount_providers %}					
+	<div class="login-card transp wFull">
+	{% get_providers as socialaccount_providers %}
 	{% if socialaccount_providers %}
 		<h1 class="tAc">Log in with</h1>
 		{% include "socialaccount/snippets/provider_list.html" with process="login" %}
-		{% include "socialaccount/snippets/login_extra.html" %}				
+		{% include "socialaccount/snippets/login_extra.html" %}
 		<div class="fS14 tAc pT-16">
 			<span>or with an account</span>
-		</div>						
+		</div>
 	{% else %}
 		<h1 class="tAc">Log in</h1>
 	{% endif %}
@@ -27,36 +27,36 @@
 						<input id="id_login" autofocus="autofocus" maxlength="30" name="login" placeholder="Username" type="text" value="{{ form.login.value|default_if_none:'' }}"/>
 					</label>
 				{% if form.login.errors %}
-				    {% for error in form.login.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+					{% for error in form.login.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
 				{% endif %}
-				</div>	
+				</div>
 				<div id="div_id_password" class="form-element">
 					<label for="id_password">
 						<input id="id_password" name="password" placeholder="Password" type="password"/>
 					</label>
 				{% if form.password.errors %}
-				    {% for error in form.password.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
-				{% endif %}	
+					{% for error in form.password.errors %}<span class="errormsg">{{ error|escape }}</span>{% endfor %}
+				{% endif %}
 				{% for error in form.non_field_errors %}
 					<span class="errormsg">{{ error }}</span>
-				{% endfor %}				
-				</div>		
+				{% endfor %}
+				</div>
 				<div id="div_id_remember" class="form-element lH-1">
-					<label for="id_remember">				
+					<label for="id_remember">
 						<input id="id_remember" name="remember" type="checkbox" />
 						<span>{{form.remember.label}}</span>
 					</label>
 				</div>
-			  {% if redirect_field_value %}
-			  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-			  {% endif %}		
+				{% if redirect_field_value %}
+				<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+				{% endif %}
 			</fieldset>
 			<div class="">
 				<button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Log In</button> 
-			</div> 
-			{% comment %}  
-		  	<a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-		  	{% endcomment %}
+			</div>
+			{% comment %}
+			<a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+			{% endcomment %}
 		</form>
 
 	</div>

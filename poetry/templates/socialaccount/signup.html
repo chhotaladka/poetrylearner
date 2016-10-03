@@ -3,8 +3,8 @@
 {% block title %}Sign up for {{ sitename }}{% endblock %}
 
 {% block main %}
-<div class="login-card transp bS-1 tAc wFull">
-    <h1>Sign Up</h1>	
+<div class="login-card transp tAc wFull">
+    <h1>Sign Up</h1>
 	<div class="info-txt">
 	{% with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
 	{{site_name}}. As a final step, please complete the following form:{% endwith %}
@@ -12,7 +12,7 @@
 	
 	<form class="signup a-mdl-form" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
 		{% csrf_token %}
-		<fieldset>				
+		<fieldset>
 			<div id="div_id_username" class="form-element">
 				<label for="id_username">
 					<input autofocus="autofocus" id="id_username" name="username" placeholder="Username" type="text" value="{{ form.username.value|default_if_none:'' }}"/>
@@ -20,7 +20,7 @@
 			{% if form.username.errors %}
 			    {% for error in form.username.errors %}<span class="errormsg tAl">{{ error|escape }}</span>{% endfor %}
 			{% endif %}
-			</div>		
+			</div>
 			<div id="div_id_email" class="form-element">
 				<label for="id_email">
 					<input id="id_email" name="email" placeholder="E-mail address" type="email" value="{{ form.email.value|default_if_none:'' }}"/>

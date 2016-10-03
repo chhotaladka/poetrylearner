@@ -1,6 +1,17 @@
-$(document).ready(function(){
+/* ========================================================================
+ * name: shared.js
+ * info: shared resources and functions
+ * path: /poetry/static/js/shared.js
+ * dependencies: jquery-2.1.4
+ * ======================================================================== */
+
++function ($) {
+	'use strict';
 	
-	var getCookie = function(name){
+	// GLOBAL PUBLIC DEFINITIONS
+	// =========================
+	
+	$.getCookie = function(name){
 		var cookieValue = null;
 		if (document.cookie && document.cookie != '') {
 			var cookies = document.cookie.split(';');
@@ -16,79 +27,156 @@ $(document).ready(function(){
 		return cookieValue;
 	};
 	
-	var csrfSafeMethod = function(method) {
+	$.csrfSafeMethod = function(method) {
 		// these HTTP methods do not require CSRF protection
 		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 	};
 	
-	/** Create or remove a bookmark of an item **/
-	var ActionUpdateBookmark = function(e) {
-		e.defaultPrevented;
-		e.stopPropagation();
-		console.log("updateBookmark: In");
+}(jQuery);
+
+/* ========================================================================
+ * name: bookmark.js
+ * info: To create and remove the bookmarks
+ * path: /bookmarks/static/bookmarks/js/bookmarks.js
+ * dependencies: /poetry/static/js/shared.js
+ * ======================================================================== */
+
++function ($) {
+	'use strict';
+	
+	
+	// BOOKMARK PUBLIC CLASS DEFINITION
+	// ================================
+	
+	//var dismiss = '[data-dismiss="alert"]'
+	var selector = '.bookmark-btn'
+	
+	var Bookmark = function (element, options) {
+		this.itemtype       = null
+		this.id             = null
+		this.bookmarkId     = null
+		this.requestUrl     = null
+		this.element       = $(element)
 		
-		id = parseInt($(this).data('id'));
-		contentType = parseInt($(this).data('ct'));
-		bookmarkId = parseInt($(this).attr('data-bid'));
-		console.log(contentType, id, bookmarkId);
+	}
+	
+	Bookmark.DEFAULTS = {
+		loadingText: 'loading...',
+	};
+	
+	Bookmark.prototype.getDefaults = function () {
+		return Bookmark.DEFAULTS
+	};
+	
+	Bookmark.prototype.responseSuccess = function(data) {
+		//console.log("Bookmark: response_success: " + data.status);
 		
-		if (bookmarkId != 0) {
-			postUrl = window.location.origin + '/bookmark/remove/';
+		if (data.status == '200') {
+			if (data.id != 0) {
+				$(this).addClass("true");
+				$(this).attr('data-bid', data.id);
+				$(this).prop('title', 'Remove from my Bookmarks');
+			} else {
+				$(this).removeClass("true");
+				$(this).attr('data-bid', data.id);
+				$(this).prop('title', 'Send to my Bookmarks to read later');
+			}
 		} else {
-			postUrl = window.location.origin + '/bookmark/add/';
+			$(this).prop('title', 'Try again');
+		}
+	};
+	
+	Bookmark.prototype.responseError = function (xhRequest, ErrorText, thrownError) {
+		console.log("Bookmark: response_error:");
+		console.log(xhRequest);
+		console.log('Bookmark: ErrorText: ' + ErrorText + "\n");
+		console.log('Bookmark: thrownError: ' + thrownError + "\n");
+	};
+	
+	/* Create or remove the bookmark of an item */
+	Bookmark.prototype.update = function() {
+		//console.log("Bookmark: update: In");
+		//console.log(this)
+		var $this    = this.element
+		//console.log($this)
+		this.id = parseInt($this.data('id'));
+		this.itemtype = parseInt($this.data('ct'));
+		this.bookmarkId = parseInt($this.attr('data-bid'));
+		//console.log(this.itemtype, this.id, this.bookmarkId);
+		
+		if (this.bookmarkId != 0) {
+			this.requestUrl = window.location.origin + '/bookmark/remove/';
+		} else {
+			this.requestUrl = window.location.origin + '/bookmark/add/';
 		}
 		
 		var fd = new FormData()
-		fd.append('content_type', contentType);
-		fd.append('object_id', id);
+		fd.append('content_type', this.itemtype);
+		fd.append('object_id', this.id);
 		
 		$.ajaxSetup({
 			beforeSend: function(xhr, settings) {
-				if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-					xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+				if (!$.csrfSafeMethod(settings.type) && !this.crossDomain) {
+					xhr.setRequestHeader("X-CSRFToken", $.getCookie('csrftoken'));
 				}
 			}
 		});
 		
 		$.ajax({
 			cache: false,
-			url : postUrl,
+			url : this.requestUrl,
 			type: "POST",
+			data : fd,
 			dataType : "json",
 			contentType: false,
 			processData: false,
-			data : fd,
-			context : this,
-			success : function(data) {
-				console.log("updateBookmark: success: "+data.status);
-				if (data.status == '200') {
-					if (data.id != 0) {
-						$(this).addClass("true");
-						$(this).attr('data-bid', data.id);
-						$(this).prop('title', "Remove from my Bookmarks");
-					} else {
-						$(this).removeClass("true");
-						$(this).attr('data-bid', data.id);
-						$(this).prop('title', "Send to my Bookmarks to read later");
-					}
-				} else {
-					$(this).prop('title', "Try again");
-				}
-			},
-			error : function (xhRequest, ErrorText, thrownError) {
-				console.log("updateBookmark: error:");
-				console.log(xhRequest);
-				console.log('ErrorText: ' + ErrorText + "\n");
-				console.log('thrownError: ' + thrownError + "\n");
-			}
+			context : $this,
+			
+			success : this.responseSuccess,
+			error : this.responseError,
 		});
 	};
 	
-	/** Bind methods to click on bookmark buttons and enable the buttons **/
-	var bindActionUpdateBookmark = function() {
-		$('.bookmark-btn').on('click', ActionUpdateBookmark);
+	
+	// BOOKMARK PLUGIN DEFINITION
+	// ==========================
+	
+	function Plugin(option) {
+		return this.each(function () {
+			var $this = $(this)
+			var data  = $this.data('bs.bookmark')
+			
+			if (!data) $this.data('bs.bookmark', (data = new Bookmark(this)))
+			//if (typeof option == 'string') data[option].call($this)//It will pass this.element, which we dont need
+			if (typeof option == 'string') data[option]()
+		})
+	}
+	
+	var old = $.fn.bookmark
+	
+	$.fn.bookmark             = Plugin
+	$.fn.bookmark.Constructor = Bookmark
+	
+	
+	// BOOKMARK NO CONFLICT
+	// ====================
+	
+	$.fn.bookmark.noConflict = function () {
+		$.fn.bookmark = old
+		return this
+	}
+	
+	
+	// APPLY TO STANDARD BOOKMARK ELEMENTS
+	// ===================================
+	var clickHandler = function (e) {
+		//console.log("bookmark: clickHandler: In");
+		e.preventDefault();
+		Plugin.call($(this), 'update');
 	};
 	
-	bindActionUpdateBookmark();
+	//$(document).on('click.bs.bookmark.data-api', ".bookmark-btn", Bookmark.prototype.update);
+	$(document).on('click.bs.bookmark.data-api', ".bookmark-btn", clickHandler);
 	
-});
+	
+}(jQuery);

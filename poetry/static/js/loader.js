@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	/*** FUNCTION DEFINITIONS ***/
+	/*###### COMMON FUNCTIONS ######*/
 	
 	var getCookie = function(name){
 		var cookieValue = null;
@@ -23,15 +23,16 @@ $(document).ready(function(){
 		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 	};
 	
-	/** Load related Poetry **/
-	var loadRelatedPoetry = function(e) {
-		console.log("loadRelatedPoetry: In");
+	
+	/*###### REPOSITORY/POETRY RELATED FUNCTIONS ######*/
+	
+	/** Action: Load related Poetry **/
+	var actionLoadRelatedPoetry = function(id, url) {
+		console.log("actionLoadRelatedPoetry: In");
 		
-		id = parseInt($("#id-related-poetry").data('id'));
-		url = $("#id-related-poetry").data('url');
-		
-		requestUrl = window.location.origin + url;
-		console.log(id, requestUrl);
+		item_id = parseInt(id);
+		requestUrl = window.location.origin + url + "?id=" + item_id;
+		console.log(requestUrl);
 		
 		$.ajaxSetup({
 			beforeSend: function(xhr, settings) {
@@ -50,7 +51,7 @@ $(document).ready(function(){
 			processData: false,
 			
 			success: function(data) {
-				console.log("loadRelatedPoetry: success!!");
+				console.log("actionLoadRelatedPoetry: success!!");
 				console.log(data.status);
 				
 				$("#id-related-poetry").children().remove();
@@ -60,7 +61,7 @@ $(document).ready(function(){
 					componentHandler.upgradeDom();
 					
 					// Bind actions on Poetry
-					bindActionClickPoetry();
+					//bindActionClickPoetry();
 					
 				} else {
 					var html = $.parseHTML('<i class="material-icons mdl-color-text--green-600">highlight_off</i>')
@@ -70,6 +71,7 @@ $(document).ready(function(){
 			},
 			
 			error: function( xhr, status, errorThrown ) {
+				console.log("actionLoadRelatedPoetry: error!!");
 				console.log( "Error: " + errorThrown );
 				console.log( "Status: " + status );
 				console.dir( xhr );
@@ -82,7 +84,8 @@ $(document).ready(function(){
 		});
 	};
 	
-	/** Action:click on Poetry list cards **/
+	
+	/** Action: click on Poetry list cards **/
 	var actionClickPoetry = function(e) {
 		e.stopPropagation();
 		if($(e.target).is('a') || $(e.target.parentNode).is('a')){
@@ -92,15 +95,33 @@ $(document).ready(function(){
 		window.document.location = $(this).data("href");
 	};
 	
-	/** Bind Actions to Poetry list **/
-	var bindActionClickPoetry = function(e) {
+	
+	/** Bind Action: to load related poetry list **/
+	var bindActionLoadRelatedPoetry = function() {
+		// Call action if element #id-related-poetry present with correct attributes
+		if( $("#id-related-poetry").length ) {
+			// Check data attributes of the element
+			var id = $("#id-related-poetry").attr("data-id");
+			var url = $("#id-related-poetry").attr("data-url");
+			if ( (typeof id !== typeof undefined && id !== false) &&
+				(typeof url !== typeof undefined && url !== false) ) {
+				// Call action method
+				actionLoadRelatedPoetry(id, url);
+			}
+		}
+	};
+	
+	
+	/** Bind Action: to click on Poetry list cards **/
+	var bindActionClickPoetry = function() {
 		var nodes = $('.poetry-card.small');
 		nodes.on('click', actionClickPoetry);
 	};
 	
-	/*** END OF FUNCTION DEFINITIONS ***/
+	
+	/*###### CALLING  ######*/
 	
 	/* Load related Poetry */
-	loadRelatedPoetry();
+	bindActionLoadRelatedPoetry();
 	
 });

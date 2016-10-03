@@ -1524,6 +1524,9 @@ p.poetry-stanza,
 	background: transparent;
 	color: #333;
 }
+.search-btn svg {
+	fill: #919191 !important;
+}
 .search-btn.cW svg {
 	fill: white !important;
 }
@@ -1594,7 +1597,6 @@ p.poetry-stanza,
 	box-shadow: 0px 1px 2px #CCC inset;*/
 }
 .search-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-	color: white;
 	font-family: "Open sans","Helvetica","Arial",sans-serif;
 	font-weight: 300;
 	font-size: 22px;
@@ -1603,7 +1605,6 @@ p.poetry-stanza,
 	text-overflow: ellipsis !important;
 }
 .search-input::-moz-placeholder { /* Firefox 19+ */
-	color: white;
 	font-family: "Open sans","Helvetica","Arial",sans-serif;
 	font-weight: 300;
 	font-size: 22px;
@@ -1611,7 +1612,6 @@ p.poetry-stanza,
 	text-overflow: ellipsis !important;
 }
 .search-input:-ms-input-placeholder { /* IE 10+ */
-	color: white;
 	font-family: "Open sans","Helvetica","Arial",sans-serif;
 	font-weight: 300;
 	font-size: 22px;
@@ -1620,13 +1620,19 @@ p.poetry-stanza,
 	text-overflow: ellipsis !important;
 }
 .search-input:-moz-placeholder { /* Firefox 18- */
-	color: white;
 	font-family: "Open sans","Helvetica","Arial",sans-serif;
 	font-weight: 300;
 	font-size: 22px;
 	opacity: 0.8;
 	text-overflow: ellipsis !important;
 }
+.search-input.light::-webkit-input-placeholder,
+.search-input.light::-moz-placeholder,
+.search-input.light:-ms-input-placeholder,
+.search-input.light:-moz-placeholder {
+	color: white;
+}
+
 .search-input:focus::-webkit-input-placeholder,
 .search-input:focus::-moz-placeholder,
 .search-input:focus:-ms-input-placeholder,

@@ -8,23 +8,3 @@
 {% include "repository/include/cards/poetry-sm.html" with poetry=item %}
 </div>
 {% endfor %}
-{% comment %} Scripts are not required in case of no items {% endcomment %}
-{% if items %}
-<script>
-{% comment %}
-jquery not required. Using alternate of '$(document).ready()'
-{% endcomment %}
-document.addEventListener('DOMContentLoaded', function () {
-	var poetryClicked = function(e){
-		if( $(e.target).is('a') || $(e.target.parentNode).is('a') 
-		|| $(e.target).is('button') ){
-			{% comment %} clicked on `a` tag. {% endcomment %}
-			return;
-		}
-		window.document.location = $(this).data("href");
-	};
-	var nodes = $('.poetry-card.small');
-	nodes.on('click', poetryClicked);
-});
-</script>
-{% endif %}

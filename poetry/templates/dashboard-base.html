@@ -142,7 +142,9 @@
 		{% include "feedback/modal.html" %}
 	{% endblock %}
 	{% block scripts %}{% comment %} extra scripts {% endcomment %}
-	{% include "repository/include/misc/bookmark-button-js.html" %}
+	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
+	<script type="text/javascript" src="{% static "bookmarks/js/bookmark.js" %}"></script>
+	<script type="text/javascript" src="{% static "repository/js/repository.js" %}"></script>
 	{% endblock %}
 	</body>
 </html>

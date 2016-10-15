@@ -43,7 +43,7 @@
 					<div class="section-title">
 						<h3 class="c-grey1"><a href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}">Poetry by {{ obj.popular_name }}</a></h3>	
 					</div>
-					{% get_recent_poetries 5 by obj as poetries %}
+					{% get_recent_poetries 10 by obj as poetries %}
 					{% include "repository/include/list/poetry.html" with items=poetries %}
 					<div class="mdl-card__actions">
 					{% if poetries %}

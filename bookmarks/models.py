@@ -63,7 +63,7 @@ class BookmarkManager(models.Manager):
     
     def remove_bookmark(self, obj, user):
         '''
-        Remove a user's bookmark on a given object, if it exist.         
+        Remove a user's bookmark on a given object, if it exist.
         '''
         content_type = ContentType.objects.get_for_model(obj)
         # First, try to fetch the instance of this row from DB
@@ -85,7 +85,7 @@ class BookmarkManager(models.Manager):
         Get total number of current bookmarks by different users on a given object.
         '''
         content_type = ContentType.objects.get_for_model(obj)
-        count = self.filter(content_type=content_type, object_id=obj._get_pk_val()).count()        
+        count = self.filter(content_type=content_type, object_id=obj._get_pk_val()).count()
         return count
     
     
@@ -112,6 +112,9 @@ class Bookmark(models.Model):
     
     objects = BookmarkManager()
     
+    
+    class Meta:
+        ordering = ['-date_added']
     
     def __str__(self):          # on Python 3
         return "{}'s bookmark".format(self.user.username)

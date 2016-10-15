@@ -470,7 +470,7 @@ html, body {
 }
 
 .section-cards {
-	max-width: 512px;
+	max-width: 528px;
 	margin: 0px auto;
 }
 
@@ -960,6 +960,7 @@ html, body {
 	fill: #F8DAD7;
 }
 .title-text.dark { color: rgba(0, 0, 0, 0.87); }
+.color-dark { color: rgba(0, 0, 0, 0.87); }
 .author-card--sm .title-text,
 .author-card--md .title-text {
     color: rgba(0, 0, 0, 0.87);
@@ -2923,6 +2924,10 @@ ol, ul, li {
 }
 ul {
 	list-style: outside none none;
+}
+ol.default, ul.default {
+	margin: 16px 0px;
+	padding: 0px 40px;
 }
 .card-list-item {
 	position: relative;

@@ -1,7 +1,8 @@
 import scrapy
 import re
-import os, sys, traceback
 import json
+import os, sys, traceback
+from crawlers.spiders.base import BaseSpider
 
 try:
     from crawlers.utils import save_to_db_poem, save_to_db_author, get_language_list_for_url
@@ -163,4 +164,12 @@ class KangarooBot(scrapy.Spider):
                 print("ERROR: l3_parse_article_page: Unexpected error:", sys.exc_info()[0])
                 for frame in traceback.extract_tb(sys.exc_info()[2]):
                     fname,lineno,fn,text = frame
-                    print ("DBG:: Error in %s on line %d" % (fname, lineno))                           
+                    print ("DBG:: Error in %s on line %d" % (fname, lineno))
+
+
+class SpiderKangaroo(BaseSpider):
+    '''
+    @summary: Class to manage KangarooBot
+    '''
+    spider_name = "kangaroo"
+    bot = KangarooBot

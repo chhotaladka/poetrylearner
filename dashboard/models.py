@@ -199,7 +199,7 @@ class UserProfile(models.Model):
         '''
         profile = self._get_social_account(provider)
         if profile != None:
-            print profile.extra_data
+            #print profile.extra_data
             if self.get_provider_name(profile.provider) == 'facebook':
                 return self._get_fb_link(profile)
             elif self.get_provider_name(profile.provider) == 'google':

@@ -72,6 +72,12 @@ class ReindeerBot(scrapy.Spider):
         ABCD = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u',
                 'v','x','y','z',]
         
+        #test only
+        #url = 'https://rekhta.org/nazms/dhartii-kaa-bojh-baqar-mehdi-nazms?lang=en'
+        #url = 'https://rekhta.org/nazms/ghataa-chhaaii-to-kyaa-josh-malihabadi-nazms?lang=Hi'
+        #yield scrapy.Request(url, callback=self.l4_parse_poetry)
+        #return
+	
         for alphabet in ABCD:#FIXME TESTING: change back to ABCD after testing
             self.logger.debug('Listing poets %s', alphabet)
             url = self.domain_name + self.API_POETS_READ + '?' + '&sort=SortName-asc' + '&page=1' + '&lang=1' + '&pageSize=10000' + '&startsWith=' + alphabet
@@ -156,13 +162,15 @@ class ReindeerBot(scrapy.Spider):
         
         try:
             # extract poem
-            stanza_selectors = response.xpath("//div[@class='poemContainer']/div[@class='PoemTextHost  ']/div[@class='PoemDisplay OrgTextDisplay ']/div")
+            #stanza_selectors = response.xpath("//div[@class='poemContainer']/div[@class='PoemTextHost  ']/div[@class='PoemDisplay OrgTextDisplay ']/div")
+            stanza_selectors = response.xpath("//div[contains(@class,'poemContainer')]/div[contains(@class,'PoemTextHost')]/div[contains(@class,'PoemDisplay') and contains(@class,'OrgTextDisplay')]/div")
             poem = ''
             for s in stanza_selectors:
                 line_selectors = s.xpath("./p")
                 for l in line_selectors:
                     line = l.xpath(".//text()").extract()
-                    line = ' '.join(line)
+                    line = ''.join(line)
+                    line = line.strip()
                     ##print line
                     poem = poem + line + '\n'
                 poem = poem + '\n'

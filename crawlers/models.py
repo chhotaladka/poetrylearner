@@ -104,7 +104,7 @@ class RawArticle(models.Model):
         return tmp[self.language]    
     
     def save(self, *args, **kwargs):
-        print "Model RawArticle save called"
+        #print "Model RawArticle save called"
               
         super(RawArticle, self).save(*args, **kwargs)
 
@@ -207,6 +207,6 @@ class RawAuthor(models.Model):
             return RawAuthor.objects.all().order_by('-id')[0]
             
     def save(self, *args, **kwargs):
-        print "Model RawAuthor save called"
+        #print "Model RawAuthor save called"
               
         super(RawAuthor, self).save(*args, **kwargs)

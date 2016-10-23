@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.utils.timesince import timesince as djtimesince
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ObjectDoesNotExist
 
 VERBS = {
     'ADDITION': u'added',
@@ -163,8 +164,11 @@ class Action(models.Model):
 
     def target_url(self):
         "Returns the target (i.e. edited object) represented by this Action"
-        target = self.target_content_type.get_object_for_this_type(pk=self.target_object_id)
-        return target.get_absolute_url()
+        try:
+            target = self.target_content_type.get_object_for_this_type(pk=self.target_object_id)
+            return target.get_absolute_url()
+        except ObjectDoesNotExist:
+            return '#'
     
     def target_name(self):
         return self.target_object_repr

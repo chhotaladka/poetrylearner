@@ -174,7 +174,7 @@ class ReindeerBot(scrapy.Spider):
                     ##print line
                     poem = poem + line + '\n'
                 poem = poem + '\n'
-            poem = poem[0:-2]#strip last '\n' from the poem
+            poem = poem[0:-1]#strip last '\n' from the poem
             #print poem
             
             # extract title of the poem

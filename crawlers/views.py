@@ -11,7 +11,10 @@ from django.http.response import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from common.utils import html_to_plain_text
 from common.decorators import group_required
+from django.contrib.contenttypes.models import ContentType
 
+from activity.signals import sig_action
+from activity.models import VERBS
 from repository.models import Poetry, Person 
 
 # Create your views here.
@@ -195,38 +198,39 @@ def article_to_poetry(request):
     article_ids = request.GET.get('articles', None)
             
     # Only AJAX POST request is allowed  
-    if request.is_ajax() and request.method == "POST":    
+    if request.is_ajax() and request.method == "POST":
         if creator_id is None or article_ids is None:
             # Return failure
-            print "Error: article_to_poetry: No parameter(s) passed."                
+            print "Error: article_to_poetry: No parameter(s) passed."
             res = {}
             res['result'] = 'failure'
-            res['count'] = 0                    
+            res['count'] = 0
             return JsonResponse(res)
         
         article_ids = [x.strip() for x in article_ids.split(',')]
         # remove comma from the 
         if not article_ids[-1]:
-            article_ids = article_ids[:-1]            
-        creator_id = creator_id.strip()               
-        print "article_to_poetry: creator=", creator_id, "articles=", article_ids            
+            article_ids = article_ids[:-1]
+        creator_id = creator_id.strip()
+        print "article_to_poetry: creator=", creator_id, "articles=", article_ids
         
         count = 0
         
-        try:                                
+        try:
             # Get the `Person` object having id=`creator_id`
             # Return failure if not found
             person = Person.objects.get(pk=creator_id)
             
-            if person:            
+            if person:
                 # Add all 'articles' to Poetry with 'person' as 'creator' field
                 print "article_to_poetry: found ", person.name, " in person@repository"
-                        
+                ct = ContentType.objects.get(app_label="repository", model="poetry")
+                
                 for article_id in article_ids:
                     article = RawArticle.objects.get(pk=article_id)
                     
                     if article:
-                        # Create a new poetry              
+                        # Create a new poetry
                         poetry = Poetry()
                         
                         poetry.name = article.title
@@ -243,32 +247,43 @@ def article_to_poetry(request):
                         article.valid = True
                         article.save()
                         count += 1
+                        
+                        ##
+                        # Send signal to log the action
+                        sig_action.send(request.user,
+                            timestamp = poetry.date_added,
+                            verb = VERBS['ADDITION'],
+                            content_type = ct,
+                            object_id = poetry.pk,
+                            object_repr = poetry.name,
+                            change_message = None,
+                            public=True)
                     
                 # Return success with number of poetry made
-                print "article_to_poetry: Total", count                        
+                print "article_to_poetry: Total", count
                 res = {}
                 res['result'] = 'success'
                 res['count'] = count  
                 return JsonResponse(res)
-    
+            
             else:
                 # Return failure, means You have to add the entry of Person first
                 print "No such creator/person found in person@repository"
                 
                 res = {}
                 res['result'] = 'failure'
-                res['count'] = 0                    
+                res['count'] = 0
                 return JsonResponse(res)
             
         except:
             print ("Error: Unexpected error:", sys.exc_info()[0])
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
-                print ("DBG:: Error in %s on line %d" % (fname, lineno)) 
+                print ("DBG:: Error in %s on line %d" % (fname, lineno))
             res = {}
             res['result'] = 'error'
-            res['count'] = 0                    
-            return JsonResponse(res)           
+            res['count'] = 0
+            return JsonResponse(res)
             
     return HttpResponseForbidden()
 

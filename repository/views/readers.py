@@ -190,6 +190,8 @@ def items(request):
     
     else:
         count = {}
+        count['poetry'] = Poetry.objects.all().count
+        count['snippet'] = Snippet.objects.all().count
         count['person'] = Person.objects.all().count
         count['place'] = Place.objects.all().count
         count['product'] = Product.objects.all().count

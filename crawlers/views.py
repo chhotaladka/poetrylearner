@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from common.utils import html_to_plain_text
 from common.decorators import group_required
 from django.contrib.contenttypes.models import ContentType
+from django.utils import timezone
 
 from activity.signals import sig_action
 from activity.models import VERBS
@@ -240,6 +241,7 @@ def article_to_poetry(request):
                         poetry.same_as = article.source_url
                         poetry.added_by = request.user
                         poetry.modified_by = request.user
+                        poetry.date_modified = timezone.now()
                         poetry.save()
                         print "article_to_poetry: RawArticle ", article_id, "-> Poetry ", poetry.id
                         

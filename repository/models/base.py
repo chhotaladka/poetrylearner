@@ -62,7 +62,7 @@ class Thing(models.Model):
     modified_by = models.ForeignKey(auth.models.User,
                                     related_name="%(app_label)s_%(class)s_modified")
     
-    date_modified = models.DateTimeField(auto_now=True,
+    date_modified = models.DateTimeField(blank=True,
                                          help_text=_("The date time on which the item was most recently modified or when the item's entry was modified within a DataFeed.")
                                         )
     

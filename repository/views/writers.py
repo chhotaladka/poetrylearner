@@ -88,6 +88,7 @@ class CreateThingView(View):
                 if not obj.pk:
                     obj.added_by = self.request.user
                 obj.modified_by = self.request.user
+                obj.date_modified = timezone.now()
                 obj.save()
                 # Without this next line the M2M fields won't be saved.
                 form.save_m2m()

@@ -4,12 +4,12 @@
 {% endcomment %}
 {% load humanize %}
 	<div class="mdl-cell mdl-cell--12-col">
-		<div class="p-card">			
+		<div class="p-card">
+			<div class="search-title">
+				<div class="title">{{result_title}}</div>
+			</div>
 			<div class="search-stats mL-8">
-			{{ items.paginator.count|intcomma }} results				
-			</div>			
-			{% comment %}<div class="search-title">
-				<h3 class="C-{{item_type}}">{{result_title}}</h3>
-			</div>{% endcomment %}						
+				<span>{{ items.paginator.count|intcomma }} results</span>
+			</div>
 		</div>
 	</div>

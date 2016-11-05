@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 import os, sys, traceback
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import (
+    HttpResponse, Http404, HttpResponseRedirect
+)
 from django.core.exceptions import PermissionDenied
 from django.template.context_processors import request
 from django.views.generic.base import View
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.template.loader import render_to_string
@@ -105,7 +108,7 @@ def _resolve_item_type(type, list=False):
     elif type == Book.item_type():
         item_cls = Book
         template = "repository/items/book.html"
-        list_template = "repository/include/list/book.html"                
+        list_template = "repository/include/list/book.html"
     
     if list:
         return item_cls, list_template
@@ -120,12 +123,12 @@ def item(request, type, pk, slug, src=None):
     @src: Source of access. It may be used to manipulate the context/templates.
         eg. src='public_url' means this view is being accessed using some public url.
     '''
-
-    item_cls, template = _resolve_item_type(type)    
+    
+    item_cls, template = _resolve_item_type(type)
     if item_cls is None:
         print "Error: content type is not found"
         raise Http404 
-                                       
+    
     # Get the object from the `pk`, raises a Http404 if not found
     obj = get_object_or_404(item_cls, pk=pk)
     
@@ -134,14 +137,14 @@ def item(request, type, pk, slug, src=None):
         if user_has_group(request.user, ['Administrator', 'Editor']) is False:
             # Do not show unpublished `poetry`, `snippet` 
             if obj.is_published() is False:
-                raise Http404        
+                raise PermissionDenied
         
     ##
     # Check, if `slug` is different from what it is expected,
-    # softredirect to the correct URL    
+    # softredirect to the list page
     if slug != obj.get_slug():
-        return redirect(obj)
-
+        return HttpResponseRedirect(reverse('repository:list', kwargs={'type': type}))
+    
     # Instantiate the Meta class
     meta = Meta(title = obj.title(), 
                 description = obj.meta_description(), 
@@ -153,7 +156,6 @@ def item(request, type, pk, slug, src=None):
                 keywords = obj.get_keywords(),
             )
     
-    ##
     # Make the context and render  
     context = {'obj': obj, 'meta': meta, 'item_type': type, 
                'src': src}    
@@ -162,42 +164,43 @@ def item(request, type, pk, slug, src=None):
 
 def home(request):
     '''
-    Show home page of Repository
-    '''    
-    ##
-    # Make the context and render  
-    context = {'obj': None }
-    template = "repository/home.html"  
-    return render(request, template, context)
+    @summary: Show home page of Repository
+    @note: Only 'Administrator' has access (redirect others to home page).
+    '''
+    if user_has_group(request.user, ['Administrator',]) is False:
+        # Redirect to home page
+        return redirect('/')
+    
+    else:
+        # Make the context and render  
+        context = {'obj': None }
+        template = "repository/home.html"  
+        return render(request, template, context)
 
 
 def items(request):
     '''
-    Show all data items
+    @summary: Show all data items
+    @note: Only 'Administrator' has access (redirect others to home page).
     '''
-    count = {}
     
-    if user_has_group(request.user, ['Administrator', 'Editor']):
-        count['snippet'] = Snippet.objects.all().count
-        count['poetry'] = Poetry.objects.all().count
+    if user_has_group(request.user, ['Administrator',]) is False:
+        # Redirect to home page
+        return redirect('/')
+    
     else:
-        # Show the count of published items only
-        count['snippet'] = Snippet.published.all().count
-        count['poetry'] = Poetry.published.all().count
+        count = {}
+        count['person'] = Person.objects.all().count
+        count['place'] = Place.objects.all().count
+        count['product'] = Product.objects.all().count
+        count['event'] = Event.objects.all().count
+        count['organization'] = Organization.objects.all().count
+        count['book'] = Book.objects.all().count
         
-    count['person'] = Person.objects.all().count
-    count['place'] = Place.objects.all().count
-    count['product'] = Product.objects.all().count
-    count['event'] = Event.objects.all().count
-    count['organization'] = Organization.objects.all().count
-    count['book'] = Book.objects.all().count
-    
-    
-    ##
-    # Make the context and render  
-    context = {'obj': None, 'count': count }
-    template = "repository/items/data.html"  
-    return render(request, template, context) 
+        # Make the context and render  
+        context = {'obj': None, 'count': count }
+        template = "repository/items/data.html"
+        return render(request, template, context)
 
 
 def list(request, type, src=None):

@@ -3,8 +3,8 @@
 
 {% comment %} To set the main nav link active throughout the views of this app {% endcomment %}
 {% block is-repo-active %}active{% endblock %}
-
-{% block search %}{% comment %} Modify the search block as per the current page {% endcomment %}
+{% comment %}
+{% block search %}{% comment %} Modify the search block as per the current page {% endcomment % }
 <section id="id-head" class="centered">
 	<div class="head__banner search">
 		<div id="id-search-box" class="site-search-row search-box">
@@ -26,11 +26,13 @@
 				</svg>
 			</a>
 		</div>
-		{% endcomment %}
+		{% endcomment % }
 		</div>
 	</div>
 </section>
-{% endblock %}{% comment %} end of search block {% endcomment %}
+{% endblock %}{% comment %} end of search block {% endcomment % }
+{% endcomment %}
+
 {% comment %} This app requires feedback {% endcomment %}
 {% block feedback %}
 {% include "feedback/modal.html" %}

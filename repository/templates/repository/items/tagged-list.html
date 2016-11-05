@@ -1,33 +1,18 @@
 {% extends "repository/base.html" %}
 {% block title %}#{{tag}} | {{ sitename }}{% endblock %}
 
-{% block search-placeholder %}{{result_title}}{% endblock %}
 {% block search-action %}/{% endblock %}
-
-{% block breadcrumbs %}
-<div class="pT-8 pB-8">
-	<div class="_layout mW-512">					
-		<div class="breadcrumbs wFull">
-			<a href="{% url 'repository:home' %}">Repository</a>
-			<span> / </span>
-			<a href="{% url 'repository:view' %}">data</a>
-			<span> / </span>
-			<a href="{% url 'repository:list' type=item_type %}">{{ item_type }}</a>
-			<span> / </span>
-			<span>#{{ tag }}</span>			 	
-		</div>					
-	</div>	
-</div>
-{% endblock %}
 
 {% block main %}
 	<section class="pT-8 pB-16">
 		<div class="_layout layout-L mdl-grid">
-			<div class="__c mdl-cell mdl-cell--12-col mdl-grid">
+		{% if items %} {% comment %} Display the list {% endcomment %}
+			{% include "repository/include/misc/pagination-top.html" with items=items %}
 			{% include list_template with items=items %}
-			</div>
-		</div>	
+			{% include "repository/include/misc/pagination-bottom.html" with items=items %}
+		{% else %} {% comment %} Display the notification {% endcomment %}
+			{% include "repository/include/misc/empty-result.html" %}
+		{% endif %}
+		</div>
 	</section>
 {% endblock %}
-
-{% block page-title %}Tags{% endblock %}

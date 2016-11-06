@@ -141,9 +141,13 @@ def item(request, type, pk, slug, src=None):
         
     ##
     # Check, if `slug` is different from what it is expected,
-    # softredirect to the list page
     if slug != obj.get_slug():
-        return HttpResponseRedirect(reverse('repository:list', kwargs={'type': type}))
+        if user_has_group(request.user, ['Administrator', 'Editor']):
+            # softredirect to correct url
+            return redirect(obj)
+        else:
+            # softredirect to the list page
+            return HttpResponseRedirect(reverse('repository:list', kwargs={'type': type}))
     
     # Instantiate the Meta class
     meta = Meta(title = obj.title(), 

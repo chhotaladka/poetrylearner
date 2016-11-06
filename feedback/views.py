@@ -28,39 +28,46 @@ class FeedbackCreateView(CreateView):
     #template_name = 'feedback/feedback_form.html'
     ajax_template = 'feedback/form.html'
     thanks_template = 'feedback/include/thanks.html'
+    error_template = 'feedback/include/error.html'
 
     def dispatch(self, request, *args, **kwargs):
-        print "FeedbackCreateView dispatch."
+        #print "FeedbackCreateView dispatch."
         if kwargs.get('ctype_id') and kwargs.get('obj_id'):
             try:
                 content_type = ContentType.objects.get_for_id(kwargs['ctype_id'])
-                print content_type
+            
             except ContentType.DoesNotExist:
                 if request.is_ajax():
                     # Create JSON response and send
-                    res = {}
-                    res['result'] = 'failure'
-                    res['status'] = '404'
-                    return JsonResponse(res)
+                    data = {}
+                    data['status'] = '404'
+                    data['contenthtml'] = render_to_string(
+                                            self.error_template,
+                                            context={'error_message': 'invalid content'}
+                                        )
+                    return JsonResponse(data)
                 raise Http404
             
             try:
                 self.content_object = content_type.get_object_for_this_type(pk=kwargs['obj_id'])
-                self.ctype_id = kwargs['ctype_id']                
+                self.ctype_id = kwargs['ctype_id']
 
             except ObjectDoesNotExist:
                 if request.is_ajax():
                     # Create JSON response and send
-                    res = {}
-                    res['result'] = 'failure'
-                    res['status'] = '404'
-                    return JsonResponse(res)                
+                    data = {}
+                    data['status'] = '404'
+                    data['contenthtml'] = render_to_string(
+                                            self.error_template,
+                                            context={'error_message': 'invalid object'}
+                                        )
+                    return JsonResponse(data)
                 raise Http404
             
         return super(FeedbackCreateView, self).dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
-        print "FeedbackCreateView get_form_kwargss."
+        #print "FeedbackCreateView get_form_kwargss."
         kwargs = super(FeedbackCreateView, self).get_form_kwargs()
         
         if self.request.user.is_authenticated():
@@ -73,22 +80,21 @@ class FeedbackCreateView(CreateView):
         return kwargs
 
     def get_template_names(self):
-        print "FeedbackCreateView get_template_names."
+        #print "FeedbackCreateView get_template_names."
         if self.request.is_ajax():
-            print "ajax request"
             return self.ajax_template
         
         return super(FeedbackCreateView, self).get_template_names()
 
     def get_context_data(self, **kwargs):
-        print "FeedbackCreateView get_context_data."
+        #print "FeedbackCreateView get_context_data."
         context = super(FeedbackCreateView, self).get_context_data(**kwargs)
         
         if hasattr(self, 'content_object'):
             context.update({'content_object': self.content_object})
 
         if hasattr(self, 'ctype_id'):
-            context.update({'ctype_id': self.ctype_id})                       
+            context.update({'ctype_id': self.ctype_id})
             
         return context
 
@@ -102,10 +108,13 @@ class FeedbackCreateView(CreateView):
             print "WARN:: spam detected."
             if request.is_ajax():
                 # Create JSON response and send
-                res = {}
-                res['result'] = 'failure'
-                res['status'] = '400'
-                return JsonResponse(res)
+                data = {}
+                data['status'] = '400'
+                data['contenthtml'] = render_to_string(
+                                        self.error_template,
+                                        context={'error_message': 'invalid access'}
+                                    )
+                return JsonResponse(data)
             raise Http404
         
         return super(FeedbackCreateView, self).post(request, *args, **kwargs)
@@ -120,11 +129,10 @@ class FeedbackCreateView(CreateView):
         
         if self.request.is_ajax():
             # Create JSON response and send
-            res = {}
-            res['result'] = 'success'
-            res['status'] = '200'
-            res['html'] = render_to_string(self.thanks_template)
-            return JsonResponse(res)        
+            data = {}
+            data['status'] = '200'
+            data['contenthtml'] = render_to_string(self.thanks_template)
+            return JsonResponse(data)
         return HttpResponseRedirect(self.get_success_url())
    
     def form_invalid(self, form):
@@ -134,10 +142,13 @@ class FeedbackCreateView(CreateView):
         """
         if self.request.is_ajax():
             # Create JSON response and send
-            res = {}
-            res['result'] = 'failure'
-            res['status'] = '40011'
-            return JsonResponse(res)        
+            data = {}
+            data['status'] = '422' # Unprocessable Entity
+            data['contenthtml'] = render_to_string(
+                                    self.error_template,
+                                    context={'error_message': 'invalid data'}
+                                )
+            return JsonResponse(data)
         return self.render_to_response(self.get_context_data(form=form))
     
     def get_success_url(self):
@@ -155,7 +166,6 @@ def feedback_response(request, pk):
         action = request.POST.get('action', None)
         notify = request.POST.get('notify', None)
         rating = request.POST.get('rating', None)
-        print action
         
         # validate data and process
         flag_save = False
@@ -165,14 +175,14 @@ def feedback_response(request, pk):
                 rating = int(rating)
                 if FEEDBACK_RATING_MIN <= rating <= FEEDBACK_RATING_MAX:
                     obj.rating = rating
-                    flag_save = True            
+                    flag_save = True
             except ValueError:
                     pass  # it was not an int.
         
         if action != None and action != '':
-            if len(action) < 1000:            
+            if len(action) < 1000:
                 obj.action = action
-                flag_save = True                                        
+                flag_save = True
             else:
                 flag_save = False
                 message = 'Failed. Maximum allowed response length is 1000 characters.'
@@ -188,11 +198,11 @@ def feedback_response(request, pk):
             # Check notify
             if notify:
                 user_email = obj.get_user_email()
-                if user_email:               
+                if user_email:
                     # Send email to the user
                     print 'DBG:: in response to feedback %s, sending email to %s'% (obj.id, user_email)
                     message += ' Notification sent to user.'
-                                        
+            
         messages.success(request, message)
         return HttpResponseRedirect(obj.get_absolute_url())
 
@@ -201,7 +211,7 @@ def feedback_response(request, pk):
     context = {'feedback': obj}
     template = "feedback/response.html"
 
-    return render(request, template, context)    
+    return render(request, template, context)
 
 
 @group_required('administrator', 'editor')

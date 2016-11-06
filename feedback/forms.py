@@ -14,7 +14,6 @@ class FeedbackForm(forms.ModelForm):
 
     def __init__(self, user=None, url=None, prefix='feedback',
                  content_object=None, *args, **kwargs):
-        print "DBG:: FeedbackForm  init."
         self.content_object = content_object
         super(FeedbackForm, self).__init__(prefix='feedback', *args, **kwargs)
         if url:
@@ -27,11 +26,11 @@ class FeedbackForm(forms.ModelForm):
             self.fields['email'].required = False
 
     def save(self):
-        print "DBG:: FeedbackForm  save."
+        #print "DBG:: FeedbackForm  save."
         if not self.cleaned_data.get('url'):
             self.instance.content_object = self.content_object
             obj = super(FeedbackForm, self).save()
-            print "DBG:: FeedbackForm saved", obj.id
+            #print "DBG:: FeedbackForm saved", obj.id
 #             send_email(
 #                 '',
 #                 {

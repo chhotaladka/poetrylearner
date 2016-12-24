@@ -72,8 +72,11 @@ def poetry_related(request, src=None):
     ids = mix1_ids + mix2_ids
     obj_list = Poetry.objects.filter(pk__in=ids)
     
+    continuation = ""
+    
     data = {}
     data['status'] = 200
+    data['continuation'] = continuation
     data['contenthtml'] = render_to_string(template, 
                                            {'items': obj_list, 'request': request})
     

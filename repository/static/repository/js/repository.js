@@ -12,10 +12,13 @@
 	// ==================================
 	
 	var selector_related_poetry = '#id-related-poetry';
+	var selector_more_poetry = '#id-more-poetry';
+	var selector_more_poetry_btn = '#id-more-poetry-btn';
 	
 	var Repository = function (element, options) {
 		this.itemtype       = null
 		this.id             = null
+		this.continuation   = null
 		this.requestUrl     = null
 		this.element       = $(element)
 	}
@@ -28,6 +31,15 @@
 		return Repository.DEFAULTS;
 	};
 	
+	Repository.prototype.getContinuation = function () {
+		var continuation = $(selector_more_poetry).data("continuation");
+		if (typeof continuation !== typeof undefined && continuation !== false) {
+			return continuation;
+		} else {
+			return "";
+		}
+	};
+	
 	Repository.prototype.responseError = function (xhRequest, ErrorText, thrownError) {
 		console.log("Repository: response_error:");
 		console.log(xhRequest);
@@ -38,14 +50,26 @@
 	Repository.prototype.responseSuccess = function(data) {
 		//console.log("Repository: response_success: " + data.status);
 		
-		$(this).children().remove();
+		if ( this.getContinuation() ) {
+			var flagCt = true;
+			var selector = $(selector_more_poetry);
+		} else {
+			var selector = $(selector_related_poetry);
+		}
+		selector.children().remove();
 		
 		if (data.status == '200') {
 			var html = $.parseHTML(data.contenthtml);
-			$(this).append(html);
+			selector.append(html);
+			$(selector_more_poetry).attr("data-continuation", data.continuation);
+			if (flagCt == true) {
+				$(selector_more_poetry_btn).addClass('hidden');
+			} else if ( data.continuation ) {
+				$(selector_more_poetry_btn).removeClass('hidden');
+			}
 		} else {
 			var html = $.parseHTML('<i class="material-icons mdl-color-text--green-600">highlight_off</i>')
-			$(this).append(html);
+			selector.append(html);
 		}
 		componentHandler.upgradeDom();
 	};
@@ -53,12 +77,13 @@
 	/* Load related Poetry */
 	Repository.prototype.loadRelatedPoetry = function() {
 		//console.log("Repository: loadRelatedPoetry: In");
+		
 		var $this    = this.element;
 		
 		this.itemtype = parseInt($this.data('ct'));
 		this.id = parseInt($this.data('id'));
-		this.requestUrl = window.location.origin + $this.data('url') + "?id=" + this.id;
-		//console.log(this.itemtype, this.id, this.requestUrl);
+		this.continuation = this.getContinuation();
+		this.requestUrl = window.location.origin + $this.data('url') + "?id="+this.id + "&continuation="+this.continuation;
 		
 		$.ajaxSetup({
 			beforeSend: function(xhr, settings) {
@@ -75,7 +100,7 @@
 			dataType: "json",
 			contentType: false,
 			processData: false,
-			context : $this,
+			context : this,
 			
 			success : this.responseSuccess,
 			error : this.responseError,
@@ -139,7 +164,13 @@
 		}
 	};
 	
+	var loadMorePoetry = function() {
+		// Call action method
+		Plugin.call($(selector_related_poetry), 'loadRelatedPoetry');
+	};
+
 	$(document).ready(bindActionLoadRelatedPoetry);
 	$(document).on('click.bs.repository.data-api', '.poetry-card.small', Repository.prototype.clickPoetryCards);
+	$(document).on('click.bs.repository.data-api', selector_more_poetry_btn, loadMorePoetry);
 	
 }(jQuery);

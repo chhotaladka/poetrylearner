@@ -19,40 +19,42 @@
 				</div>
 			</div>
 			{% comment %} Statistics graph {% endcomment %}
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-	google.charts.load('current', {packages: ['corechart', 'bar']});
-	google.charts.setOnLoadCallback(drawStuff);
-	
-	function drawStuff() {
-		var data = google.visualization.arrayToDataTable([
-				['Action', {% for s in stats %}'{{ s.name }}',{ role: 'annotation' },{% endfor %}],
-				['Count', {% for s in stats %}{{ s.value }},'{{ s.name }}',{% endfor %}],
-			]);
-		
-		var options = {
-			title: '',
-			isStacked: 'false',//'absolute/relative/percent'
-			height: 120,
-			chartArea: {width: '80%', height: '60%'},
-			legend: { position: "none" },
-			hAxis: {
-				title: '',
-				minValue: 0,
-			},
-			vAxis: {
-				title: ''
-			}
-		};
-		var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-		chart.draw(data, options);
-	};
-</script>
+			{% if actions %}
+			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+			<script type="text/javascript">
+				google.charts.load('current', {packages: ['corechart', 'bar']});
+				google.charts.setOnLoadCallback(drawStuff);
+				
+				function drawStuff() {
+					var data = google.visualization.arrayToDataTable([
+							['Action', {% for s in stats %}'{{ s.name }}',{ role: 'annotation' },{% endfor %}],
+							['Count', {% for s in stats %}{{ s.value }},'{{ s.name }}',{% endfor %}],
+						]);
+					
+					var options = {
+						title: '',
+						isStacked: 'false',//'absolute/relative/percent'
+						height: 120,
+						chartArea: {width: '80%', height: '60%'},
+						legend: { position: "none" },
+						hAxis: {
+							title: '',
+							minValue: 0,
+						},
+						vAxis: {
+							title: ''
+						}
+					};
+					var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+					chart.draw(data, options);
+				};
+			</script>
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="activity wide-card bCw wFull">
 					<div id="chart_div" style=""></div>
 				</div>
 			</div>
+		{% endif %}
 		{% if actions %} {% comment %} Display the list {% endcomment %}
 			{% for action in actions %}
 			<div class="mdl-cell mdl-cell--12-col mT0 mB0">

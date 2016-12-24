@@ -149,6 +149,11 @@ class Poetry(CreativeWork):
         verbose_name = _("Poetry")
         verbose_name_plural = _("Poetry")
 
+    def get_absolute_url(self):
+        # Overriding the base method
+        kwargs = {'pk': self.id, 'slug': self.get_slug(),}
+        return reverse('poetry', kwargs=kwargs)
+    
     def get_language(self):
         '''
         Returns the language full name

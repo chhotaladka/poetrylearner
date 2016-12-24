@@ -17,7 +17,19 @@
 {% block search-action %}/{% endblock %}
 
 {% block breadcrumbs %}
-{% include "repository/include/misc/breadcrumb_for_item.html" %}
+<div class="pT-8 pB-8">
+	<div class="_layout mW-512">
+		<div class="breadcrumbs wFull">{% comment %}
+			<a href="{% url 'repository:home' %}">Repository</a>
+			<span> / </span>
+			<a href="{% url 'repository:view' %}">data</a>
+			<span> / </span>{% endcomment %}
+			<a href="{% url 'explore-poets' %}">Poets</a>
+			<span> / </span>
+			<span>{{ obj.headline }}</span>
+		</div>
+	</div>
+</div>
 {% endblock %}
 
 {% block main %}
@@ -41,13 +53,13 @@
 			<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
 				<div class="section-cards">
 					<div class="section-title">
-						<h3 class="c-grey1"><a href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}">Poetry by {{ obj.popular_name }}</a></h3>	
+						<h3 class="c-grey1"><a href="{% url 'explore-poetry-of' pk=obj.id slug=obj.get_slug %}">Poetry by {{ obj.popular_name }}</a></h3>	
 					</div>
 					{% get_recent_poetries 10 by obj as poetries %}
 					{% include "repository/include/list/poetry.html" with items=poetries %}
 					<div class="mdl-card__actions">
 					{% if poetries %}
-						<a class="action-button wFull oN" href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}" title="Show all poetry by {{ obj.title }}">							
+						<a class="action-button wFull oN" href="{% url 'explore-poetry-of' pk=obj.id slug=obj.get_slug %}" title="Show all poetry by {{ obj.title }}">							
 							Show all
 						</a>
 					{% else %}<span class="action-button wFull">Working on it...</span>{% endif %}

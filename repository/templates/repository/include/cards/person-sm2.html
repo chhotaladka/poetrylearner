@@ -1,0 +1,46 @@
+{% comment %}
+	Info:       Person small Card
+	Requires:   css and js of static/mdl/*
+{% endcomment %}
+{% load staticfiles %}
+<div class="content-wrapper" itemscope itemtype="http://schema.org/Person">
+	<div class="mdl-card author-card--sm bC-none wFull">
+		<div class="card__title tAc">
+			{% with person_img_url=person.get_image_url %}
+			<a class="card" href="{{person.get_absolute_url}}" itemprop="url">
+				{% if person_img_url %}
+				<div class="avatar md border" style="background: url('{{ person_img_url }}') center / cover;">			
+				</div>
+				{% else %}
+				<div class="avatar md border">
+					{% include "common/svg/person.html" %}
+				</div>
+				{% endif %}
+			</a>
+			{% endwith %}
+			<a class="card" href="{{person.get_absolute_url}}" itemprop="url">
+				<div class="title-text tAc" itemprop="name">
+					{{ person.name }}
+				</div>
+				<div class="extras">
+					<span class="text" itemprop="additionalName">{{person.additional_name}}</span>
+				</div>
+				{% if person.year_birth or person.year_death %}
+				<div class="extras fS-12">
+					<span>(</span>
+				{% if person.year_birth %}
+					<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span> 
+				{% endif %}
+				{% if person.year_death %}
+					<span title="Death">
+						<span>- </span>
+						<span itemprop="deathDate">{{ person.year_death }}</span>
+					</span>
+				{% endif %}
+					<span>)</span>
+				</div>
+				{% endif %}
+			</a>
+		</div>
+	</div>
+</div>

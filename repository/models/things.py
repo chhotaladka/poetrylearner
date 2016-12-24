@@ -147,6 +147,11 @@ class Person(Thing):
                               help_text=_('An image of the item.')
                             ) 
 
+    def get_absolute_url(self):
+        # Overriding the base method
+        kwargs = {'pk': self.id, 'slug': self.get_slug(),}
+        return reverse('poet', kwargs=kwargs)
+    
     def popular_name(self):
         if self.additional_name:
             return self.additional_name

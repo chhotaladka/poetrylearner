@@ -326,9 +326,109 @@ def list(request, type, src=None):
                'item_type': type, 'result_title': result_title,
                'query_tabs': query_tabs, 'order': order,
                'src': src}
-    template = 'repository/items/list.html'    
+    template = 'repository/items/list.html'
 
     return render(request, template, context)
+
+
+def explore_poetry(request, poet=None, slug=None, src=None):
+    '''
+    @summary: Explore and list the poetry 
+    
+    @scope: public
+    '''
+    
+    if poet:
+        creator = get_object_or_404(Person, pk=poet)
+    else:
+        creator = None
+
+    ##
+    # Check the parameters passed in the URL and process accordingly
+    # Language
+    language = request.GET.get('lan', None)
+    
+    # If creator(poet) is not given
+    if creator is None:
+        result_title = 'Poetry'
+        objs = None
+        # Otherthings will be taken care in template (using templatetags/ajax)
+        
+    # If creator(poet) is given
+    else:
+        result_title = 'Poetry by ' + creator.popular_name()
+        
+        kwargs = {}
+        kwargs['creator'] = creator
+        kwargs['published'] = True # Show only published `poetry`
+        obj_list = []
+        obj_list = Poetry.objects.apply_filter(**kwargs)
+        
+        # Pagination
+        paginator = Paginator(obj_list, 40) # Show 40 entries per page    
+        page = request.GET.get('page')
+        try:
+            objs = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            objs = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            objs = paginator.page(paginator.num_pages)
+    
+    context = {'items': objs, 'creator': creator, 'language': language,
+               'item_type': 'poetry', 'result_title': result_title,
+               'src': src}
+    template = 'repository/items/explore_poetry.html'
+    return render(request, template, context)
+
+
+def explore_poets(request, src=None):
+    '''
+    @summary: Explore and list the poets i.e. person
+    
+    @scope: public
+    '''
+    
+    result_title = 'Poets'
+
+    mix_count = 20
+    q_objects = Q()
+    id_list = Person.objects.filter(q_objects).values_list('id', flat=True)
+    count = len(id_list)
+    mix_count = mix_count if count > mix_count else count
+    mix_ids = random.sample(id_list, mix_count)
+    
+    obj_list = Person.objects.filter(pk__in=mix_ids)
+    
+    
+    # Pagination
+    paginator = Paginator(obj_list, 40) # Show 40 entries per page    
+    page = request.GET.get('page')
+    try:
+        objs = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        objs = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        objs = paginator.page(paginator.num_pages)
+    
+    context = {'items': objs,
+               'item_type': 'person', 'result_title': result_title,
+               'src': src}
+    template = 'repository/items/explore_poets.html'
+
+    return render(request, template, context)
+
+
+def explore_tags(request, slug, src=None):
+    '''
+    @summary: Explore and list the tagged items
+    
+    @scope: public
+    '''
+    pass
 
 
 def tagged_items(request, slug, type, src=None):

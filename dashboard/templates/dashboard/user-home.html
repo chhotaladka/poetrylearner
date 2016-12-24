@@ -32,7 +32,7 @@
 				{% include "repository/include/list/poetry.html" with items=poetries %}
 				<div class="mdl-card__actions">
 				{% if poetries %}	
-					<a class="action-button wFull oN" href="{% url 'repository:list' type='poetry' %}?tab=pub&o=shuffle" title="Show more poetry">
+					<a class="action-button wFull oN" href="{% url 'explore-poetry' %}" title="Show more poetry">
 						Show more
 					</a>
 				{% else %}<span class="action-button wFull">Working on it...</span>{% endif %}

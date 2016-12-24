@@ -98,8 +98,8 @@
 				<a href="/">poetry learner</a>
 			</div>
 			<nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800" itemscope itemtype="http://schema.org/SiteNavigationElement">
-				<a class="mdl-navigation__link" href="{% url 'list-poetry' %}" itemprop="url">Poetry</a>
-				<a class="mdl-navigation__link" href="{% url 'list-poet' %}" itemprop="url">Poets</a>
+				<a class="mdl-navigation__link" href="{% url 'explore-poetry' %}" itemprop="url">Poetry</a>
+				<a class="mdl-navigation__link" href="{% url 'explore-poets' %}" itemprop="url">Poets</a>
 				{% if request.user|has_group:'administrator' %}
 				<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}" itemprop="url">Crawled data</a>
 				{% endif %}

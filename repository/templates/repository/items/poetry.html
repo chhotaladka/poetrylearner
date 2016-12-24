@@ -12,7 +12,19 @@
 {% block search-action %}/{% endblock %}
 
 {% block breadcrumbs %}
-{% include "repository/include/misc/breadcrumb_for_item.html" %}
+<div class="pT-8 pB-8">
+	<div class="_layout mW-512">
+		<div class="breadcrumbs wFull">{% comment %}
+			<a href="{% url 'repository:home' %}">Repository</a>
+			<span> / </span>
+			<a href="{% url 'repository:view' %}">data</a>
+			<span> / </span>{% endcomment %}
+			<a href="{% url 'explore-poetry' %}">Poetry</a>
+			<span> / </span>
+			<span>{{ obj.headline }}</span>
+		</div>
+	</div>
+</div>
 {% endblock %}
 
 {% block main %}

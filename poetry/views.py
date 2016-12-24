@@ -35,15 +35,29 @@ def poet(request, pk, slug):
     return readers.item(request, 'person', pk, slug, src='public_url')
 
 
-def list_poetry(request):
+def explore_poetry_of(request, pk, slug):
+    '''
+    @summary: Returns the poetry by the person `pk` from the repository
+    '''
+    return readers.explore_poetry(request, poet=pk, slug=slug, src='public_url')
+
+
+def explore_poetry(request):
     '''
     Returns the list of poetries from the repository
-    '''    
-    return readers.list(request, 'poetry', src='public_url')
+    '''
+    return readers.explore_poetry(request, src='public_url')
 
 
-def list_poet(request):
+def explore_poets(request):
     '''
     Returns the list of persons from the repository
     '''    
-    return readers.list(request, 'person', src='public_url')
+    return readers.explore_poets(request, src='public_url')
+
+
+def explore_tags(request, slug):
+    '''
+    Returns the list of tagged items from the repository
+    '''    
+    return readers.explore_tags(request, slug, src='public_url')

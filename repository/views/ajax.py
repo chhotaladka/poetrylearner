@@ -35,6 +35,7 @@ def poetry_related(request, src=None):
     ##
     # Check the parameters passed in the URL and process accordingly
     id = request.GET.get('id', None)
+    continuation = request.GET.get('continuation', None)
     #mix = request.GET.get('mix', 'related')
     
     mix1_count = 5 # Creator's random poetry
@@ -50,12 +51,23 @@ def poetry_related(request, src=None):
         data['contenthtml'] = ''
         return JsonResponse(data)
     
+    # Decode the value of `continuation`
+    exclude_ids = []
+    if continuation:
+        exclude_ids = continuation.split("i")
+    
+    exclude_ids.append(id)
+    
     # Select `mix1_count` random poetry by creator of `ref_poetry`
     q_objects = Q()
     q_objects &= Q(date_published__isnull=False)
     q_objects &= Q(creator_id=ref_poetry.creator_id)
-    
-    id_list = Poetry.objects.filter(q_objects).exclude(pk=id).values_list('id', flat=True)
+    try:
+        id_list = Poetry.objects.filter(q_objects).exclude(pk__in=exclude_ids).values_list('id', flat=True)
+    except:
+        # Chances of exceptions.ValueError, in case if exclude_ids has non integer values
+        print("ERROR: ajax.poetry_related: unexpected error 1:", sys.exc_info()[0])
+        id_list = []
     count = len(id_list)
     mix1_count = mix1_count if count > mix1_count else count
     mix1_ids = random.sample(id_list, mix1_count)
@@ -71,14 +83,16 @@ def poetry_related(request, src=None):
     
     ids = mix1_ids + mix2_ids
     obj_list = Poetry.objects.filter(pk__in=ids)
-    
-    continuation = ""
+
+    # Encode the values into the `continuation`
+    if not continuation:
+        continuation = "i".join([str(i) for i in ids])
     
     data = {}
     data['status'] = 200
     data['continuation'] = continuation
     data['contenthtml'] = render_to_string(template, 
                                            {'items': obj_list, 'request': request})
-    
+            
     return JsonResponse(data)
 

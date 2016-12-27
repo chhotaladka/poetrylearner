@@ -19,11 +19,7 @@
 {% block breadcrumbs %}
 <div class="pT-8 pB-8">
 	<div class="_layout mW-512">
-		<div class="breadcrumbs wFull">{% comment %}
-			<a href="{% url 'repository:home' %}">Repository</a>
-			<span> / </span>
-			<a href="{% url 'repository:view' %}">data</a>
-			<span> / </span>{% endcomment %}
+		<div class="breadcrumbs wFull">
 			<a href="{% url 'explore-poets' %}">Poets</a>
 			<span> / </span>
 			<span>{{ obj.headline }}</span>
@@ -33,8 +29,8 @@
 {% endblock %}
 
 {% block main %}
-
-	<section id="priSect" class="pT-8 pB-16">
+	{% comment %} PERSON INFO {% endcomment %}
+	<section class="pT-8 pB-16">
 		<div class="_layout layout-sLs mdl-grid">
 			<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top mdl-grid pA-0">
 			</div>	
@@ -45,7 +41,7 @@
 			</div>
 		</div>
 	</section>
-
+	{% comment %} RECENT POETRIES BY THE PERSON {% endcomment %}
 	<section class="pB-8">
 		<div class="_layout layout-sLs mdl-grid">
 			<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">

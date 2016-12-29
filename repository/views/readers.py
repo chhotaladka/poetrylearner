@@ -133,21 +133,26 @@ def item(request, type, pk, slug, src=None):
     obj = get_object_or_404(item_cls, pk=pk)
     
     # Check for permissions
+    if src != 'public_url':
+        # public users should not have access to repository urls '/r/data/...'
+        # redirect to respective public url
+        if user_has_group(request.user, ['Administrator', 'Editor']) is False:
+            return HttpResponseRedirect(obj.get_absolute_url())
+    
     if type == 'poetry' or type == 'snippet':
         if user_has_group(request.user, ['Administrator', 'Editor']) is False:
             # Do not show unpublished `poetry`, `snippet` 
             if obj.is_published() is False:
                 raise PermissionDenied
-        
-    ##
+    
     # Check, if `slug` is different from what it is expected,
     if slug != obj.get_slug():
         if user_has_group(request.user, ['Administrator', 'Editor']):
             # softredirect to correct url
             return redirect(obj)
         else:
-            # softredirect to the list page
-            return HttpResponseRedirect(reverse('repository:list', kwargs={'type': type}))
+            # softredirect to the item list page
+            return HttpResponseRedirect(obj.get_list_url())
     
     # Instantiate the Meta class
     meta = Meta(title = obj.title(), 

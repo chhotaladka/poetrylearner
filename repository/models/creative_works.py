@@ -154,6 +154,10 @@ class Poetry(CreativeWork):
         kwargs = {'pk': self.id, 'slug': self.get_slug(),}
         return reverse('poetry', kwargs=kwargs)
     
+    def get_list_url(self):
+        # Overriding the base method
+        return reverse('explore-poetry')
+    
     def get_language(self):
         '''
         Returns the language full name

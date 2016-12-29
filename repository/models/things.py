@@ -152,6 +152,10 @@ class Person(Thing):
         kwargs = {'pk': self.id, 'slug': self.get_slug(),}
         return reverse('poet', kwargs=kwargs)
     
+    def get_list_url(self):
+        # Overriding the base method
+        return reverse('explore-poets')
+    
     def popular_name(self):
         if self.additional_name:
             return self.additional_name

@@ -97,6 +97,10 @@ class Thing(models.Model):
     def get_edit_url(self):        
         kwargs = {'pk': self.id, 'type': self.item_type()}
         return reverse('repository:add-item', kwargs=kwargs)        
+    
+    def get_list_url(self):
+        kwargs = {'type': self.item_type()}
+        return reverse('repository:list', kwargs=kwargs)
 
     def headline(self):
         return self.name

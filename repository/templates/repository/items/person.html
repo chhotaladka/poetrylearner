@@ -6,6 +6,7 @@
 {% endcomment %}
 {% load staticfiles %}
 {% load poetry_tags %}
+{% load common_tags %}
 
 {% block meta %}
 {% include "meta.html" with meta=meta only %}
@@ -48,8 +49,17 @@
 			</div>
 			<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
 				<div class="section-cards">
-					<div class="section-title">
-						<h3 class="c-grey1"><a href="{% url 'explore-poetry-of' pk=obj.id slug=obj.get_slug %}">Poetry by {{ obj.popular_name }}</a></h3>	
+					<div class="section-title row fill">
+						<div>
+							<h3 class="c-grey1"><a href="{% url 'explore-poetry-of' pk=obj.id slug=obj.get_slug %}">Poetry by {{ obj.popular_name }}</a></h3>
+						</div>
+						<div>{% if request.user|has_group:'administrator,editor' %}
+							<h3 class="c-grey1">
+								<a title="Review the poetry of {{ obj.popular_name }}" href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}&tab=unpub&o=shuffle">Review</a>
+							</h3>
+							<span class="info-txt">[ editor's section ]</span>
+							{% endif %}
+						</div>
 					</div>
 					{% get_recent_poetries 10 by obj as poetries %}
 					{% include "repository/include/list/poetry.html" with items=poetries %}

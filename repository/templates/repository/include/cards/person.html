@@ -4,6 +4,7 @@
 {% endcomment %}
 {% load staticfiles %}
 {% load humanize %}
+{% load poetry_tags %}
 
 <div class="mdl-card card-l author-card--lg bS-1 wFull" itemscope itemtype="http://schema.org/Person">
 	<div class="card__title tAc bg-person">
@@ -38,6 +39,13 @@
 			<span>)</span>
 		</div>
 		{% endif %}
+		<div class="row r2l fill extras">
+		{% get_poetry_count by person published as poetry_count %}
+			<div class="op4 fS-28">
+				<span class="b">{{ poetry_count|intcomma }}</span>
+				<span class="fS-12"> poetry</span>
+			</div>
+		</div>
 	</div>
 	<div class="mdl-card__supporting-text">
 		<p><span itemprop="description">{{ person.description }}</span>

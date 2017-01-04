@@ -1357,7 +1357,7 @@ a.action-button:hover {
     font-weight: 300;
 	color: #757575 !important;
 }
-.clg {color: #90949C !important;}/* very light grey */
+.clg {color: rgba(144, 148, 156, 1) !important;}/* light grey */
 .meta-edit a,
 .light-txt a,
 .info-txt a,
@@ -2553,6 +2553,10 @@ ul.mdl-mini-footer__link-list {
 .mxH-36 { max-height: 36px; }
 .bC-none { background-color: transparent !important;}
 .bC-inh { background-color: inherit;}
+.op3 {opacity: 0.3 !important;}
+.op4 {opacity: 0.4 !important;}
+.op5 {opacity: 0.5 !important;}
+.op6 {opacity: 0.6 !important;}
 
 .position-rel { position: relative;}
 .position-abs { position: absolute;}

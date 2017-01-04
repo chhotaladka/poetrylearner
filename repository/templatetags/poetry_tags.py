@@ -213,18 +213,35 @@ class PoetryCountNode(Node):
                        varname = tokens[2]
                     )
             
-        elif tokens[1] == 'by':            
+        elif tokens[1] == 'by':
             correct_syntax = "'%s by [Person object] as [varname]'" % tokens[0]
             if len(tokens) < 5:
                 raise template.TemplateSyntaxError, "Number of arguments are less. Correct syntax is " + correct_syntax
             
-            if tokens[3] != 'as':
-                raise template.TemplateSyntaxError, "Third argument must be 'as'. Correct syntax is " + correct_syntax
-
-            return cls(
-                       varname = tokens[4],
-                       creator = tokens[2]
-                    )
+            if len(tokens) == 5:
+                if tokens[3] != 'as':
+                    raise template.TemplateSyntaxError, "Third argument must be 'as'. Correct syntax is " + correct_syntax
+                return cls(
+                           varname = tokens[4],
+                           creator = tokens[2]
+                        )
+                
+            elif len(tokens) == 6:
+                if tokens[4] != 'as':
+                    correct_syntax = "'%s by [Person object] published/unpublished as [varname]'" % tokens[0]
+                    raise template.TemplateSyntaxError, "Fourth argument must be 'as'. Correct syntax is " + correct_syntax
+                if tokens[3] == 'published':
+                        return cls(
+                           varname = tokens[5],
+                           creator = tokens[2],
+                           published = _PUBLISHED
+                        )
+                else:
+                        return cls(
+                           varname = tokens[5],
+                           creator = tokens[2],
+                           published = _UNPUBLISHED
+                        )
     
         elif tokens[1] == 'in':
             correct_syntax = "'%s in [language] as [varname]'" % tokens[0]
@@ -288,18 +305,17 @@ class PoetryCountNode(Node):
                 creator = self.creator.resolve(context)
                 q_objects &= Q(creator_id=creator.id)
             
-            elif self.language:
+            if self.language:
                 q_objects &= Q(language=self.language)
-                
-            elif self.tag:
-                q_objects &= Q(keywords__slug=self.tag)
-                
-            elif self.published == _PUBLISHED:
-                q_objects &= Q(date_published__isnull=False)
             
+            if self.tag:
+                q_objects &= Q(keywords__slug=self.tag)
+            
+            if self.published == _PUBLISHED:
+                q_objects &= Q(date_published__isnull=False)
             elif self.published == _UNPUBLISHED:
                 q_objects &= Q(date_published__isnull=True)
-                                
+            
             context[self.varname] = Poetry.objects.filter(q_objects).count()
         
         except:
@@ -428,6 +444,8 @@ def get_poetry_count(parser, token):
         case 4: {% get_poetry_count has [tag] as [varname] %}
         case 5: {% get_poetry_count published as [varname] %}
         case 5: {% get_poetry_count unpublished as [varname] %}
+        case 6: {% get_poetry_count by [Author object] published as [varname] %}
+        case 7: {% get_poetry_count by [Author object] unpublished as [varname] %}
         
     Example usage::
         {% get_poetry_count as count %}
@@ -436,6 +454,8 @@ def get_poetry_count(parser, token):
         {% get_poetry_count has tag1 as count %}
         {% get_poetry_count published as count %}
         {% get_poetry_count unpublished as count %}
+        {% get_poetry_count by creator published as count %}
+        {% get_poetry_count by creator unpublished as count %}
     """     
     
     return PoetryCountNode.handle_token(parser, token)

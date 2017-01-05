@@ -32,10 +32,8 @@
 					<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span> 
 				{% endif %}
 				{% if person.year_death %}
-					<span title="Death">
-						<span>- </span>
-						<span itemprop="deathDate">{{ person.year_death }}</span>
-					</span>
+					<span>- </span>
+					<span title="Death" itemprop="deathDate">{{ person.year_death }}</span>
 				{% endif %}
 					<span>)</span>
 				</div>

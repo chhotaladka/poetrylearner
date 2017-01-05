@@ -17,13 +17,12 @@
 		</div>
 	</div>
 	<div class="details">
-		<div class="mB4" itemprop="creator" itemscope itemtype="http://schema.org/Person">
-			<span>By</span>
+		<div class="mB4 fS16" itemprop="creator" itemscope itemtype="http://schema.org/Person">
 			<a title="View the creator" href="{{ poetry.creator.get_absolute_url }}" itemprop="url">
 				<span itemprop="name">{{ poetry.creator.popular_name }}</span>
 			</a>
 		</div>
-		<div class="mB4">
+		<div class="mB4 fS14">
 			{% comment %}FIXME temporary disabled <a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">{% endcomment %}
 			<a class="hashtag pretty-link" href="#">
 				<s>#</s>
@@ -44,7 +43,7 @@
 		</div>
 	</div>
 	<div class="content p-16">
-		<div lang="{{ poetry.language }}" class="poetry-stanza {{ poetry.language }} fS16" itemprop="text">{{ poetry.body }}</div>
+		<div lang="{{ poetry.language }}" class="poetry-stanza {{ poetry.language }} fS20" itemprop="text">{{ poetry.body }}</div>
 	</div>
 	<div class="action-panel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
 		<button id="shareBtn" class="action-button oN" title="Worth sharing?"

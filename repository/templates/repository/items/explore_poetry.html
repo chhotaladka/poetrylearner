@@ -65,10 +65,10 @@
 			<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
 			</div>
 			<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
-				<div class="section-cards">
+				<div class="section-cards">{% comment %}
 					<div class="section-title">
 						<h3 class="c-grey1">Recommended</h3>
-					</div>
+					</div>{% endcomment %}
 					{% get_poetry_pub_rand 10 as random_poetry %}
 					{% include "repository/include/list/poetry.html" with items=random_poetry %}
 				</div>

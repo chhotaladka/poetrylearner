@@ -21,7 +21,7 @@
 		<p lang="{{ poetry.language }}" class="poetry-stanza {{ poetry.language }} fS16" itemprop="description">{% autoescape off %}{{ poetry.summary }}...{% endautoescape %}</p>
 	</div>
 	<div class="details">
-		<div class="mB4">
+		<div class="mT4 fS14">
 			{% for tag in poetry.get_tags_slugs %}
 	 		<a class="hashtag pretty-link" href="{% url 'repository:tagged-poetry' slug=tag %}">
 	 			<s>#</s>

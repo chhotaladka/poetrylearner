@@ -19,8 +19,18 @@ from django.contrib import admin
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.i18n import i18n_patterns
+from django.contrib.sitemaps.views import sitemap
 
+from repository.sitemaps import PersonSitemap, PoetrySitemap
+from .sitemaps import StaticViewSitemap 
 from . import views
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'poet': PersonSitemap,
+    'poetry': PoetrySitemap
+}
+
 
 urlpatterns = [
     url(r'^$', views.welcome, name='welcome'),
@@ -39,6 +49,10 @@ urlpatterns = [
     url(r'^poets/(?P<pk>\d+)/(?P<slug>.+)?/poetry/?$', views.explore_poetry_of, name='explore-poetry-of'),
     url(r'^poets/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.poet, name='poet'),
     url(r'^poets/?$', views.explore_poets, name='explore-poets'),
+    
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap'),
+    
     url(r'^', include('shorturls.urls', namespace='shorturls')),
     
 ]

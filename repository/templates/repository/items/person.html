@@ -68,7 +68,7 @@
 					{% include "repository/include/list/poetry.html" with items=poetries %}
 					<div class="mdl-card__actions">
 					{% if poetries %}
-						<a class="action-button wFull oN" href="{% url 'explore-poetry-of' pk=obj.id slug=obj.get_slug %}" title="Show all poetry by {{ obj.title }}">							
+						<a class="action-button pTB-8 wFull oN" href="{% url 'explore-poetry-of' pk=obj.id slug=obj.get_slug %}" title="Show all poetry by {{ obj.title }}">							
 							Show all
 						</a>
 					{% else %}<span class="action-button wFull">Working on it...</span>{% endif %}

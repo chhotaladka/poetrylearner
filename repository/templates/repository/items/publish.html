@@ -17,8 +17,10 @@
 							{{ obj.name }}
 						</div>
 					</div>
-					<div class="article-info">
-						By {{ obj.creator.name }}
+					<div class="details">
+						<div class="mB4 fS16">
+							{{ obj.creator.popular_name }}
+						</div>
 					</div>
 					<div class="content p-16">
 					{% if is_published %}

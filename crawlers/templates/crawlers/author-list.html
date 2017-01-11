@@ -8,20 +8,18 @@
 
 {% block tabs %}
 <div class="pB-8">
-	<div class="_layout">
-		<div class="md-tabs">
-			<div class="md-tabs__tab-bar">
-				<div class="md-tabs__tab is-static">
-					<span class="tab-label">Authors</span>
-				</div>			
-			{% for tab in query_tabs %}
-				<a href="{{ tab.url }}" class="md-tabs__tab {{ tab.css }}" title="{{ tab.help_text }}">
-					<span class="tab-label bL">{{ tab.name }}</span>
-				</a>
-			{% endfor %}
-			</div>
-		</div>				
-	</div>	
+	<div class="md-tabs">
+		<div class="md-tabs__tab-bar">
+			<div class="md-tabs__tab is-static">
+				<span class="tab-label">Authors</span>
+			</div>			
+		{% for tab in query_tabs %}
+			<a href="{{ tab.url }}" class="md-tabs__tab {{ tab.css }}" title="{{ tab.help_text }}">
+				<span class="tab-label bL">{{ tab.name }}</span>
+			</a>
+		{% endfor %}
+		</div>
+	</div>
 </div>
 {% endblock %}
 {% block breadcrumbs %}

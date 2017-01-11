@@ -22,9 +22,9 @@
 	<body class="mdl-poetry mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
 	{% block body %}
 	
-	<div class="mdl-layout mdl-js-layout dashboard-layout mdl-layout--fixed-header">
+	<div class="mdl-layout mdl-js-layout dashboard-layout">
 		{% block header %}{% comment %} header of a section/app. Modify in the base template of the app {% endcomment %}
-		<header class="mdl-layout__header page-header">
+		<header class="mdl-layout__header page-header mdl-layout__header--scroll">
 			<div class="mdl-layout__drawer-button">
 				{% include "common/svg/menu.html" %}
 			</div>

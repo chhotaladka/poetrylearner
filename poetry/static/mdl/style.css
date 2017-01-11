@@ -1992,11 +1992,19 @@ input.search-input {
 }
 
 .page-header.mdl-layout__header {
-	/*background: url('../img/header2.jpg') top / cover;*/
-	background-color: white;
+	background-color: transparent;
 	color: #616161 !important;/*grey-700*/
 	min-height: 46px;
-	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.14);
+	/*box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.14);*/
+/*show header always: override mdl for sm screen*/
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+.mdl-layout__container.has-scrolling-header .mdl-layout__content {
+/*show header always: override mdl for sm screen*/
+	overflow: visible;
 }
 .page-header.mdl-layout__header.is-compact {
     max-height: 46px;

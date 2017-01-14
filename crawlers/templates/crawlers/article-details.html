@@ -2,8 +2,10 @@
 
 {% block title %}{{ article.get_title }} - Crawled Article - {{ sitename }}{% endblock %}
 
-{% block search-placeholder %}Articles{% endblock %}
-{% block search-action %}{% url 'crawlers:article-list' %}{% endblock %}
+{% block search %}
+{% url 'crawlers:article-list' as search_url %}
+{% include "common/include/search-bar.html" with q_url=search_url q_str=query_string placeholder="Search an Article" %}
+{% endblock %}
 
 {% block breadcrumbs %}
 <div class="pT-8 pB-8">
@@ -109,8 +111,4 @@
 	</div>
 </section>
 
-{% endblock %}
-
-{% block search-form-action %}
-	{% url 'crawlers:article-list' %}
 {% endblock %}

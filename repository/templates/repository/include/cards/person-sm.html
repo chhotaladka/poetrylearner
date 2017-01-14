@@ -9,19 +9,21 @@
 {% get_poetry_count by person published as poetry_count_pub %}
 <div class="content-wrapper" itemscope itemtype="http://schema.org/Person">
 	<a class="card" href="{{person.get_absolute_url}}" itemprop="url">
-		<div class="mdl-card author-card--sm bS-1 wFull">
-			<div class="card__title tAc">
+		<div class="mdl-card author-card--sm bS-1">
+			<div>
 				{% with person_img_url=person.get_image_url %}
 				{% if person_img_url %}
-				<div class="avatar md border" style="background: url('{{ person_img_url }}') center / cover;">			
+				<div class="avatar-sq" style="background: url('{{ person_img_url }}') center / cover;">
 				</div>
 				{% else %}
-				<div class="avatar md border">
+				<div class="avatar-sq">
 					{% include "common/svg/person.html" %}
 				</div>
 				{% endif %}
 				{% endwith %}
-				<div class="title-text tAc" itemprop="name">
+			</div>
+			<div class="p-8 pT12 tAc">
+				<div class="title-text fS14 tAc" itemprop="name">
 					{{ person.name }}
 				</div>
 				<div class="extras">

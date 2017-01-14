@@ -4,8 +4,10 @@
 
 {% block title %}Crawled Articles - {{ sitename }}{% endblock %}
 
-{% block search-placeholder %}{{result_title}}{% endblock %}
-{% block search-action %}{% endblock %}
+{% block search %}
+{% url 'crawlers:article-list' as search_url %}
+{% include "common/include/search-bar.html" with q_url=search_url q_str=query_string placeholder="Search an Article" %}
+{% endblock %}
 
 {% block tabs %}
 <div class="pB-8">
@@ -13,7 +15,7 @@
 		<div class="md-tabs__tab-bar">
 			<div class="md-tabs__tab is-static">
 				<span class="tab-label">Articles</span>
-			</div>			
+			</div>
 		{% for tab in query_tabs %}
 			<a href="{{ tab.url }}" class="md-tabs__tab {{ tab.css }}" title="{{ tab.help_text }}">
 				<span class="tab-label bL">{{ tab.name }}</span>

@@ -3,19 +3,21 @@
 
 {% block title %}{{ author.get_name }} - Crawled Author - {{ sitename }}{% endblock %}
 
-{% block search-placeholder %}Authors{% endblock %}
-{% block search-action %}{% url 'crawlers:author-list' %}{% endblock %}
+{% block search %}
+{% url 'crawlers:author-list' as search_url %}
+{% include "common/include/search-bar.html" with q_url=search_url q_str=query_string placeholder="Search an Author" %}
+{% endblock %}
 
 {% block breadcrumbs %}
 <div class="pT-8 pB-8">
-	<div class="_layout">					
+	<div class="_layout">
 		<div class="breadcrumbs wFull">
 			<a href="{% url 'crawlers:dashboard' %}">Crawled data</a>
 			<span> / </span>
 			<a href="{% url 'crawlers:article-list' %}">author</a>
-			<span> / </span>	
-			<span>{{ author.get_name }}</span>		 	
-		</div>					
+			<span> / </span>
+			<span>{{ author.get_name }}</span>
+		</div>
 	</div>	
 </div>
 {% endblock %}
@@ -29,10 +31,10 @@
 					{% with prev_author=author.get_previous %}
 					<a href="{% url 'crawlers:author-details' pk=prev_author.id %}">
 						<button id="id-prev-btn" class="action-button" title="Previous Author {{prev_author.get_name}}">
-			                <i class="material-icons md-36" role="presentation">arrow_back</i>			                
+			                <i class="material-icons md-36" role="presentation">arrow_back</i>
 						</button>
 					</a>
-					{% endwith %}																		
+					{% endwith %}
 					<div class="mdl-layout-spacer"></div>
 					{% with next_author=author.get_next%}
 					<a href="{% url 'crawlers:author-details' pk=next_author.id %}">
@@ -52,15 +54,15 @@
 								</td>
 								<td class="data" colspan="2">
 									<span class="gI">{{author.id}}</span>
-								</td>						
-							</tr>			
+								</td>
+							</tr>
 							<tr>
 								<td class="name" colspan="2">
 									<span class="gI">Name</span>
 								</td>
 								<td class="data" colspan="2">
 									<span class="gI" id="id-author-name">{{ author.get_name }}</span>
-								</td>						
+								</td>
 							</tr>
 							<tr>
 								<td class="name" colspan="2">
@@ -68,7 +70,7 @@
 								</td>
 								<td class="data" colspan="2">
 									<span class="gI">{{ author.get_birth_date }}</span>
-								</td>						
+								</td>
 							</tr>
 							<tr>
 								<td class="name" colspan="2">
@@ -76,7 +78,7 @@
 								</td>
 								<td class="data" colspan="2">
 									<span class="gI">{{ author.get_death_date }}</span>
-								</td>						
+								</td>
 							</tr>
 							<tr>
 								<td class="name" colspan="2">
@@ -86,7 +88,7 @@
 									<span class="gI">
 										<a class="h-link" title="{{ author.source_url }}" href="{{ author.source_url }}">{{ author.get_source_name }}</a>
 									</span>
-								</td>						
+								</td>
 							</tr>
 							<tr>
 								<td class="name" colspan="2">
@@ -94,7 +96,7 @@
 								</td>
 								<td class="data" colspan="2">
 									<span class="gI">{{ author.added_at }} IST</span>
-								</td>						
+								</td>
 							</tr>
 							<tr>
 								<td class="name" colspan="2">
@@ -102,7 +104,7 @@
 								</td>
 								<td class="data" colspan="2">
 									<span class="gI" id="id-validity">{{ author.get_validity }}</span>
-								</td>						
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -116,7 +118,7 @@
 			                <span class="action-button__text"><b>{{ articles.total }}</b></span>
 			                <span class="action-button__text">)</span>
 						</button>
-					</a>					
+					</a>
 					{% if not author.get_validity %}
 					{% comment %} Provide a button to add this author to main database i.e. projects.Author {% endcomment %}					
 					<button id="id-add-btn" class="action-button" title="Add {{ author.get_name }} to main database">						
@@ -130,37 +132,32 @@
 			                <i class="material-icons" role="presentation">search</i>
 			                <span class="action-button__text">Search this author in person@repository</span>		                
 						</button>
-					</a>				
+					</a>
 					{% endif %}
 					
-				</div>																		
+				</div>
 			</div>
 
 			<div id="id-div-form" class="mdl-cell mdl-cell--8-col hidden">
 			{% comment %} update the AJAX response of add-person request here {% endcomment %}
-				<div class="mdl-card author-card--lg bS-1 wFull">	
-					<div id="id-person-form-body" class="">			
+				<div class="mdl-card author-card--lg bS-1 wFull">
+					<div id="id-person-form-body" class="">
 					</div>
 					<div class="mdl-card__menu">
 						<button class="mdl-button mdl-js-button mdl-button--icon" id="id-dismiss" title="Dismiss the form">
 			              <i class="material-icons mdl-color-text--grey-600">close</i>
 						</button>
 					</div>
-				</div>		
+				</div>
 			</div>
-										
-		</div>	
+		</div>
 	</section>
 
-{% endblock %}
-
-{% block search-form-action %}
-	{% url 'crawlers:author-list' %}
 {% endblock %}
 
 {% block scripts %}
 	{{ block.super }}
 	{% if not author.get_validity %}
 	<script type="text/javascript" src="{% static 'js/crawlers/author.js' %}"></script>
-	{% endif %}		
+	{% endif %}
 {% endblock %}

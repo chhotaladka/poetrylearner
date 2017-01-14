@@ -14,6 +14,16 @@ from common.search import get_query
 
 # Create your views here.
 
+def search_person(query_string):
+    '''
+    Process the query_string and return the `Person` object list
+    '''
+    entry_query = get_query(query_string, ['name', 'additional_name', 'description'])
+    print entry_query
+    obj_list = Person.objects.filter(entry_query).order_by('name')
+    return obj_list
+
+
 def person(request):
     '''
     For ajax search of `Person` select field

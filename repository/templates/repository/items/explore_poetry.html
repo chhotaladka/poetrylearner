@@ -16,9 +16,10 @@
 <meta name="description" content="Read and explore more than {{ poetry_count }} poetry on {{ sitename }}.">
 {% endif %}
 {% endblock %}
-
-{% block search-placeholder %}{{result_title}}{% endblock %}
-{% block search-action %}/{% endblock %}
+{% comment %}  
+{% block search %}
+{% include "common/include/search-bar.html" with q_url="" q_str=query_string placeholder="Search a Poetry" %}
+{% endblock %}{% endcomment %}
 
 {% block main %}
 	<section class="pT-8 pB-8">
@@ -31,7 +32,7 @@
 					</div>
 					<div class="search-stats mL-8">
 					{% if creator %}
-						<span>{{ items.paginator.count|intcomma }} results</span>
+						<span>{{ items.paginator.count|intcomma }} result{{ items.paginator.count|pluralize }}</span>
 					{% else %}{% comment %}
 						{% get_poetry_count as poetry_count %}
 						<span>{{ poetry_count|intcomma }} results</span>{% endcomment %}
@@ -52,7 +53,7 @@
 			{% include "repository/include/list/poetry.html" with items=items %}
 			{% include "repository/include/misc/pagination-bottom.html" with items=items %}
 		{% else %} {% comment %} Display the notification {% endcomment %}
-			{% include "repository/include/misc/empty-result.html" %}
+			{% comment %}  {% include "common/include/empty-result.html" %}{% endcomment %}
 		{% endif %}
 			</div>
 			<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">

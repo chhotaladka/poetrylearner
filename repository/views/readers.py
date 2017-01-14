@@ -19,6 +19,7 @@ import json
 import random
 
 from repository.models import *
+from repository.views.search import search_person
 
 from common.search import get_query
 from common.utils import user_has_group
@@ -352,6 +353,7 @@ def explore_poetry(request, poet=None, slug=None, src=None):
     # Check the parameters passed in the URL and process accordingly
     # Language
     language = request.GET.get('lan', None)
+    query_string = request.GET.get('q', '')
     
     # If creator(poet) is not given
     if creator is None:
@@ -383,6 +385,7 @@ def explore_poetry(request, poet=None, slug=None, src=None):
     
     context = {'items': objs, 'creator': creator, 'language': language,
                'item_type': 'poetry', 'result_title': result_title,
+               'query_string': query_string,
                'src': src}
     template = 'repository/items/explore_poetry.html'
     return render(request, template, context)
@@ -394,18 +397,28 @@ def explore_poets(request, src=None):
     
     @scope: public
     '''
-    
-    result_title = 'Poets'
+    ##
+    # Check the parameters passed in the URL and process accordingly
 
-    mix_count = 20
-    q_objects = Q()
-    id_list = Person.objects.filter(q_objects).values_list('id', flat=True)
-    count = len(id_list)
-    mix_count = mix_count if count > mix_count else count
-    mix_ids = random.sample(id_list, mix_count)
-    
-    obj_list = Person.objects.filter(pk__in=mix_ids)
-    
+    if ('q' in request.GET) and request.GET['q'].strip():
+        # Search Poets for the query `q`
+        query_string = request.GET['q']
+        result_title = '"' + query_string + '" in Poets'
+        
+        obj_list = search_person(query_string)
+        
+    else:
+        # Select mix of `mix_count` Poets
+        query_string = ''
+        result_title = 'Poets'
+        
+        mix_count = 40
+        q_objects = Q()
+        id_list = Person.objects.filter(q_objects).values_list('id', flat=True)
+        count = len(id_list)
+        mix_count = mix_count if count > mix_count else count
+        mix_ids = random.sample(id_list, mix_count)
+        obj_list = Person.objects.filter(pk__in=mix_ids)
     
     # Pagination
     paginator = Paginator(obj_list, 40) # Show 40 entries per page    
@@ -418,9 +431,10 @@ def explore_poets(request, src=None):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
-    
+    print query_string
     context = {'items': objs,
                'item_type': 'person', 'result_title': result_title,
+               'query_string': query_string,
                'src': src}
     template = 'repository/items/explore_poets.html'
 
@@ -486,38 +500,6 @@ def tagged_items(request, slug, type, src=None):
     template = 'repository/items/tagged-list.html'    
 
     return render(request, template, context)
-
-
-def search(request, src=None):
-    '''
-    @summary: For ajax search of Person select field
-    
-    @src: Source of access. It is being used to manipulate the context/templates.
-        eg. src='public_url' means this view is being accessed using some public url.    
-    '''
-
-    # Search query
-    if ('q' in request.GET) and request.GET['q'].strip():
-        query_string = request.GET['q']
-        entry_query = get_query(query_string, ['name', 'additional_name',])
-        obj_list = Person.objects.filter(entry_query).order_by('name')[:5]
-    else:
-        obj_list = []
-            
-    result = []
-    for obj in obj_list:
-        data = {}
-        data['id'] = obj.id
-        data['name'] = obj.name
-        data['name_en'] = obj.additional_name#TODO change name_en to additional_name, elswhere in javascripts
-        data['birth'] = obj.year_birth if obj.year_birth else ''
-        data['death'] = obj.year_death if obj.year_death else ''
-        data['url'] = obj.get_absolute_url()
-        result.append(data)
-        
-    r = json.dumps(result)
-                  
-    return HttpResponse(r, content_type="application/json")
 
 
 def get_a_poetry():

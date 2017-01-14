@@ -412,7 +412,7 @@ def explore_poets(request, src=None):
         query_string = ''
         result_title = 'Poets'
         
-        mix_count = 40
+        mix_count = 20
         q_objects = Q()
         id_list = Person.objects.filter(q_objects).values_list('id', flat=True)
         count = len(id_list)
@@ -421,7 +421,7 @@ def explore_poets(request, src=None):
         obj_list = Person.objects.filter(pk__in=mix_ids)
     
     # Pagination
-    paginator = Paginator(obj_list, 40) # Show 40 entries per page    
+    paginator = Paginator(obj_list, 20) # Show 40 entries per page    
     page = request.GET.get('page')
     try:
         objs = paginator.page(page)

@@ -419,6 +419,7 @@ html, body {
 	perspective-origin: 165px 56px;
 	transform-origin: 165px 56px 0px;
 	box-sizing: border-box;
+	position: relative;
 }
 .mdl-card__title {
 	min-height: 176px;

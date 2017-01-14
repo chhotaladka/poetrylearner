@@ -8,9 +8,11 @@
 {% endfor%}
 {% endcomment %}
 <div class="mdl-cell mdl-cell--12-col">
-{% for item in items %}
-	<div class="person-wrapper">
-	{% include "repository/include/cards/person-sm.html" with person=item %}
+	<div class="mL-8">
+	{% for item in items %}
+		<div class="person-wrapper">
+		{% include "repository/include/cards/person-sm.html" with person=item %}
+		</div>
+	{% endfor%}
 	</div>
-{% endfor%}
 </div>

@@ -223,7 +223,7 @@ def list(request, type, src=None):
         eg. src='public_url' means this view is being accessed using some public url.    
     '''    
     
-    item_cls, list_template = _resolve_item_type(type, list=True)    
+    item_cls, list_template = _resolve_item_type(type, list=True)
     if item_cls is None:
         print "Error: content type is not found"
         raise Http404 
@@ -239,7 +239,7 @@ def list(request, type, src=None):
     # Creator id (valid for items derived from `CreativeWork`)
     creator = request.GET.get('creator', None)
     # Language (valid for items derived from `CreativeWork`)
-    language = request.GET.get('lan', None)    
+    language = request.GET.get('lan', None)
     # Sort the result by: 'name' for `Author.name`, 'edit' for `Author.date_modified`
     # Default is 'edit' i.e. Give recently edited item first
     sort = request.GET.get('sort', 'edit')
@@ -266,7 +266,7 @@ def list(request, type, src=None):
             kwargs['published'] = False
         else:
             # Set the q_tab to None: ignore other values
-            q_tab = None        
+            q_tab = None
     
     # Set order to its default i.e. `recent` if it is not the expected one.
     if order != 'shuffle':
@@ -287,13 +287,13 @@ def list(request, type, src=None):
             print 'Error: That creator_id is not an integer, pass silently'
             pass
 
-    if language:        
+    if language:
         tmp = dict(LANGUAGES)
         if language in tmp:
             q_string = '&lan=' + language
-            extra_get_queries.append(q_string)            
+            extra_get_queries.append(q_string)
             kwargs['language'] = language
-            result_title += ', #' + tmp[language]                         
+            result_title += ', #' + tmp[language]
 
     # Only for ``poetry`` and ``snippet``
     if type == 'poetry' or type == 'snippet':
@@ -303,9 +303,9 @@ def list(request, type, src=None):
             query_tabs = _create_query_tabs(request.path, q_tab, extra_get_queries)
         else:
             # Create ``query_tabs`` for public users
-            query_tabs = []                        
+            query_tabs = []
             # Show only published `poetry`, `snippet` 
-            kwargs['published'] = True      
+            kwargs['published'] = True
     
     if order == 'shuffle':
         # Note: order_by('?') queries may be expensive and slow, 
@@ -313,7 +313,10 @@ def list(request, type, src=None):
         # FIXME: It will slow down if table is large. Use some other options.
         obj_list = item_cls.objects.apply_filter(**kwargs).order_by('?')
     else:
-        obj_list = item_cls.objects.apply_filter(**kwargs).order_by('-date_modified')                
+        if (q_tab == 'pub') and (type == 'poetry' or type == 'snippet'):
+            obj_list = item_cls.objects.apply_filter(**kwargs).order_by('-date_published')
+        else:
+            obj_list = item_cls.objects.apply_filter(**kwargs).order_by('-date_modified')
     
     
     # Pagination
@@ -369,7 +372,7 @@ def explore_poetry(request, poet=None, slug=None, src=None):
         kwargs['creator'] = creator
         kwargs['published'] = True # Show only published `poetry`
         obj_list = []
-        obj_list = Poetry.objects.apply_filter(**kwargs)
+        obj_list = Poetry.objects.apply_filter(**kwargs).order_by('-date_published')
         
         # Pagination
         paginator = Paginator(obj_list, 40) # Show 40 entries per page    

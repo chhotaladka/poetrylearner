@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.utils.decorators import method_decorator
 import json
 from repository.models import *
-from common.search import get_query, normalize_query, get_query_for_nterms
+from common.search import get_query, normalize_query, get_query_for_nterms, strip_stopwords
 
 # Create your views here.
 
@@ -44,16 +44,23 @@ def search_person(query_string):
     # 1) There are multiple terms, or
     # 2) There is single term with length >= 3
     # Now discard all term with length < 3
-    terms_n = []
-    for term in terms:
-        if len(term) < 3:
-            pass
-        else:
-            terms_n.append(term)
+    terms1 = [x for x in terms if len(x) >= 3 ]
     
-    entry_query = get_query_for_nterms(terms_n, ['name', 'additional_name', 'description'])
-    #print entry_query
-    obj_list = Person.objects.filter(entry_query)
+    # First search in `name`/`additional_name` fields
+    entry_query1 = get_query_for_nterms(terms1, ['name', 'additional_name'])
+    
+    # Now remove the STOP WORDS such as A, THE, AND etc
+    # and search in `description` field
+    terms2 = strip_stopwords(terms1)
+    if len(terms2):
+        entry_query2 = get_query_for_nterms(terms2, ['description'])
+    else:
+        entry_query2 = Q()
+    
+    # Run the query
+    q = entry_query1 | entry_query2
+    obj_list = Person.objects.filter(q)
+    
     return obj_list
 
 

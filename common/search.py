@@ -6,6 +6,192 @@ from django.db.models import Q
 import re
 import os, sys, traceback
 
+# STOP WORDS: https://en.wikipedia.org/wiki/Stop_words
+stopwords = """
+a
+about
+above
+after
+again
+against
+all
+am
+an
+and
+any
+are
+aren't
+as
+at
+be
+because
+been
+before
+being
+below
+between
+both
+but
+by
+can't
+cannot
+could
+couldn't
+did
+didn't
+do
+does
+doesn't
+doing
+don't
+down
+during
+each
+few
+for
+from
+further
+had
+hadn't
+has
+hasn't
+have
+haven't
+having
+he
+he'd
+he'll
+he's
+her
+here
+here's
+hers
+herself
+him
+himself
+his
+how
+how's
+i
+i'd
+i'll
+i'm
+i've
+if
+in
+into
+is
+isn't
+it
+it's
+its
+itself
+let's
+me
+more
+most
+mustn't
+my
+myself
+no
+nor
+not
+of
+off
+on
+once
+only
+or
+other
+ought
+our
+ours
+ourselves
+out
+over
+own
+same
+shan't
+she
+she'd
+she'll
+she's
+should
+shouldn't
+so
+some
+such
+than
+that
+that's
+the
+their
+theirs
+them
+themselves
+then
+there
+there's
+these
+they
+they'd
+they'll
+they're
+they've
+this
+those
+through
+to
+too
+under
+until
+up
+very
+was
+wasn't
+we
+we'd
+we'll
+we're
+we've
+were
+weren't
+what
+what's
+when
+when's
+where
+where's
+which
+while
+who
+who's
+whom
+why
+why's
+with
+won't
+would
+wouldn't
+you
+you'd
+you'll
+you're
+you've
+your
+yours
+yourself
+yourselves
+""".split()
+
+def strip_stopwords(words):
+    "Removes stopwords - from given list of words `words`"
+    terms = []
+    for word in words:
+        if word.lower() not in stopwords:
+            terms.append(word)
+    return terms
+
 def normalize_query(query_string,
                     findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
                     normspace=re.compile(r'\s{2,}').sub):
@@ -53,7 +239,7 @@ def get_query(query_string, search_fields):
         print ("Error: Unexpected error:", sys.exc_info()[0])
         for frame in traceback.extract_tb(sys.exc_info()[2]):
             fname,lineno,fn,text = frame
-            print ("DBG:: Error in %s on line %d" % (fname, lineno))            
+            print ("DBG:: Error in %s on line %d" % (fname, lineno))
             
     return query
 
@@ -79,11 +265,14 @@ def get_query_for_nterms(normalized_terms, search_fields):
             if query is None:
                 query = or_query
             else:
-                query = query & or_query
+                # AND operation changed to OR: if searche phrase contains multiple words,
+                # search hit of individual word should reflect in result.
+                # OR operation is more helpful when searching Person name.
+                query = query | or_query
     except:
         print ("Error: Unexpected error:", sys.exc_info()[0])
         for frame in traceback.extract_tb(sys.exc_info()[2]):
             fname,lineno,fn,text = frame
-            print ("DBG:: Error in %s on line %d" % (fname, lineno))            
+            print ("DBG:: Error in %s on line %d" % (fname, lineno))
             
     return query

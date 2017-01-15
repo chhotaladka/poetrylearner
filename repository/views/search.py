@@ -53,7 +53,7 @@ def search_person(query_string):
     
     entry_query = get_query_for_nterms(terms_n, ['name', 'additional_name', 'description'])
     #print entry_query
-    obj_list = Person.objects.filter(entry_query).order_by('name')
+    obj_list = Person.objects.filter(entry_query)
     return obj_list
 
 

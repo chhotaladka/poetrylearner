@@ -56,3 +56,34 @@ def get_query(query_string, search_fields):
             print ("DBG:: Error in %s on line %d" % (fname, lineno))            
             
     return query
+
+
+def get_query_for_nterms(normalized_terms, search_fields):
+    '''
+    It accept list of normalized terms/tokens, otherwise it is same as 
+    `get_query` function.
+    Returns a query, that is a combination of Q objects. That combination
+    aims to search keywords within a model by testing the given search fields.
+    '''
+    query = None # Query to search for every search term
+    
+    try:
+        for term in normalized_terms:
+            or_query = None # Query to search for a given term in each field
+            for field_name in search_fields:
+                q = Q(**{"%s__icontains" % field_name: term})
+                if or_query is None:
+                    or_query = q
+                else:
+                    or_query = or_query | q
+            if query is None:
+                query = or_query
+            else:
+                query = query & or_query
+    except:
+        print ("Error: Unexpected error:", sys.exc_info()[0])
+        for frame in traceback.extract_tb(sys.exc_info()[2]):
+            fname,lineno,fn,text = frame
+            print ("DBG:: Error in %s on line %d" % (fname, lineno))            
+            
+    return query

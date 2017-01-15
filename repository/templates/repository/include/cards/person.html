@@ -4,6 +4,7 @@
 {% endcomment %}
 {% load staticfiles %}
 {% load humanize %}
+{% load common_tags %}
 {% load poetry_tags %}
 
 <div class="mdl-card card-l author-card--lg bS-1 wFull" itemscope itemtype="http://schema.org/Person">
@@ -54,7 +55,7 @@
 	</div>
 	{% comment %}  Include meta panel {% endcomment %}
 	{% include "repository/include/misc/meta-panel.html" with item=person %}
-
+	{% if request.user|has_group:'administrator,editor' %}
 	<div class="mdl-card__menu">
 		<a href="{% url 'repository:add-item' type=person.item_type pk=person.id %}/?cancel={{request.path}}" title="Edit to improve.">
 			<button class="mdl-button mdl-button--icon c-white" id="btn1">
@@ -62,6 +63,7 @@
 			</button>
 		</a>
 	</div>
+	{% endif %}
 </div>
 <div class="card-l">
 	<div class="feedback link tAr">

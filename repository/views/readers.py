@@ -431,7 +431,7 @@ def explore_poets(request, src=None):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
-    print query_string
+    
     context = {'items': objs,
                'item_type': 'person', 'result_title': result_title,
                'query_string': query_string,

@@ -7,6 +7,7 @@
 			<div class="activity wide-card bCw mH-auto wFull bS-1">
 				<div class="pLR-16 pTB-8">
 					<span class="groupdate">{{ action_group.grouper|niceday }}</span>
+					<span class="light-txt fS10 pL-8">+ {{ action_group.list|length }}</span>
 				</div>
 			</div>
 			{% for action in action_group.list %}

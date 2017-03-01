@@ -59,7 +59,7 @@ def has_group(user, groups):
     e.g. {{ user|has_group:"Administrator, Editor" }}
     '''
     if user:       
-        group_list = [s for s in groups.split(',')]     
+        group_list = [s for s in groups.split(',')]
         if user.is_authenticated():
             if bool(user.groups.filter(name__in=group_list)) | user.is_superuser:
                 return True
@@ -69,12 +69,17 @@ def has_group(user, groups):
 @register.filter
 def niceday(value):
     '''
-    For date & time values, compared to current timestamp returns representing string.
+    For date & datetime values, compared to current timestamp returns representing string.
     '''
     if not isinstance(value, date):  # datetime is a subclass of date
         return value
     
-    now = datetime.now(utc if is_aware(value) else None)
+    if isinstance(value, datetime):
+        now = datetime.now(utc if is_aware(value) else None).date()
+        value = value.date()
+    else:
+        now = datetime.now().date()
+        
     delta = now - value
     day_delta = delta.days
     
@@ -94,7 +99,7 @@ def niceday(value):
 @register.filter
 def nicetime(value):
     """
-    For date and time values shows how many seconds, minutes or hours ago
+    For datetime values shows how many seconds, minutes or hours ago
     compared to current timestamp returns representing string.
     """
     if not isinstance(value, date):  # datetime is a subclass of date

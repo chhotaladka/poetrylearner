@@ -1,0 +1,22 @@
+{% comment %} Display the activity list {% endcomment %}
+{% load common_tags %}
+{% if actions %}
+	{% regroup actions by timestamp.date as action_groups %}
+	{% for action_group in action_groups %}
+		<div class="mdl-cell mdl-cell--12-col mT0 mB0">
+			<div class="activity wide-card bCw mH-auto wFull bS-1">
+				<div class="pLR-16 pTB-8">
+					<span class="groupdate">{{ action_group.grouper|niceday }}</span>
+				</div>
+			</div>
+			{% for action in action_group.list %}
+			{% include "activity/include/activity-card.html" with action=action %}
+			{% endfor %}
+		</div>
+	{% endfor %}
+	{% include "activity/include/pagination-bottom.html" with items=actions %}
+{% else %}{% comment %} Display the notification {% endcomment %}
+	<div class="mdl-cell mdl-cell--12-col mT0 mB0">
+	{% include "activity/include/empty-result.html" %}
+	</div>
+{% endif %}

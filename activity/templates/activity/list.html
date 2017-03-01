@@ -19,7 +19,7 @@
 				</div>
 			</div>
 			{% comment %} Statistics graph {% endcomment %}
-			{% if actions %}
+			{% if actions and not actions.has_previous %}
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 			<script type="text/javascript">
 				google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -54,19 +54,8 @@
 					<div id="chart_div" style=""></div>
 				</div>
 			</div>
-		{% endif %}
-		{% if actions %} {% comment %} Display the list {% endcomment %}
-			{% for action in actions %}
-			<div class="mdl-cell mdl-cell--12-col mT0 mB0">
-			{% include "activity/include/activity-card.html" with action=action %}
-			</div>
-			{% endfor %}
-			{% include "activity/include/pagination-bottom.html" with items=actions %}
-		{% else %}{% comment %} Display the notification {% endcomment %}
-			<div class="mdl-cell mdl-cell--12-col mT0 mB0">
-			{% include "activity/include/empty-result.html" %}
-			</div>
-		{% endif %}
+			{% endif %}
+			{% include "activity/include/list.html" %}
 		</div>
 	</section>
 {% endblock %}

@@ -2,9 +2,8 @@
 	Info: Activity Card
 {% endcomment %}
 {% load common_tags %}
-
 <div class="activity wide-card bCw mH-auto wFull bS-1">
-	<div class="title p-16 row">
+	<div class="p-16 row fW-no">
 		<div class="verb-icon {{ action.get_verb }}">
 			{% if action.is_addition %}
 			{% include "common/svg/plus.html" %}
@@ -15,10 +14,12 @@
 			{% endif %}
 		</div>
 		<div>
-			<div class="fS-12 title-text mB4">
-				<a class="h-link" href="{{ action.actor_url }}">{{ action.actor }}</a>
-				<span>{{ action.get_verb }}</span>
-				<a class="h-link" href="{{ action.target_url }}">{{ action.target_name }}</a>.
+			<div class="title">
+				<div class="fS-12 title-text mB4">
+					<a class="h-link" href="{{ action.actor_url }}">{{ action.actor }}</a>
+					<span>{{ action.get_verb }}</span>
+					<a class="h-link" href="{{ action.target_url }}">{{ action.target_name }}</a>
+				</div>
 			</div>
 			<div class="fS10 light-txt">
 				<span>{{ action.timestamp }}</span>

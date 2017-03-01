@@ -1294,6 +1294,12 @@ a.action-button:hover {
 	border-left: 2px solid rgba(139, 195, 74, 0.60);
 }
 /* activity */
+.activity .groupdate {
+	font-size: 9px;
+	color: #222;
+	font-weight: bold;
+	text-transform: uppercase;
+}
 .verb-icon,
 .activity .verb-icon {
 	margin-right: 8px;
@@ -2379,10 +2385,10 @@ ul.mdl-mini-footer__link-list {
 .centered {
     margin: 0px auto;
 }
-.b { font-weight: 600;}
+.b { font-weight: 600 !important;}
 .bold {
 	color: #222;
-	font-weight: 600;
+	font-weight: 600 !important;
 }
 .hi {letter-spacing: 0em !important;}
 .fS-13 {

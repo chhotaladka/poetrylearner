@@ -1,0 +1,37 @@
+{% comment %} Display the feedback list {% endcomment %}
+{% if feedbacks %} {% comment %} Display the list {% endcomment %}
+	{% include "common/include/pagination-top.html" with items=feedbacks %}	
+	{% for feedback in feedbacks %}
+	<div class="feedback-list mdl-cell mdl-cell--12-col mT0 mB0">
+	{% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}
+	</div>
+	{% endfor %}
+	{% include "common/include/pagination-bottom.html" with items=feedbacks %}
+{% else %}  {% comment %} Display the notification {% endcomment %}
+	<div class="mdl-cell mdl-cell--12-col mT0 mB0">
+	{% include "feedback/include/empty-result.html" %}
+	</div>
+{% endif %}
+<script>
+{% comment %} javascript to toggle feedback card view (more/less) {% endcomment %}
+{% if feedbacks%}
+	document.addEventListener('DOMContentLoaded', function () {
+		var status = false;
+		var toggleView = function(){
+			if ($(this).hasClass('more')){
+				status = true;
+			} else{
+				status = false;
+			}
+			$('.feedback-list .feedback').removeClass('more');
+			if (status){
+				$(this).removeClass('more');
+			} else{
+				$(this).addClass('more');
+			}
+		};
+		var nodes = $('.feedback-list .feedback');
+		nodes.on('click', toggleView);
+	});
+{% endif %}
+</script>

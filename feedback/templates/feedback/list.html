@@ -3,60 +3,22 @@
 
 {% block title %}Feedbacks | {{ sitename }}{% endblock %}
 
-{% block tabs %}
-<div class="pB-8">
-	<div class="md-tabs">
-		<div class="md-tabs__tab-bar">
-			<div class="md-tabs__tab is-static">
-				<span class="tab-label">Feedbacks</span>
-			</div>			
-		{% for tab in query_tabs %}
-			<a href="{{ tab.url }}" class="md-tabs__tab {{ tab.css }}" title="{{ tab.help_text }}">
-				<span class="tab-label bL">{{ tab.name }}</span>
-			</a>
-		{% endfor %}
-		</div>
-	</div>
-</div>
-{% endblock %}
 {% block main %}
 	<section class="pT-8 pB-16">
 		<div class="_layout layout-L mdl-grid">
-		{% if feedbacks %} {% comment %} Display the list {% endcomment %}
-			{% include "common/include/pagination-top.html" with items=feedbacks %}	
-			
-			{% for feedback in feedbacks %}
-			<div class="feedback-list mdl-cell mdl-cell--12-col mT0 mB0">
-			{% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="wide-card row fill">
+					<div class="head-title">Feedbacks</div>
+					<div class="mR-8">
+					{% for tab in query_tabs %}
+						<a href="{{ tab.url }}" class="md-tabs__tab {{ tab.css }}" title="{{ tab.help_text }}">
+							<span class="tab-label bL">{{ tab.name }}</span>
+						</a>
+					{% endfor %}
+					</div>
+				</div>
 			</div>
-			{% endfor %}
-			
-			{% include "common/include/pagination-bottom.html" with items=feedbacks %}
-			
-		{% else %}  {% comment %} Display the notification {% endcomment %}
-			{% include "common/include/empty-result.html" with result_title='feedbacks' %}
-		{% endif %}
+			{% include "feedback/include/list.html" %}
 		</div>
 	</section>
-	<script>
-	{% comment %} javascript to toggle feedback card view (more/less) {% endcomment %}
-	document.addEventListener('DOMContentLoaded', function () {
-		var status = false;
-		var toggleView = function(){
-			if ($(this).hasClass('more')){
-				status = true;
-			} else{
-				status = false;
-			}
-			$('.feedback-list .feedback').removeClass('more');
-			if (status){
-				$(this).removeClass('more');
-			} else{
-				$(this).addClass('more');
-			}
-		};
-		var nodes = $('.feedback-list .feedback');
-		nodes.on('click', toggleView);
-	});
-	</script>
 {% endblock %}

@@ -175,9 +175,9 @@ def item(request, type, pk, slug, src=None):
 def home(request):
     '''
     @summary: Show home page of Repository
-    @note: Only 'Administrator' has access (redirect others to home page).
+    @note: Only Administrator & Editor have access (redirect others to home page).
     '''
-    if user_has_group(request.user, ['Administrator',]) is False:
+    if user_has_group(request.user, ['Administrator', 'Editor']) is False:
         # Redirect to home page
         return redirect('/')
     
@@ -191,10 +191,10 @@ def home(request):
 def items(request):
     '''
     @summary: Show all data items
-    @note: Only 'Administrator' has access (redirect others to home page).
+    @note: Only Administrator & Editor have access (redirect others to home page).
     '''
     
-    if user_has_group(request.user, ['Administrator',]) is False:
+    if user_has_group(request.user, ['Administrator', 'Editor']) is False:
         # Redirect to home page
         return redirect('/')
     

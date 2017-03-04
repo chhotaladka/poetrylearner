@@ -99,18 +99,18 @@ html, body {
 }
 
 .mdl-poetry .mdl-poetry__post {
-    max-width: 1080px;
-    padding: 0px;
-    display: flex;
-    width: 100%;
-    margin: 0px auto;
-    flex-shrink: 0;
+	max-width: 1080px;
+	padding: 0px;
+	display: flex;
+	width: 100%;
+	margin: 0px auto;
+	flex-shrink: 0;
 }
 ._layout {
-    max-width: 1080px;
-    padding: 0px;
-    width: 100%;
-    margin: 0px auto;
+	max-width: 1080px;
+	padding: 0px;
+	width: 100%;
+	margin: 0px auto;
 }
 ._layout.full {
 	max-width: 100%;
@@ -134,30 +134,30 @@ html, body {
 }
 .err-card h1 {
 	margin: 8px;
-    font-family: "Open Sans",arial;
-    color: #555;
-    font-size: 42px;
-    font-weight: 300;
-    margin-top: 0px;
-    margin-bottom: 20px;
+	font-family: "Open Sans",arial;
+	color: #555;
+	font-size: 42px;
+	font-weight: 300;
+	margin-top: 0px;
+	margin-bottom: 20px;
 }
 .err-card h2 {
-    font-family: "Open Sans",arial;
-    color: #555;
-    font-size: 18px;
-    font-weight: 400;
-    margin-bottom: 20px;
+	font-family: "Open Sans",arial;
+	color: #555;
+	font-size: 18px;
+	font-weight: 400;
+	margin-bottom: 20px;
 }
 .err-card p {
-    margin: 0px 0px 10px;
-    color: #555;
-    font-size: 14px;
+	margin: 0px 0px 10px;
+	color: #555;
+	font-size: 14px;
 }
 
 .table--large .mdl-data-table {
-  width: 100%;
-  width: -moz-available;          /* WebKit-based browsers will ignore this. */
-  width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+	width: 100%;
+	width: -moz-available;          /* WebKit-based browsers will ignore this. */
+	width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
 }
 .mdl-data-table .non-numeric {
 	text-align: left;
@@ -1024,11 +1024,11 @@ html, body {
 	background-color: rgba(219, 68, 55, 1); }
 
 .info-box {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: flex-start;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: flex-start;
 	color: #616161 !important;
 	font-size: 13px;
 	line-height: 18px;
@@ -1135,8 +1135,7 @@ html, body {
 .action-button > * {
 	vertical-align: middle;
 }
-.action-button:hover,
-.profile-menu-btn:hover {
+.action-button:hover {
 	color: #616161;
 }
 .action-button:hover svg {
@@ -1945,6 +1944,25 @@ p.poetry-stanza,
 .mdl-navigation__link.section {
 	font-weight: 600 !important;
 }
+.mdl-navigation__link button {
+	background: transparent none repeat scroll 0px 0px;
+	border: medium none;
+	border-radius: 2px;
+	position: relative;
+	padding: 0px;
+	display: inline-block;
+	overflow: hidden;
+	outline: medium none;
+	cursor: pointer;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+	font-weight: 700;
+	font-size: 16px;
+	color: inherit;
+	letter-spacing: 0.05em;
+}
+
 .dashboard-navigation > a:hover {
 	text-decoration: none;
 }
@@ -1994,67 +2012,15 @@ p.poetry-stanza,
 .nav-submenu {
   position: absolute;
   right: 16px;
-  top: 16px; }
+  top: 16px;
+}
 
-.profile-menu .mdl-menu__item {
-	height: auto;
-	line-height: 16px;
-	padding: 5px 22px;
-}
-.profile-menu button {
-	width: 100%;
-	display: inline-block;
-	border: none;
-	outline: 0px none;
-	cursor: pointer;
-	background: transparent;
-	text-align: inherit;
-	padding: 0px;
-	font-family: unset;
-	color: inherit;
-}
-.profile-menu .separator,
 .separator {
 	border-bottom: 1px solid #E9EAED;
 	margin: 5px 7px 6px;
 	padding-top: 1px;
 }
 
-.dropdown-menu .dropdown-caret {
-    position: absolute;
-    top: -10px;
-    left: 12px;
-    width: 18px;
-    height: 10px;
-    float: left;
-    overflow: hidden;
-left: auto;
-right: 30px;
-}
-.dropdown-caret .caret-outer, 
-.dropdown-caret .caret-inner {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    display: inline-block;
-    margin-left: -1px;
-}
-.dropdown-caret .caret-outer {
-    border-bottom: 10px solid rgba(0, 0, 0, 0.1);
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    height: auto;
-    left: 0px;
-    top: 0px;
-    width: auto;
-}
-.dropdown-caret .caret-inner {
-    top: 1px;
-    left: 1px;
-    border-left: 9px solid transparent;
-    border-right: 9px solid transparent;
-    border-bottom: 9px solid #FFF;
-}
 .logo,
 .site-name {
 	white-space: nowrap;

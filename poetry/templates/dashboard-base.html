@@ -35,9 +35,9 @@
 				<div class="mdl-layout-spacer"></div>
 				<nav class="mdl-navigation page-header--nav">
 				{% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
-					{% if request.user.is_authenticated %}
-					<div id="id-profile-menu" class="mdl-navigation__link">
-						<button class="action-button oN" title="{{ request.user|title }} : {{ profile.get_contact }}">
+				{% if request.user.is_authenticated %}
+					<a class="mdl-navigation__link" href="{% url 'dashboard:user-home' %}">
+						<button class="action-button oN" title="Home">
 							{% if profile.get_avatar_url %}
 							<div>
 								<img class="circle" width="36" height="36" src="{{ profile.get_avatar_url }}"></img>
@@ -46,46 +46,16 @@
 							{% include "common/svg/user.html" %}
 							{% endif %}
 						</button>
-					</div>
-					{% else %}
+					</a>
+				{% else %}
 					<div class="mdl-navigation__link wS-nw">
 						<a class="oN" href="{% url 'account_login' %}?next={% block header-login-redirect %}{% url 'dashboard:user-home' %}{% endblock %}">
 							Log in
 						</a>
 					</div>
-					{% endif %}
+				{% endif %}
 				{% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
 				</nav>
-				{% comment %} User profile submenu {% endcomment %}
-				{% if request.user.is_authenticated %}
-				<ul class="dropdown-menu profile-menu mdl-menu mdl-menu--bottom-right mdl-js-menu" for="id-profile-menu">
-					<a class="mdl-menu__item oN" href="{% url 'dashboard:private-profile' %}">
-						<div>
-							<div>{% if profile %}{{ profile.get_first_name }}{% else %}{{ request.user|title }}{% endif %}</div>
-							<div class="light-txt">View Profile</div>
-						</div>
-					</a>
-					{% comment %}<li disabled class="mdl-menu__item">Disabled Action</li>{% endcomment %}
-					<li class="separator"></li>
-					<a class="mdl-menu__item oN" href="{% url 'dashboard:user-home' %}">
-						Home
-					</a>
-					<a class="mdl-menu__item oN" href="{% url 'bookmark:list-bookmarks' %}">
-						Bookmarks
-					</a>
-					<a class="mdl-menu__item oN" href="{% url 'activity:list' %}">
-						Activity Log
-					</a>
-					<li class="separator"></li>
-					<li class="mdl-menu__item">
-						<form method="post" action="{% url 'account_logout' %}">
-							{% csrf_token %}
-							<input type="hidden" name="next" value={% block header-logout-redirect %}"/"{% endblock %}/>
-							<button class="oN" type="submit">Log Out</button>
-						</form>
-					</li>
-				</ul>
-				{% endif %}
 			</div>
 		</header>
 		{% endblock %}{% comment %} end of header block {% endcomment %}
@@ -98,17 +68,45 @@
 				<a href="/">poetry learner</a>
 			</div>
 			<nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800" itemscope itemtype="http://schema.org/SiteNavigationElement">
+				{% if request.user.is_authenticated %}
+				<a class="mdl-navigation__link" href="{% url 'dashboard:private-profile' %}" title="{{ request.user|title }} : {{ profile.get_contact }}">
+					<div class="row">
+						<div class="pR-8">
+						{% if profile.get_avatar_url %}
+							<img class="circle" width="36" height="36" src="{{ profile.get_avatar_url }}"></img>
+						{% else %}
+							{% include "common/svg/user.html" %}
+						{% endif %}
+						</div>
+						<div>
+							<div>{% if profile %}{{ profile.get_first_name }}{% else %}{{ request.user|title }}{% endif %}</div>
+							<div class="light-txt">View Profile</div>
+						</div>
+					</div>
+				</a>
+				{% endif %}
 				<a class="mdl-navigation__link" href="{% url 'explore-poetry' %}" itemprop="url">Poetry</a>
 				<a class="mdl-navigation__link" href="{% url 'explore-poets' %}" itemprop="url">Poets</a>
+				{% if request.user.is_authenticated %}
+				<a class="mdl-navigation__link" href="{% url 'bookmark:list-bookmarks' %}">Bookmarks</a>
 				{% if request.user|has_group:'administrator' %}
 				<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}" itemprop="url">Crawled data</a>
 				{% endif %}
 				{% if request.user|has_group:'administrator,editor' %}
 				<a class="mdl-navigation__link" href="{% url 'repository:home' %}" itemprop="url">Repository</a>
+				<a class="mdl-navigation__link" href="{% url 'activity:list' %}">Activity Log</a>
 				<a class="mdl-navigation__link" href="{% url 'feedback:list' %}" itemprop="url">Feedbacks</a>
 				{% endif %}
 				{% if request.user.is_staff %}
 				<a class="mdl-navigation__link" href="{% url 'admin:index' %}" itemprop="url">Admin</a>
+				{% endif %}
+				<div class="mdl-navigation__link">
+					<form method="post" action="{% url 'account_logout' %}">
+						{% csrf_token %}
+						<input type="hidden" name="next" value="{{ request.path }}"/>
+						<button class="oN" type="submit">Logout</button>
+					</form>
+				</div>
 				{% endif %}
 			</nav>
 			<footer class="mdl-mini-footer">

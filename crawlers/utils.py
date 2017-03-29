@@ -6,6 +6,10 @@ import json
 
 from crawlers.models import RawArticle, RawAuthor
 
+# Minimum length of an article to be qualified as valid Article
+ARTICLE_MIN_LEN = 32
+
+
 def validate_source_url(url):
     validate = URLValidator()
     try:

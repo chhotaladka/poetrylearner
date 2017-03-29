@@ -5,6 +5,11 @@ import os, sys, traceback, time
 from crawlers.spiders.base import BaseSpider
 
 try:
+    from crawlers.utils import ARTICLE_MIN_LEN
+except ImportError:
+    ARTICLE_MIN_LEN = 32
+
+try:
     from crawlers.utils import save_to_db_poem, save_to_db_author, get_language_list_for_url
 except ImportError:
     def save_to_db_poem(data):
@@ -134,7 +139,7 @@ class KangarooBot(scrapy.Spider):
             #print len(urls_all)
             
             # Exclude the URLs present in breadcrumbs
-            urls_exclude = response.xpath("//div[@id='mw-content-text']//div[@id='kkrachna' or @class='kkrachna' or @id='extrainfobox']//a/@href").extract()
+            urls_exclude = response.xpath("//div[@id='mw-content-text']//div[@id='kkrachna' or @class='kkrachna' or @id='extrainfobox' or @class='noarticletext']//a/@href").extract()
             urls_exclude = set(urls_exclude)
             #print len(urls_exclude)
             
@@ -232,13 +237,20 @@ class KangarooBot(scrapy.Spider):
                 if len(p):
                     # Now check for the length of the text under the <p>
                     # Because it may contains empty <p>, or one line text stating poetry is not available etc.
-                    # Here we assume that the length of Poetry should be greater than 8.
+                    # Here we assume that the length of Poetry should be greater than ARTICLE_MIN_LEN.
                     p_t = response.xpath("//div[@id='mw-content-text']//p/text()").extract()
                     p_t = "".join(x.encode('utf-8') for x in p_t)
-                    if len(p_t) <= 8:
+                    if len(p_t) <= ARTICLE_MIN_LEN:
                         flag_poetry_found = Flase
                 else:
                     flag_poetry_found = Flase
+            else:
+                # Check the length of the article
+                p_t = response.xpath("//div[@id='mw-content-text']/div[@class='poem']//p/text()").extract()
+                p_t = "".join(x.encode('utf-8') for x in p_t)
+                if len(p_t) <= ARTICLE_MIN_LEN:
+                    flag_poetry_found = Flase
+                
         except:
             self.logger.error("parse_poetry_page: xpath error.")
             flag_poetry_found = False

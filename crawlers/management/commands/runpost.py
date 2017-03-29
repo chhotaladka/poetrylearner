@@ -4,6 +4,8 @@ import traceback
 
 from crawlers.processors.reindeer import cmd_init_reindeer, cmd_resume_reindeer, cmd_exit_reindeer
 from crawlers.processors.kangaroo import cmd_init_kangaroo, cmd_resume_kangaroo, cmd_exit_kangaroo
+from crawlers.processors.cleaning import cmd_init_cleaning, cmd_resume_cleaning, cmd_exit_cleaning
+
 
 class Command(BaseCommand):
     help = 'Run crawlers post processing commands.'
@@ -15,7 +17,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--init',
             type=str,
-            choices=['reindeer', 'kangaroo'],
+            choices=['reindeer', 'kangaroo', 'cleaning'],
             dest='init',
             default=False,
             help='Initialize post processor.',
@@ -23,7 +25,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--resume',
             type=str,
-            choices=['reindeer', 'kangaroo'],
+            choices=['reindeer', 'kangaroo', 'cleaning'],
             dest='resume',
             default=False,
             help='Resume/run post processor.',
@@ -31,7 +33,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--exit',
             type=str,
-            choices=['reindeer', 'kangaroo'],
+            choices=['reindeer', 'kangaroo', 'cleaning'],
             dest='exit',
             default=False,
             help='Exit post processor.',
@@ -56,24 +58,27 @@ class Command(BaseCommand):
             process = options['init']
             if process == 'reindeer':
                 cmd_init_reindeer()
-                
             elif process == 'kangaroo':
                 cmd_init_kangaroo()
+            elif process == 'cleaning':
+                cmd_init_cleaning()
                 
         elif options['resume']:
             process = options['resume']
             if process == 'reindeer':
                 cmd_resume_reindeer(num_thread)
-                
             elif process == 'kangaroo':
                 cmd_resume_kangaroo(num_thread)
+            elif process == 'cleaning':
+                cmd_resume_cleaning(num_thread)
                 
         elif options['exit']:
             process = options['exit']
             if process == 'reindeer':
                 cmd_exit_reindeer()
-                
             elif process == 'kangaroo':
                 cmd_exit_kangaroo()
+            elif process == 'cleaning':
+                cmd_exit_cleaning()
         else:
             raise CommandError('-h or --help for help')

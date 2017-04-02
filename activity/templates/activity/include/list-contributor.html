@@ -1,0 +1,9 @@
+{% comment %} Display the contributor list {% endcomment %}
+{% if contributors %}
+	{% for user in contributors %}
+		{% include "activity/include/contributor-card.html" %}
+	{% endfor %}
+	{% include "activity/include/pagination-bottom.html" with items=contributors %}
+{% else %}{% comment %} Display the notification {% endcomment %}
+	{% include "activity/include/empty-contributors.html" %}
+{% endif %}

@@ -96,7 +96,7 @@ class Action(models.Model):
                                      db_index=True)
 
     actor = models.ForeignKey(User,
-                              related_name='actor',
+                              related_name='action',
                               db_index=True)
 
     target_content_type = models.ForeignKey(ContentType,
@@ -161,6 +161,9 @@ class Action(models.Model):
     
     def actor_url(self):
         return self.actor.profile.get_absolute_url()
+    
+    def actor_name(self):
+        return self.actor.profile.get_first_name()
 
     def target_url(self):
         "Returns the target (i.e. edited object) represented by this Action"

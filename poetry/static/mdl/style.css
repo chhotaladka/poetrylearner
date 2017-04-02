@@ -950,6 +950,16 @@ html, body {
 	width: 110px;
 	height: 110px;
 }
+.avatar.sm,
+.avatar.sm svg {
+	width: 60px;
+	height: 60px;
+}
+.avatar.xsm,
+.avatar.xsm svg {
+	width: 32px;
+	height: 32px;
+}
 .avatar.user svg {
 	fill: #616161 !important;
 }

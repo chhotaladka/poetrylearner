@@ -1,0 +1,30 @@
+{% extends "activity/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Top contributors | {{ sitename }}{% endblock %}
+
+{% block main %}
+	<section class="pT-8 pB-16">
+		<div class="_layout layout-L mdl-grid">
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="wide-card row fill">
+					<div class="head-title">
+						<a href="{% url 'activity:list' %}">Activity Log</a>
+						<span>/</span>
+						<span class="fS16">Top Contributors</span>
+					</div>
+					<div class="mR-8">
+					{% for tab in query_list %}
+						<a href="{{ tab.url }}" class="md-tabs__tab {{ tab.css }}" title="{{ tab.help_text }}">
+							<span class="tab-label bL">{{ tab.name }}</span>
+						</a>
+					{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="mdl-cell mdl-cell--12-col mT0 mB0">
+			{% include "activity/include/list-contributor.html" %}
+			</div>
+		</div>
+	</section>
+{% endblock %}

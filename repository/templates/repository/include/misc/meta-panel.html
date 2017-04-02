@@ -12,7 +12,7 @@
 				<div>
 					<span>Last edited by</span> 
 					<a title="View user" href={{ item.get_last_edit_user.profile.get_absolute_url }}>
-						{{item.get_last_edit_user}}
+						{{item.get_last_edit_user.profile.get_first_name}}
 					</a>
 				</div>
 				<div title="Last edited at {{ item.get_last_edit_time }} IST">
@@ -25,7 +25,7 @@
 				<div>
 					<span>Added by</span> 
 					<a title="View user" href={{ item.get_first_edit_user.profile.get_absolute_url }}>
-						{{item.get_first_edit_user}}
+						{{item.get_first_edit_user.profile.get_first_name}}
 					</a>
 				</div>
 				<div title="Added at {{ item.get_first_edit_time }} IST">

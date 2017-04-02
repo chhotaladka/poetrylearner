@@ -1,6 +1,5 @@
 {% comment %} Display the feedback list {% endcomment %}
 {% if feedbacks %} {% comment %} Display the list {% endcomment %}
-	{% include "common/include/pagination-top.html" with items=feedbacks %}	
 	{% for feedback in feedbacks %}
 	<div class="feedback-list mdl-cell mdl-cell--12-col mT0 mB0">
 	{% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}

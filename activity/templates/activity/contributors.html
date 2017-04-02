@@ -7,26 +7,28 @@
 	<section class="pT-8 pB-16">
 		<div class="_layout layout-L mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col">
-				<div class="wide-card row fill">
-					<div class="head-title">
+				<div class="wide-card">
+					<div class="head-title mB-8">
 						<a href="{% url 'activity:list' %}">Activity Log</a>
 						<span>/</span>
 						<span class="fS16">Top Contributors</span>
 					</div>
-					<div class="dropdown mT-8">
-						<div class="dropbtn" role="button">
-							<div class="dropbtn-txt">{{ query_list_title }}</div>
-							<span class="dropdown-arw"></span>
+					<div class="menu row r2l">
+						<div class="dropdown">
+							<div class="dropbtn" role="button">
+								<div class="dropbtn-txt">{{ query_list_title }}</div>
+								<span class="dropdown-arw"></span>
+							</div>
+							<ul class="dropdown-content right">
+							{% for qi in query_list %}
+								<li>
+									<a href="{{ qi.url }}" class="{{ qi.css }}" title="{{ qi.help_text }}">
+										<span>{{ qi.name }}</span>
+									</a>
+								</li>
+							{% endfor %}
+							</ul>
 						</div>
-						<ul class="dropdown-content right">
-						{% for qi in query_list %}
-							<li>
-								<a href="{{ qi.url }}" class="{{ qi.css }}" title="{{ qi.help_text }}">
-									<span>{{ qi.name }}</span>
-								</a>
-							</li>
-						{% endfor %}
-						</ul>
 					</div>
 				</div>
 			</div>

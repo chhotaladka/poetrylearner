@@ -214,6 +214,77 @@ def feedback_response(request, pk):
     return render(request, template, context)
 
 
+def _create_query_list(request, q=None, extra_get_queries=[]):
+    '''
+    @summary: Return query list object for feedbacks
+    '''
+    get_query = ''.join(extra_get_queries)
+    url = request.path
+    
+    q_name = {
+              'all': 'All',
+              'pending': 'Pending',
+              'closed': 'Closed',
+              'me': 'My feedbacks',
+              'anonymous': 'Anonymous',
+              'known': 'By known'
+            }
+    
+    # Create query list and populate
+    query_list = []
+    
+    item = {
+           'name': q_name['all'],
+           'help_text': 'Recent feedbacks',
+           'url': url + '?q=all',
+           'css': 'is-active' if q == 'all' else '',
+        }
+    query_list.append(item)
+    
+    item = {
+           'name': q_name['pending'],
+           'help_text': 'Feedbacks to which response is awaiting.',
+           'url': url + '?q=pending',
+           'css': 'is-active' if q == 'pending' else '',
+        }
+    query_list.append(item)
+    
+    item = {
+           'name': q_name['closed'],
+           'help_text': 'Feedbacks to which response has given.',
+           'url': url + '?q=closed',
+           'css': 'is-active' if q == 'closed' else '',
+        }
+    query_list.append(item)
+    
+    item = {
+           'name': q_name['me'],
+           'help_text': 'My feedbacks',
+           'url': url + '?q=me',
+           'css': 'is-active' if q == 'me' else '',
+        }
+    query_list.append(item)
+    
+    if user_has_group(request.user, ['Administrator',]):
+        item = {
+               'name': q_name['anonymous'],
+               'help_text': 'Feedbacks by anonymous users',
+               'url': url + '?q=anonymous',
+               'css': 'is-active' if q == 'anonymous' else '',
+            }
+        query_list.append(item)
+        
+        item = {
+               'name': q_name['known'],
+               'help_text': 'User has account or have given email id',
+               'url': url + '?q=known',
+               'css': 'is-active' if q == 'known' else '',
+            }
+        query_list.append(item)
+    
+    return query_list, q_name[q]
+
+
 @group_required('administrator', 'editor')
 def feedback_list(request):
     '''
@@ -227,19 +298,19 @@ def feedback_list(request):
     # Check the parameters passed in the URL and process accordingly
     
     # Query tab
-    q_tab = request.GET.get('tab', None)
+    q_tab = request.GET.get('q', None)
     
     if q_tab == 'pending':
         # Feedbacks to which we have not responded
         obj_list = Feedback.objects.all().filter(
-                                                  Q(action__isnull=True) | 
+                                                  Q(action__isnull=True) |
                                                   Q(action=u'')
                                                   )
 
     elif q_tab == 'closed':
         # Feedbacks to which we have responded
         obj_list = Feedback.objects.all().exclude(
-                                                  Q(action__isnull=True) | 
+                                                  Q(action__isnull=True) |
                                                   Q(action=u'')
                                                   ).order_by('-date_responded')
             
@@ -254,81 +325,31 @@ def feedback_list(request):
         # Feedbacks by anonymous users (haven't given email id)        
         obj_list = Feedback.objects.all().filter(
                                                  Q(added_by__isnull=True),
-                                                 Q(email__isnull=True) | 
+                                                 Q(email__isnull=True) |
                                                  Q(email=u'')
                                                  )        
     elif q_tab == 'me':
         # Feedbacks by me i.e. request.user        
         obj_list = Feedback.objects.all().filter(
                                                  Q(added_by=request.user)
-                                                 )    
+                                                 )
     elif q_tab == 'all':
         # Most recent feedbacks
         obj_list = Feedback.objects.all()
  
     else:
         # Default: Feedbacks to which we have not responded
+        q_tab = 'pending'
         obj_list = Feedback.objects.all().filter(
-                                                  Q(action__isnull=True) | 
+                                                  Q(action__isnull=True) |
                                                   Q(action=u'')
                                                   )
-          
-    
-    # Create tab list and populate
-    query_tabs = []    
-    
-    tab = {
-           'name': 'all',
-           'help_text': 'Recent feedbacks',
-           'url': request.path + '?tab=all',
-           'css': 'is-active' if q_tab == 'all' else '',
-        }
-    query_tabs.append(tab)
-    
-    tab = {
-           'name': 'pending',
-           'help_text': 'Feedbacks to which response is awaiting.',
-           'url': request.path + '?tab=pending',
-           'css': 'is-active' if q_tab == 'pending' or q_tab is None else '',
-        }
-    query_tabs.append(tab)
-    
-    tab = {
-           'name': 'closed',
-           'help_text': 'Feedbacks to which response has given.',
-           'url': request.path + '?tab=closed',
-           'css': 'is-active' if q_tab == 'closed' else '',
-        }
-    query_tabs.append(tab)
-    
-    tab = {
-           'name': 'by me',
-           'help_text': 'My feedbacks',
-           'url': request.path + '?tab=me',
-           'css': 'is-active' if q_tab == 'me' else '',
-        }
-    query_tabs.append(tab)
-    
-    if user_has_group(request.user, ['Administrator',]):    
-        tab = {
-               'name': 'by anonymous',
-               'help_text': 'Feedbacks by anonymous users',
-               'url': request.path + '?tab=anonymous',
-               'css': 'is-active' if q_tab == 'anonymous' else '',
-            }
-        query_tabs.append(tab)
-        
-        tab = {
-               'name': 'by known',
-               'help_text': 'User has account or have given email id',
-               'url': request.path + '?tab=known',
-               'css': 'is-active' if q_tab == 'known' else '',
-            }
-        query_tabs.append(tab)    
-            
+
+    # Create query list and its title
+    query_list, query_list_title = _create_query_list(request, q_tab)
     
     # Pagination
-    paginator = Paginator(obj_list, 20) # Show 20 entries per page    
+    paginator = Paginator(obj_list, 40) # Show 40 entries per page    
     page = request.GET.get('page')
     try:
         objs = paginator.page(page)
@@ -338,8 +359,11 @@ def feedback_list(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
-            
-    context = {'feedbacks': objs, 'query_tabs': query_tabs}
-    template = 'feedback/list.html'    
+        
+    context = {'feedbacks': objs,
+               'query_list': query_list,
+               'query_list_title': query_list_title
+               }
+    template = 'feedback/list.html'
 
-    return render(request, template, context)    
+    return render(request, template, context)

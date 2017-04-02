@@ -13,12 +13,20 @@
 						<span>/</span>
 						<span class="fS16">Top Contributors</span>
 					</div>
-					<div class="mR-8">
-					{% for tab in query_list %}
-						<a href="{{ tab.url }}" class="md-tabs__tab {{ tab.css }}" title="{{ tab.help_text }}">
-							<span class="tab-label bL">{{ tab.name }}</span>
-						</a>
-					{% endfor %}
+					<div class="dropdown mT-8">
+						<div class="dropbtn" role="button">
+							<div class="dropbtn-txt">{{ query_list_title }}</div>
+							<span class="dropdown-arw"></span>
+						</div>
+						<ul class="dropdown-content right">
+						{% for qi in query_list %}
+							<li>
+								<a href="{{ qi.url }}" class="{{ qi.css }}" title="{{ qi.help_text }}">
+									<span>{{ qi.name }}</span>
+								</a>
+							</li>
+						{% endfor %}
+						</ul>
 					</div>
 				</div>
 			</div>

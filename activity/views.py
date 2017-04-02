@@ -37,48 +37,56 @@ def _create_query_tabs(request_path='/', q_tab=None, extra_get_queries=[]):
     return query_tabs
 
 
-def _create_query_list(request_path='/', period=None, extra_get_queries=[]):
+def _create_query_list(request, q=None, extra_get_queries=[]):
     '''
     @summary: Return query list object for Contributors
     '''
     get_query = ''.join(extra_get_queries)
+    url = reverse('activity:contributors')
+    
+    q_name = {
+              'alltime': 'All time',
+              'fortnight': 'Fortnightly',
+              'month': 'Monthly',
+              'year': 'Yearly',
+            }
     
     # Create tab list and populate
     query_list = []
     
     tab = {
-           'name': 'All time',
+           'name': q_name['alltime'],
            'help_text': 'Top contributors of all time',
-           'url': reverse('activity:contributors') + '?p=alltime' + get_query,
-           'css': 'is-active' if period == 'alltime' or period is None else '',
+           'url': url + '?q=alltime' + get_query,
+           'css': 'is-active' if q == 'alltime' else '',
         }
     query_list.append(tab)
     
     tab = {
-           'name': 'Fortnightly',
+           'name': q_name['fortnight'],
            'help_text': 'Top contributors of the last fortnight',
-           'url': reverse('activity:contributors') + '?p=fortnight' + get_query,
-           'css': 'is-active' if period == 'fortnight' else '',
+           'url': url + '?q=fortnight' + get_query,
+           'css': 'is-active' if q == 'fortnight' else '',
         }
     query_list.append(tab)
     
     tab = {
-           'name': 'Monthly',
+           'name': q_name['month'],
            'help_text': 'Top contributors of the last month',
-           'url': reverse('activity:contributors') + '?p=month' + get_query,
-           'css': 'is-active' if period == 'month' else '',
+           'url': url + '?q=month' + get_query,
+           'css': 'is-active' if q == 'month' else '',
         }
     query_list.append(tab)
     
     tab = {
-           'name': 'Yearly',
+           'name': q_name['year'],
            'help_text': 'Top contributors of the last year',
-           'url': reverse('activity:contributors') + '?p=year' + get_query,
-           'css': 'is-active' if period == 'year' else '',
+           'url': url + '?q=year' + get_query,
+           'css': 'is-active' if q == 'year' else '',
         }
     query_list.append(tab)
     
-    return query_list
+    return query_list, q_name[q]
 
 
 def __activity_list(request, show_all=False):
@@ -118,7 +126,7 @@ def __activity_list(request, show_all=False):
     data['value'] = obj_list.filter(verb=VERBS['ADDITION']).count()
     stats.append(data)
     
-    query_tabs = _create_query_tabs(request.path, q_tab, extra_get_queries)
+    query_tabs = _create_query_tabs(reverse('activity:contributors'), q_tab, extra_get_queries)
     
     # Pagination
     paginator = Paginator(obj_list, 40) # Show 40 entries per page    
@@ -165,18 +173,20 @@ def list_contributors(request):
     RESULT_COUNT = 5
     
     # Check the parameters passed in the URL and process accordingly
-    period = request.GET.get('p', None)
+    period = request.GET.get('q', None)
     
-    if period == 'fortnight':
+    if period == 'alltime':
+        num_days = 0
+    elif period == 'fortnight':
         num_days = 15
     elif period == 'month':
         num_days = 30
     elif period == 'year':
         num_days = 365
     else:
-        # Collect all time data
-        num_days = 0
-        period = None
+        # Default
+        period = 'fortnight'
+        num_days = 15
     
     # Generate queryset
     if num_days:
@@ -192,11 +202,12 @@ def list_contributors(request):
                          ).order_by('-num_actions')[:RESULT_COUNT]
     
     #
-    query_list = _create_query_list(request.path, period)
+    query_list, query_list_title = _create_query_list(request, period)
     
     
     context = {'contributors': objs,
                'query_list': query_list,
+               'query_list_title': query_list_title,
                }
     template = 'activity/contributors.html'
 

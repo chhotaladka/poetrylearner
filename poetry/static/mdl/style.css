@@ -2255,25 +2255,95 @@ ul.mdl-mini-footer__link-list {
 	opacity: 1;
 }
 
-/* Popup/overlay/info-box etc */
-.info-overlay.mdl-menu {
-	min-width: 120px;
+/* Dropdown menu */
+.dropdown {
+	position: relative;
+	display: inline-block;
+	color: rgba(0, 0, 0, 0.54);
+	font-size: 13px;
 }
-.info-overlay > .action {
-	text-align: right;
-	margin: 8px;
+.dropdown .dropbtn {
+	display: inline-block;
+	position: relative;
+	outline: medium none;
+	padding: 0px 22px 0px 16px;
+	line-height: 22px;
+	cursor: pointer;
 }
-.info-overlay > .text.mdl-menu__item {
+.dropbtn-txt {
+	display: inline-block;
+	padding-right: 6px;
 	white-space: nowrap;
-	min-width: 240px;
+}
+.dropdown-arw {
+	border-color: #909090 transparent;
+	border-style: solid;
+	border-width: 5px 4px 0px !important;
+	width: 0px;
+	height: 0px;
+	margin-left: -2px;
+	top: 50%;
+	margin-top: -2px;
+	position: absolute;
+}
+.dropdown .dropdown-content {
+	display: none;
+	position: absolute;
+	min-width: 160px;
+	background: #FFF none repeat scroll 0% 0%;
+	border: 1px solid #D6D6D6;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.16);
+	z-index: 100;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.dropdown .dropdown-content.right {
+	right: 0;
+}
+.dropdown .dropdown-content.left {
+	left: 0;
+}
+.dropdown-content a {
+	color: rgba(0, 0, 0, 0.54);
+	text-decoration: none;
+	padding: 6px 44px 6px 30px;
+	line-height: 17px;
+	display: block;
+	position: relative;
+}
+.dropdown-content a:hover {
+	text-decoration: none;
+	background-color: #f1f1f1;
+}
+.dropdown-content a.is-active::after {
+	height: 100%;
+	width: 2px;
+	display: block;
+	content: " ";
+	top: 0px;
+	left: 0px;
+	position: absolute;
+	background: #167AC6 none repeat scroll 0% 0%;
+}
+.dropdown-content a.is-active {
 	cursor: default;
-	color: inherit;
-
 }
-.info-overlay > .text.mdl-menu__item:hover {
-	background-color: transparent;
-
+.dropdown:hover .dropdown-content {
+	display: block;
 }
+.dropbtn:hover {
+	color: rgba(0, 0, 0, 0.87);
+}
+.dropbtn:hover .dropdown-arw {
+	border-color: rgba(0, 0, 0, 0.87) transparent;
+}
+.dropbtn:active {
+	color: #167AC6;
+}
+.dropbtn:active .dropdown-arw {
+	border-color: #167AC6 transparent;
+}
+
 
 /* Tags */
 .hashtag {

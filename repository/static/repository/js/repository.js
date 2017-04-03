@@ -176,3 +176,4 @@
 	$(document).on('click.bs.repository.data-api', selector_more_poetry_btn, loadMorePoetry);
 	
 }(jQuery);
+

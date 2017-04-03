@@ -13,8 +13,8 @@
 		{% endblock %}
 		<title>{% block title %}poetrylearner{% endblock title %}</title>
 		{% comment %} Base CSS {% endcomment %}
-		<link rel="stylesheet" href="{% static "mdl/material.min.css" %}">
-		<link rel="stylesheet" href="{% static "mdl/style.css" %}">
+		<link rel="stylesheet" href="{% static "css/material.min.css" %}">
+		<link rel="stylesheet" href="{% static "css/style.css" %}">
 		<link rel="stylesheet" href="{% static "css/modal.css" %}">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link href="https://fonts.googleapis.com/css?family=Satisfy|Noto+Sans" rel="stylesheet">
@@ -135,7 +135,7 @@
 	{% endblock %}{% comment %} end of body {% endcomment %}
 	{% comment %} jQuery (necessary for Bootstrap's JavaScript plugins) {% endcomment %}
 	<script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'mdl/material.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/material.min.js' %}"></script>
 	{% block scripts %}{% comment %} extra scripts {% endcomment %}
 		<script type="text/javascript" src="{% static "js/poetrylearner.min.js" %}"></script>
 	{% endblock %}

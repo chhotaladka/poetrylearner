@@ -9,12 +9,18 @@ class ShortURL(template.Node):
     @classmethod
     def parse(cls, parser, token):
         parts = token.split_contents()
-        if len(parts) != 2:
-            raise template.TemplateSyntaxError("%s takes exactly one argument" % parts[0])
-        return cls(template.Variable(parts[1]))
+        if len(parts) == 2:
+            return cls(template.Variable(parts[1]))
+        elif len(parts) == 4 and parts[2] == 'as':
+            return cls(template.Variable(parts[1]),
+                       parts[3])
+        else:
+            correct_syntax = "1) '%s [obj]'  OR 2) '%s [obj] as [context_var]'" % (parts[0], parts[0])
+            raise template.TemplateSyntaxError("Correct syntax: %s" % correct_syntax)
         
-    def __init__(self, obj):
+    def __init__(self, obj=None, context_var=None):
         self.obj = obj
+        self.varname = context_var
         
     def render(self, context):
         try:
@@ -30,13 +36,23 @@ class ShortURL(template.Node):
         tinyid = converter.from_decimal(obj.pk)
         
         if hasattr(settings, 'SHORT_BASE_URL') and settings.SHORT_BASE_URL:
-            return urlparse.urljoin(settings.SHORT_BASE_URL, prefix+tinyid)
-        
+            short_url = urlparse.urljoin(settings.SHORT_BASE_URL, prefix+tinyid)
+            if self.varname:
+                context[self.varname] = short_url
+                return ''
+            else:
+                return short_url
+            
         try:
-            return urlresolvers.reverse('shorturls:redirect', kwargs = {
+            short_url = urlresolvers.reverse('shorturls:redirect', kwargs = {
                 'prefix': prefix,
                 'tiny': tinyid
             })
+            if self.varname:
+                context[self.varname] = short_url
+                return ''
+            else:
+                return short_url
         except urlresolvers.NoReverseMatch:
             return ''
             

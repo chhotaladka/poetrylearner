@@ -4,13 +4,19 @@
 	Note:       Use inside mdl-card div
 {% endcomment %}
 {% load shorturl %}
+{% shorturl poetry as share_url %}
 <div id="sharePanel" class="hidden">
 	<div class="share-panel mdl-card__actions mdl-card--border">
 		<div class="row mB-8">
 			{% if poetry.is_published %}
-			<button id="shareTwitteBtn" class="share-button" title="Share to Twitter" onclick="">
+			<a href="https://twitter.com/share?
+				url={{ share_url }}&
+				text={{ poetry.meta_description }}&" 
+				target="_blank">
+				<button id="shareTwitteBtn" class="share-button" title="Share to Twitter">
 				<span class="share-icon-twitter"></span>
-			</button>
+				</button>
+			</a>
 			<button id="shareFbBtn" class="share-button" title="Share to Facebook">
 				<span class="share-icon-fb"></span>
 			</button>
@@ -30,7 +36,7 @@
 			</button>
 		</div>
 		<div class="mB-8 form-element">
-			<input class="share-panel-url" type="text" title="Share link" value="{% shorturl poetry %}" onclick="this.focus();this.select();"></input>
+			<input class="share-panel-url" type="text" title="Share link" value="{{ share_url }}" onclick="this.focus();this.select();"></input>
 		</div>
 	</div>
 </div>

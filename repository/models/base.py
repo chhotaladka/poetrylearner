@@ -110,6 +110,9 @@ class Thing(models.Model):
     
     def summary(self):
         return self.description
+    
+    def summary_socialmedia(self):
+        return self.description
 
     def meta_description(self):
         '''

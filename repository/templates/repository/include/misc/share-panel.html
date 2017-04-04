@@ -11,21 +11,34 @@
 			{% if poetry.is_published %}
 			<a href="https://twitter.com/share?
 				url={{ share_url }}&
-				text={{ poetry.meta_description }}&" 
+				text={{ poetry.summary_socialmedia }}&"
 				target="_blank">
-				<button id="shareTwitteBtn" class="share-button" title="Share to Twitter">
+				<button id="shareTwitteBtn" class="share-button" title="Share on Twitter">
 				<span class="share-icon-twitter"></span>
 				</button>
 			</a>
-			<button id="shareFbBtn" class="share-button" title="Share to Facebook">
-				<span class="share-icon-fb"></span>
-			</button>
-			<button id="shareGoogleBtn" class="share-button" title="Share to Google+">
-				<span class="share-icon-google"></span>
-			</button>
-			<button id="shareMailBtn" class="share-button" title="Mail to">
-				<span class="share-icon-mail"></span>
-			</button>
+			<a href="https://www.facebook.com/sharer/sharer.php?
+				u={{ share_url }}"
+				target="_blank">
+				<button id="shareFbBtn" class="share-button" title="Share on Facebook">
+					<span class="share-icon-fb"></span>
+				</button>
+			</a>
+			<a href="https://plus.google.com/share?
+				url={{ share_url }}"
+				target="_blank">
+				<button id="shareGoogleBtn" class="share-button" title="Share on Google+">
+					<span class="share-icon-google"></span>
+				</button>
+			</a>
+			<a href="mailto:?
+				subject={{ poetry.meta_description }}&
+				body={{ poetry.summary_socialmedia }}%0A{{ share_url }}&"
+				target="_blank">
+				<button id="shareMailBtn" class="share-button" title="Mail to">
+					<span class="share-icon-mail"></span>
+				</button>
+			</a>
 			{% else %}
 			<div class="fS14 c-red">Only published item can be shared on social media.</div>
 			{% endif %}

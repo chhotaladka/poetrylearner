@@ -34,10 +34,12 @@ def truncatewords(str, limit=30):
     return ' '.join(words) + '...'
 
 
-def truncatelines(str, limit=4):
+def truncatelines(str, limit=4, seperator='\n'):
     """
     Returns first `limit` lines from the `str` string
     strip the html tags.
+    @seperator: newline characters cannot appear in URLs, for sharing on social media
+    call with seperator='%0A'
     """
     try:
         limit = int(limit)
@@ -53,11 +55,11 @@ def truncatelines(str, limit=4):
         str.replace("<[\s]*\/?br[\s]*\/?>","\n")
         str = strip_tags(str)
         ## Split the string by lines and remove blank elements if any 
-        str = [val for val in str.splitlines() if len(val) > 0]    
+        str = [val for val in str.splitlines() if len(val) > 0]
     
         # Cut the string
         str = str[:limit]
-        str = '\n'.join(str)
+        str = seperator.join(str)
     except:
         print ("Error: Unexpected error:", sys.exc_info()[0])
         for frame in traceback.extract_tb(sys.exc_info()[2]):

@@ -8,23 +8,20 @@
 
 <div class="mdl-card book author-card--sm bS-1 wFull">
 	<div class="mdl-card__title column">	
-		<div class="icon mdl-color-text--grey-500">
-			<i class="material-icons dp48">book</i>
-		</div>												
+		<div class="c-9e svg48 pB-16">
+		{% include "common/svg/book.html" %}
+		</div>
 		<div class="title-text">
-			<a href="{{book.get_absolute_url}}" title="View Book">														
+			<a href="{{book.get_absolute_url}}" title="View Book">
 				{{ book.name }}
 			</a>
 		</div>
 		<div class="extras">
-			<span>By
-				<a title="View creator" href="{{ book.creator.get_absolute_url }}">
-					{{ book.creator.name }}
-				</a>
-			</span>
-		</div>	
+			<span>By</span>
+			<a title="View creator" href="{{ book.creator.get_absolute_url }}">{{ book.creator.name }}</a>
+		</div>
 		<div class="extras fS-12">
 			{{ book.get_language }}
-		</div>								
-	</div>						
+		</div>
+	</div>
 </div>

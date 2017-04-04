@@ -29,7 +29,9 @@
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
 					<a href="{% url 'repository:add-item' type='person' %}?cancel={{request.path}}" class="member">
-						<i class="material-icons dp48">person</i>
+						<div class="action-button c-61 svg48">
+						{% include "common/svg/person.html" %}
+						</div>
 						<div class="caption">
 							Add Person
 						</div>
@@ -40,7 +42,9 @@
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
 					<a href="{% url 'repository:add-item' type='poetry' %}?cancel={{request.path}}" class="member">
-						<i class="material-icons dp48">local_library</i>
+						<div class="action-button c-61 svg48">
+						{% include "common/svg/local_library.html" %}
+						</div>
 						<div class="caption">
 							Add Poetry
 						</div>
@@ -51,7 +55,9 @@
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
 					<a href="{% url 'repository:add-item' type='book' %}?cancel={{request.path}}" class="member">
-						<i class="material-icons dp48">book</i>
+						<div class="action-button c-61 svg48">
+						{% include "common/svg/book.html" %}
+						</div>
 						<div class="caption">
 							Add Book
 						</div>
@@ -62,7 +68,9 @@
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
 					<a href="{% url 'repository:add-item' type='snippet' %}?cancel={{request.path}}" class="member">
-						<i class="material-icons dp48">style</i>
+						<div class="action-button c-61 svg48">
+						{% include "common/svg/style.html" %}
+						</div>
 						<div class="caption">
 							Add Snippet
 						</div>
@@ -73,7 +81,9 @@
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
 					<a href="{% url 'repository:add-item' type='organization' %}?cancel={{request.path}}" class="member">
-						<i class="material-icons dp48">account_balance</i>
+						<div class="action-button c-61 svg48">
+						{% include "common/svg/account_balance.html" %}
+						</div>
 						<div class="caption">
 							Add Organization
 						</div>
@@ -84,7 +94,9 @@
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
 					<a href="{% url 'repository:add-item' type='event' %}?cancel={{request.path}}" class="member">
-						<i class="material-icons dp48">event</i>
+						<div class="action-button c-61 svg48">
+						{% include "common/svg/event.html" %}
+						</div>
 						<div class="caption">
 							Add Event
 						</div>
@@ -95,7 +107,9 @@
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
 					<a href="{% url 'repository:add-item' type='product' %}?cancel={{request.path}}" class="member">
-						<i class="material-icons dp48">shopping_cart</i>
+						<div class="action-button c-61 svg48">
+						{% include "common/svg/shopping_cart.html" %}
+						</div>
 						<div class="caption">
 							Add Product
 						</div>
@@ -106,7 +120,9 @@
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
 					<a href="{% url 'repository:add-item' type='place' %}?cancel={{request.path}}" class="member">
-						<i class="material-icons dp48">place</i>
+						<div class="action-button c-61 svg48">
+						{% include "common/svg/place.html" %}
+						</div>
 						<div class="caption">
 							Add Place
 						</div>

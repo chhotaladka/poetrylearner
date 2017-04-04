@@ -10,9 +10,9 @@
 			<h1>Repository</h1>
 		</div>
 		<div class="head__subtitle">
-			Here we store the processed data.		 					
+			Here we store the processed data.
 		</div>
-	</div>				
+	</div>
 </section>
 {% endblock %}
 {% block main %}	
@@ -23,29 +23,33 @@
 
 			<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
 				<div class="links-card">
-					<a href="{% url 'repository:add' %}" class="member">						
-						<i class="material-icons dp48">note_add</i>
+					<a href="{% url 'repository:add' %}" class="member">
+						<div class="action-button c-61 svg48">
+						{% include "common/svg/note_add.html" %}
+						</div>
 						<div class="caption">
 							Add to Repository
-						</div>					
-					</a>		
+						</div>
+					</a>
 				</div>
 			</div>
 
 			<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
 				<div class="links-card">
-					<a href="{% url 'repository:view' %}" class="member">						
-						<i class="material-icons dp48">find_in_page</i>
+					<a href="{% url 'repository:view' %}" class="member">
+						<div class="action-button c-61 svg48">
+						{% include "common/svg/find_in_page.html" %}
+						</div>
 						<div class="caption">
 							Explore Repository
-						</div>						
-					</a>											
-				</div>															
-			</div>							
+						</div>
+					</a>
+				</div>
+			</div>
 
 		</div>
 
-	</div>	
+	</div>
 </section>
-		
+
 {% endblock %}

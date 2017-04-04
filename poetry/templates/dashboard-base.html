@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="{% static "css/material.min.css" %}">
 		<link rel="stylesheet" href="{% static "css/style.css" %}">
 		<link rel="stylesheet" href="{% static "css/modal.css" %}">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
 		<link href="https://fonts.googleapis.com/css?family=Satisfy|Noto+Sans" rel="stylesheet">
 		{% block extra-style %}{% comment %} Include here extra css style {% endcomment %}{% endblock %}
 	</head>
@@ -38,7 +38,7 @@
 				{% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
 				{% if request.user.is_authenticated %}
 					<a class="mdl-navigation__link" href="{% url 'dashboard:user-home' %}">
-						<button class="action-button oN" title="Home">
+						<button class="action-button c-3 oN" title="Home">
 							{% if profile.get_avatar_url %}
 							<div>
 								<img class="circle" width="36" height="36" src="{{ profile.get_avatar_url }}"></img>

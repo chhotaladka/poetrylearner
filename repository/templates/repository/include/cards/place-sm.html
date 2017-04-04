@@ -5,16 +5,16 @@
 {% endcomment %}
 <div class="mdl-card place wide-card mH-auto wFull bS-1">
 	<div class="mdl-card__supporting-text">	
-		<div class="fS-28">																					
+		<div class="fS-28">
 			<a href="{{ place.get_absolute_url }}" title="View place">{{ place.headline }}</a>
-		</div>	
+		</div>
 		<div class="extras">
-			<span class="icon mdl-color-text--grey-500">
-				<i class="material-icons md-18">place</i>
-			</span>		
+			<span class="c-9e">
+			{% include "common/svg/place.html" %}
+			</span>
 			<a href="{{ place.has_map|default:"#" }}" title="View location on the map">
 				{{ place.address|default:"map" }}
 			</a>
 		</div>
-	</div>														
+	</div>
 </div>

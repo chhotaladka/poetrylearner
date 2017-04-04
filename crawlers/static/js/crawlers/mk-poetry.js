@@ -40,7 +40,6 @@ $(document).ready(function(){
 
 		if (data.result == 'success') {
 			$('#id-status-text').text(data.count+' articles added to poetry@repository successfully!!');
-			$('#id-status-icon').text('done');
 			$('#id-div-status').removeClass('status-failure');
 			$('#id-div-status').addClass('status-success');
 			$('#id-div-status').removeClass('hidden');			
@@ -48,7 +47,6 @@ $(document).ready(function(){
 		} else if (data.result == 'failure') {
 			console.log("failed");
 			$('#id-status-text').text('Failed to add articles to poetry@repository!');
-			$('#id-status-icon').text('error_outline');
 			$('#id-div-status').removeClass('status-success');
 			$('#id-div-status').addClass('status-failure');
 			$('#id-div-status').removeClass('hidden');
@@ -56,7 +54,6 @@ $(document).ready(function(){
 		} else {
 			console.log("unexpected error!");
 			$('#id-status-text').text('Unexpected error occurred!');
-			$('#id-status-icon').text('error_outline');
 			$('#id-div-status').removeClass('status-success');
 			$('#id-div-status').addClass('status-failure');
 			$('#id-div-status').removeClass('hidden');

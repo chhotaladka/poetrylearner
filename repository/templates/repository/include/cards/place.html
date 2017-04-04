@@ -8,10 +8,10 @@
 
 <div class="mdl-card place author-card--lg bS-1 wFull">
 	<div class="mdl-card__title column bg-place">	
-		<div class="icon">
-			<i class="material-icons dp48">place</i>
+		<div class="svg48 pB-16">
+		{% include "common/svg/place.html" %}
 		</div>
-		<div class="title-text">																					
+		<div class="title-text">
 			{{ place.name }}
 		</div>	
 		<div class="extras mT-8">
@@ -19,9 +19,9 @@
 				<i>{{ place.address|default:"map" }}</i>
 			</a>
 		</div>
-	</div>					
-	<div class="mdl-card__supporting-text">					
-		<p>{{ place.description }}</p>		
+	</div>
+	<div class="mdl-card__supporting-text">
+		<p>{{ place.description }}</p>
 		<p>Know more: <a title="Click here to know more" href="{{ org.similar_item_url }}" target="_blank">
 			{{ place.similar_item_name }}</a>
 		</p>
@@ -31,9 +31,9 @@
 
 	<div class="mdl-card__menu">
 		<a href="{% url 'repository:add-item' type=place.item_type pk=place.id %}/?cancel={{request.path}}" title="Edit to improve.">
-		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">
-          <i class="material-icons mdl-color-text--white">edit</i>
-		</button>
+			<button class="action-button action-button--icon oN c-F" id="btn1">
+			{% include "common/svg/edit.html" %}
+			</button>
 		</a>
 	</div>
 </div>

@@ -10,24 +10,24 @@
 	<fieldset>
 		{% include "repository/include/fields/name.html" %}
 		{% include "repository/include/fields/description.html" %}
-		{% include "repository/include/fields/same_as.html" %}		
+		{% include "repository/include/fields/same_as.html" %}
 		<div id="id-extra-btn" class="mB-16">
-			<a class="action-button wFull tAl" title="Add more fields">							
-	            <i class="material-icons" role="presentation">more_horiz</i>
-	            <span class="action-button__text bold">Add some more fields</span>			                            
-			</a>
+			<div class="action-button wFull tAl" title="Add more fields">
+				{% include "common/svg/more_horiz.html" %}
+				<span class="action-button__text bold">Add some more fields</span>
+			</div>
 		</div>
-		<div id="id-extra-fields" class="hidden">			
+		<div id="id-extra-fields" class="hidden">
 		{% include "repository/include/fields/start_date.html" %}
 		{% include "repository/include/fields/end_date.html" %}
 		{% include "repository/include/fields/location.html" %}
 		{% include "repository/include/fields/super_event.html" %}
-		{% include "repository/include/fields/image.html" %}						
+		{% include "repository/include/fields/image.html" %}
 		</div>
 	</fieldset>
 	{% if cancel_url %}
 	<input type="hidden" name="cancel" value="{{ cancel_url }}"/>
-	{% endif %}	
+	{% endif %}
 	<div class="tAr">
 		<input class="mdl-button" type="button" name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;"/>	
 		<input class="mdl-button mdl-button--colored" type="submit" name="submit" value="Save changes" id="id-form-submit"/> 

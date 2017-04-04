@@ -14,7 +14,7 @@
 		<div class="breadcrumbs wFull">
 			<a href="{% url 'crawlers:dashboard' %}">Crawled data</a>
 			<span> / </span>
-			<a href="{% url 'crawlers:article-list' %}">author</a>
+			<a href="{% url 'crawlers:author-list' %}">author</a>
 			<span> / </span>
 			<span>{{ author.get_name }}</span>
 		</div>
@@ -27,19 +27,19 @@
 		<div class="mdl-poetry__post mdl-grid">
 			
 			<div id="id-author-card" class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--top bS-1 wFull">
-				<div class="row nav-panel mdl-card__actions">
+				<div class="action-panel mdl-card__actions">
 					{% with prev_author=author.get_previous %}
 					<a href="{% url 'crawlers:author-details' pk=prev_author.id %}">
-						<button id="id-prev-btn" class="action-button" title="Previous Author {{prev_author.get_name}}">
-			                <i class="material-icons md-36" role="presentation">arrow_back</i>
+						<button id="id-prev-btn" class="action-button svg32" title="Previous Author {{prev_author.get_name}}">
+						{% include "common/svg/arrow_back.html" %}
 						</button>
 					</a>
 					{% endwith %}
 					<div class="mdl-layout-spacer"></div>
 					{% with next_author=author.get_next%}
 					<a href="{% url 'crawlers:author-details' pk=next_author.id %}">
-						<button id="id-next-btn" class="action-button" title="Next Author {{next_author.get_name}}">							
-			                <i class="material-icons md-36" role="presentation">arrow_forward</i>			                
+						<button id="id-next-btn" class="action-button svg32" title="Next Author {{next_author.get_name}}">
+						{% include "common/svg/arrow_forward.html" %}
 						</button>
 					</a>
 					{% endwith %}
@@ -112,29 +112,28 @@
 				<div class="action-panel mdl-card__actions mdl-card--border">
 					<a href="{% url 'crawlers:article-list' %}?author={{ author.get_name }}">
 						<button id="id-list-btn" class="action-button" title="List crawled articles by {{ author.get_name }}">
-			                <i class="material-icons" role="presentation">list</i>
-			                <span class="action-button__text">List crawled articles</span>
-			                <span class="action-button__text">(</span>
-			                <span class="action-button__text"><b>{{ articles.total }}</b></span>
-			                <span class="action-button__text">)</span>
+							{% include "common/svg/list.html" %}
+							<span class="action-button__text">List crawled articles</span>
+							<span class="action-button__text">(</span>
+							<span class="action-button__text"><b>{{ articles.total }}</b></span>
+							<span class="action-button__text">)</span>
 						</button>
 					</a>
 					{% if not author.get_validity %}
 					{% comment %} Provide a button to add this author to main database i.e. projects.Author {% endcomment %}					
 					<button id="id-add-btn" class="action-button" title="Add {{ author.get_name }} to main database">						
-		                <i class="material-icons" role="presentation">person_add</i>
-		                <span class="action-button__text">Add author to person@repository</span>		                
+						{% include "common/svg/person_add.html" %}
+						<span class="action-button__text">Add author to person@repository</span>
 					</button>
 					{% else %}
 					{% comment %}  Auhtor is valid. So, there should be her/his entry in main database of Author i.e. projects.Author. Take me there {% endcomment %}
-					<a href="{% url 'repository:list' type='person' %}?q={{ author.get_name }}">
+					<a href="{% url 'explore-poets' %}?q={{ author.get_name }}">
 						<button id="id-find-btn" class="action-button" title="Find {{ author.get_name }} in main database">						
-			                <i class="material-icons" role="presentation">search</i>
-			                <span class="action-button__text">Search this author in person@repository</span>		                
+							{% include "common/svg/search.html" %}
+							<span class="action-button__text">Search this author in person@repository</span>		                
 						</button>
 					</a>
 					{% endif %}
-					
 				</div>
 			</div>
 
@@ -144,8 +143,8 @@
 					<div id="id-person-form-body" class="">
 					</div>
 					<div class="mdl-card__menu">
-						<button class="mdl-button mdl-js-button mdl-button--icon" id="id-dismiss" title="Dismiss the form">
-			              <i class="material-icons mdl-color-text--grey-600">close</i>
+						<button class="action-button" id="id-dismiss" title="Dismiss the form">
+						{% include "common/svg/close.html" %}
 						</button>
 					</div>
 				</div>

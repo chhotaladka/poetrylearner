@@ -51,8 +51,8 @@
 	
 	<div class="mdl-card__menu">
 		<a href="{% url 'repository:add-item' type=book.item_type pk=book.id %}/?cancel={{request.path}}" title="Edit to improve.">
-		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">
-          <i class="material-icons mdl-color-text--white">edit</i>
+		<button class="action-button action-button--icon oN c-F" id="btn1">
+		{% include "common/svg/edit.html" %}
 		</button>
 		</a>
 	</div>

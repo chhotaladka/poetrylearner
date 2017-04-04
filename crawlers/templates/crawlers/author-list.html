@@ -14,7 +14,7 @@
 		<div class="md-tabs__tab-bar">
 			<div class="md-tabs__tab is-static">
 				<span class="tab-label">Authors</span>
-			</div>			
+			</div>
 		{% for tab in query_tabs %}
 			<a href="{{ tab.url }}" class="md-tabs__tab {{ tab.css }}" title="{{ tab.help_text }}">
 				<span class="tab-label bL">{{ tab.name }}</span>
@@ -78,9 +78,9 @@
 								</td>
 								<td title="{{author.added_at}}">{{ author.added_at | date }}</td>
 								<td class="non-numeric" title="{{author.get_validity}}">
-								{% if author.get_validity %}<i class="material-icons" role="presentation">done</i>
-								{% else %}False
-								{% endif %}
+								{% if author.get_validity %}
+								{% include "common/svg/done.html" %}
+								{% else %}False{% endif %}
 								</td>
 							</tr>
 							{% endfor %}

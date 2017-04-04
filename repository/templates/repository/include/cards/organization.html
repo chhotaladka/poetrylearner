@@ -9,9 +9,11 @@
 <div class="mdl-card org author-card--lg bS-1 wFull">
 	<div class="mdl-card__title column bg-org">	
 		<div class="icon">
-			<i class="material-icons dp48">account_balance</i>
+			<div class="svg48 pB-16">
+			{% include "common/svg/account_balance.html" %}
+			</div>
 		</div>
-		<div class="title-text">																					
+		<div class="title-text">
 			{{ org.name }}
 		</div>
 		<div class="extras">
@@ -29,14 +31,14 @@
 			<div>{{ org.address }}</div> 
 		</div>
 	</div>
-	{% endif %}						
-	<div class="mdl-card__supporting-text">					
-		<p>{{ org.description }}</p>		
+	{% endif %}
+	<div class="mdl-card__supporting-text">
+		<p>{{ org.description }}</p>
 		<p>Know more: <a title="Click here to know more" href="{{ org.similar_item_url }}" target="_blank">
 			{{ org.similar_item_name }}</a>
 		</p>
 	</div>
-	<div class="mdl-card__supporting-text">					
+	<div class="mdl-card__supporting-text">
 		Dsiplay organization tree
 	</div>		
 	{% comment %}  Include meta panel {% endcomment %}
@@ -44,8 +46,8 @@
 	
 	<div class="mdl-card__menu">
 		<a href="{% url 'repository:add-item' type=org.item_type pk=org.id %}/?cancel={{request.path}}" title="Edit to improve.">
-		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">
-          <i class="material-icons mdl-color-text--white">edit</i>
+		<button class="action-button action-button--icon oN c-F" id="btn1">
+		{% include "common/svg/edit.html" %}
 		</button>
 		</a>
 	</div>

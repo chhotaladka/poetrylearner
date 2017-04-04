@@ -12,8 +12,8 @@
 	<div class="mdl-card__title column" style="background: url('{{ event_img_url }}') center / cover;">
 	{% else %}
 	<div class="mdl-card__title column bg-event">
-	{% endif %}							
-		<div class="title-text highlight">																					
+	{% endif %}
+		<div class="title-text highlight">
 			{{ event.name }}
 		</div>
 		<div class="extras highlight">
@@ -25,7 +25,9 @@
 		</div>
 		{% if event.location %}		
 		<div class="extras highlight">
-			<i class="material-icons md-18">place</i>
+			<div class="p-8 c-F">
+			{% include "common/svg/place.html" %}
+			</div>
 		</div>
 		<div class="extras highlight">
 			<a href="{{ event.location.get_absolute_url }}" class="icon" title="Location or area of action.">						
@@ -60,8 +62,8 @@
 	
 	<div class="mdl-card__menu">
 		<a href="{% url 'repository:add-item' type=event.item_type pk=event.id %}/?cancel={{request.path}}" title="Edit to improve.">
-		<button class="mdl-button mdl-js-button mdl-button--icon" id="btn1">
-          <i class="material-icons mdl-color-text--white">edit</i>
+		<button class="action-button action-button--icon oN c-F" id="btn1">
+		{% include "common/svg/edit.html" %}
 		</button>
 		</a>
 	</div>

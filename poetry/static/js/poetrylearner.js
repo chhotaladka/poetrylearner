@@ -635,7 +635,7 @@ if (typeof jQuery === 'undefined') {
 		//console.log("Bookmark: response_success: " + data.status);
 		
 		if (data.status == '200') {
-			if (data.id != 0) {
+			if (data.bid != 0) {
 				$(this).addClass("true");
 				$(this).attr('data-bid', data.bid);
 				$(this).prop('title', 'Remove from my Bookmarks');
@@ -666,6 +666,12 @@ if (typeof jQuery === 'undefined') {
 		this.itemtype = parseInt($this.data('type'));
 		this.bookmarkId = parseInt($this.attr('data-bid'));
 		//console.log(this.itemtype, this.id, this.bookmarkId);
+		
+		// Return if the data items are not valid
+		if (isNaN(this.id) || isNaN(this.itemtype) || isNaN(this.bookmarkId)) {
+			console.log("Bookmark: invalid params");
+			return;
+		}
 		
 		if (this.bookmarkId != 0) {
 			this.requestUrl = window.location.origin + '/bookmark/remove/';
@@ -738,8 +744,8 @@ if (typeof jQuery === 'undefined') {
 		Plugin.call($(this), 'update');
 	};
 	
-	//$(document).on('click.bs.bookmark.data-api', ".bookmark-btn", Bookmark.prototype.update);
-	$(document).on('click.bs.bookmark.data-api', ".bookmark-btn", clickHandler);
+	//$(document).on('click.bs.bookmark.data-api', ".bookmark-js-button", Bookmark.prototype.update);
+	$(document).on('click.bs.bookmark.data-api', ".bookmark-js-button", clickHandler);
 	
 	
 }(jQuery);

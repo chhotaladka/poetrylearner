@@ -1,0 +1,80 @@
+{% comment %}  
+	Log in clickcard
+{% endcomment %}
+<style>
+.clickcard {
+	position: absolute;
+	z-index: 2000000006;
+	transition: opacity 0.2s ease-out 0s;
+}
+.card-border-arrow, .card-body-arrow {
+	position: absolute;
+	width: 0px;
+	height: 0px;
+	vertical-align: top;
+	background: transparent none repeat scroll 0% 0%;
+	border: 12px solid transparent;
+}
+.card-border-arrow-vertical, .card-body-arrow-vertical {
+	bottom: -10px;
+	border-bottom-width: 0px;
+}
+.card-border-arrow-vertical {
+	margin-bottom: -1px;
+	border-top-color: #C5C5C5;
+}
+.card-body-arrow-vertical {
+	border-top-color: #FFF;
+}
+.clickcard-border {
+	float: left;
+	background: #FFF none repeat scroll 0% 0%;
+	border: 1px solid #C5C5C5;
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.18);
+}
+.clickcard-body {
+	min-height: 54px;
+	overflow: hidden;
+	font-size: 13px;
+	color: #555;
+}
+.clickcard-content {
+	display: block;
+	padding: 20px;
+	width: 235px;
+	line-height: 1.3em;
+}
+.login-clickcard.clickcard-content {
+	width: auto;
+}
+.login-clickcard-header {
+	margin-bottom: 15px;
+	font-size: 15px;
+	font-weight: 600;
+}
+.login-clickcard-message {
+	margin-bottom: 10px;
+	font-size: 13px;
+	line-height: 1.3em;
+}
+</style>
+<div id="id-clickcard" class="clickcard"
+	style="left: 73px; top: 100px;">
+	<div style="left: 33px;" class="card-border-arrow card-border-arrow-vertical"></div>
+	<div class="clickcard-border">
+		<div style="left: 33px;" class="card-body-arrow card-body-arrow-vertical"></div>
+		<div class="clickcard-body">
+		
+			<div class="login-clickcard clickcard-content">
+				<div class="login-clickcard-header">Want to read this again later?</div>
+				<div class="login-clickcard-message">
+				Log in to add this poetry to Bookmarks.
+				</div>
+				<a href="{% url 'account_login' %}?next={{ request.path }}">
+					<button class="mdl-button mdl-button--raised login-btn">Log in</button>
+				</a>
+			</div>
+		
+		</div>
+	</div>
+</div>

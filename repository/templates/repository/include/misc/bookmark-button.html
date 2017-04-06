@@ -8,21 +8,21 @@
 		{% if request.user.is_authenticated %}
 		{% bookmark_by_user request.user on item as bookmark %}
 		{% if bookmark %}
-			<button class="action-button bookmark-btn oN true" title="Remove from my Bookmarks"
+			<button class="action-button bookmark-btn bookmark-js-button oN true" title="Remove from my Bookmarks"
 				data-id="{{ item.id }}" data-type="{{ item.get_content_type.id }}" data-bid="{{ bookmark.id }}">
 				{% include "common/svg/bookmark.html" %}
 				<span class="action-button__text">Read later</span>
 			</button>
 		{% else %}
-			<button class="action-button bookmark-btn oN" title="Send to my Bookmarks to read later"
+			<button class="action-button bookmark-btn bookmark-js-button oN" title="Send to my Bookmarks to read again later"
 				data-id="{{ item.id }}" data-type="{{ item.get_content_type.id }}" data-bid="0">
 				{% include "common/svg/bookmark.html" %}
 				<span class="action-button__text">Read later</span>
 			</button>
 		{% endif %}
 		{% else %}
-			<button class="action-button bookmark-btn oN"
-				title="Send to my Bookmarks to read later">
+			<button class="action-button bookmark-btn oN clickcard-js-button"
+				title="Send to my Bookmarks to read again later">
 				{% include "common/svg/bookmark.html" %}
 				<span class="action-button__text">Read later</span>
 			</button>	

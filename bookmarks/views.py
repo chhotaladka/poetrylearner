@@ -20,6 +20,17 @@ def add_bookmark(request):
         object_id = request.POST.get('id')
         bookmark_id = 0
         #print "DBG:: bookmark add - content_type_id, object_id :", content_type_id, object_id
+        
+        # Check input data validity
+        try:
+            content_type_id = int(content_type_id)
+            object_id = int(object_id)
+        except ValueError:
+            print "ERR:: Invalid content_type_id, object_id :", content_type_id, object_id
+            data = {}
+            data['status'] = 404
+            data['bid'] = bookmark_id
+            return JsonResponse(data)
 
         # Validate content_type_id and object_id
         try:
@@ -29,7 +40,7 @@ def add_bookmark(request):
             print "ERR:: The content of object doesn't exist"
             data = {}
             data['status'] = 404
-            data['id'] = bookmark_id
+            data['bid'] = bookmark_id
             return JsonResponse(data)
         
         # Add bookmark
@@ -61,6 +72,17 @@ def remove_bookmark(request):
         object_id = request.POST.get('id')
         #print "DBG:: bookmark remove - content_type_id, object_id :", content_type_id, object_id
 
+        # Check input data validity
+        try:
+            content_type_id = int(content_type_id)
+            object_id = int(object_id)
+        except:
+            print "ERR:: Invalid content_type_id, object_id :"
+            data = {}
+            data['status'] = 404
+            data['bid'] = 0
+            return JsonResponse(data)
+        
         # Validate content_type_id and object_id
         try:
             content_type = ContentType.objects.get_for_id(content_type_id)

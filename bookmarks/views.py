@@ -16,8 +16,8 @@ def add_bookmark(request):
     Add a bookmark for the user on given object
     '''
     if request.method == "POST":
-        content_type_id = request.POST.get('content_type')
-        object_id = request.POST.get('object_id')
+        content_type_id = request.POST.get('type')
+        object_id = request.POST.get('id')
         bookmark_id = 0
         #print "DBG:: bookmark add - content_type_id, object_id :", content_type_id, object_id
 
@@ -43,7 +43,7 @@ def add_bookmark(request):
             
         data = {}
         data['status'] = status
-        data['id'] = bookmark_id
+        data['bid'] = bookmark_id
         
         return JsonResponse(data)
     
@@ -57,8 +57,8 @@ def remove_bookmark(request):
     Remove the bookmark by the user on given object
     '''
     if request.method == "POST":
-        content_type_id = request.POST.get('content_type')
-        object_id = request.POST.get('object_id')
+        content_type_id = request.POST.get('type')
+        object_id = request.POST.get('id')
         #print "DBG:: bookmark remove - content_type_id, object_id :", content_type_id, object_id
 
         # Validate content_type_id and object_id
@@ -74,7 +74,7 @@ def remove_bookmark(request):
             
         data = {}
         data['status'] = status
-        data['id'] = 0
+        data['bid'] = 0
         
         return JsonResponse(data)
     

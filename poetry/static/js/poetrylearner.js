@@ -637,11 +637,11 @@ if (typeof jQuery === 'undefined') {
 		if (data.status == '200') {
 			if (data.id != 0) {
 				$(this).addClass("true");
-				$(this).attr('data-bid', data.id);
+				$(this).attr('data-bid', data.bid);
 				$(this).prop('title', 'Remove from my Bookmarks');
 			} else {
 				$(this).removeClass("true");
-				$(this).attr('data-bid', data.id);
+				$(this).attr('data-bid', data.bid);
 				$(this).prop('title', 'Send to my Bookmarks to read later');
 			}
 		} else {
@@ -663,7 +663,7 @@ if (typeof jQuery === 'undefined') {
 		var $this    = this.element
 		//console.log($this)
 		this.id = parseInt($this.data('id'));
-		this.itemtype = parseInt($this.data('ct'));
+		this.itemtype = parseInt($this.data('type'));
 		this.bookmarkId = parseInt($this.attr('data-bid'));
 		//console.log(this.itemtype, this.id, this.bookmarkId);
 		
@@ -674,8 +674,8 @@ if (typeof jQuery === 'undefined') {
 		}
 		
 		var fd = new FormData()
-		fd.append('content_type', this.itemtype);
-		fd.append('object_id', this.id);
+		fd.append('type', this.itemtype);
+		fd.append('id', this.id);
 		
 		$.ajaxSetup({
 			beforeSend: function(xhr, settings) {

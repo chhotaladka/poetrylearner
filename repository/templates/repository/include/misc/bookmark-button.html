@@ -9,13 +9,13 @@
 		{% bookmark_by_user request.user on item as bookmark %}
 		{% if bookmark %}
 			<button class="action-button bookmark-btn oN true" title="Remove from my Bookmarks"
-				data-id="{{ item.id }}" data-ct="{{ item.get_content_type.id }}" data-bid="{{ bookmark.id }}">
+				data-id="{{ item.id }}" data-type="{{ item.get_content_type.id }}" data-bid="{{ bookmark.id }}">
 				{% include "common/svg/bookmark.html" %}
 				<span class="action-button__text">Read later</span>
 			</button>
 		{% else %}
 			<button class="action-button bookmark-btn oN" title="Send to my Bookmarks to read later"
-				data-id="{{ item.id }}" data-ct="{{ item.get_content_type.id }}" data-bid="0">
+				data-id="{{ item.id }}" data-type="{{ item.get_content_type.id }}" data-bid="0">
 				{% include "common/svg/bookmark.html" %}
 				<span class="action-button__text">Read later</span>
 			</button>

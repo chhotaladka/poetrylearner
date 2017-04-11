@@ -370,21 +370,12 @@ class PoetryRandomNode(Node):
         
 
     def render(self, context):
-        q_objects = Q()
         try:
             # poetries which are unpublished: [:self.count]
-            if self.published is True:
-                q_objects &= Q(date_published__isnull=False)
+            if self.published:
+                context[self.varname] = Poetry.objects.random(self.count, published=True)
             else:
-                q_objects &= Q(date_published__isnull=True)
-            
-            obj_list = Poetry.objects.filter(q_objects)
-            indexes = random.sample(range(len(obj_list)), self.count)
-            result = []
-            for index in indexes:
-                result.append(obj_list[index])
-
-            context[self.varname] = result
+                context[self.varname] = Poetry.objects.random(self.count, published=False)
         
         except:
             print ("Error: Unexpected error:", sys.exc_info()[0])

@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.utils.html import strip_tags
 from django.db.models import Q
+import random
 from common.utils import truncatelines
 
 from things import CreativeWork, CreativeWorkManager, Person
@@ -26,6 +27,24 @@ class PoetryManager(CreativeWorkManager):
             q_objects &= Q(language=kwargs['language'])           
         
         return super(PoetryManager, self).apply_filter(*args, **kwargs).filter(q_objects)
+    
+    def random(self, count=20, published=True):
+        '''
+        Random Poetry.
+        '''
+        q_objects = Q()
+        if published:
+            # published items
+            q_objects &= Q(date_published__isnull=False)
+        else:
+            # unpublished items
+            q_objects &= Q(date_published__isnull=True)
+            
+        id_list = self.filter(q_objects).values_list('id', flat=True)
+        total = len(id_list)
+        count = count if total > count else total
+        mix_ids = random.sample(id_list, count)
+        return super(PoetryManager, self).get_queryset().filter(pk__in=mix_ids)
 
     
 class ArticleManager(CreativeWorkManager):

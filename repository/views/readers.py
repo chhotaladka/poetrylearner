@@ -414,14 +414,7 @@ def explore_poets(request, src=None):
         # Select mix of `mix_count` Poets
         query_string = ''
         result_title = 'Poets'
-        
-        mix_count = 20
-        q_objects = Q()
-        id_list = Person.objects.filter(q_objects).values_list('id', flat=True)
-        count = len(id_list)
-        mix_count = mix_count if count > mix_count else count
-        mix_ids = random.sample(id_list, mix_count)
-        obj_list = Person.objects.filter(pk__in=mix_ids)
+        obj_list = Person.objects.random(20)
     
     # Pagination
     paginator = Paginator(obj_list, 20) # Show 40 entries per page    

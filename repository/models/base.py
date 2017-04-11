@@ -11,6 +11,7 @@ from django.conf import settings
 from django.utils.http import urlquote  as django_urlquote
 from django.utils.http import urlencode as django_urlencode
 from urlparse import urlparse
+import random
 from common.slugify import slugify 
 
 # Create your models here.
@@ -25,9 +26,21 @@ class ThingManager(models.Manager):
         Return empty queryset
         Some derived classes would override this function.
         '''
-        return super(ThingManager, self).get_queryset().all()        
-               
-        
+        return super(ThingManager, self).get_queryset().all()
+    
+    def random(self, count=20):
+        '''
+        Random objects queryset.
+        Some derived classes would override this function to get
+        more meaningfull object mix.
+        '''
+        id_list = self.all().values_list('id', flat=True)
+        total = len(id_list)
+        count = count if total > count else total
+        mix_ids = random.sample(id_list, count)
+        return super(ThingManager, self).get_queryset().filter(pk__in=mix_ids)
+
+
 class Thing(models.Model):
     '''
     @summary: The most generic type of item.

@@ -407,14 +407,18 @@ def explore_poets(request, src=None):
         # Search Poets for the query `q`
         query_string = request.GET['q']
         result_title = '"' + query_string + '" in Poets'
-        
         obj_list = search_person(query_string)
         
     else:
-        # Select mix of `mix_count` Poets
         query_string = ''
         result_title = 'Poets'
-        obj_list = Person.objects.random(20)
+        objs = []
+        context = {'items': objs,
+           'item_type': 'person', 'result_title': result_title,
+           'query_string': query_string,
+           'src': src}
+        template = 'repository/items/explore_poets.html'    
+        return render(request, template, context)
     
     # Pagination
     paginator = Paginator(obj_list, 20) # Show 40 entries per page    
@@ -432,7 +436,7 @@ def explore_poets(request, src=None):
                'item_type': 'person', 'result_title': result_title,
                'query_string': query_string,
                'src': src}
-    template = 'repository/items/explore_poets.html'
+    template = 'repository/items/search_poets.html'
 
     return render(request, template, context)
 

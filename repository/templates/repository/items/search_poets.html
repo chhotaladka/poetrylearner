@@ -1,0 +1,38 @@
+{% extends "repository/base.html" %}
+{% comment %}
+	Info: Search results page for poets
+{% endcomment %}
+{% load person_tags %}
+{% block title %}{{ result_title }} | {{ sitename }}{% endblock title %}
+{% block meta %}
+{% get_poets_count as poets_count %}
+<meta name="description" content="Read and explore the poetry of {{ poets_count }} great poets on {{ sitename }}.">
+{% endblock %}
+
+{% block search %}
+{% include "common/include/search-bar.html" with q_url="" q_str=query_string placeholder="Search for a Poet" %}
+{% endblock %}
+
+{% block main %}
+	<section class="pT-8 pB-16">
+		<div class="_layout layout-L mdl-grid">
+		{% if items %} {% comment %} Display the list {% endcomment %}
+			{% load humanize %}
+			<div class="mdl-cell mdl-cell--12-col">
+				<div class="wide-card mB-8">
+					<div class="search-title">
+						<div class="title">{{result_title}}</div>
+					</div>
+					<div class="search-stats mL-8">
+						<span>{{ items.paginator.count|intcomma }} result{{ items.paginator.count|pluralize }}</span>
+					</div>
+				</div>
+			</div>
+			{% include "repository/include/list/person.html" with items=items %}
+			{% include "repository/include/misc/pagination-bottom.html" with items=items %}
+		{% else %} {% comment %} Display the notification {% endcomment %}
+			{% include "common/include/empty-result.html" %}
+		{% endif %}
+		</div>
+	</section>
+{% endblock %}

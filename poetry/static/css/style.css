@@ -933,6 +933,17 @@ html, body {
 	overflow: hidden;
 	margin-top: 32px;
 }
+.avatar-sq img {
+	position: absolute;
+	display: block;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	height: auto;
+	margin: auto;
+}
 .author-card--sm .avatar,
 .author-card--lg .avatar {
     border-radius: 50%;

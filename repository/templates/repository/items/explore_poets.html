@@ -14,25 +14,25 @@
 {% endblock %}
 
 {% block main %}
-	<section class="pT-8 pB-8">
+	<section class="pT-16 pB-8">
 		<div class="_layout layout-L mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="section-title">
-					<h3 class="c-grey1 pLR-16">Discover new poets</h3>
+					<h3 class="c-grey1">Discover Poets</h3>
 				</div>
 			</div>
-			{% get_person_random 8 as random_persons %}
+			{% get_person_random 14 as random_persons %}
 			{% include "repository/include/list/person.html" with items=random_persons %}
 		</div>
 	</section>
-	<section class="pT-8 pB-8">
+	<section class="pT-8 pB-16">
 		<div class="_layout layout-L mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="section-title">
-					<h3 class="c-grey1">Recent updates</h3>
+					<h3 class="c-grey1">Recent Updates</h3>
 				</div>
 			</div>
-			{% get_person_recent 8 as recent_persons %}
+			{% get_person_recent 6 as recent_persons %}
 			{% include "repository/include/list/person.html" with items=recent_persons %}
 		</div>
 	</section>

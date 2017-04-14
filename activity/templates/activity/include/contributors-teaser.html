@@ -1,0 +1,35 @@
+{% comment %}
+	Info: Contributors teaser Card
+{% endcomment %}
+{% load common_tags %}
+{% for user in contributors %}
+<div class="wide-card mH-auto wFull bS-1">
+	<div class="p-8 row fill">
+		<div class="row">
+			<div class="avatar xsm user">
+			{% include "common/svg/user.html" %}
+			</div>
+			<div>
+				<div class="fS-12 title-text">
+					<a class="h-link" href="{{ user.profile.get_absolute_url }}">{{ user.profile.get_first_name }}</a>
+				</div>
+				<div class="fS10 light-txt">
+					<span>Last update:</span>
+					<span>{{ user.lastest_action_date|nicetime }}</span>
+				</div>
+			</div>
+		</div>
+		<div>
+			<div>
+				<span class="fS24">{{ user.num_actions }}</span>
+				<span class="fS10 light-txt">contributions</span>
+			</div>
+		</div>
+	</div>
+</div>
+{% endfor %}
+<div class="wide-card mH-auto wFull bS-1">
+	<a class="action-button pTB-8 wFull oN" href="{% url 'activity:contributors' %}" title="Show more">							
+		Show more
+	</a>
+</div>

@@ -18,6 +18,7 @@
 					</div>
 				</div>
 			</div>
+
 			{% comment %} Statistics graph {% endcomment %}
 			{% if actions and not actions.has_previous %}
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -55,7 +56,32 @@
 				</div>
 			</div>
 			{% endif %}
-			{% include "activity/include/list.html" %}
+
+			<div class="__l mdl-cell mdl-cell--2-col mdl-cell--top pA-0">
+			</div>
+			<div class="__c mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet pA-0">
+			
+			{% if actions %}
+				{% include "activity/include/list.html"%}
+				{% include "activity/include/pagination-bottom.html" with items=actions %}
+			{% else %}{% comment %} Display the notification {% endcomment %}
+				{% include "activity/include/empty-result.html" %}
+			{% endif %}
+			
+			</div>
+			<div class="__l mdl-cell mdl-cell--2-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
+				<div class="wide-card">
+					<div class="section-title">
+						<h3 class="c-grey1">Last Fortnight</h3>
+					</div>
+					<div class="pB-8">
+						<div id="id-contributors-loading" class="action-button wFull oN hidden">Loading contributors...</div>
+					</div>
+				</div>
+				<div id="id-contributors" data-url="{% url 'activity:ajax-contributors' %}">
+				</div>
+			</div>
+			
 		</div>
 	</section>
 {% endblock %}

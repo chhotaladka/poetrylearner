@@ -1,23 +1,16 @@
 {% comment %} Display the activity list {% endcomment %}
 {% load common_tags %}
-{% if actions %}
-	{% regroup actions by timestamp.date as action_groups %}
-	{% for action_group in action_groups %}
-		<div class="mdl-cell mdl-cell--12-col mT0 mB0">
-			<div class="activity wide-card bCw mH-auto wFull bS-1">
-				<div class="pLR-16 pTB-8">
-					<span class="groupdate">{{ action_group.grouper|niceday }}</span>
-					<span class="light-txt fS10 pL-8">+ {{ action_group.list|length }}</span>
-				</div>
-			</div>
-			{% for action in action_group.list %}
-			{% include "activity/include/activity-card.html" with action=action %}
-			{% endfor %}
+{% regroup actions by timestamp.date as action_groups %}
+<div class="mdl-cell mdl-cell--12-col mT0 mB0">
+{% for action_group in action_groups %}
+	<div class="activity wide-card bCw mH-auto wFull bS-1">
+		<div class="pLR-16 pTB-8">
+			<span class="groupdate">{{ action_group.grouper|niceday }}</span>
+			<span class="light-txt fS10 pL-8">+ {{ action_group.list|length }}</span>
 		</div>
-	{% endfor %}
-	{% include "activity/include/pagination-bottom.html" with items=actions %}
-{% else %}{% comment %} Display the notification {% endcomment %}
-	<div class="mdl-cell mdl-cell--12-col mT0 mB0">
-	{% include "activity/include/empty-result.html" %}
 	</div>
-{% endif %}
+	{% for action in action_group.list %}
+	{% include "activity/include/activity-card.html" with action=action %}
+	{% endfor %}
+{% endfor %}
+</div>

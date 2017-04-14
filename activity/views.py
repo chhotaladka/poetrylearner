@@ -4,6 +4,8 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Max
 from django.utils import timezone
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 from datetime import timedelta
 
 from django.contrib.auth.models import User
@@ -212,3 +214,41 @@ def list_contributors(request):
     template = 'activity/contributors.html'
 
     return render(request, template, context)
+
+
+def ajax_contributors(request):
+    '''
+    @summary: AJAX only: List contributors(users/actors) having activities recently (in last fortnight).
+    '''
+    if request.is_ajax() is False:
+        raise PermissionDenied
+    
+    RESULT_COUNT = 5
+    num_days = 15
+    query_list_title = "Recent contributors"
+    try:
+        qset = User.objects.filter(
+            action__timestamp__gte = timezone.now().date() - timedelta(days=num_days)
+            )
+        objs = qset.annotate(
+            num_actions=Count('action'),
+            lastest_action_date=Max('action__timestamp')
+            ).order_by('-num_actions')[:RESULT_COUNT]
+    
+        template = "activity/include/contributors-teaser.html"
+        
+        data = {}
+        data['status'] = 200
+        data['contenthtml'] = render_to_string(
+            template,
+            {'contributors': objs, 'query_list_title': query_list_title, 'request': request}
+            )
+    
+    except:
+        data = {}
+        data['status'] = 500
+        data['contenthtml'] = ''
+    
+    return JsonResponse(data)
+
+

@@ -2,6 +2,7 @@
 	Info: Contributors teaser Card
 {% endcomment %}
 {% load common_tags %}
+{% load humanize %}
 {% for user in contributors %}
 <div class="wide-card mH-auto wFull bS-1">
 	<div class="p-8 row fill">
@@ -21,7 +22,7 @@
 		</div>
 		<div>
 			<div>
-				<span class="fS24">{{ user.num_actions }}</span>
+				<span class="fS24">{{ user.num_actions|intcomma }}</span>
 				<span class="fS10 light-txt">contributions</span>
 			</div>
 		</div>

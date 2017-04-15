@@ -2,6 +2,7 @@
 	Info: Contributor Card
 {% endcomment %}
 {% load common_tags %}
+{% load humanize %}
 <div class="wide-card bCw mH-auto wFull bS-1">
 	<div class="p-16 row fW-no fill">
 		<div class="row">
@@ -21,7 +22,7 @@
 		</div>
 		<div>
 			<div>
-				<span class="fS24">{{ user.num_actions }}</span>
+				<span class="fS24">{{ user.num_actions|intcomma }}</span>
 				<span class="fS10 light-txt">contributions</span>
 			</div>
 		</div>

@@ -20,32 +20,60 @@ def search_person(query_string):
     '''
     
     terms = normalize_query(query_string)
-    if (len(terms) == 1): # If only one token
-        if (len(terms[0]) == 1): # If it's length is ONE
-            if terms[0].isalpha(): # If it is alphabet
+    
+    if len(terms) == 0:
+        # There are no terms
+        return []
+    
+    if len(terms) == 1:
+        # There is only ONE term of any length
+        # Process the term
+        token = terms[0]
+    
+    else:
+        # Keep terms having valid length
+        # Discard all term with length < 3
+        terms1 = [x for x in terms if len(x) >= 3 ]
+    
+        if len(terms1) == 0:
+            # There are no terms of valid length
+            # e.g. "ab cd ef", "a bc de", "a b c", "a b", "ab cd" etc.
+            # Process first term and discard others
+            token = terms[0]
+        
+        elif len(terms1) == 1:
+            # There are only ONE term of valid length
+            # e.g. "abc", "abcd" etc.
+            token = terms1[0]
+        else:
+            token = ''
+    
+    
+    if len(token):
+        # Process the token
+        if (len(token) == 1): # If it's length is ONE
+            if token.isalpha(): # If it is alphabet
                 # return the Person whose name starts with `query_string`
-                q_objects = Q(name__istartswith=terms[0])
-                q_objects |= Q(additional_name__istartswith=terms[0])
+                q_objects = Q(name__istartswith=token)
+                q_objects |= Q(additional_name__istartswith=token)
                 #print q_objects
                 obj_list = Person.objects.filter(q_objects).order_by('name')
                 return obj_list
             else:
                 # Search is irrelevant; return empty list
                 return []
-        elif len(terms[0]) < 3:
+            
+        elif (len(token) <= 3):
             # Search in name/additional_name fields only
-            q_objects = Q(name__icontains=terms[0])
-            q_objects |= Q(additional_name__icontains=terms[0])
+            q_objects = Q(name__icontains=token)
+            q_objects |= Q(additional_name__icontains=token)
             #print q_objects
             obj_list = Person.objects.filter(q_objects).order_by('name')
             return obj_list
     
-    # We are here, it means:
-    # 1) There are multiple terms, or
-    # 2) There is single term with length >= 3
-    # Now discard all term with length < 3
-    terms1 = [x for x in terms if len(x) >= 3 ]
     
+    # We are here, it means:
+    # 1) There are multiple terms of valid length (>3)
     # First search in `name`/`additional_name` fields
     entry_query1 = get_query_for_nterms(terms1, ['name', 'additional_name'])
     

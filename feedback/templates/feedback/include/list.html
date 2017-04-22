@@ -1,16 +1,9 @@
 {% comment %} Display the feedback list {% endcomment %}
-{% if feedbacks %} {% comment %} Display the list {% endcomment %}
-	{% for feedback in feedbacks %}
-	<div class="feedback-list mdl-cell mdl-cell--12-col mT0 mB0">
-	{% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}
-	</div>
-	{% endfor %}
-	{% include "common/include/pagination-bottom.html" with items=feedbacks %}
-{% else %}  {% comment %} Display the notification {% endcomment %}
-	<div class="mdl-cell mdl-cell--12-col mT0 mB0">
-	{% include "feedback/include/empty-result.html" %}
-	</div>
-{% endif %}
+<div class="feedback-list">
+{% for feedback in feedbacks %}
+{% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}
+{% endfor %}
+</div>
 <script>
 {% comment %} javascript to toggle feedback card view (more/less) {% endcomment %}
 {% if feedbacks%}

@@ -5,7 +5,7 @@
 {% block title %}Feedbacks | {{ sitename }}{% endblock %}
 
 {% block main %}
-	<section class="pT-8 pB-16">
+	<section class="pT-8">
 		<div class="_layout layout-L mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="wide-card">
@@ -33,7 +33,18 @@
 					</div>
 				</div>
 			</div>
-			{% include "feedback/include/list.html" %}
+		</div>
+	</section>
+	<section class="pB-16">
+		<div class="_layout layout-L mdl-grid">
+			<div class="mdl-cell mdl-cell--12-col">
+			{% if feedbacks %} {% comment %} Display the list {% endcomment %}
+				{% include "feedback/include/list.html" %}
+				{% include "common/include/pagination-bottom.html" with items=feedbacks %}
+			{% else %}  {% comment %} Display the notification {% endcomment %}
+				{% include "feedback/include/empty-result.html" %}
+			{% endif %}
+			</div>
 		</div>
 	</section>
 {% endblock %}

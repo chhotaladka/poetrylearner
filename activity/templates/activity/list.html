@@ -4,7 +4,7 @@
 {% block title %}Activity Log | {{ sitename }}{% endblock %}
 
 {% block main %}
-	<section class="pT-8 pB-16">
+	<section class="pT-8">
 		<div class="_layout layout-L mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="wide-card row fill">
@@ -18,9 +18,12 @@
 					</div>
 				</div>
 			</div>
-
-			{% comment %} Statistics graph {% endcomment %}
-			{% if actions and not actions.has_previous %}
+		</div>
+	</section>
+	{% comment %} Statistics graph {% endcomment %}
+	{% if actions and not actions.has_previous %}
+	<section class="">
+		<div class="_layout layout-L mdl-grid">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 			<script type="text/javascript">
 				google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -55,21 +58,23 @@
 					<div id="chart_div" style=""></div>
 				</div>
 			</div>
-			{% endif %}
+		</div>
+	</section>
+	{% endif %}
 
+	<section class="pB-16">
+		<div class="_layout layout-sLs mdl-grid">
 			<div class="__l mdl-cell mdl-cell--2-col mdl-cell--top pA-0">
 			</div>
-			<div class="__c mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet pA-0">
-			
+			<div class="__c mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet pA-0 mB-32">
 			{% if actions %}
 				{% include "activity/include/list.html"%}
 				{% include "activity/include/pagination-bottom.html" with items=actions %}
 			{% else %}{% comment %} Display the notification {% endcomment %}
 				{% include "activity/include/empty-result.html" %}
 			{% endif %}
-			
 			</div>
-			<div class="__l mdl-cell mdl-cell--2-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
+			<div class="__l mdl-cell mdl-cell--2-col mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-cell--top pA-0 mB-32">
 				<div class="wide-card">
 					<div class="section-title">
 						<h3 class="c-grey1">Last Fortnight</h3>
@@ -81,7 +86,6 @@
 				<div id="id-contributors" data-url="{% url 'activity:ajax-contributors' %}">
 				</div>
 			</div>
-			
 		</div>
 	</section>
 {% endblock %}

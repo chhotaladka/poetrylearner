@@ -6,27 +6,39 @@
 {% block title %}My bookmarks | {{ sitename }}{% endblock %}
 
 {% block main %}
-	<section class="pT-8 pB-16">
+	<section class="pT-8">
 		<div class="_layout layout-L mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="wide-card row fill">
 					<div class="head-title">My bookmarks</div>
 					<div class="head-title">
-						<span class="fS16">{{ items.paginator.count|intcomma }}</span>
+						<span class="fS16">{{ bookmarks_poetry.paginator.count|intcomma }}</span>
 						<span class="bookmark-btn true svg32">
 						{% include "common/svg/bookmark.html" %}
 						</span>
 					</div>
 				</div>
 			</div>
-		{% if items %} {% comment %} Display the list {% endcomment %}
-			{% include "repository/include/list/poetry.html" with items=items %}
-			{% include "common/include/pagination-bottom.html" with items=items %}
-		{% else %}{% comment %} Display the notification {% endcomment %}
-			<div class="mdl-cell mdl-cell--12-col mT0 mB0">
-			{% include "bookmarks/include/empty-result.html" %}
+		</div>
+	</section>
+	<section class="pB-16">
+		<div class="_layout layout-L mdl-grid">
+			<div class="mdl-cell mdl-cell--12-col">
+			{% if bookmarks_poetry %} {% comment %} Display the list {% endcomment %}
+				{% for bookmark in bookmarks_poetry %}
+					{% if bookmark.content_object %}
+					{% include "repository/include/cards/poetry-sm.html" with poetry=bookmark.content_object %}
+					{% else %}
+					{% include "bookmarks/include/deleted-poetry-card.html" with bookmark=bookmark %}
+					{% endif %}
+				{% endfor %}
+				{% include "common/include/pagination-bottom.html" with items=bookmarks_poetry %}
+			{% else %}{% comment %} Display the notification {% endcomment %}
+				<div class="mdl-cell mdl-cell--12-col mT0 mB0">
+				{% include "bookmarks/include/empty-result.html" %}
+				</div>
+			{% endif %}
 			</div>
-		{% endif %}
 		</div>
 	</section>
 {% endblock %}

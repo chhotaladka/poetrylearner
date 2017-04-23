@@ -743,9 +743,15 @@ if (typeof jQuery === 'undefined') {
 		e.preventDefault();
 		Plugin.call($(this), 'update');
 	};
+	var clickcardHandler = function (e) {
+		//console.log("bookmark: clickcardHandler: In");
+		e.preventDefault();
+
+	};
 	
 	//$(document).on('click.bs.bookmark.data-api', ".bookmark-js-button", Bookmark.prototype.update);
 	$(document).on('click.bs.bookmark.data-api', ".bookmark-js-button", clickHandler);
+	$(document).on('click.bs.bookmark.data-api', ".clickcard-js-button", clickcardHandler);
 	
 	
 }(jQuery);
@@ -924,7 +930,7 @@ if (typeof jQuery === 'undefined') {
 	};
 
 	$(document).ready(bindActionLoadRelatedPoetry);
-	$(document).on('click.bs.repository.data-api', '.poetry-card.small', Repository.prototype.clickPoetryCards);
+	$(document).on('click.bs.repository.data-api', '.poetrycard-js', Repository.prototype.clickPoetryCards);
 	$(document).on('click.bs.repository.data-api', selector_more_poetry_btn, loadMorePoetry);
 	
 }(jQuery);

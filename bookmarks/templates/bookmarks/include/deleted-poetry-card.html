@@ -1,0 +1,29 @@
+{% comment %}
+	Info: Deleted Poetry Card. Bookmarked poetry no longer exixts.
+{% endcomment %}
+<div class="mdl-card poetry poetry-card small wFull bS-1">
+	<div class="details pT-16">
+		<div class="mB4">
+			<span class="fullname fS14">....</span>{% comment %}TODO: Add title field of Bookmark {% endcomment %}
+		</div>
+	</div>
+	<div class="title row pLR-16">
+		<div class="svg32 c-91 mR-16">
+			{% include "common/svg/warning.html" %}
+		</div>
+		<div>
+			<div class="fS16 title-text">
+				This item no longer exists.
+			</div>
+			<div class="fS-12 mT4">
+				It may have been deleted or unpublished.
+			</div>
+		</div>
+	</div>
+	<div class="bottom-panel">
+		<div class="action-panel pB-8 row r2l">
+			{% comment %}  Include BOOKMARK button {% endcomment %}
+			{% include "bookmarks/include/bookmark-button.html" with bookmark=bookmark %}
+		</div>
+	</div>
+</div>

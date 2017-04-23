@@ -123,7 +123,10 @@ class Bookmark(models.Model):
         return "{}'s bookmark".format(self.user.username)
     
     def get_content_url(self):
-        return self.content_object.get_absolute_url()
+        if self.content_object:
+            return self.content_object.get_absolute_url()
+        else:
+            return ''
     
     def get_absolute_url(self):
         return self.get_content_url()  

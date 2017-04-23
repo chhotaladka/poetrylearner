@@ -172,7 +172,7 @@
 	};
 
 	$(document).ready(bindActionLoadRelatedPoetry);
-	$(document).on('click.bs.repository.data-api', '.poetry-card.small', Repository.prototype.clickPoetryCards);
+	$(document).on('click.bs.repository.data-api', '.poetrycard-js', Repository.prototype.clickPoetryCards);
 	$(document).on('click.bs.repository.data-api', selector_more_poetry_btn, loadMorePoetry);
 	
 }(jQuery);

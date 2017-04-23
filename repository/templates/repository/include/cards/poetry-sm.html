@@ -5,7 +5,7 @@
 {% endcomment %}
 {% load common_tags %}
 
-<div class="mdl-card poetry poetry-card small wFull bS-1" data-href="{{ poetry.get_absolute_url }}"
+<div class="mdl-card poetry poetry-card small poetrycard-js wFull bS-1" data-href="{{ poetry.get_absolute_url }}"
 	itemscope itemtype="http://schema.org/CreativeWork">
 	<meta itemprop="genre" content="poetry"/>
 	<meta itemprop="name" content="{{ poetry.headline }}"/>
@@ -44,7 +44,13 @@
 	<div class="bottom-panel">
 		<div class="action-panel pB-8 row r2l">
 			{% comment %}  Include BOOKMARK button {% endcomment %}
-			{% include "repository/include/misc/bookmark-button.html" with item=poetry %}
+			{% if not bookmark %}
+				{% comment %} Sometimes 'bookmark' has been added to the context e.g. bookmark list view {% endcomment %}
+				{% load bookmark_tags %}
+				{% bookmark_by_user request.user on poetry as bookmark %}
+			{% endif %}
+			{% include "bookmarks/include/bookmark-button.html" with bookmark=bookmark item=poetry %}
+			
 			<a class="action-button oN" href="{{ poetry.get_absolute_url }}" title="Read full poetry" itemprop="url">
 				{% include "common/svg/book-open.html" %}
 				<span class="action-button__text">View</span>

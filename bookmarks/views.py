@@ -77,7 +77,7 @@ def remove_bookmark(request):
             content_type_id = int(content_type_id)
             object_id = int(object_id)
         except:
-            print "ERR:: Invalid content_type_id, object_id :"
+            print "ERR:: Invalid content_type_id, object_id"
             data = {}
             data['status'] = 404
             data['bid'] = 0
@@ -85,14 +85,18 @@ def remove_bookmark(request):
         
         # Validate content_type_id and object_id
         try:
-            content_type = ContentType.objects.get_for_id(content_type_id)
-            content_object = content_type.get_object_for_this_type(pk=object_id)
-            # Delete bookmark
-            id = Bookmark.objects.remove_bookmark(content_object, request.user)
+            bookmark_obj = Bookmark.objects.get(
+                user=request.user,
+                content_type=content_type_id,
+                object_id=object_id
+                )
+            bookmark_id = bookmark_obj.id
+            bookmark_obj.delete()
+            status = 200 # Ok
+            
         except ObjectDoesNotExist:
+            print "ERR:: Requested bookmark does not exist."
             status = 404
-        
-        status = 200 # Ok
             
         data = {}
         data['status'] = status
@@ -109,14 +113,15 @@ def list_bookmarks(request):
     '''
     List all bookmarks by the user
     '''
-    poetry_ctype = ContentType.objects.get(app_label="repository", model="poetry")
-    
-    bookmarks = request.user.saved_bookmarks.filter(content_type=poetry_ctype)
-    
-    obj_list = [x.content_object for x in bookmarks]
+    try:
+        poetry_ctype = ContentType.objects.get(app_label="repository", model="poetry")
+        bookmarks_poetry = request.user.saved_bookmarks.filter(content_type=poetry_ctype)
+    except ContentType.DoesNotExist:
+        print "ERR: Requested content type does not exist."
+        bookmarks_poetry = []
     
     # Pagination
-    paginator = Paginator(obj_list, 100) # Show 100 entries per page    
+    paginator = Paginator(bookmarks_poetry, 40) # Show 40 entries per page    
     page = request.GET.get('page')
     try:
         objs = paginator.page(page)
@@ -127,11 +132,11 @@ def list_bookmarks(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         objs = paginator.page(paginator.num_pages)
     
-    type = 'Bookmarks'
+    item_type = 'Bookmarks'
     result_title = ''
     
-    context = {'items': objs,
-               'item_type': type, 'result_title': result_title,
+    context = {'bookmarks_poetry': objs,
+               'item_type': item_type, 'result_title': result_title,
                }
     template = 'bookmarks/list.html'
     return render(request, template, context)

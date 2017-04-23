@@ -69,7 +69,9 @@
 		</button>
 		{% endif %}
 		{% comment %}  Include BOOKMARK button {% endcomment %}
-		{% include "repository/include/misc/bookmark-button.html" with item=poetry %}
+		{% load bookmark_tags %}
+		{% bookmark_by_user request.user on poetry as bookmark %}
+		{% include "bookmarks/include/bookmark-button.html" with bookamrk=bookmark item=poetry %}
 	</div>
 	{% comment %}  Include share panel {% endcomment %}
 	{% include "repository/include/misc/share-panel.html" with item=poetry %}

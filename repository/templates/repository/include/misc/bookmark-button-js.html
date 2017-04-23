@@ -1,8 +1,0 @@
-{% comment %}
-	Info:       Bookmark button javascript
-	Requires:   will only work on bookmark-btn css class.
-{% endcomment %}
-{% load staticfiles %}
-{% if request.user.is_authenticated %}  
-<script type="text/javascript" src="{% static "bookmarks/js/bookmark.js" %}"></script>
-{% endif %}

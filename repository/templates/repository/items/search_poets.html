@@ -16,22 +16,30 @@
 {% block main %}
 	<section class="pT-8 pB-16">
 		<div class="_layout layout-L mdl-grid">
-		{% if items %} {% comment %} Display the list {% endcomment %}
 			{% load humanize %}
 			<div class="mdl-cell mdl-cell--12-col">
 				<div class="wide-card mB-8">
 					<div class="search-title">
-						<div class="title">{{result_title}}</div>
+						<span class="chip chip--deletable">
+							<span class="chip__text">"</span>
+							<span class="chip__text">{{ query_string }}</span>
+							<span class="chip__text">"</span>
+							<span class="chip__text">&nbsp;in Poets</span>
+							<button onclick="location.href='{% url 'explore-poets' %}'" class="chip__action">
+								{% include "common/svg/close-bold.html" %}
+							</button>
+						</span>
 					</div>
 					<div class="search-stats mL-8">
 						<span>{{ items.paginator.count|intcomma }} result{{ items.paginator.count|pluralize }}</span>
 					</div>
 				</div>
 			</div>
+		{% if items %} {% comment %} Display the list {% endcomment %}
 			{% include "repository/include/list/person.html" with items=items %}
 			{% include "repository/include/misc/pagination-bottom.html" with items=items %}
 		{% else %} {% comment %} Display the notification {% endcomment %}
-			{% include "common/include/empty-result.html" %}
+			{% comment %}TODO: display some graphics here.{% include "common/include/empty-result.html" %}{% endcomment %}
 		{% endif %}
 		</div>
 	</section>

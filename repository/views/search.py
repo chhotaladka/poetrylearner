@@ -70,6 +70,10 @@ def search_person(query_string):
             #print q_objects
             obj_list = Person.objects.filter(q_objects).order_by('name')
             return obj_list
+        
+        else:
+            terms1 = []
+            terms1.append(token)
     
     
     # We are here, it means:

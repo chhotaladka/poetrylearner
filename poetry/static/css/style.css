@@ -1082,12 +1082,7 @@ html, body {
 	font-weight: 400;
 	color: #919191;
 }
-.meta .meta-val--bignum,
-.bignum {
-	font-size: 14px;
-	font-weight: 400;
-	color: #616161;
-}
+
 
 .mdl-card__actions.nav-panel {
 	padding: 4px;
@@ -3076,3 +3071,30 @@ ol.default, ul.default {
   .chip--deletable {
     padding-right: 4px; }
 
+
+/* Misc design related */
+.bignum {
+	font-size: 100px;
+	font-weight: 600;
+	line-height: 1;
+	font-family: "Roboto","Helvetica","Arial",sans-serif;
+	margin-top: 16px;
+	color: #919191;
+	/*background-color: #F3F000;*/
+	display: inline-block;
+}
+.bignum-text {
+	font-weight: 600;
+	margin: 8px 0px 8px;
+	color: #424242;
+	font-family: "Roboto","Helvetica","Arial",sans-serif;
+	font-size: 20px;
+	line-height: 1;
+	letter-spacing: 0.6em;
+	text-transform: uppercase;
+}
+.sitename-bottom {
+	color: #424242;
+	letter-spacing: 0.2em;
+	margin-top: 8px;
+}

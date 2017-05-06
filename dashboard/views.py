@@ -34,7 +34,7 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
     '''
     def is_open_for_signup(self, request, sociallogin):
         # To disable social account signup, return False. Otherwise return True(Default). 
-        return True    
+        return True
 
 
 # Create your views here.
@@ -87,33 +87,6 @@ def CreateProfile(sender, request, user,**kwargs):
 
 
 @login_required
-def user_home(request):
-    '''
-    Home page of the user
-    '''  
-    profile = UserProfile.objects.get(user=request.user.id)
-
-    social_accounts = []
-    providers = ["Facebook", "Google", "Twitter"]
-    for provider in providers:
-        if profile.is_social_account_exist(provider):            
-            extra_context = {}
-            extra_context['provider_name'] = profile.get_provider_name(provider)
-            extra_context['profile_image'] = profile.get_avatar_url(provider)
-            extra_context['profile_username'] = profile.get_name(provider)                
-            extra_context['profile_url'] = profile.get_social_url(provider)
-            extra_context['profile_email'] = profile.get_email(provider)
-            extra_context['profile_gender'] = profile.get_gender(provider)        
-            social_accounts.append(extra_context)
-                
-    ## Make the context and render     
-    context = {'profile': profile, 'social_accounts': social_accounts}    
-    template = 'dashboard/user-home.html'
-    
-    return render(request, template, context)
-        
-
-@login_required
 def private_profile(request):
     '''
     Private profile of the user
@@ -131,13 +104,13 @@ def private_profile(request):
             extra_context['profile_username'] = profile.get_name(provider)
             extra_context['profile_url'] = profile.get_social_url(provider)
             extra_context['profile_email'] = profile.get_email(provider)
-            extra_context['profile_gender'] = profile.get_gender(provider)            
+            extra_context['profile_gender'] = profile.get_gender(provider)
             social_accounts.append(extra_context)
             
     # Get groups name
     groups = list(request.user.groups.values_list('name',flat=True))
     if request.user.is_staff:
-        groups.append(u'staff')
+        groups.append(u'editor')
                 
     ## Make the context and render     
     context = {'social_accounts': social_accounts,
@@ -164,10 +137,15 @@ def public_profile(request, user_id, slug):
     
     if profile.is_slug_valid(slug) is False:
         raise Http404
-                
+    
+    # Get groups name
+    groups = list(user.groups.values_list('name',flat=True))
+    if user.is_staff:
+        groups.append(u'editor')
+    
     ## Make the context and render     
-    context = {'public_profile': profile}
+    context = {'public_profile': profile,
+               'groups': groups,}
     template = 'dashboard/profile-public.html'
     
     return render(request, template, context)
-

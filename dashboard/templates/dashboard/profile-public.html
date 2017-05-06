@@ -1,35 +1,27 @@
 {% extends "dashboard/base.html" %}
 
 {% block meta %}
-	<meta name="robots" content="noindex">
-	<meta name="googlebot" content="noindex">
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
 {% endblock %}
 
 {% block title %}{{ public_profile.get_first_name }} - {{ sitename }}{% endblock %}
 
-{% block main %}	
-<div class="pT-8 pB-16">
-	<div class="_layout layout-L mdl-grid">			
-		<section class="__c mdl-cell mdl-cell--12-col pA-0">
-
-			<div class="author-card--lg wFull">
-				<div class="card__title tAc">
-					<div class="avatar lg user bC-none">
-						{% include "common/svg/user.html" %}
-					</div>					
-					<div class="title-text dark">																					
-						{{ public_profile.get_first_name }}
-					</div>
-					<div class="extras">
-						<span>Joined</span>
-						<span>{{ public_profile.user.date_joined|date:"d M, Y" }}</span>					
-					</div>													
-				</div>					
-				<div class="mdl-card__supporting-text">
-				</div>
-			</div>
-
-		</section>			
-	</div>		
-</div>
+{% block main %}
+<section class="pT-8">
+    <div class="_layout layout-mL mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+            {% include 'dashboard/include/public-profile-card.html' %}
+        </div>
+    </div>
+</section>
+<section class="bB1"></section>
+<section class="pT-16 pB-16 hFull">
+    <div class="_layout layout-mL mdl-grid">
+        <div class="__l mdl-cell mdl-cell--6-col pA-0 centered">
+        </div>
+        <div class="__c mdl-cell mdl-cell--6-col pA-0 centered">
+        </div>
+    </div>
+</section>
 {% endblock %}

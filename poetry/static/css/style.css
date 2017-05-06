@@ -226,6 +226,8 @@ html, body {
 	border-radius: 24px;
 	text-transform: none;
 	background: none repeat scroll 0px 0px rgba(255, 255, 255, 0.4);
+	height: 32px;
+	line-height: 32px;
 }
 .title__extras .mdl-button:hover,
 .curve.mdl-button:hover {
@@ -398,11 +400,15 @@ html, body {
 }
 .card-l {
 	max-width: 512px;
-	margin: 0px auto;
+	margin: 1px auto;
 }
 .card-xl {
 	max-width: 620px;
-	margin: 0px auto;
+	margin: 1px auto;
+}
+.card-m .card-l, .card-xl {
+    border-radius: 2px;
+    box-sizing: border-box;
 }
 .poetry-card {
 	max-width: 512px;
@@ -1002,7 +1008,8 @@ html, body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.author-card--lg .title-text {
+.author-card--lg .title-text,
+.card-xl .title-text {
 	font-weight: 400;
 	font-size: 24px;
 	line-height: normal;
@@ -1013,7 +1020,8 @@ html, body {
 	color: rgba(0, 0, 0, 0.54);
 }
 .author-card--sm .extras,
-.author-card--lg .extras {
+.author-card--lg .extras,
+.card-xl .extras {
 	text-overflow: ellipsis;
 	white-space: normal;
 	word-break: keep-all;
@@ -1021,7 +1029,8 @@ html, body {
 	line-height: 1.375;
 }
 .author-card--sm .extras span,
-.author-card--lg .extras span {    
+.author-card--lg .extras span,
+.card-xl .extras span {
     vertical-align: middle;
 }
 .author-card--sm .action {
@@ -1276,25 +1285,29 @@ a.action-button:hover {
 .share-button:hover {
 	color: #616161;
 }
-.share-button .share-icon-twitter {
+.share-button .share-icon-twitter,
+.icon.twitter {
 	background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -348px;
     width: 32px;
     height: 32px;
 	display: inline-block;
 }
-.share-button .share-icon-fb {
+.share-button .share-icon-fb,
+.icon.facebook {
     background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -861px;
     width: 32px;
     height: 32px;
 	display: inline-block;
 }
-.share-button .share-icon-google {
+.share-button .share-icon-google,
+.icon.google {
     background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -276px;
     width: 32px;
     height: 32px;
 	display: inline-block;
 }
-.share-button .share-icon-mail {
+.share-button .share-icon-mail,
+.icon.mail {
     background: transparent url("../img/social-icons-set1.png") no-repeat scroll 0px -144px;
     width: 32px;
     height: 32px;
@@ -2179,18 +2192,6 @@ ul.mdl-mini-footer__link-list {
 	}
 }
 
-.social-icon {
-
-}
-.social-icon.facebook {
-
-}
-.social-icon.google {
-
-}
-.social-icon.twitter {
-
-}
 
 /* Tooltip */
 .tooltip {
@@ -2468,6 +2469,9 @@ ul.mdl-mini-footer__link-list {
 	color: #222;
 	font-weight: 600 !important;
 }
+.bB1 {
+	border-bottom: 1px solid rgb(224,224,224);
+}
 .hi {letter-spacing: 0em !important;}
 .fS-13 {
 	font-size: 13px !important;
@@ -2540,6 +2544,10 @@ ul.mdl-mini-footer__link-list {
 .fullname {
 	font-weight: bold;
 	color: #292F33;
+}
+.svg64 svg {
+    height:64px !important;
+    width:64px !important;
 }
 .svg48 svg {
 	height:48px !important;
@@ -2664,10 +2672,12 @@ ul.mdl-mini-footer__link-list {
 .lH-1 {line-height: 1 !important;}
 
 .dB {display:block;}
+.d-ib {display:inline-block;}
 .fD-c {flex-direction: column;}
 .fD-r {flex-direction: row;}
 .aI-c {align-items: center;}
 .aI-b {align-items: baseline;}
+.aI-fe {align-items: flex-end;}
 .fW-w {flex-wrap: wrap;}
 .fW-wr {flex-wrap: wrap-reverse;}
 .fW-no {flex-wrap: nowrap;}
@@ -2676,6 +2686,7 @@ ul.mdl-mini-footer__link-list {
 .jC-fs {justify-content: flex-start;}
 .jC-fe {justify-content: flex-end;}
 .jC-c {justify-content: center;}
+/*align-self: auto | flex-start | flex-end | center | baseline | stretch;*/
 
 .curP {cursor: pointer;}
 
@@ -2699,7 +2710,10 @@ ul.mdl-mini-footer__link-list {
 .c-blue {color: #3F51B5 !important;}
 .c-blue2 {color: #167AC6 !important;}
 .c-red {color: #DB4437 !important}
+.c-red svg {fill: #DB4437 !important}
 .bc-red {background-color: #DB4437;}
+.c-green svg {fill: #4CAF50 !important;}
+
 .c-administrator {
 	color: #FFF !important;
 	background-color:#FB0 !important;

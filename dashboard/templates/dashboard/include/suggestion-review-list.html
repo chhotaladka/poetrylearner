@@ -1,0 +1,29 @@
+{% comment %} Suggestion list to review/edit {% endcomment %}
+{% load poetry_tags %}
+{% load humanize %}
+<div class="content-wrapper">
+    <a class="card" href="{% url 'repository:list' type='poetry' %}?tab=unpub&o=shuffle">
+        <div class="card-l">
+            <div class="p-16 row r2l">
+                <div class="mL-8">
+                    <div class="c-red svg48">
+                    {% include "common/svg/content_paste.html" %}
+                    </div>
+                </div>
+                <div class="tAr">
+                    <div class="fS26 b c-91">{% get_poetry_count unpublished as pcount %}{{ pcount|intcomma }}</div>
+                    <div class="fullname fS16" style="margin-top: -4px;">Poetry to review</div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+{% get_poetry_unpub_rand 10 as poetries %}
+{% include "repository/include/list/poetry.html" with items=poetries %}
+<div class="mdl-card__actions">
+{% if poetries %}	
+	<a class="action-button wFull oN" href="{% url 'repository:list' type='poetry' %}?tab=unpub&o=shuffle" title="Show more poetry">
+		Show more
+	</a>
+{% endif %}
+</div>

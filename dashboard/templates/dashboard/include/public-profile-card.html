@@ -1,0 +1,31 @@
+{% comment %}
+    Info: User's Public Profile Card
+{% endcomment %}
+<div class="card-xl wFull">
+    <div class="p-16">
+        <div class="row aI-fe">
+            <div class="mR-16">
+                <div class="avatar circle lg user bC-none">
+                    {% include "common/svg/user.html" %}
+                </div>
+            </div>
+            <div class="mR-16 tAc">
+                <div class="title-text dark">
+                    {{ public_profile.get_name }}
+                </div>
+                <div class="extras">
+                    <span>Joined</span>
+                    <span>{{ public_profile.user.date_joined|date:"d M, Y" }}</span>
+                </div>
+	             <div class="mT4">
+	                <span>Role . </span>
+	                {% for group in groups %}
+	                <button class="curve mdl-button c-{{group}}">{{ group|title }}</button>
+	                {% endfor %}
+	            </div>
+            </div>
+        </div>
+        <div class="row">
+        </div>
+    </div>
+</div>

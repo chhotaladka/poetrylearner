@@ -1,0 +1,29 @@
+{% comment %} Suggestion list to read {% endcomment %}
+{% load poetry_tags %}
+{% load humanize %}
+<div class="content-wrapper">
+    <a class="card" href="{% url 'explore-poetry' %}">
+        <div class="card-l">
+            <div class="p-16 row r2l">
+                <div class="mL-8">
+                    <div class="c-red svg48">
+                    {% include "common/svg/book-open.html" %}
+                    </div>
+                </div>
+                <div class="tAr">
+                    <div class="fS26 b c-91">{% get_poetry_count published as pcount %}{{ pcount|intcomma }}</div>
+                    <div class="fullname fS16" style="margin-top: -4px;">Poetry for you</div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+{% get_poetry_pub_rand 10 as poetries %}
+{% include "repository/include/list/poetry.html" with items=poetries %}
+<div class="mdl-card__actions">
+{% if poetries %}	
+	<a class="action-button wFull oN" href="{% url 'explore-poetry' %}" title="Show more poetry">
+		Show more
+	</a>
+{% endif %}
+</div>

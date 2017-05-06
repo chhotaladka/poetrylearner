@@ -1,51 +1,34 @@
 {% extends "dashboard/base.html" %}
 {% load bookmark_tags %}
+{% load common_tags %}
 
 {% block title %}{{ profile.get_name }} - {{ sitename }}{% endblock %}
 
 {% block main %}
-<div class="pT-8 pB-16 hFull">
-	<div class="_layout full">
-		
-		<div class="author-card--lg wFull mT-32">
-			<div class="card__title tAc">
-				{% with profile_img_url=profile.get_avatar_url %}
-				{% if profile_img_url %}
-				<img class="avatar border" width="120" height="120" src={{ profile_img_url }}>
-				{% else %}					
-				<div class="avatar lg user bC-none">
-					{% include "common/svg/user.html" %}
-				</div>
-				{% endif %}					
-				{% endwith %}					
-				<div class="title-text dark">																					
-					{{ profile.get_name }}
-				</div>
-				<div class="extras">{{ profile.get_contact }}</div>
-				<div class="extras">
-					<span>Joined</span>
-					<span>{{ request.user.date_joined|date:"d M, Y" }}</span>					
-				</div>
-				<div class="group mT-16">
-					<span>Role . </span>
-					{% for group in groups %}
-					<button class="curve mdl-button c-{{group}}">{{ group|title }}</button>
-					{% endfor %}					
-				</div>
-				<div class="__row center">
-    			{% for account in social_accounts %}
-	    			<div class="social circle">
-	    				<a class="soc-button" title="View {{ account.provider_name }} profile" href="{{ account.profile_url }}">
-							<span class="soc-icon-{{ account.provider_name|lower }}"></span>			                	                
-						</a>
-					</div>
-    			{% endfor %}
-				</div>													
-			</div>					
-			<div class="mdl-card__supporting-text">
-			</div>
-		</div>	
-		
-	</div>
-</div>
+<section class="pT-8">
+    <div class="_layout layout-mL mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+            {% include 'dashboard/include/private-profile-card.html' %}
+        </div>
+    </div>
+</section>
+<section class="bB1"></section>
+<section class="pT-16 pB-16">
+    <div class="_layout layout-mL mdl-grid">
+        <div class="__l mdl-cell mdl-cell--6-col pA-0 centered">
+            <div class="mT-32">
+	            {% include 'dashboard/include/bookmarks-app.html' %}
+            </div>
+        </div>
+        <div class="__c mdl-cell mdl-cell--6-col pA-0 centered">
+            <div class="mT-32">
+        {% if request.user|has_group:"administrator,editor" %}
+            {% include 'dashboard/include/suggestion-review-list.html' %}
+        {% else %}
+            {% include 'dashboard/include/suggestion-read-list.html' %}
+        {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

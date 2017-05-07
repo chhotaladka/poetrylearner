@@ -131,7 +131,10 @@ def raw_article_list(request):
         q_objects &= Q(source_url__icontains=q) | Q(author__icontains=q) | Q(title__icontains=q) | Q(content__icontains=q)
         q_string = '&q=' + q
         extra_get_queries.append(q_string)        
-        result_title = result_title + ', ' + q      
+        result_title = result_title + ', ' + q
+        query_string = q
+    else:
+        query_string = ''
         
     # Create ``query_tabs``
     query_tabs = _create_query_tabs(request.path, q_tab, extra_get_queries)
@@ -153,7 +156,8 @@ def raw_article_list(request):
             
     context = {'articles': articles,
                'query_tabs': query_tabs,
-               'result_title': result_title}
+               'result_title': result_title,
+               'query_string': query_string,}
     template = 'crawlers/article-list.html'    
 
     return render(request, template, context)
@@ -336,6 +340,9 @@ def raw_author_list(request):
         # get the authors with 'name'        
         q_objects &= Q(name__icontains=q) | Q(source_url__icontains=q)      
         result_title = result_title + ', ' + q
+        query_string = q
+    else:
+        query_string = ''
                 
     # Get all authors           
     obj_list = RawAuthor.objects.all().filter(q_objects)        
@@ -397,7 +404,8 @@ def raw_author_list(request):
             
     context = {'authors': authors,
                'query_tabs': query_tabs,
-               'result_title': result_title}
+               'result_title': result_title,
+               'query_string': query_string,}
     template = 'crawlers/author-list.html'    
 
     return render(request, template, context)

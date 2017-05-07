@@ -4,33 +4,29 @@
 {% load common_tags %}
 <div class="card-xl wFull">
     <div class="p-16">
-        <div class="row aI-fe">
-            <div class="mR-16">
-                {% with profile_img_url=profile.get_avatar_url %}
-                {% if profile_img_url %}
-                <div class="avatar circle lg border" style="background: url('{{ profile_img_url }}') center / cover;">
-                </div>
-                {% else %}
-                <div class="avatar circle lg user bC-none">
-                    {% include "common/svg/user.html" %}
-                </div>
-                {% endif %}
-                {% endwith %}
+        <div class="tAc">
+            {% with profile_img_url=profile.get_avatar_url %}
+            {% if profile_img_url %}
+            <div class="avatar circle md border centered" style="background: url('{{ profile_img_url }}') center / cover;">
             </div>
-            <div class="mR-16 tAc">
-                <div class="title-text dark">
-                    {{ profile.get_name }}
-                </div>
-                <div class="extras">
-                    <span>Joined</span>
-                    <span>{{ request.user.date_joined|date:"d M, Y" }}</span>
-                </div>
-	            <div class="mT4">
-	                <span>Role . </span>
-	                {% for group in groups %}
-	                <button class="curve mdl-button c-{{group}}">{{ group|title }}</button>
-	                {% endfor %}
-	            </div>
+            {% else %}
+            <div class="avatar circle md user bC-none centered">
+                {% include "common/svg/user.html" %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            <div class="title-text dark">
+                {{ profile.get_name }}
+            </div>
+            <div class="extras">
+                <span>Joined</span>
+                <span>{{ request.user.date_joined|date:"d M, Y" }}</span>
+            </div>
+             <div class="mT4">
+                <span>Role . </span>
+                {% for group in groups %}
+                <button class="curve mdl-button c-reader">{{ group|title }}</button>
+                {% endfor %}
             </div>
         </div>
         <div class="row fill mT-16">

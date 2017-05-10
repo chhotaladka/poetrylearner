@@ -3,24 +3,34 @@
 {% block title %}Feedback details and actions | {{ sitename }}{% endblock %}
 
 {% block breadcrumbs %}
-<div class="pT-8 pB-8">
-	<div class="_layout">					
-		<div class="breadcrumbs wFull">
-			<a href="{% url 'feedback:list' %}">All feedbacks</a>
-			<span> / </span>
-			<span>{{ feedback }}</span>		 	
-		</div>					
-	</div>	
-</div>
+<section class="pT-8">
+    <div class="_layout layout-L mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+            <div class="wide-card">
+                <div class="head-title mB-8">
+                    <a class="action-button" href="{% url 'feedback:list' %}">
+                    {% include 'common/svg/arrow_back.html' %}
+                    </a>
+                    <span>Feedbacks</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
 {% block main %}
-	<section class="p-8">
-		<div class="_layout mdl-grid">
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="wide-card bCw p5 bS-1">
-					{% include "feedback/include/response-card.html" %}
-				</div>
-			</div>					
-		</div>	
-	</section>
+    <section class="pT-8">
+        <div class="_layout layout-L mdl-grid">
+            <div class="mdl-cell mdl-cell--12-col">
+                {% include "feedback/include/feedback-card.html" %}
+                {% include "feedback/include/response-card.html" %}
+            </div>
+        </div>
+    </section>
+    <section class="pT-8 pB-32">
+        <div class="_layout mdl-grid">
+            <div class="mdl-cell mdl-cell--12-col">
+            </div>
+        </div>
+    </section>
 {% endblock %}

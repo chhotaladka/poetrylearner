@@ -3,13 +3,13 @@
 {% endcomment %}
 {% load common_tags %}
 <div class="card-xl feedback bCw bS-3">
-    <div class="p-16">
-        <div class="fS16 title-text c-31">
+    <div class="p-16 bg-org">
+        <div class="fS16 title-text">
             <span>{{ feedback.get_text }}</span>
         </div>
     </div>
     <div class="pLR-16">
-        <div class="mT4 row fill">
+        <div class="mT-8 row fill">
             <div class="light-txt">
                 <span>Given by</span>
                 {% if feedback.get_user %}
@@ -39,23 +39,6 @@
             {% endif %}
         </div>
     </div>
-    <div class="p-16 mT-8 bT-1">
-        <div class="">
-            {% if feedback.get_action_taken %}
-            <span class="b c-blue3">Status: </span>
-            <span>{{ feedback.get_action_taken }}</span>
-            <div class="light-txt">[{{ feedback.date_responded }} IST]</div>
-            {% endif %}
-        </div>
-        <div class="row r2l">
-            {% if request.user|has_group:'administrator' %}
-            <div class="">
-                <a class="action-button" href="{{ feedback.get_absolute_url }}" title="Respond to feedback">
-                    {% include 'common/svg/reply.html' %}
-                    <span class="b c-blue3">Comment</span>
-                </a>
-            </div>
-            {% endif %}
-        </div>
+    <div class="p-16 mT-8">
     </div>
 </div>

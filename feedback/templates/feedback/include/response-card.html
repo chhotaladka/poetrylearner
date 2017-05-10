@@ -2,67 +2,14 @@
 	Info:       Feedback details and response Card
 	Requires:   1.``feedback`` context
 {% endcomment %}
+<div class="card-xl bCw bS-3">
 	<div class="table-card">
 		<table cellpadding="0">
 			<tbody>
-				<tr>
-					<td class="name" colspan="2">
-						<span class="gI">Date</span>
-					</td>
-					<td class="data" colspan="2">
-						<span class="gI">{{ feedback.date_added }}</span>
-					</td>						
-				</tr>
-				<tr>
-					<td class="name" colspan="2">
-						<span class="gI">Page</span>
-					</td>
-					<td class="data" colspan="2">
-						<span class="gI">
-							<a class="h-link" href="{{ feedback.get_page_url }}">{{ feedback.get_page_url|truncatechars:50 }}</a>
-						</span>
-					</td>						
-				</tr>
-				<tr>
-					<td class="name" colspan="2">
-						<span class="gI">Content</span>
-					</td>
-					<td class="data" colspan="2">
-						<span class="gI">
-							<a class="h-link" href="{{ feedback.get_content_url }}">{{ feedback.get_content_url|truncatechars:30 }}</a>
-						</span>
-					</td>						
-				</tr>
-				<tr>
-					<td class="name" colspan="2">
-						<span class="gI">Given by</span>
-					</td>
-					<td class="data" colspan="2">
-						<span class="gI">
-							{% if feedback.get_user %}
-							<a class="h-link" href="{{ feedback.get_user.profile.get_absolute_url }}" title="View user profile">
-							 	{{ feedback.get_user.username }}
-							</a>
-							{% elif feedback.email %}
-							<span class="b">{{ feedback.email }}</span>								
-							{% else %}
-							<span class="b">Anonymous user</span>
-							{% endif %}
-						</span>	
-					</td>						
-				</tr>	
-				<tr>
-					<td class="name" colspan="2">
-						<span class="gI">Feedback text</span>
-					</td>
-					<td class="data" colspan="2">
-						<span class="gI">{{ feedback.get_text }}</span>
-					</td>						
-				</tr>					
 				{% if feedback.is_responded == True %}
 				<tr id="id-action1">
 					<td id="id-td1" class="name" colspan="2">
-						<span class="gI">We responded</span>								
+						<span class="gI">We responded</span>
 					</td>
 					<td id="id-td2" class="data" colspan="2">
 						<div class="gI">
@@ -75,7 +22,7 @@
 							</span>
 						</div>
 					</td>
-				</tr>							
+				</tr>
 				<tr id="id-action2" class="hidden">
 				{% else %}
 				<tr id="id-action2">
@@ -86,7 +33,7 @@
 					<td class="data" colspan="2">
 						<div class="gI">
 							<form id="id-action-form" method="post">
-							{% csrf_token %}								
+							{% csrf_token %}
 								<div class="form-element">
 									<textarea class="form-input" name="action" rows="3" maxlength=900 required>{{ feedback.get_action_taken|default_if_none:'' }}</textarea>
 									<!--<span class="help-text">Write the action taken by you for this feedback.</span>-->											
@@ -94,22 +41,23 @@
 								<div class="form-element">
 									<input class="mdl-slider mdl-js-slider" type="range" min="0" max="10" name="rating" value="{{ feedback.get_rating }}" step="1" tabindex="0">
 									<span class="help-text">Give rating to the feedback. Lowest (negative feedback) to highest (positive feedback).</span>
-								</div>								
+								</div>
 								<div class="form-element">
 									<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="id-notify">
   										<input id="id-notify" type="checkbox" class="mdl-checkbox__input" name="notify" value="1"/>
   										<span>Send notification to user</span>
-									</label>    										
+									</label>
 								</div>
 								<div class="tAr">
 									<input class="mdl-button" type="button" name="cancel" value="Cancel"
 									onclick="location.href=&#39;{% url 'feedback:list' %}&#39;"/>							
 									<input class="mdl-button mdl-button--colored" type="submit" name="submit" value="submit response" id="id-form-submit"/>
-								</div>									
+								</div>
 							</form>
 						</div>
-					</td>								
-				</tr>		
-			</tbody>			
-		</table>	
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+</div>

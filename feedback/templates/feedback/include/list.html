@@ -4,26 +4,3 @@
 {% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}
 {% endfor %}
 </div>
-<script>
-{% comment %} javascript to toggle feedback card view (more/less) {% endcomment %}
-{% if feedbacks%}
-	document.addEventListener('DOMContentLoaded', function () {
-		var status = false;
-		var toggleView = function(){
-			if ($(this).hasClass('more')){
-				status = true;
-			} else{
-				status = false;
-			}
-			$('.feedback-list .feedback').removeClass('more');
-			if (status){
-				$(this).removeClass('more');
-			} else{
-				$(this).addClass('more');
-			}
-		};
-		var nodes = $('.feedback-list .feedback');
-		nodes.on('click', toggleView);
-	});
-{% endif %}
-</script>

@@ -1315,38 +1315,9 @@ a.action-button:hover {
 }
 
 .feedback.link {
-	padding: 4px 16px;
+    padding: 4px 16px;
 }
-/* feedback list */
-.feedback.card {
-	background-color: white;
-}
-.feedback.wide-card.more {
-	max-width: 640px;
-}
-.feedback .fbmore {
-	display: none !important;
-}
-.feedback.more {
-	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-	margin-bottom: 16px;
-	margin-top: 8px;
-}
-.feedback.more .fbless {
-	display: none !important;
-}
-.feedback.more .fbmore {
-	display: block !important;
-}
-.feedback .title .id {
-	color: #4285F4;
-}
-.feedback .title.pending {
-	border-left: 2px solid rgba(221, 75, 57, 0.60);
-}
-.feedback .title.closed {
-	border-left: 2px solid rgba(139, 195, 74, 0.60);
-}
+
 /* activity */
 .activity .groupdate {
 	font-size: 9px;
@@ -2506,9 +2477,9 @@ ul.mdl-mini-footer__link-list {
     line-height: 20px;
 }
 .fS16 {
-	font-size: 16px;
-	line-height: 22px;
-	font-weight: 400;
+	font-size: 16px !important;
+	line-height: 22px !important;
+	font-weight: 400 !important;
 }
 .fS16.b {font-weight: 600;}
 .fS18 {
@@ -2666,6 +2637,17 @@ ul.mdl-mini-footer__link-list {
     border-color: #E5E6E9 #DFE0E4 #D0D1D5;
     border-radius: 3px;
 }
+.bS-3 {
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+.bT-1 {
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+.bB-1 {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
 .lH-46 {line-height: 46px !important;}
 .lH-72 {line-height: 72px !important;}
 .lH-i {line-height: inherit !important;}
@@ -2698,6 +2680,8 @@ ul.mdl-mini-footer__link-list {
 }
 .c-3 {color: #333 !important;}
 .c-3 svg {fill: #333 !important;}
+.c-31 {color: #313131 !important;}
+.c-31 svg {fill: #313131 !important;}
 .c-61 {color: #616161 !important;}
 .c-61 svg {fill: #616161 !important;}
 .c-91 {color: #919191 !important;}
@@ -2709,6 +2693,7 @@ ul.mdl-mini-footer__link-list {
 .c-grey1 {color: #292F33 !important;}
 .c-blue {color: #3F51B5 !important;}
 .c-blue2 {color: #167AC6 !important;}
+.c-blue3 {color: #4285F4 !important;}
 .c-red {color: #DB4437 !important}
 .c-red svg {fill: #DB4437 !important}
 .bc-red {background-color: #DB4437;}
@@ -3112,3 +3097,96 @@ ol.default, ul.default {
 	letter-spacing: 0.2em;
 	margin-top: 8px;
 }
+
+/* navigation left-right button */
+._W6g {
+    cursor: pointer;
+    height: 72px;
+    position: absolute;
+    display: block;
+    visibility: inherit;
+    width: 36px;
+    z-index: 1;
+    bottom: 0;
+    margin-bottom: auto;
+    margin-top: auto;
+    outline: none;
+    opacity: 0.8;
+    top: 0;
+}
+._W6g:hover {
+    opacity: 0.9;
+}
+._W6g.nb-fades {
+    -moz-transition: opacity 0.5s,visibility 0.5s;
+    transition: opacity 0.5s,visibility 0.5s;
+}
+._W6g._Ggo {
+    height: 48px;
+    width: 48px;
+    opacity: 0.9;
+}
+._W6g._Ggo:hover {
+    opacity: 1.0;
+}
+._S6g._Ggo {
+    right: 20px;
+}
+._R6g._Ggo {
+    left: 20px;
+}
+
+._R6g._Ggo .g-fab, ._S6g._Ggo .g-fab {
+    box-shadow: 0 7px 15px rgba(0,0,0,.2);
+    cursor: pointer;
+    height: 48px;
+    width: 48px;
+    background-color: #fff;
+    color: #757575;
+}
+._R6g._Ggo .g-fab svg, ._S6g._Ggo .g-fab svg {
+    fill: #757575;
+}
+
+._uqh {
+    width: 56px;
+    height: 56px;
+}
+._jAg {
+    border-radius: 50%;
+    cursor: default;
+    display: block;
+    position: relative;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.12),0 0 1px 0 rgba(0,0,0,0.24),inset 0 0 0 0 rgba(0,0,0,0.10),inset 0 0 0 0 rgba(255,255,255,0.50);
+    z-index: 0;
+}
+._jAg ._HAg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+}
+._wtf {
+    display: inline-block;
+    fill: currentColor;
+    height: 24px;
+    line-height: 24px;
+    position: relative;
+    width: 24px;
+}
+._wtf svg {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+._W6g._Ggo:hover .g-fab {
+    color: #222 !important;
+}
+._W6g._Ggo:hover .g-fab svg {
+    fill: #222 !important;
+}
+

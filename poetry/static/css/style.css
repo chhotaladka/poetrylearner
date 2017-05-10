@@ -1956,7 +1956,8 @@ p.poetry-stanza,
     visibility: visible;
 }
 
-.dashboard-navigation.mdl-navigation > .mdl-navigation__link {
+.dashboard-navigation.mdl-navigation > .mdl-navigation__link,
+.dashboard-navigation.mdl-navigation > .mdl-navigation__link button {
 	font-weight: 700;
 	font-size: 16px;
 	color: inherit;

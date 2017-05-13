@@ -3,53 +3,54 @@
 
 {% block title %}Repository | {{ sitename }}{% endblock %}
 {% block search %}{% comment %} Don't show search box here {% endcomment %}{% endblock %}
-{% block headbanner %}
-<section id="id-head" class="centered pB-32">
-	<div class="head__banner repository">
-		<div class="head__title">
-			<h1>Repository</h1>
-		</div>
-		<div class="head__subtitle">
-			Here we store the processed data.
-		</div>
-	</div>
-</section>
+
+{% block navigation-header %}
+{% include 'common/include/navigation-bar-head.html' with nav_url=cancel_url nav_title='Repository' nav_css='repository' %}
 {% endblock %}
-{% block main %}	
+
+{% block main %}    
 <section class="pT-8 pB-16">
-	<div class="_layout layout-L mdl-grid">
-
-		<div class="__c mdl-cell mdl-cell--12-col mdl-grid">
-
-			<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
-				<div class="links-card">
-					<a href="{% url 'repository:add' %}" class="member">
-						<div class="action-button c-61 svg48">
-						{% include "common/svg/note_add.html" %}
-						</div>
-						<div class="caption">
-							Add to Repository
-						</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
-				<div class="links-card">
-					<a href="{% url 'repository:view' %}" class="member">
-						<div class="action-button c-61 svg48">
-						{% include "common/svg/find_in_page.html" %}
-						</div>
-						<div class="caption">
-							Explore Repository
-						</div>
-					</a>
-				</div>
-			</div>
-
-		</div>
-
-	</div>
+    <div class="_layout layout-L mdl-grid">
+        <div class="__c mdl-cell mdl-cell--12-col">
+            <div class="card-xl">
+                <div class="p-16 tAc">
+                    <div class="mB-16">
+                        
+                    </div>
+                    <div class="title-text dark">
+                        <span>We store here data after processing</span>
+                    </div>
+                    <div>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+            <div class="links-card">
+                <a href="{% url 'repository:add' %}" class="member">
+                    <div class="action-button c-61 svg48">
+                    {% include "common/svg/note_add.html" %}
+                    </div>
+                    <div class="caption">
+                        Add to Repository
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+            <div class="links-card">
+                <a href="{% url 'repository:view' %}" class="member">
+                    <div class="action-button c-61 svg48">
+                    {% include "common/svg/find_in_page.html" %}
+                    </div>
+                    <div class="caption">
+                        Explore Repository
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </section>
 
 {% endblock %}

@@ -1,23 +1,12 @@
 {% extends "feedback/base.html" %}
 
-{% block title %}Feedback details and actions | {{ sitename }}{% endblock %}
+{% block title %}Feedback response | {{ sitename }}{% endblock %}
 
-{% block breadcrumbs %}
-<section class="pT-8">
-    <div class="_layout layout-L mdl-grid">
-        <div class="mdl-cell mdl-cell--12-col">
-            <div class="wide-card">
-                <div class="head-title mB-8">
-                    <a class="action-button" href="{% url 'feedback:list' %}">
-                    {% include 'common/svg/arrow_back.html' %}
-                    </a>
-                    <span>Feedbacks</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{% block navigation-header %}
+{% url 'feedback:list' as nav_url %}
+{% include 'common/include/navigation-bar.html' with nav_url=nav_url nav_title='Feedback Response' nav_css='feedback' %}
 {% endblock %}
+
 {% block main %}
     <section class="pT-8">
         <div class="_layout layout-L mdl-grid">

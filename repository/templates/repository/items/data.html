@@ -9,16 +9,8 @@
 {% block search-action %}/{% endblock %}
 
 {% block breadcrumbs %}
-<div class="pT-8 pB-8">
-	<div class="_layout mW-512">
-		<div class="breadcrumbs wFull">
-			<a href="{% url 'repository:home' %}">Repository</a>
-			<span> / </span>
-			<a href="{% url 'repository:view' %}">data</a>
-			<span> / </span>
-		</div>
-	</div>
-</div>
+{% url 'repository:home' as nav_url %}
+{% include 'common/include/navigation-bar.html' with nav_url=nav_url nav_title='Explore Repository' nav_css='repository' %}
 {% endblock %}
 
 {% block main %}

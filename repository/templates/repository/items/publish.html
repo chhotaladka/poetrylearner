@@ -1,59 +1,57 @@
 {% extends "repository/base.html" %}
 {% load staticfiles %}
 
-{% block title %}Publish or unpublish '{{ obj.name }}' | {{ sitename }}{% endblock %}
+{% block title %}Publish/Unpublish '{{ obj.name }}' | {{ sitename }}{% endblock %}
+
+{% block breadcrumbs %}
+{% include 'common/include/navigation-bar.html' with nav_url=obj.get_absolute_url nav_title='Publish/Unpublish' nav_css='repository' %}
+{% endblock %}
 
 {% block main %}
-
-	<div class="pT-8 pB-16">
-		<div class="_layout layout-sLs mdl-grid">
-			<section class="__l mdl-cell mdl-cell--3-col pA-0">
-			</section>
-			<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
-				<div class="mdl-card poetry-card bS-1 wFull">
-				{% with is_published=obj.is_published %}
-					<div class="mdl-card__title mdl-color-text--grey-800">
-						<div class="title-text  mdl-card__title-text {{ obj.language }}">
-							{{ obj.name }}
-						</div>
+<section class="pT-8 pB-16">
+	<div class="_layout layout-L mdl-grid">
+		<div class="__c mdl-cell mdl-cell--12-col pA-0">
+			<div class="mdl-card poetry-card bS-1 wFull">
+			{% with is_published=obj.is_published %}
+				<div class="mdl-card__title mdl-color-text--grey-800">
+					<div class="title-text  mdl-card__title-text {{ obj.language }}">
+						{{ obj.name }}
 					</div>
-					<div class="details">
-						<div class="mB4 fS16">
-							{{ obj.creator.popular_name }}
-						</div>
-					</div>
-					<div class="content p-16">
-					{% if is_published %}
-						<div class="fS16">
-							If you unpublish the article, it will no longer be accessible to the public.
-						</div>
-					{% else %}
-						<div class="fS16">
-							Before publishing, kindly make sure of the followings:
-							<ol class="default color-dark">
-								<li>Title is correct.</li>
-								<li>Formatting of stanzas are correct (Compare with the source if unsure).</li>
-								<li>There are no useless html tags.</li>
-								<li>There are no copyright issues.</li>
-							</ol>
-						</div>
-					{% endif %}
-					</div>
-					<form id="id-snippet-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
-						{% csrf_token %} 
-						<div class="tAr">
-							<input class="mdl-button" type="button"
-							name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ obj.get_absolute_url }}&#39;"/>						
-							<input class="mdl-button mdl-button--colored" type="submit" 
-							name="submit" {% if is_published %}value="Unpublish"{% else %}value="Publish"{% endif %} id="id-form-submit"/> 
-						</div>
-					</form>
-				{% endwith %}
 				</div>
-			</section>
-			<section class="__r mdl-cell mdl-cell--3-col pA-0">
-			</section>
+				<div class="details">
+					<div class="mB4 fS16">
+						{{ obj.creator.popular_name }}
+					</div>
+				</div>
+				<div class="content p-16">
+				{% if is_published %}
+					<div class="fS16">
+						If you unpublish the article, it will no longer be accessible to the public.
+					</div>
+				{% else %}
+					<div class="fS16">
+						Before publishing, kindly make sure of the followings:
+						<ol class="default color-dark">
+							<li>Title is correct.</li>
+							<li>Formatting of stanzas are correct (Compare with the source if unsure).</li>
+							<li>There are no useless html tags.</li>
+							<li>There are no copyright issues.</li>
+						</ol>
+					</div>
+				{% endif %}
+				</div>
+				<form id="id-publish-form" method="post" enctype="multipart/form-data" class="a-mdl-form">
+					{% csrf_token %} 
+					<div class="tAr">
+						<input class="mdl-button" type="button"
+						name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ obj.get_absolute_url }}&#39;"/>						
+						<input class="mdl-button mdl-button--colored" type="submit" 
+						name="submit" {% if is_published %}value="Unpublish"{% else %}value="Publish"{% endif %} id="id-form-submit"/> 
+					</div>
+				</form>
+			{% endwith %}
+			</div>
 		</div>
 	</div>
-	
+</section>
 {% endblock %}

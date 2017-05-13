@@ -4,12 +4,15 @@
 
 {% block title %}Feedbacks | {{ sitename }}{% endblock %}
 
+{% block navigation-header %}
+{% include 'common/include/navigation-bar-head.html' with nav_url=cancel_url nav_title='Feedbacks' nav_css='feedback' %}
+{% endblock %}
+
 {% block main %}
 	<section class="pT-8">
 		<div class="_layout layout-L mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col">
-				<div class="wide-card">
-					<div class="head-title mB-8">Feedbacks</div>
+				<div class="card-xl">
 					<div class="menu row fill">
 						<div class="search-stats mL-8">
 							<span>{{ feedbacks.paginator.count|intcomma }}</span>

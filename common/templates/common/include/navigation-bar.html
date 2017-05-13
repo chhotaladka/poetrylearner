@@ -1,0 +1,23 @@
+{% comment %}
+    Navigation Bar Header
+{% endcomment %}
+<section class="">
+    <div class="nav-bar {{ nav_css }}">
+        <div class="nav-button">
+            <div class="mR-8">
+                <a class="button white-button" href="{{ nav_url }}">
+                {% include 'common/svg/arrow_back.html' %}
+                </a>
+            </div>
+        </div>
+        <div class="nav-title">
+            <span>{{ nav_title }}</span>
+        </div>
+        <div class="nav-button">
+            <div class="mR-8">
+                <a class="button white-button" href="#">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

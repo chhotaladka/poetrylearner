@@ -80,7 +80,7 @@
 				{% if request.user.is_authenticated %}
 				<a class="mdl-navigation__link" href="{% url 'bookmark:list-bookmarks' %}">Bookmarks</a>
 				{% if request.user|has_group:'administrator' %}
-				<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}" itemprop="url">Crawled data</a>
+				<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}" itemprop="url">Crawlers</a>
 				{% endif %}
 				{% if request.user|has_group:'administrator,editor' %}
 				<a class="mdl-navigation__link" href="{% url 'repository:home' %}" itemprop="url">Repository</a>
@@ -114,10 +114,10 @@
 		{% block messages %}
 		{% include "common/include/message-panel.html" with messages=messages only %}
 		{% endblock %}
+		{% block navigation-header %}{% endblock %}
 		{% block search %}{% endblock %}
-		{% block headbanner %}{% endblock %}
-		{% block tabs %}{% comment %} Navigation tabs {% endcomment %}{% endblock %}
 		{% block breadcrumbs %}{% endblock %}
+		{% block tabs %}{% comment %} Navigation tabs {% endcomment %}{% endblock %}
 		{% block main %}{% comment %} Put the main content in this block {% endcomment %}{% endblock %}
 		</main>
 	</div>

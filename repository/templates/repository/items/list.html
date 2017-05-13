@@ -12,6 +12,11 @@
 {% block search-placeholder %}{{result_title}}{% endblock %}
 {% block search-action %}/{% endblock %}
 
+{% block breadcrumbs %}
+{% url 'repository:view' as nav_url %}
+{% include 'common/include/navigation-bar.html' with nav_url=nav_url nav_title=result_title nav_css='repository' %}
+{% endblock %}
+
 {% block tabs %}
 {% if query_tabs %}
 <div class="pB-8">

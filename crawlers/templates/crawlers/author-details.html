@@ -3,26 +3,19 @@
 
 {% block title %}{{ author.get_name }} - Crawled Author - {{ sitename }}{% endblock %}
 
+{% block navigation-header %}
+{% url 'crawlers:author-list' as nav_url %}
+{% with author.get_name as nav_title %}
+{% include 'common/include/navigation-bar.html' with nav_url=nav_url nav_title=nav_title nav_css='crawlers' %}
+{% endwith %}
+{% endblock %}
+
 {% block search %}
 {% url 'crawlers:author-list' as search_url %}
 {% include "common/include/search-bar.html" with q_url=search_url q_str=query_string placeholder="Search an Author" %}
 {% endblock %}
 
-{% block breadcrumbs %}
-<div class="pT-8 pB-8">
-	<div class="_layout">
-		<div class="breadcrumbs wFull">
-			<a href="{% url 'crawlers:dashboard' %}">Crawled data</a>
-			<span> / </span>
-			<a href="{% url 'crawlers:author-list' %}">author</a>
-			<span> / </span>
-			<span>{{ author.get_name }}</span>
-		</div>
-	</div>	
-</div>
-{% endblock %}
 {% block main %}
-
 	<section id="id-section-main" class="p-8">
 		<div class="mdl-poetry__post mdl-grid">
 			

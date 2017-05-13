@@ -2,24 +2,16 @@
 {% load staticfiles %}
 {% load common_tags %}
 
-{% block title %}Add an item to Repository | {{ sitename }}{% endblock %}
+{% block title %}Add to Repository | {{ sitename }}{% endblock %}
 
 {% block search-placeholder %}Repository{% endblock %}
 {% block search-action %}/{% endblock %}
 
 {% block breadcrumbs %}
-<div class="pT-8 pB-8">
-	<div class="_layout mW-512">
-		<div class="breadcrumbs wFull">
-			<a href="{% url 'repository:home' %}">Repository</a>
-			<span> / </span>
-			<a href="{% url 'repository:add' %}">add</a>
-			<span> / </span>
-		</div>
-	</div>
-</div>
+{% url 'repository:home' as nav_url %}
+{% include 'common/include/navigation-bar.html' with nav_url=nav_url nav_title='Add to Repository' nav_css='repository' %}
 {% endblock %}
-				
+
 {% block main %}
 <section class="pT-8 pB-16">
 	<div class="_layout layout-L mdl-grid">

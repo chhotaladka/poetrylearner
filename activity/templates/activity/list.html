@@ -3,12 +3,15 @@
 
 {% block title %}Activity Log | {{ sitename }}{% endblock %}
 
+{% block navigation-header %}
+{% include 'common/include/navigation-bar-head.html' with nav_url=cancel_url nav_title='Activity Log' nav_css='activity' %}
+{% endblock %}
+
 {% block main %}
 	<section class="pT-8">
 		<div class="_layout layout-L mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col">
-				<div class="wide-card row fill">
-					<div class="head-title">Activity Log</div>
+				<div class="card-xl row r2l">
 					<div class="mR-8">
 					{% for tab in query_tabs %}
 						<a href="{{ tab.url }}" class="md-tabs__tab {{ tab.css }}" title="{{ tab.help_text }}">

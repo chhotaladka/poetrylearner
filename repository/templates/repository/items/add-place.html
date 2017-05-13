@@ -1,35 +1,37 @@
 {% extends "repository/base.html" %}
 {% load staticfiles %}
 
-{% block title %}Add a {{ item_type }} to repository | {{ sitename }}{% endblock %}
+{% block title %}Add {{ item_type }} to repository | {{ sitename }}{% endblock %}
 
 {% block search-placeholder %}{{ item_type }}{% endblock %}
 {% block search-action %}/{% endblock %}
 
 {% block breadcrumbs %}
-{% include "repository/include/misc/breadcrumb_for_add_item.html" %}
+{% with 'Add '|add:item_type as nav_title %}
+{% include 'common/include/navigation-bar.html' with nav_url=cancel_url nav_title=nav_title nav_css='repository' %}
+{% endwith %}
 {% endblock %}
 
 {% block main %}	
-<section id="priSect" class="pT-8 pB-48">
-	<div class="_layout layout-sLs mdl-grid">		
-		<section class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-		</section>	
-		<section class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
-			<div class="mdl-card author-card--lg bS-1 wFull">
-				<div class="p-16">
-					<div class="title-text"></div>
-				</div>
-				{% include "repository/include/forms/place.html" %}
-				<div class="mdl-card__menu">
-					<button class="action-button--small" title="Cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;">
-						{% include "common/svg/close.html" %}         
-					</button>
-				</div>
-			</div>
-		</section>				
-		<section class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-		</section>				
-	</div>		
-</section>	
+<section class="pT-8 pB-48">
+    <div class="_layout layout-sLs mdl-grid">
+        <div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+        </div>
+        <div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
+            <div class="mdl-card author-card--lg bS-1 wFull">
+                <div class="p-16">
+                    <div class="title-text"></div>
+                </div>
+                {% include "repository/include/forms/place.html" %}
+                <div class="mdl-card__menu">
+                    <button class="action-button--small" title="Cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;">
+                        {% include "common/svg/close.html" %}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+        </div>
+    </div>
+</section>
 {% endblock %}

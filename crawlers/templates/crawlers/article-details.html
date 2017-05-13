@@ -2,24 +2,18 @@
 
 {% block title %}{{ article.get_title }} - Crawled Article - {{ sitename }}{% endblock %}
 
+{% block navigation-header %}
+{% url 'crawlers:article-list' as nav_url %}
+{% with article.get_title as nav_title %}
+{% include 'common/include/navigation-bar.html' with nav_url=nav_url nav_title=nav_title nav_css='crawlers' %}
+{% endwith %}
+{% endblock %}
+
 {% block search %}
 {% url 'crawlers:article-list' as search_url %}
 {% include "common/include/search-bar.html" with q_url=search_url q_str=query_string placeholder="Search an Article" %}
 {% endblock %}
 
-{% block breadcrumbs %}
-<div class="pT-8 pB-8">
-	<div class="_layout">
-		<div class="breadcrumbs wFull">
-			<a href="{% url 'crawlers:dashboard' %}">Crawled data</a>
-			<span> / </span>
-			<a href="{% url 'crawlers:article-list' %}">article</a>
-			<span> / </span>
-			<span>{{ article.get_title }}</span>
-		</div>
-	</div>
-</div>
-{% endblock %}
 {% block main %}
 <section id="priSect" class="pT-8 pB-16">
 	<div class="_layout layout-L mdl-grid">

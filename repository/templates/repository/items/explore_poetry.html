@@ -22,95 +22,90 @@
 {% endblock %}{% endcomment %}
 
 {% block main %}
-	<section class="pT-8 pB-8">
-		<div class="_layout layout-L mdl-grid">
-		{% load humanize %}
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="p-card">
-					<div class="search-title">
-						<div class="title">{{result_title}}</div>
-					</div>
-					<div class="search-stats mL-8">
-					{% if creator %}
-						<span>{{ items.paginator.count|intcomma }} result{{ items.paginator.count|pluralize }}</span>
-					{% else %}{% comment %}
-						{% get_poetry_count as poetry_count %}
-						<span>{{ poetry_count|intcomma }} results</span>{% endcomment %}
-					{% endif %}
-					</div>
+{% if creator %} {% comment %} Display the poetry of creator {% endcomment %}
+<section class="pT-8 pB-8">
+    <div class="_layout layout-L mdl-grid">
+    {% load humanize %}
+        <div class="mdl-cell mdl-cell--12-col">
+            <div class="p-card">
+                <div class="search-title">
+                    <div class="title">{{result_title}}</div>
+                </div>
+                <div class="search-stats mL-8">
+                {% if creator %}
+                    <span>{{ items.paginator.count|intcomma }} result{{ items.paginator.count|pluralize }}</span>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="pT-8 pB-8">
+    <div class="_layout layout-L mdl-grid">
+        <div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0 mdl-cell--hide-phone mdl-cell--hide-tablet">
+        {% include "repository/include/cards/person-sm2.html" with person=creator %}
+        </div>
+        <div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
+    {% if items %} {% comment %} Display the list {% endcomment %}
+        {% include "repository/include/list/poetry.html" with items=items %}
+        {% include "repository/include/misc/pagination-bottom.html" with items=items %}
+    {% else %} {% comment %} Display the notification {% endcomment %}
+        {% comment %}  {% include "common/include/empty-result.html" %}{% endcomment %}
+    {% endif %}
+        </div>
+        <div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+        </div>
+    </div>
+</section>
+{% else %} {% comment %} Display explore poetry page {% endcomment %}
+<section class="pT-8 pB-8">
+	<div class="_layout layout-sLs mdl-grid">
+		<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+		</div>
+		<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
+			<div class="section-cards">
+				<div class="section-title">
+					<h3 class="c-grey1">Discover Poetry</h3>
+				</div>
+				{% get_poetry_pub_rand 10 as random_poetry %}
+				{% include "repository/include/list/poetry.html" with items=random_poetry %}
+			</div>
+		</div>
+		<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+		</div>
+	</div>
+</section>
+<section class="pT-8 pB-16">
+	<div class="_layout layout-sLs mdl-grid">
+		<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+		</div>
+		<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
+			<div class="section-cards">
+				<div class="section-title">
+					<h3 class="c-grey1">Recent Updates</h3>
+				</div>
+				{% get_recent_poetries 10 as recent_poetry %}
+				{% include "repository/include/list/poetry.html" with items=recent_poetry %}
+			</div>
+		</div>
+		<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+		</div>
+	</div>
+</section>
+<section class="pT-16 pB-16">
+	<div class="_layout layout-L mdl-grid">
+		<div class="mdl-cell mdl-cell--12-col">
+			<div class="card-xl wFull">
+				{% get_poetry_count as poetry_count %}
+				<div class="tAc">
+					<div class="bignum">{{ poetry_count|intcomma }}</div>
+					<div class="bignum-text">poetry</div>
+					<div class="">@</div>
+					<div class="sitename-bottom">poetrylearner.com</div>
 				</div>
 			</div>
 		</div>
-	</section>
-{% if creator %}
-	<section class="pT-8 pB-8">
-		<div class="_layout layout-L mdl-grid">
-			<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0 mdl-cell--hide-phone mdl-cell--hide-tablet">
-			{% include "repository/include/cards/person-sm2.html" with person=creator %}
-			</div>
-			<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
-		{% if items %} {% comment %} Display the list {% endcomment %}
-			{% include "repository/include/list/poetry.html" with items=items %}
-			{% include "repository/include/misc/pagination-bottom.html" with items=items %}
-		{% else %} {% comment %} Display the notification {% endcomment %}
-			{% comment %}  {% include "common/include/empty-result.html" %}{% endcomment %}
-		{% endif %}
-			</div>
-			<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-			</div>
-		</div>
-	</section>
-{% else %}
-	<section class="pT-8 pB-8">
-		<div class="_layout layout-sLs mdl-grid">
-			<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-			</div>
-			<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
-				<div class="section-cards">{% comment %}
-					<div class="section-title">
-						<h3 class="c-grey1">Recommended</h3>
-					</div>{% endcomment %}
-					{% get_poetry_pub_rand 10 as random_poetry %}
-					{% include "repository/include/list/poetry.html" with items=random_poetry %}
-				</div>
-			</div>
-			<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-			</div>
-		</div>
-	</section>
-	
-	<section class="pT-8 pB-16">
-		<div class="_layout layout-sLs mdl-grid">
-			<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-			</div>
-			<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
-				<div class="section-cards">
-					<div class="section-title">
-						<h3 class="c-grey1">Recent Updates</h3>
-					</div>
-					{% get_recent_poetries 10 as recent_poetry %}
-					{% include "repository/include/list/poetry.html" with items=recent_poetry %}
-				</div>
-			</div>
-			<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-			</div>
-		</div>
-	</section>
-	
-	<section class="pT-16 pB-16">
-		<div class="_layout layout-L mdl-grid">
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="wide-card wFull">
-					{% get_poetry_count as poetry_count %}
-					<div class="tAc">
-						<div class="bignum">{{ poetry_count|intcomma }}</div>
-						<div class="bignum-text">poetry</div>
-						<div class="">@</div>
-						<div class="sitename-bottom">poetrylearner.com</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+	</div>
+</section>
 {% endif %}
 {% endblock %}

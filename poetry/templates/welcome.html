@@ -5,36 +5,45 @@
 {% block title %}poetrylearner{% endblock %}
 
 {% block main %}
-<div id="priSect" class="pT-8 pB-16">
-	<div class="_layout layout-L mdl-grid">
-		<section class="__c mdl-cell mdl-cell--12-col pA-0">
-			<div class="banner">
-				{% if poetry %}
-				<div class="wide-card tAc wFull appear">
-					<div class="content p-16">
-						<div lang="{{ poetry.language }}" class="poetry-stanza {{ poetry.language }} fS18">{{ poetry.body }}</div>
-					</div>
-					<div class="details tAc">
-						<div class="mB4">
-							<a title="View the creator" href="{{ poetry.creator.get_absolute_url }}">
-								<span>{{ poetry.creator.popular_name }}</span>
-							</a>
-						</div>
-						<div class="pT-8 mB4">
-							<button class="action-button--small" onclick="location.href=&#39;{{poetry.get_absolute_url}}&#39;" title="More info">
-								{% include "common/svg/info_outline.html" %}
-							</button>
-						</div>
-					</div>
-				</div>
-				{% else %}
-				<div class="wide-card tAc wFull">
-					<h1 lang="en" class="lang-en">Memory is an autumn leaf that murmurs in the wind and then is heard no more.</h1>
-					<h2 class="tAr">Kahlil Gibran</h2>
-				</div>
-				{% endif %}
-			</div>
-		</section>
-	</div>
+<section class="pT-8 pB-32">
+    <div class="_layout layout-L mdl-grid">
+        <div class="__c mdl-cell mdl-cell--12-col pA-0">
+            <div class="pB-32">
+                {% if poetry %}
+                <div class="card-xl tAc wFull">
+                    <div class="content p-16">
+                        <div lang="{{ poetry.language }}" class="poetry-stanza {{ poetry.language }} fS18">{{ poetry.body }}</div>
+                    </div>
+                    <div class="details tAc">
+                        <div class="mB4">
+                            <a title="View the creator" href="{{ poetry.creator.get_absolute_url }}">
+                                <span>{{ poetry.creator.popular_name }}</span>
+                            </a>
+                        </div>
+                        <div class="pT-8 mB4">
+                            <button class="action-button--small" onclick="location.href=&#39;{{poetry.get_absolute_url}}&#39;" title="More info">
+                                {% include "common/svg/info_outline.html" %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="wide-card tAc wFull">
+                    <h1 lang="en" class="lang-en">Memory is an autumn leaf that murmurs in the wind and then is heard no more.</h1>
+                    <h2 class="tAr">Kahlil Gibran</h2>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<div class="nav-footer light">
+    <div class="p-8 bT-1">
+        <div class="card-m tAc">
+	        <a href="/" class="card">
+	           <div class="fS14 b">Surprise me!</div>
+	        </a>
+        </div>
+    </div>
 </div>
 {% endblock %}

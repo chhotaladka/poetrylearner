@@ -2012,8 +2012,9 @@ p.poetry-stanza,
 }
 .mdl-layout__drawer > .mdl-layout__title, 
 .mdl-layout__drawer > .mdl-layout-title {
-    line-height: 64px;
-    padding-left: 40px;
+    /*line-height: 64px;*/
+    line-height: 1;
+    padding-left: 32px;
 }
 .mdl-layout__drawer .mdl-mini-footer {
 	padding: 16px 40px;
@@ -2120,7 +2121,13 @@ p.poetry-stanza,
 	margin: 5px 7px 6px;
 	padding-top: 1px;
 }
-
+.logo-img {
+    display: inline-block;
+    background-color: #F3F000;
+    width: 56px;
+    height: 56px;
+    text-decoration: none;
+}
 .logo,
 .site-name {
 	white-space: nowrap;
@@ -2139,6 +2146,16 @@ p.poetry-stanza,
 .logo a:hover,
 .site-name a:hover {
 	text-decoration: none;
+}
+@media (max-width: 479px) {
+    .site-name.hm {
+        display: none !important;
+    }
+}
+@media (min-width: 480px) {
+    .logo.sm {
+        display: none !important;
+    }
 }
 /* Footer */
 .mdl-mini-footer {

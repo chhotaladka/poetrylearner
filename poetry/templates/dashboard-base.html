@@ -2,134 +2,143 @@
 {% load common_tags %}
 <!DOCTYPE html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		{% comment %} The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags {% endcomment %}
-		<meta name="google-site-verification" content="u3Vuy3bHXt4xurDnEsimzk-e4cNpklJSbYYW_bxt94U" />
-		{% block meta %}{% comment %} Write down all meta here {% endcomment %}
-		<meta name="description" content="Building towards an archive for the poetry of every language. Read your next favorite poetry.">
-		{% endblock %}
-		<title>{% block title %}poetrylearner{% endblock title %}</title>
-		 <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" sizes="32x32"> 
-		{% comment %} Base CSS {% endcomment %}
-		<link rel="stylesheet" href="{% static "css/material.min.css" %}">
-		<link rel="stylesheet" href="{% static "css/style.css" %}">
-		<link rel="stylesheet" href="{% static "css/modal.css" %}">
-		<!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
-		<link href="https://fonts.googleapis.com/css?family=Satisfy|Noto+Sans" rel="stylesheet">
-		{% block extra-style %}{% comment %} Include here extra css style {% endcomment %}{% endblock %}
-	</head>
-	<body class="mdl-poetry mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-	{% block body %}
-	
-	<div class="mdl-layout mdl-js-layout dashboard-layout">
-		{% block header %}{% comment %} header of a section/app. Modify in the base template of the app {% endcomment %}
-		<header class="mdl-layout__header page-header mdl-layout__header--scroll">
-			<div class="mdl-layout__drawer-button">
-				{% include "common/svg/menu.html" %}
-			</div>
-			<div class="mdl-layout__header-row page-header--row">
-				<div class="mdl-layout-title logo site-name">
-					<a href="/">poetry learner</a>
-				</div>
-				<div class="mdl-layout-spacer"></div>
-				<nav class="mdl-navigation page-header--nav">
-				{% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
-				{% if not request.user.is_authenticated %}
-					<div class="mdl-navigation__link wS-nw">
-						<a class="oN" href="{% url 'account_login' %}?next={% block header-login-redirect %}{{ request.path }}{% endblock %}">
-							Log in
-						</a>
-					</div>
-				{% endif %}
-				{% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
-				</nav>
-			</div>
-		</header>
-		{% endblock %}{% comment %} end of header block {% endcomment %}
-		<div id="id-drawer" class="mdl-layout__drawer mdl-color--white mdl-color-text--grey-700">
-			<div class="mdl-layout__drawer-button"
-				onclick="document.getElementById('id-drawer').classList.remove('is-visible');document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove('is-visible');return false;">
-				{% include "common/svg/close.html" %}
-			</div>
-			<div class="mdl-layout-title logo site-name">
-				<a href="/">poetry learner</a>
-			</div>
-			<nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800" itemscope itemtype="http://schema.org/SiteNavigationElement">
-				{% if request.user.is_authenticated %}
-				<a class="mdl-navigation__link" href="{% url 'dashboard:private-profile' %}" title="{{ request.user|title }} : {{ profile.get_contact }}">
-					<div class="row">
-						<div class="pR-8">
-						{% if profile.get_avatar_url %}
-							<img class="circle" width="36" height="36" src="{{ profile.get_avatar_url }}"></img>
-						{% else %}
-							{% include "common/svg/user.html" %}
-						{% endif %}
-						</div>
-						<div>
-							<div>{% if profile %}{{ profile.get_first_name }}{% else %}{{ request.user|title }}{% endif %}</div>
-							<div class="light-txt">View Profile</div>
-						</div>
-					</div>
-				</a>
-				{% endif %}
-				<a class="mdl-navigation__link" href="{% url 'explore-poetry' %}" itemprop="url">Poetry</a>
-				<a class="mdl-navigation__link" href="{% url 'explore-poets' %}" itemprop="url">Poets</a>
-				{% if request.user.is_authenticated %}
-				<a class="mdl-navigation__link" href="{% url 'bookmark:list-bookmarks' %}">Bookmarks</a>
-				{% if request.user|has_group:'administrator' %}
-				<a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}" itemprop="url">Crawlers</a>
-				{% endif %}
-				{% if request.user|has_group:'administrator,editor' %}
-				<a class="mdl-navigation__link" href="{% url 'repository:home' %}" itemprop="url">Repository</a>
-				<a class="mdl-navigation__link" href="{% url 'activity:list' %}">Activity Log</a>
-				<a class="mdl-navigation__link" href="{% url 'feedback:list' %}" itemprop="url">Feedbacks</a>
-				{% endif %}
-				{% if request.user.is_staff %}
-				<a class="mdl-navigation__link" href="{% url 'admin:index' %}" itemprop="url">Admin</a>
-				{% endif %}
-				<div class="mdl-navigation__link">
-					<form method="post" action="{% url 'account_logout' %}">
-						{% csrf_token %}
-						<input type="hidden" name="next" value="/"/>
-						<button class="oN" type="submit">Logout</button>
-					</form>
-				</div>
-				{% endif %}
-			</nav>
-			<footer class="mdl-mini-footer">
-				<div class="mdl-mini-footer__left-section">
-					<ul class="mdl-mini-footer__link-list">
-						<!--<li><a href="#">About</a></li>
-						<li><a href="#">Privacy & Terms</a></li>
-						<li><a href="#">Help</a></li>-->
-						<li><a id="feedbackBtn-site" data-url="{% url 'feedback:add' %}" href="#">Send feedback</a></li>
-					</ul>
-				</div>
-			</footer>
-		</div>
-		<main class="mdl-layout__content">
-		{% block messages %}
-		{% include "common/include/message-panel.html" with messages=messages only %}
-		{% endblock %}
-		{% block navigation-header %}{% endblock %}
-		{% block search %}{% endblock %}
-		{% block breadcrumbs %}{% endblock %}
-		{% block tabs %}{% comment %} Navigation tabs {% endcomment %}{% endblock %}
-		{% block main %}{% comment %} Put the main content in this block {% endcomment %}{% endblock %}
-		</main>
-	</div>
-	{% endblock %}{% comment %} end of body {% endcomment %}
-	{% comment %} jQuery (necessary for Bootstrap's JavaScript plugins) {% endcomment %}
-	<script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/material.min.js' %}"></script>
-	{% block scripts %}{% comment %} extra scripts {% endcomment %}
-		<script type="text/javascript" src="{% static "js/poetrylearner.min.js" %}"></script>
-	{% endblock %}
-	{% block feedback %}{% comment %} Feedback modal {% endcomment %}
-		{% include "feedback/modal.html" %}
-	{% endblock %}
-	</body>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% comment %} The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags {% endcomment %}
+        <meta name="google-site-verification" content="u3Vuy3bHXt4xurDnEsimzk-e4cNpklJSbYYW_bxt94U" />
+        {% block meta %}{% comment %} Write down all meta here {% endcomment %}
+        <meta name="description" content="Building towards an archive for the poetry of every language. Read your next favorite poetry.">
+        {% endblock %}
+        <title>{% block title %}poetrylearner{% endblock title %}</title>
+         <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" sizes="32x32"> 
+        {% comment %} Base CSS {% endcomment %}
+        <link rel="stylesheet" href="{% static "css/material.min.css" %}">
+        <link rel="stylesheet" href="{% static "css/style.css" %}">
+        <link rel="stylesheet" href="{% static "css/modal.css" %}">
+        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
+        <link href="https://fonts.googleapis.com/css?family=Satisfy|Noto+Sans" rel="stylesheet">
+        {% block extra-style %}{% comment %} Include here extra css style {% endcomment %}{% endblock %}
+    </head>
+    <body class="mdl-poetry mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+    {% block body %}
+    <div class="mdl-layout mdl-js-layout dashboard-layout">
+    <!--<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">-->
+        {% block header %}{% comment %} header of a section/app. Modify in the base template of the app {% endcomment %}
+        <header class="mdl-layout__header page-header mdl-layout__header--scroll">
+            {% if request.user.is_authenticated %} {% comment %} SHow drawer after login {% endcomment %}
+            <div class="mdl-layout__drawer-button">
+                {% include "common/svg/menu.html" %}
+            </div>
+            {% endif %}
+            <div class="mdl-layout__header-row page-header--row">
+                <div class="mdl-layout-title logo sm">
+                    <a href="/" class="logo-img"></a>
+                </div>
+                <div class="mdl-layout-title site-name hm mL-8">
+                    <a href="/">poetry learner</a>
+                </div>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation page-header--nav">
+                {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
+                    <div class="mdl-navigation__link wS-nw">
+                        <a class="oN" href="{% url 'explore-poetry' %}">Poetry</a>
+                    </div>
+                    <div class="mdl-navigation__link wS-nw">
+                        <a class="oN" href="{% url 'explore-poets' %}">Poets</a>
+                    </div>
+                {% if not request.user.is_authenticated %}
+                    <div class="mdl-navigation__link wS-nw">
+                        <a class="oN" href="{% url 'account_login' %}?next={% block header-login-redirect %}{{ request.path }}{% endblock %}">
+                            Log in
+                        </a>
+                    </div>
+                {% endif %}
+                {% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
+                </nav>
+            </div>
+        </header>
+        {% endblock %}{% comment %} end of header block {% endcomment %}
+        {% if request.user.is_authenticated %} {% comment %} SHow drawer after login {% endcomment %}
+        <div id="id-drawer" class="mdl-layout__drawer mdl-color--white mdl-color-text--grey-700">
+            <div class="mdl-layout__drawer-button"
+                onclick="document.getElementById('id-drawer').classList.remove('is-visible');document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove('is-visible');return false;">
+                {% include "common/svg/close.html" %}
+            </div>
+            <div class="mdl-layout-title logo">
+                <a href="/" class="logo-img"></a>
+            </div>
+            <nav class="mdl-navigation dashboard-navigation mdl-color-text--grey-800" itemscope itemtype="http://schema.org/SiteNavigationElement">
+                {% if request.user.is_authenticated %}
+                <a class="mdl-navigation__link" href="{% url 'dashboard:private-profile' %}" title="{{ request.user|title }} : {{ profile.get_contact }}">
+                    <div class="row">
+                        <div class="pR-8">
+                        {% if profile.get_avatar_url %}
+                            <img class="circle" width="36" height="36" src="{{ profile.get_avatar_url }}"></img>
+                        {% else %}
+                            {% include "common/svg/user.html" %}
+                        {% endif %}
+                        </div>
+                        <div>
+                            <div>{% if profile %}{{ profile.get_first_name }}{% else %}{{ request.user|title }}{% endif %}</div>
+                            <div class="light-txt">View Profile</div>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+                <a class="mdl-navigation__link" href="{% url 'bookmark:list-bookmarks' %}">Bookmarks</a>
+                {% if request.user|has_group:'administrator,editor' %}
+                <a class="mdl-navigation__link" href="{% url 'feedback:list' %}" itemprop="url">Feedbacks</a>
+                <a class="mdl-navigation__link" href="{% url 'activity:list' %}">Activity Log</a>
+                <a class="mdl-navigation__link" href="{% url 'repository:home' %}" itemprop="url">Repository</a>
+                {% endif %}
+                {% if request.user|has_group:'administrator' %}
+                <a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}" itemprop="url">Crawlers</a>
+                {% endif %}
+                {% if request.user.is_staff %}
+                <a class="mdl-navigation__link" href="{% url 'admin:index' %}" itemprop="url">Admin</a>
+                {% endif %}
+                <div class="mdl-navigation__link">
+                    <form method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="/"/>
+                        <button class="oN" type="submit">Logout</button>
+                    </form>
+                </div>
+            </nav>
+            <footer class="mdl-mini-footer">
+                <div class="mdl-mini-footer__left-section">
+                    <ul class="mdl-mini-footer__link-list">
+                        <!--<li><a href="#">About</a></li>
+                        <li><a href="#">Privacy & Terms</a></li>
+                        <li><a href="#">Help</a></li>-->
+                        <li><a id="feedbackBtn-site" data-url="{% url 'feedback:add' %}" href="#">Send feedback</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+        {% endif %}
+        <main class="mdl-layout__content">
+        {% block messages %}
+        {% include "common/include/message-panel.html" with messages=messages only %}
+        {% endblock %}
+        {% block navigation-header %}{% endblock %}
+        {% block search %}{% endblock %}
+        {% block breadcrumbs %}{% endblock %}
+        {% block tabs %}{% comment %} Navigation tabs {% endcomment %}{% endblock %}
+        {% block main %}{% comment %} Put the main content in this block {% endcomment %}{% endblock %}
+        </main>
+    </div>
+    {% endblock %}{% comment %} end of body {% endcomment %}
+    {% comment %} jQuery (necessary for Bootstrap's JavaScript plugins) {% endcomment %}
+    <script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/material.min.js' %}"></script>
+    {% block scripts %}{% comment %} extra scripts {% endcomment %}
+        <script type="text/javascript" src="{% static "js/poetrylearner.min.js" %}"></script>
+    {% endblock %}
+    {% block feedback %}{% comment %} Feedback modal {% endcomment %}
+        {% include "feedback/modal.html" %}
+    {% endblock %}
+    </body>
 </html>

@@ -15,8 +15,14 @@
         </div>
         <div class="nav-button">
             <div class="mR-8">
+	            {% if nav_close %}
+	            <a class="button white-button" href="{{ nav_close }}">
+	            {% include 'common/svg/close-bold.html' %}
+	            </a>
+	            {% else %}
                 <a class="button white-button" href="#">
                 </a>
+                {% endif %}
             </div>
         </div>
     </div>

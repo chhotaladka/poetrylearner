@@ -59,5 +59,3 @@ poetry/media/
 #settings.py
 poetry/settings.py
 
-#other
-#crawlers/spiders/secret

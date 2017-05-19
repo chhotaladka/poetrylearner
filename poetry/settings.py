@@ -27,7 +27,7 @@ DEBUG = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
-     ('Chhota Ladka','chhotaladka02@gmail.com')
+     ('Chhotaladka','chhotaladka02@gmail.com')
 )
 
 MANAGERS = ADMINS
@@ -54,12 +54,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    # Added 
-    'formtools',
+    # Added
     'django.contrib.humanize',
     # pip installed
-    'django_select2',
-    'crispy_forms',
     'taggit',
     'allauth',
     'allauth.account',
@@ -76,6 +73,9 @@ INSTALLED_APPS = (
     'feedback',
     'dashboard',
     'bookmarks',
+    'activity',
+    'shorturls',
+    'proofreader',
 )
 
 TEMPLATE_LOADERS = (
@@ -116,6 +116,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",               
                 'common.context_processors.getvars',
                 'dashboard.context_processors.profile',
+                'poetry.context_processors.site',
             ],
         },
     },
@@ -137,6 +138,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 ACCOUNT_SESSION_REMEMBER = None
+ACCOUNT_ADAPTER = 'dashboard.views.CustomAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'dashboard.views.CustomSocialAccountAdapter'
 # Allauth end
 
 WSGI_APPLICATION = 'poetry.wsgi.application'
@@ -147,7 +150,7 @@ WSGI_APPLICATION = 'poetry.wsgi.application'
 
 DATABASES = {
     'default':
-        {'ENGINE': 'django.db.backends.mysql', 'NAME': 'poetry3', 'HOST': '127.0.0.1', 'USER': 'root', 'PASSWORD': 'root', 'PORT': '3306'}
+        {'ENGINE': 'django.db.backends.mysql', 'NAME': 'poetrydb', 'HOST': '127.0.0.1', 'USER': 'root', 'PASSWORD': 'root', 'PORT': '3306'}
 }
 
 
@@ -204,19 +207,6 @@ MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = '/media/'
 
-# # CKeditor related
-# CKEDITOR_JQUERY_URL = STATIC_URL + 'js/jquery-2.1.4.min.js'
-# CKEDITOR_UPLOAD_PATH = 'images/'
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'toolbar': 'Full',
-#         'justifyClasses': [ 'AlignLeft', 'AlignCenter', 'AlignRight', 'AlignJustify' ],
-#     },
-#     
-#     'config_text': {
-#         'toolbar': 'Basic',        
-#     },
-# }
 
 # django_select2 related
 AUTO_RENDER_SELECT2_STATICS = True
@@ -241,7 +231,39 @@ META_SITE_NAME = 'Site Name' #TODO
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
 META_USE_GOOGLEPLUS_PROPERTIES = True
-META_USE_SITES = False #TODO check
+META_USE_SITES = True #TODO check
 META_PUBLISHER_FB_ID = 'https://www.facebook.com/SiteName' #TODO can use PAGE URL or Publisher id ID
 META_PUBLISHER_GOOGLE_ID = 'https://plus.google.com/111112222333344444' #TODO Google+ ID 
 META_FB_APP_ID = '' #TODO
+
+#
+# Shorturls
+SHORTEN_MODELS = {
+    'P': 'repository.poetry',
+    'H': 'repository.person',
+}
+SHORTURLS_DEFAULT_CONVERTER = 'shorturls.baseconv.base32'
+SHORT_BASE_URL = 'http://poetrylearner.com/'
+SHORTEN_FULL_BASE_URL = 'http://poetrylearner.com/'
+
+# LOGGING = {
+#     'version': 1,
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         }
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#         }
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'level': 'DEBUG',
+#             'handlers': ['console'],
+#         }
+#     }
+# }

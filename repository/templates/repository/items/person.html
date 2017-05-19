@@ -56,7 +56,7 @@
 						<div>{% if request.user|has_group:'administrator,editor' %}
 							{% get_poetry_count by obj unpublished as upub_poetry_count %}
 							<h3 class="c-grey1">
-								<a title="Review the poetry of {{ obj.popular_name }}" href="{% url 'repository:list' type='poetry' %}?creator={{ obj.id }}&tab=unpub&o=shuffle">
+								<a title="Review the poetry of {{ obj.popular_name }}" href="{% url 'proofreader:poetry' %}?poet={{ obj.id }}">
 									<span>Review</span>
 								</a>
 							</h3>

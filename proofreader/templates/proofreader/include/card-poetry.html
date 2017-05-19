@@ -1,0 +1,56 @@
+{% comment %}
+    Info: Poetry Card for Proofreading
+{% endcomment %}
+<div class="mdl-card card-l poetry-card wFull bS-1">
+{% with poetry_url=poetry.get_absolute_url %}
+    <div class="title mdl-card__title mdl-card--expand">
+        <div class="title-text mdl-card__title-text {{ poetry.language }}">
+            <a href="{{ poetry.get_absolute_url }}" title="View Poetry Page">{{ poetry.headline }}</a>
+        </div>
+    </div>
+    <div class="details">
+        <div class="mB4 fS14" itemprop="creator">
+            <a title="View the creator" href="{{ poetry.creator.get_absolute_url }}">
+                <span>{{ poetry.creator.popular_name }}</span>
+            </a>
+        </div>
+        <div class="mB4 fS14">
+            {% comment %}FIXME temporary disabled <a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">{% endcomment %}
+            <a class="hashtag pretty-link" href="#">
+                <s>#</s>
+                <b>{{ poetry.get_language }}</b>
+            </a>
+            {% for tag in poetry.get_tags_slugs %}
+            <a class="hashtag pretty-link" href="{% url 'repository:tagged-poetry' slug=tag %}">
+                <s>#</s>
+                <b itemprop="keywords">{{ tag }}</b>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="content p-16">
+        <div class="poetry-stanza {{ poetry.language }} fS20">{{ poetry.body }}</div>
+    </div>
+    <div class="action-panel mdl-card__actions mdl-card--border mdl-color-text--grey-700">
+        <button id="shareBtn" class="action-button oN" title="Worth sharing?"
+            onclick="document.getElementById('sharePanel').classList.toggle('hidden'); return false;">
+            {% include "common/svg/share.html" %}
+            <span class="action-button__text">Share</span>
+        </button>
+        {% comment %}  Include BOOKMARK button {% endcomment %}
+        {% load bookmark_tags %}
+        {% bookmark_by_user request.user on poetry as bookmark %}
+        {% include "bookmarks/include/bookmark-button.html" with bookamrk=bookmark item=poetry %}
+    </div>
+    {% comment %}  Include share panel {% endcomment %}
+    {% include "repository/include/misc/share-panel.html" with item=poetry %}
+    {% comment %}  Include meta panel {% endcomment %}
+    {% include "repository/include/misc/meta-panel.html" with item=poetry %}
+    
+{% endwith %}
+</div>
+<div class="card-l">
+    <div class="feedback link tAr">
+        <a id="feedbackBtn" data-url="{% url 'feedback:add_for_content' ctype_id=poetry.get_content_type.id obj_id=poetry.id %}" href="#">Feedback</a>
+    </div>
+</div>

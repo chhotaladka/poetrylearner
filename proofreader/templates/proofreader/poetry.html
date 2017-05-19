@@ -1,0 +1,67 @@
+{% extends "proofreader/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Proofreading | {{ sitename }}{% endblock %}
+{% block search %}{% comment %} Don't show search box here {% endcomment %}{% endblock %}
+
+{% block navigation-header %}
+{% url 'proofreader:home' as nav_url %}
+{% include 'common/include/navigation-bar.html' with nav_url=nav_url nav_title=result_title nav_close='/' nav_css='repository' %}
+{% endblock %}
+
+{% block main %}
+{% comment %} PRIMARY POETRY {% endcomment %}
+<section id="priSect" class="pT-8 pB-16">
+    <div class="_layout layout-L mdl-grid">
+        <div class="__c mdl-cell mdl-cell--12-col pA-0 mB-32">
+        {% if obj %}
+        {% include "proofreader/include/card-poetry.html" with poetry=obj %}
+        {% else %}
+        {% include "repository/include/misc/empty-result.html" %}
+        {% endif %}
+        </div>
+        <div class="__c mdl-cell mdl-cell--12-col pA-0 mB-32">
+        </div>
+    </div>
+</section>
+<section class="nav-footer light">
+    <div class="p-8 bT-1">
+        <div class="card-l tAc">
+            <div class="row fill pLR-8">
+	            {% url 'proofreader:poetry' pk=obj.id as fallback_url %}
+	            {% url 'proofreader:poetry' as forward_url %}
+                <button id="editBtn" class="action-button oN" title="Edit to improve">
+                    {% include "common/svg/edit.html" %}
+                    <span class="action-button__text">Edit</span>
+                </button>
+                <button id="pubBtn" class="action-button oN" title="Publish">
+                    {% include "common/svg/publish.html" %}
+                    <span class="action-button__text">Publish</span>
+                </button>
+                <button id="nextBtn" class="action-button oN" title="Publish or unpublish">
+                    {% include "common/svg/arrow_forward.html" %}
+                    <span class="action-button__text">Next</span>
+                </button>
+                <script>
+                    var fallback_url=encodeURIComponent('{{fallback_url}}'+'?'+'{{ getvars }}');
+                    var forward_url=encodeURIComponent('{{forward_url}}'+'?'+'{{ getvars }}');
+                    
+                    var edit_url="{{ obj.get_edit_url }}/?cancel="+fallback_url+"&next="+fallback_url;
+                    var pub_url="{% url 'repository:publish' type=obj.item_type pk=obj.id slug=obj.get_slug %}?cancel="+fallback_url+"&next="+forward_url;
+                    var next_url='{{ forward_url }}'+'?'+'{{ getvars }}';
+                    console.log(fallback_url);
+                    console.log(edit_url);
+                    console.log(pub_url);
+                    
+                    function init(){
+                        document.getElementById('editBtn').onclick=function(){location.href=edit_url;};
+                        document.getElementById('pubBtn').onclick=function(){location.href=pub_url;};
+                        document.getElementById('nextBtn').onclick=function(){location.href=next_url;};
+                    }
+                    window.onload=init;
+                </script>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

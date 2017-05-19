@@ -182,19 +182,19 @@ html, body {
     color: #FFF;
     vertical-align: middle;
 }
-.nav-bar.head {
+.nav-bar.head .nav-title {
     border-left: 1px solid rgba(0,0,0,0.12);
     padding-left: 16px;
-    padding-right: 160px;
+    padding-right: 16px;
 }
 @media only screen and (min-width: 1240px) {
-    .nav-bar.head {
+    .nav-bar.head .nav-title {
         padding-left: 40px;
         padding-right: 40px;
     }
 }
 @media only screen and (max-width: 1239px) and (min-width: 800px) {
-    .nav-bar.head  {
+    .nav-bar.head .nav-title  {
         padding-left: 20px;
         padding-right: 20px;
     }
@@ -714,10 +714,12 @@ html, body {
     padding-left: 24px;
     padding-right: 24px;
 }
-.tab-label.bR {
+.tab-label.bR,
+.bR {
 	border-right: 1px solid #CCD6DD;
 }
-.tab-label.bL {
+.tab-label.bL,
+.bL {
 	border-left: 1px solid #CCD6DD;
 }
 
@@ -738,192 +740,6 @@ html, body {
 }
 
 /* flash msg/notification section */
-/** Common, default styles for the notification box **/
-.ns-box {
-	position: fixed;
-	background: rgba(42,45,50,0.85);
-	padding: 22px;
-	line-height: 1.4;
-	z-index: 1000;
-	pointer-events: none;
-	color: rgba(250,251,255,0.95);
-	font-size: 90%;
-	font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
-}
-.ns-box.ns-show {
-	pointer-events: auto;
-}
-.ns-box a {
-	color: inherit;
-	opacity: 0.85;
-	font-weight: 700;
-}
-.ns-box a:hover,
-.ns-box a:focus {
-	opacity: 1;
-}
-.ns-box p {
-	margin: 0;
-}
-.ns-box.ns-show,
-.ns-box.ns-visible {
-	pointer-events: auto;
-}
-.ns-close {
-	width: 20px;
-	height: 20px;
-	position: absolute;
-	right: 4px;
-	top: 4px;
-	overflow: hidden;
-	text-indent: 100%;
-	cursor: pointer;
-	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
-}
-.ns-close:hover, 
-.ns-close:focus {
-	outline: none;
-}
-.ns-close::before,
-.ns-close::after {
-	content: '';
-	position: absolute;
-	width: 3px;
-	height: 60%;
-	top: 50%;
-	left: 50%;
-	background: #6e6e6e;
-}
-.ns-close:hover::before,
-.ns-close:hover::after {
-	background: #fff;
-}
-.ns-close::before {
-	-webkit-transform: translate(-50%,-50%) rotate(45deg);
-	transform: translate(-50%,-50%) rotate(45deg);
-}
-.ns-close::after {
-	-webkit-transform: translate(-50%,-50%) rotate(-45deg);
-	transform: translate(-50%,-50%) rotate(-45deg);
-}
-/* Growl-style notifications */
-.ns-growl {
-	top: auto;
-	left: 30px;
-	max-width: 300px;
-	border-radius: 5px;
-}
-.ns-growl p {
-	margin: 0;
-	line-height: 1.3;
-}
-[class^="ns-effect-"].ns-growl.ns-hide,
-[class*=" ns-effect-"].ns-growl.ns-hide {
-	-webkit-animation-direction: reverse;
-	animation-direction: reverse;
-}
-/* Individual effects: scale */
-.ns-effect-scale {
-	background: rgba(219, 68, 55, 0.8);
-	/*background: rgba(65,95,118,0.8);*/
-	box-shadow: 0 25px 10px -15px rgba(0,0,0,0.05);
-}
-.ns-effect-scale .ns-close::before,
-.ns-effect-scale .ns-close::after {
-	background: #ddd;
-}
-.ns-effect-scale .ns-close:hover::before,
-.ns-effect-scale .ns-close:hover::after {
-	background: #fff;
-}
-.ns-effect-scale.ns-show,
-.ns-effect-scale.ns-hide {
-	-webkit-animation-name: animScale;
-	animation-name: animScale;
-	-webkit-animation-duration: 0.25s;
-	animation-duration: 0.25s;
-}
-@-webkit-keyframes animScale {
-	0% { opacity: 0; -webkit-transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); }
-	100% { opacity: 1; -webkit-transform: translate3d(0,0,0) scale3d(1,1,1); }
-}
-@keyframes animScale {
-	0% { opacity: 0; -webkit-transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); }
-	100% { opacity: 1; -webkit-transform: translate3d(0,0,0) scale3d(1,1,1); transform: translate3d(0,0,0) scale3d(1,1,1); }
-}
-@media screen and (max-width: 25em) {
-	.ns-growl {
-		top: auto;
-		left: 10px;
-		right: 10px;
-		max-width: none;
-	}
-}
-/* attached-style notifications */
-.ns-attached {
-    left: 30px;
-    max-width: 300px;
-}
-[class^="ns-effect-"].ns-attached.ns-hide,
-[class*=" ns-effect-"].ns-attached.ns-hide {
-    -webkit-animation-direction: reverse;
-    animation-direction: reverse;
-}
-/* Individual effects: flip */
-.ns-effect-flip {
-    background: rgba(219, 68, 55, 0.8);
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    bottom: 0px;
-    font-size: 1.15em;
-    padding: 1.5em;
-    max-width: 280px;
-    backface-visibility: hidden;
-}
-.ns-effect-flip .ns-close::before,
-.ns-effect-flip .ns-close::after {
-    background: #ddd;
-}
-.ns-effect-flip .ns-close:hover::before,
-.ns-effect-flip .ns-close:hover::after {
-    background: #fff;
-}
-.ns-effect-flip.ns-show,
-.ns-effect-flip.ns-hide {
-    -webkit-animation-name: animFlipFront;
-    animation-name: animFlipFront;
-    -webkit-animation-duration: 0.3s;
-    animation-duration: 0.3s;
-}
-.ns-effect-flip.ns-hide {
-    -webkit-animation-name: animFlipBack;
-    animation-name: animFlipBack;
-}
-@-webkit-keyframes animFlipFront {
-    0% { -webkit-transform: perspective(1000px) rotate3d(1,0,0,-90deg); }
-    100% { -webkit-transform: perspective(1000px); }
-}
-@keyframes animFlipFront {
-    0% { -webkit-transform: perspective(1000px) rotate3d(1,0,0,-90deg); transform: perspective(1000px) rotate3d(1,0,0,-90deg); }
-    100% { -webkit-transform: perspective(1000px); transform: perspective(1000px); }
-}
-@-webkit-keyframes animFlipBack {
-    0% { -webkit-transform: perspective(1000px) rotate3d(1,0,0,90deg); }
-    100% { -webkit-transform: perspective(1000px); }
-}
-@keyframes animFlipBack {
-    0% { -webkit-transform: perspective(1000px) rotate3d(1,0,0,90deg); transform: perspective(1000px) rotate3d(1,0,0,90deg); }
-    100% { -webkit-transform: perspective(1000px); transform: perspective(1000px); }
-}
-@media screen and (max-width: 25em) {
-    .ns-attached {
-        left: 30px;
-        max-width: none;
-        right: 30px;
-    }
-}
-
 #msgPanel,
 .msg-panel {
 	background-color: rgba(219, 68, 55, 1);
@@ -2123,7 +1939,8 @@ p.poetry-stanza,
 }
 .logo-img {
     display: inline-block;
-    background-color: #F3F000;
+    /*background-color: #F3F000;*/
+    background-color: #F6DB00;
     width: 56px;
     height: 56px;
     text-decoration: none;
@@ -2748,6 +2565,11 @@ ul.mdl-mini-footer__link-list {
 .c-red svg {fill: #DB4437 !important}
 .bc-red {background-color: #DB4437;}
 .c-green svg {fill: #4CAF50 !important;}
+.c-y {color: #F6DB00 !important;}
+.c-y svg {fill: #F6DB00 !important;}
+.bc-y {background-color: #F6DB00 !important;}
+.c-r {color: #D4322F !important;}
+.c-r svg {fill: #D4322F !important;}
 
 .c-administrator {
 	color: #FFF !important;
@@ -3115,6 +2937,7 @@ ol.default, ul.default {
     position: fixed;
     bottom: 0px;
     width: 100%;
+    z-index: 4;
 }
 .nav-footer.light {
     background-color: #FFF;

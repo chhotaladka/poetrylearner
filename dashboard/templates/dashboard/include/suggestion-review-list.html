@@ -2,17 +2,17 @@
 {% load poetry_tags %}
 {% load humanize %}
 <div class="content-wrapper">
-    <a class="card" href="{% url 'repository:list' type='poetry' %}?tab=unpub&o=shuffle">
+    <a class="card" href="{% url 'proofreader:home' %}">
         <div class="card-l">
             <div class="p-16 row r2l">
                 <div class="mL-8">
-                    <div class="c-red svg48">
+                    <div class="c-green svg48">
                     {% include "common/svg/content_paste.html" %}
                     </div>
                 </div>
                 <div class="tAr">
                     <div class="fS26 b c-91">{% get_poetry_count unpublished as pcount %}{{ pcount|intcomma }}</div>
-                    <div class="fullname fS16" style="margin-top: -4px;">Poetry to review</div>
+                    <div class="fullname fS16" style="margin-top: -4px;">Poetry to Proofread</div>
                 </div>
             </div>
         </div>

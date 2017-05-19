@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^feedback/', include('feedback.urls', namespace='feedback')),
     url(r'^r/', include('repository.urls', namespace='repository')),
     url(r'^u/', include('dashboard.urls', namespace='dashboard')),
+    url(r'^proofreader/', include('proofreader.urls', namespace='proofreader')),
     
     url(r'^poetry/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.poetry, name='poetry'),
     url(r'^poetry/?$', views.explore_poetry, name='explore-poetry'),

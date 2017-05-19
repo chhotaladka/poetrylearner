@@ -1,0 +1,42 @@
+{% extends "proofreader/base.html" %}
+{% load staticfiles %}
+{% load poetry_tags %}
+{% load humanize %}
+
+{% block title %}Proofreader | {{ sitename }}{% endblock %}
+{% block search %}{% comment %} Don't show search box here {% endcomment %}{% endblock %}
+
+{% block navigation-header %}
+{% include 'common/include/navigation-bar-head.html' with nav_title='Proofreader' nav_close='/' nav_css='repository' %}
+{% endblock %}
+
+{% block main %}
+{% comment %} PRIMARY POETRY {% endcomment %}
+<section id="priSect" class="pT-8 pB-16">
+    <div class="_layout layout-L mdl-grid">
+        <div class="__c mdl-cell mdl-cell--12-col">
+            <div class="card-xl">
+                <div class="p-16 tAc">
+                    <div class="mB-32">
+                        <div class="c-green svg48">
+                        {% include "common/svg/content_paste.html" %}
+                        </div>
+                        <div class="tAc">
+                            <div class="fS26 b c-91">{% get_poetry_count unpublished as pcount %}{{ pcount|intcomma }}</div>
+                            <div class="fullname fS16">Poetry</div>
+                        </div>
+                    </div>
+                    <div class="row center fS14 b">
+                        <div class="pLR-8">Read</div>
+                        <div class="bL bR pLR-8">Edit</div>
+                        <div class="pLR-8">Publish</div>
+                    </div>
+                    <div class="mT-16">
+                        <a class="card mdl-button mdl-button--colored" href="{% url 'proofreader:poetry' %}">start proofreading</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

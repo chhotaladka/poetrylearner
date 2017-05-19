@@ -1,10 +1,10 @@
 {% extends "repository/base.html" %}
 {% load staticfiles %}
 
-{% block title %}Publish/Unpublish '{{ obj.name }}' | {{ sitename }}{% endblock %}
+{% block title %}{{ action }} '{{ obj.name }}' | {{ sitename }}{% endblock %}
 
 {% block breadcrumbs %}
-{% include 'common/include/navigation-bar.html' with nav_url=obj.get_absolute_url nav_title='Publish/Unpublish' nav_css='repository' %}
+{% include 'common/include/navigation-bar.html' with nav_url=cancel_url nav_title=action nav_css='repository' %}
 {% endblock %}
 
 {% block main %}
@@ -44,9 +44,9 @@
 					{% csrf_token %} 
 					<div class="tAr">
 						<input class="mdl-button" type="button"
-						name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ obj.get_absolute_url }}&#39;"/>						
+						name="cancel" value="Cancel" id="id-form-cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;"/>
 						<input class="mdl-button mdl-button--colored" type="submit" 
-						name="submit" {% if is_published %}value="Unpublish"{% else %}value="Publish"{% endif %} id="id-form-submit"/> 
+						name="submit" value="{{ action }}" id="id-form-submit"/> 
 					</div>
 				</form>
 			{% endwith %}

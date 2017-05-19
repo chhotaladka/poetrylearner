@@ -27,7 +27,8 @@ class CreateThingView(View):
     form_class = None
     template_name = None
     ajax_template_name = None
-    cancel_url = '/'
+    cancel_url = None
+    next_url = None
     item_type = None
     
     def construct_change_message(self, form):
@@ -64,8 +65,11 @@ class CreateThingView(View):
         return render(request, self.template_name, {'form': form, 'cancel_url': self.cancel_url, 'item_type': self.item_type})
 
     def post(self, request, *args, **kwargs):
+        # Check the parameters passed in the URL and process accordingly
         # Prepare the cancel_url for 'Cancel button' to be passed with the context    
         self.cancel_url = request.POST.get('cancel', '/')
+        # Prepare the next_url for redirection after successful operation
+        self.next_url = request.GET.get('next', None)
         
         if request.is_ajax():
             self.template_name = self.ajax_template_name
@@ -122,7 +126,8 @@ class CreateThingView(View):
                     return JsonResponse(res)
                 
                 messages.success(request, 'Changes on item %s are successful! '%obj.name)
-                return HttpResponseRedirect(obj.get_absolute_url())
+                self.next_url = self.next_url if self.next_url else obj.get_absolute_url()
+                return HttpResponseRedirect(self.next_url)
                 
             except:
                 print ("Error: Unexpected error:", sys.exc_info()[0])
@@ -239,6 +244,8 @@ def publish(request, type, pk, slug):
     """
     Publish or unpublish a creative work type item
     """
+    ACTION_PUBLISH = 'Publish'
+    ACTION_UNPUBLISH = 'Unpublish'
     
     # Check the type i.e. item_type and derive the data model etc.
     if type == Snippet.item_type():
@@ -253,6 +260,12 @@ def publish(request, type, pk, slug):
         print "Error: content type is not found"
         raise Http404
     
+    # Check the parameters passed in the URL and process accordingly
+    # Prepare the cancel_url for 'Cancel button' to be passed with the context    
+    cancel_url = request.GET.get('cancel', None)
+    # Prepare the next_url for redirection after successful operation
+    next_url = request.GET.get('next', None)
+    
     # Get the object from the `pk`, raises a Http404 if not found
     obj = get_object_or_404(item_cls, pk=pk)
     
@@ -260,13 +273,13 @@ def publish(request, type, pk, slug):
         state_changed = False
         action = request.POST.get('submit')
         # Do the operation, only if current status is different.
-        if action == 'Publish':
+        if action == ACTION_PUBLISH:
             if obj.date_published is None:
                 obj.modified_by = request.user
                 obj.date_published = timezone.now()
                 obj.save()
                 state_changed = True
-        elif action == 'Unpublish':
+        elif action == ACTION_UNPUBLISH:
             if obj.date_published:
                 obj.modified_by = request.user
                 obj.date_published = None
@@ -277,7 +290,7 @@ def publish(request, type, pk, slug):
         if state_changed:
             from activity.signals import sig_action
             from activity.models import VERBS
-            if action == 'Publish':
+            if action == ACTION_PUBLISH:
                 verb = VERBS['PUBLISH']
                 public = True
             else:
@@ -295,9 +308,18 @@ def publish(request, type, pk, slug):
         
         if state_changed:
             messages.success(request, 'Changes on item %s are successful! '%obj.name)
-        return HttpResponseRedirect(obj.get_absolute_url())
+        next_url = next_url if next_url else obj.get_absolute_url()
+        return HttpResponseRedirect(next_url)
+    
+    cancel_url = cancel_url if cancel_url else obj.get_absolute_url()
+    
+    # Prepare the current `action`
+    if obj.is_published():
+        action = ACTION_UNPUBLISH
+    else:
+        action = ACTION_PUBLISH
     
     ##
-    # Make the context and render  
-    context = {'obj': obj }
+    # Make the context and render
+    context = {'obj': obj, 'action': action, 'cancel_url': cancel_url,}
     return render(request, template, context)

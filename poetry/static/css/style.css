@@ -127,15 +127,23 @@ html, body {
 /* Secondary navigation bar */
 .nav-bar {
     background-color: #4285f4;
-    -moz-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
     display: table;
     height: 46px;
-    padding: 4px 0;
     width: 100%;
 }
+.nav-bar.shadow {
+    -moz-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+}
+.nav-bar.repository1 {
+    background: #8086DC; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left, #8086DC , #80BFCE); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #8086DC, #80BFCE); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #8086DC, #80BFCE); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #8086DC , #80BFCE); /* Standard syntax */
+}
 .nav-bar.repository {
-	background-color: #0F9D58 !important;
+    background-color: #8086DC !important;
 }
 .nav-bar.crawlers {
     background-color: #167AC6 !important;

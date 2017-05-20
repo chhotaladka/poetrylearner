@@ -70,7 +70,7 @@ def proofread_poetry(request, pk=None, src=None):
         if poet:
             try:
                 creator = get_object_or_404(Person, pk=int(poet))
-                result_title = 'Proofreading poetry by ' + creator.popular_name()
+                result_title = 'Proofreading poetry of ' + creator.popular_name()
                 creator_id = creator.id
             except (TypeError, ValueError):
                 print 'Error: proofread: poet is not an integer, pass silently'

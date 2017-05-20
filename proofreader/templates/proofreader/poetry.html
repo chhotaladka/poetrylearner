@@ -42,16 +42,17 @@
                     {% include "common/svg/arrow_forward.html" %}
                     <span class="action-button__text">Next</span>
                 </button>
+                {% comment %} Javascript to create URLs for action buttons {% endcomment %}
                 <script>
-                    var fallback_url=encodeURIComponent('{{fallback_url}}'+'?'+'{{ getvars }}');
-                    var forward_url=encodeURIComponent('{{forward_url}}'+'?'+'{{ getvars }}');
+                    {% comment %} Remove the unwanted '&' from the `getvars` context variable {% endcomment %}
+                    var getvars = '{{ getvars }}'.replace(/&amp;/g, '');
+                    
+                    var fallback_url=encodeURIComponent('{{fallback_url}}'+'?'+getvars);
+                    var forward_url=encodeURIComponent('{{forward_url}}'+'?'+getvars);
                     
                     var edit_url="{{ obj.get_edit_url }}/?cancel="+fallback_url+"&next="+fallback_url;
                     var pub_url="{% url 'repository:publish' type=obj.item_type pk=obj.id slug=obj.get_slug %}?cancel="+fallback_url+"&next="+forward_url;
-                    var next_url='{{ forward_url }}'+'?'+'{{ getvars }}';
-                    console.log(fallback_url);
-                    console.log(edit_url);
-                    console.log(pub_url);
+                    var next_url='{{ forward_url }}'+'?'+getvars;
                     
                     function init(){
                         document.getElementById('editBtn').onclick=function(){location.href=edit_url;};

@@ -27,37 +27,46 @@
 <section class="nav-footer light">
     <div class="p-8 bT-1">
         <div class="card-l tAc">
-            <div class="row fill pLR-8">
-	            {% url 'proofreader:poetry' pk=obj.id as fallback_url %}
-	            {% url 'proofreader:poetry' as forward_url %}
-                <button id="editBtn" class="action-button oN" title="Edit to improve">
-                    {% include "common/svg/edit.html" %}
-                    <span class="action-button__text">Edit</span>
-                </button>
-                <button id="pubBtn" class="action-button oN" title="Publish">
-                    {% include "common/svg/publish.html" %}
-                    <span class="action-button__text">Publish</span>
-                </button>
+            <div class="row fill r2l pLR-8">
+                {% url 'proofreader:poetry' as forward_url %}
                 <button id="nextBtn" class="action-button oN" title="Publish or unpublish">
                     {% include "common/svg/arrow_forward.html" %}
                     <span class="action-button__text">Next</span>
                 </button>
+                {% if obj %}
+                {% url 'proofreader:poetry' pk=obj.id as fallback_url %}
+                <button id="pubBtn" class="action-button oN" title="Publish">
+                    {% include "common/svg/publish.html" %}
+                    <span class="action-button__text">Publish</span>
+                </button>
+                <button id="editBtn" class="action-button oN" title="Edit to improve">
+                    {% include "common/svg/edit.html" %}
+                    <span class="action-button__text">Edit</span>
+                </button>
+                {% endif %}
                 {% comment %} Javascript to create URLs for action buttons {% endcomment %}
                 <script>
                     {% comment %} Remove the unwanted '&' from the `getvars` context variable {% endcomment %}
                     var getvars = '{{ getvars }}'.replace(/&amp;/g, '');
                     
-                    var fallback_url=encodeURIComponent('{{fallback_url}}'+'?'+getvars);
                     var forward_url=encodeURIComponent('{{forward_url}}'+'?'+getvars);
                     
-                    var edit_url="{{ obj.get_edit_url }}/?cancel="+fallback_url+"&next="+fallback_url;
-                    var pub_url="{% url 'repository:publish' type=obj.item_type pk=obj.id slug=obj.get_slug %}?cancel="+fallback_url+"&next="+forward_url;
-                    var next_url='{{ forward_url }}'+'?'+getvars;
-                    
                     function init(){
-                        document.getElementById('editBtn').onclick=function(){location.href=edit_url;};
-                        document.getElementById('pubBtn').onclick=function(){location.href=pub_url;};
+                        {% if obj %}
+                        var next_url='{{ forward_url }}'+'?'+getvars;
+                        {% else %} {% comment %} GET query has no result, so now let's explore without it. {% endcomment %}
+                        var next_url='{{ forward_url }}';
+                        {% endif %}
                         document.getElementById('nextBtn').onclick=function(){location.href=next_url;};
+                        
+                        {% if obj %}
+                        var fallback_url=encodeURIComponent('{{fallback_url}}'+'?'+getvars);
+                        var pub_url="{% url 'repository:publish' type=obj.item_type pk=obj.id slug=obj.get_slug %}?cancel="+fallback_url+"&next="+forward_url;
+                        var edit_url="{{ obj.get_edit_url }}/?cancel="+fallback_url+"&next="+fallback_url;
+                        
+                        document.getElementById('pubBtn').onclick=function(){location.href=pub_url;};
+                        document.getElementById('editBtn').onclick=function(){location.href=edit_url;};
+                        {% endif %}
                     }
                     window.onload=init;
                 </script>

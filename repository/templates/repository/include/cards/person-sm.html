@@ -1,6 +1,5 @@
 {% comment %}
-	Info:       Person small Card
-	Requires:   css and js of static/mdl/*
+	Info: Person small Card
 {% endcomment %}
 {% load staticfiles %}
 {% load common_tags %}
@@ -9,7 +8,7 @@
 {% get_poetry_count by person published as poetry_count_pub %}
 <div class="content-wrapper" itemscope itemtype="http://schema.org/Person">
 	<a class="card" href="{{person.get_absolute_url}}" itemprop="url">
-		<div class="mdl-card author-card--sm bS-1">
+		<div class="card-l bCw author-card--sm bS-1 h-shadow">
 			<div>
 				{% with person_img_url=person.get_image_url %}
 				{% if person_img_url %}
@@ -22,26 +21,28 @@
 				{% endif %}
 				{% endwith %}
 			</div>
-			<div class="p-8 pT12 tAc">
-				<div class="title-text fS14 tAc" itemprop="name">
-					{{ person.name }}
+			<div>
+				<div class="p-8 pT12 tAc">
+					<div class="title-text fS14 tAc" itemprop="name">
+						{{ person.name }}
+					</div>
+					<div class="extras">
+						<span class="text" itemprop="additionalName">{{person.additional_name}}</span>
+					</div>
+					{% if person.year_birth or person.year_death %}
+					<div class="extras fS-12">
+						<span>(</span>
+					{% if person.year_birth %}
+						<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span> 
+					{% endif %}
+					{% if person.year_death %}
+						<span>- </span>
+						<span title="Death" itemprop="deathDate">{{ person.year_death }}</span>
+					{% endif %}
+						<span>)</span>
+					</div>
+					{% endif %}
 				</div>
-				<div class="extras">
-					<span class="text" itemprop="additionalName">{{person.additional_name}}</span>
-				</div>
-				{% if person.year_birth or person.year_death %}
-				<div class="extras fS-12">
-					<span>(</span>
-				{% if person.year_birth %}
-					<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span> 
-				{% endif %}
-				{% if person.year_death %}
-					<span>- </span>
-					<span title="Death" itemprop="deathDate">{{ person.year_death }}</span>
-				{% endif %}
-					<span>)</span>
-				</div>
-				{% endif %}
 			</div>
 			<div class="pos-RB">
 				<div class="info-panel">

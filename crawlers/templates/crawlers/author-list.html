@@ -4,7 +4,7 @@
 {% block title %}Crawled Authors - {{ sitename }}{% endblock %}
 
 {% block navigation-header %}
-{% url 'crawlers:dashboard' as nav_url %}
+{% url 'crawlers:home' as nav_url %}
 {% include 'common/include/navigation-bar.html' with nav_url=nav_url nav_title='Crawled Authors' nav_css='crawlers' %}
 {% endblock %}
 

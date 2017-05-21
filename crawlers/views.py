@@ -412,20 +412,17 @@ def raw_author_list(request):
 
 
 @group_required('administrator')
-def dashboard(request):
+def home(request):
     author = {}
     article = {}
     
     author['total'] = RawAuthor.objects.all().count
     author['valid'] = RawAuthor.objects.valid().count
-    author['nobirth'] = RawAuthor.objects.nobirth().count
-    author['nodeath'] = RawAuthor.objects.nodeath().count
-    author['nodate'] = RawAuthor.objects.nodate().count
     
     article['total'] = RawArticle.objects.all().count
-    article['valid'] = RawArticle.objects.valid().count       
+    article['valid'] = RawArticle.objects.valid().count
         
     context = {'author': author, 'article': article}
-    template = "crawlers/dashboard.html"
+    template = "crawlers/home.html"
 
     return render(request, template, context)

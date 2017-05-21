@@ -14,6 +14,13 @@
 <section id="priSect" class="pT-8 pB-16">
     <div class="_layout layout-L mdl-grid">
         <div class="__c mdl-cell mdl-cell--12-col pA-0 mB-32">
+        {% if poetry_count %}
+            <div class="card-l tAr">
+                <div class="light-txt m8">
+                    <span>1 of {{ poetry_count|add:-1 }} poetry for this query</span>
+                </div>
+            </div>
+        {% endif %}
         {% if obj %}
         {% include "proofreader/include/card-poetry.html" with poetry=obj %}
         {% else %}

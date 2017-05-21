@@ -9,7 +9,8 @@ from common.decorators import group_required
 
 def get_random_poetry(creator_id=None, published=False):
     '''
-    Get a random Poetry
+    Get a random Poetry.
+    It also returns count of Poetry for the given query.
     '''
     kwargs = {}
     
@@ -37,7 +38,8 @@ def get_random_poetry(creator_id=None, published=False):
     else:
         obj = {}
            
-    return obj
+    return obj, count
+
 
 @login_required 
 @group_required('administrator', 'editor')
@@ -59,6 +61,7 @@ def proofread_poetry(request, pk=None, src=None):
     @scope: private
     '''
     result_title = 'Proofreading Poetry'
+    poetry_count = 0
     
     # Get the object from the `pk`, raises a Http404 if not found
     if pk is None:
@@ -75,7 +78,7 @@ def proofread_poetry(request, pk=None, src=None):
             except (TypeError, ValueError):
                 print 'Error: proofread: poet is not an integer, pass silently'
         
-        obj = get_random_poetry(creator_id=creator_id, published=False)
+        obj, poetry_count = get_random_poetry(creator_id=creator_id, published=False)
     
     else:
         obj = get_object_or_404(Poetry, pk=pk)
@@ -83,6 +86,7 @@ def proofread_poetry(request, pk=None, src=None):
     context = {'obj': obj,
                'item_type': 'poetry',
                'result_title': result_title,
+               'poetry_count': poetry_count,
                'src': src}
     template = 'proofreader/poetry.html'
     return render(request, template, context)

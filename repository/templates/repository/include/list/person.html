@@ -1,9 +1,8 @@
 {% comment %}
-	Info:       Person list as card view
-	Requires:   css and js of static/mdl/*
+	Info: Person list as card view
 {% endcomment %}
 <div class="mdl-cell mdl-cell--12-col">
-	<div class="mL-8">
+	<div class="row center">
 	{% for item in items %}
 		<div class="person-wrapper">
 		{% include "repository/include/cards/person-sm.html" with person=item %}

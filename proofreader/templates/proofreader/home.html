@@ -12,27 +12,31 @@
 
 {% block main %}
 {% comment %} PRIMARY POETRY {% endcomment %}
-<section id="priSect" class="pT-8 pB-16">
+<section class="pT-8 pB-16">
     <div class="_layout layout-L mdl-grid">
         <div class="__c mdl-cell mdl-cell--12-col">
-            <div class="card-xl">
+            <div class="card-s">
                 <div class="p-16 tAc">
                     <div class="mB-32">
                         <div class="c-y svg48">
                         {% include "common/svg/content_paste.html" %}
                         </div>
                         <div class="tAc">
-                            <div class="fS26 b c-91">{% get_poetry_count unpublished as pcount %}{{ pcount|intcomma }}</div>
-                            <div class="fullname fS16">Poetry</div>
+                            <h3>Proofread</h3>
+                            <div class="fS26 c-91">{% get_poetry_count unpublished as pcount %}{{ pcount|intcomma }}</div>
+                            <h3>Poetry</h3>
                         </div>
                     </div>
-                    <div class="row center fS14 b">
+                    <div class="row center fS14">
                         <div class="pLR-8">Read</div>
                         <div class="bL bR pLR-8">Edit</div>
                         <div class="pLR-8">Publish</div>
                     </div>
                     <div class="mT-16">
-                        <a class="card mdl-button mdl-button--colored" href="{% url 'proofreader:poetry' %}">start proofreading</a>
+                        <a class="card mdl-button " href="{% url 'proofreader:poetry' %}">
+                            <span>start</span>
+                            <span class="c-blue3">{% include "common/svg/arrow_forward.html" %}</span>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -96,7 +96,7 @@
                 <a class="mdl-navigation__link" href="{% url 'repository:home' %}">Repository</a>
                 {% endif %}
                 {% if request.user|has_group:'administrator' %}
-                <a class="mdl-navigation__link" href="{% url 'crawlers:dashboard' %}">Crawlers</a>
+                <a class="mdl-navigation__link" href="{% url 'crawlers:home' %}">Crawlers</a>
                 {% endif %}
                 {% if request.user.is_staff %}
                 <a class="mdl-navigation__link" href="{% url 'admin:index' %}">Admin</a>
@@ -140,5 +140,8 @@
     {% block feedback %}{% comment %} Feedback modal {% endcomment %}
         {% include "feedback/modal.html" %}
     {% endblock %}
+    {% if not request.user|has_group:'administrator,editor' %}
+    {% include "google-analytics.html" %}
+    {% endif %}
     </body>
 </html>

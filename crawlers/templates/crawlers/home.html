@@ -1,0 +1,93 @@
+{% extends "crawlers/base.html" %}
+{% load humanize %} 
+
+{% block title %}Crawlers - {{ sitename }}{% endblock %}
+
+{% block search %}{% comment %} Don't show search box here {% endcomment %}{% endblock %}
+
+{% block navigation-header %}
+{% include 'common/include/navigation-bar-head.html' with nav_url=cancel_url nav_title='Crawlers' nav_css='crawlers' %}
+{% endblock %}
+
+{% block main %}
+<section class="pT-8 pB-16">
+    <div class="_layout layout-L mdl-grid">
+    
+        <div class="__c mdl-cell mdl-cell--12-col">
+            <div class="card-xl">
+                <div class="p-16 tAc">
+                    <div class="mB-16">
+                        
+                    </div>
+                    <h3>We store here data crawled by our Web Spiders</h3>
+                    <div>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mdl-cell mdl-cell--12-col">
+            <div class="row center">
+	            <div class="cardlist-wrapper">
+	                <a class="card" href="{% url 'crawlers:author-list' %}">
+	                    <div class="card-m bCw mB-32 h-shadow">
+	                        <div class="p-16">
+	                            <div class="mB-32 c-61 svg48">
+	                            {% include "common/svg/person.html" %}
+	                            </div>
+	                            <div class="">
+                                    <div class="fS26">
+                                        <span class="c-blue3">{{ author.valid|intcomma }}</span>
+                                        <span> / </span> 
+                                        <span class="c-91">{{ author.total|intcomma }}</span>
+                                    </div>
+	                                <h3>Authors</h3>
+	                            </div>
+	                            <div class="c-a3">
+	                                <p>Total {{ author.total|intcomma }} authors' data have been crawled from various websites.
+	                                To add an author to Repository, select the author from the <b>Authors</b> page and click on the name.
+	                                You will get further information about the operation.</p>
+	                            </div>
+	                            <div class="mT-16 tAr">
+	                                <span class="c-blue3">{% include "common/svg/arrow_forward.html" %}</span>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </a>
+	            </div>
+
+	            <div class="cardlist-wrapper">
+	                <a class="card" href="{% url 'crawlers:article-list' %}">
+	                    <div class="card-m bCw mB-32 h-shadow">
+	                        <div class="p-16">
+	                            <div class="mB-32 c-61 svg48">
+	                            {% include "common/svg/archive.html" %}
+	                            </div>
+	                            <div class="">
+	                                <div class="fS26">
+	                                    <span class="c-blue3">{{ article.valid|intcomma }}</span>
+	                                    <span> / </span> 
+	                                    <span class="c-91">{{ article.total|intcomma }}</span>
+	                                </div>
+	                                <h3>Articles</h3>
+	                            </div>
+	                            <div class="c-a3">
+	                                <p>Out of {{ article.total|intcomma }} crawled articles, {{ article.valid|intcomma }} has been processed and added to the Repository.</p>
+	                                <p>Once an author is added to Repository, you can add her/his articles to the Repository.
+	                                The action is available on the crawled author page. The Repository item will be created but will not be published on the web.
+	                                Admin and authorized users can view these Repository items and publish them on the web for public access.</p>
+	                            </div>
+	                            <div class="mT-16 tAr">
+	                                <span class="c-blue3">{% include "common/svg/arrow_forward.html" %}</span>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </a>
+	            </div>
+	        </div>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}

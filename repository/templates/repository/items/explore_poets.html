@@ -6,8 +6,7 @@
 {% load humanize %}
 {% block title %}{{ result_title }} | {{ sitename }}{% endblock title %}
 {% block meta %}
-{% get_poets_count as poets_count %}
-<meta name="description" content="Read and explore the poetry of {{ poets_count }} great poets on {{ sitename }}.">
+{% include "meta.html" with meta=meta only %}
 {% endblock %}
 
 {% block search %}

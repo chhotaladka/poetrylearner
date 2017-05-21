@@ -1,12 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-import os, sys, traceback
+import sys, traceback
 from django.http import (
-    HttpResponse, Http404, HttpResponseRedirect
+    Http404, HttpResponseRedirect
 )
 from django.core.exceptions import PermissionDenied
 from django.template.context_processors import request
-from django.views.generic.base import View
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -15,9 +13,8 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.conf.global_settings import LANGUAGES
-import json
 import random
-
+from django.contrib.sites.shortcuts import get_current_site
 from repository.models import *
 from repository.views.search import search_person
 
@@ -156,6 +153,13 @@ def item(request, type, pk, slug, src=None):
             return HttpResponseRedirect(obj.get_list_url())
     
     # Instantiate the Meta class
+    if type == 'poetry':
+        meta_image_url = obj.creator.get_image_url()
+    elif type == 'person':
+        meta_image_url = obj.get_image_url()
+    else:
+        meta_image_url = "img/poetrylearner_logo_120x120.png"
+        
     meta = Meta(title = obj.title(), 
                 description = obj.meta_description(), 
                 section= type, 
@@ -164,6 +168,7 @@ def item(request, type, pk, slug, src=None):
                 date_time = obj.get_last_edit_time(),
                 object_type = 'article',
                 keywords = obj.get_keywords(),
+                image = meta_image_url,
             )
     
     # Make the context and render  
@@ -386,9 +391,29 @@ def explore_poetry(request, poet=None, slug=None, src=None):
             # If page is out of range (e.g. 9999), deliver last page of results.
             objs = paginator.page(paginator.num_pages)
     
+    # Instantiate the Meta class
+    if creator:
+        meta_image_url = creator.get_image_url()
+        print meta_image_url
+        meta_description = "%s has %s poetry on %s."%(
+            creator.full_name(), paginator.count, get_current_site(request).name)
+    else:
+        meta_image_url = "img/poetrylearner_logo_120x120.png"
+        meta_description = "Read and explore more than %s poetry on %s."%(
+            Poetry.objects.all().count(), get_current_site(request).name)
+    
+    meta = Meta(title = result_title, 
+                description = meta_description,
+                section= 'Poetry',
+                object_type = 'article',
+                keywords = None,
+                image = meta_image_url,
+            )
+    
     context = {'items': objs, 'creator': creator, 'language': language,
                'item_type': 'poetry', 'result_title': result_title,
                'query_string': query_string,
+               'meta': meta,
                'src': src}
     template = 'repository/items/explore_poetry.html'
     return render(request, template, context)
@@ -409,35 +434,44 @@ def explore_poets(request, src=None):
         result_title = '"' + query_string + '" in Poets'
         obj_list = search_person(query_string)
         
+        # Pagination
+        paginator = Paginator(obj_list, 20) # Show 40 entries per page    
+        page = request.GET.get('page')
+        try:
+            objs = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            objs = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            objs = paginator.page(paginator.num_pages)
+        
+        template = 'repository/items/search_poets.html'
+        
     else:
         query_string = ''
         result_title = 'Poets'
         objs = []
-        context = {'items': objs,
-           'item_type': 'person', 'result_title': result_title,
-           'query_string': query_string,
-           'src': src}
-        template = 'repository/items/explore_poets.html'    
-        return render(request, template, context)
+        template = 'repository/items/explore_poets.html'
     
-    # Pagination
-    paginator = Paginator(obj_list, 20) # Show 40 entries per page    
-    page = request.GET.get('page')
-    try:
-        objs = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        objs = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        objs = paginator.page(paginator.num_pages)
+    # Instantiate the Meta class
+    meta_image_url = "img/poetrylearner_logo_120x120.png"
+    meta_description = "Read and explore the poetry of %s great poets on %s."%(
+        Person.objects.all().count(), get_current_site(request).name)
+    
+    meta = Meta(title = result_title, 
+                description = meta_description,
+                section= 'Poets',
+                object_type = 'article',
+                keywords = None,
+                image = meta_image_url,
+            )
     
     context = {'items': objs,
                'item_type': 'person', 'result_title': result_title,
                'query_string': query_string,
+               'meta': meta,
                'src': src}
-    template = 'repository/items/search_poets.html'
-
     return render(request, template, context)
 
 

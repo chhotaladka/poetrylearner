@@ -17,14 +17,12 @@
         <link rel="stylesheet" href="{% static "css/material.min.css" %}">
         <link rel="stylesheet" href="{% static "css/style.css" %}">
         <link rel="stylesheet" href="{% static "css/modal.css" %}">
-        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
         <link href="https://fonts.googleapis.com/css?family=Satisfy|Noto+Sans" rel="stylesheet">
         {% block extra-style %}{% comment %} Include here extra css style {% endcomment %}{% endblock %}
     </head>
     <body class="mdl-poetry mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
     {% block body %}
     <div class="mdl-layout mdl-js-layout dashboard-layout">
-    <!--<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">-->
         {% block header %}{% comment %} header of a section/app. Modify in the base template of the app {% endcomment %}
         <header class="mdl-layout__header page-header mdl-layout__header--scroll">
             {% if request.user.is_authenticated %} {% comment %} SHow drawer after login {% endcomment %}

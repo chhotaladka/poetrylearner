@@ -8,14 +8,9 @@
 {% load humanize %}
 {% block title %}{{ result_title }} | {{ sitename }}{% endblock title %}
 {% block meta %}
-{% if creator %}
-{% get_poetry_count by creator as poetry_count %}
-<meta name="description" content="{{ creator.full_name }} has {{ poetry_count }} poetry on {{ sitename }}.">
-{% else %}
-{% get_poetry_count as poetry_count %}
-<meta name="description" content="Read and explore more than {{ poetry_count }} poetry on {{ sitename }}.">
-{% endif %}
+{% include "meta.html" with meta=meta only %}
 {% endblock %}
+
 {% comment %}  
 {% block search %}
 {% include "common/include/search-bar.html" with q_url="" q_str=query_string placeholder="Search a Poetry" %}

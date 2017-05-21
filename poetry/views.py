@@ -3,7 +3,8 @@ from django.template.context_processors import request
 from django.contrib import messages
 import os, sys, traceback
 import json
-
+from django.contrib.sites.shortcuts import get_current_site
+from meta_tags.views import Meta
 from repository.views import readers
 
 # Create your views here. 
@@ -14,8 +15,18 @@ def welcome(request):
     Welcome page
     ''' 
     poetry = readers.get_a_poetry()
-
-    context = {'poetry': poetry}
+    
+    # Instantiate the Meta class
+    meta_image_url = "img/poetrylearner_logo_120x120.png"
+    meta_description = "Building towards an archive for the poetry of every language. Read your next favorite poetry."
+    
+    meta = Meta(title = "Read a random Poetry on %s"%(get_current_site(request).name), 
+                description = meta_description,
+                keywords = None,
+                image = meta_image_url,
+            )
+    
+    context = {'poetry': poetry, 'meta': meta,}
     template = 'welcome.html'
     
     return render(request, template, context)

@@ -4,18 +4,11 @@
 <div class="card-xl wFull">
     <div class="p-16">
         <div class="tAc">
-            {% with profile_img_url=profile.get_avatar_url %}
-            {% if profile_img_url %}
-            <div class="avatar circle md border centered" style="background: url('{{ profile_img_url }}') center / cover;">
-            </div>
-            {% else %}
             <div class="avatar circle md user bC-none centered">
                 {% include "common/svg/user.html" %}
             </div>
-            {% endif %}
-            {% endwith %}
             <div class="title-text dark">
-                {{ profile.get_name }}
+                {{ public_profile.get_first_name|title }}
             </div>
              <div class="mT4">
                 <span>Role . </span>

@@ -1117,7 +1117,6 @@ h3 {
     border-radius: 2px;
     color: #919191;
     position: relative;
-    /*height: 36px;*/
     min-width: 64px;
     padding: 0px 8px;
     display: inline-block;
@@ -1129,8 +1128,11 @@ h3 {
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    /*line-height: 36px;*/
     vertical-align: middle;
+}
+.action-button.lg {
+    height: 36px;
+    line-height: 36px;
 }
 .bottom-panel {
 	padding: 8px 16px;

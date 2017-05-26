@@ -32,21 +32,21 @@
     </div>
 </section>
 <section class="nav-footer light">
-    <div class="p-8 bT-1">
+    <div class="bT-1">
         <div class="card-l tAc">
             <div class="row fill r2l pLR-8">
                 {% url 'proofreader:poetry' as forward_url %}
-                <button id="nextBtn" class="action-button oN" title="Publish or unpublish">
+                <button id="nextBtn" class="action-button lg oN" title="Publish or unpublish">
                     {% include "common/svg/arrow_forward.html" %}
                     <span class="action-button__text">Next</span>
                 </button>
                 {% if obj %}
                 {% url 'proofreader:poetry' pk=obj.id as fallback_url %}
-                <button id="pubBtn" class="action-button oN" title="Publish">
+                <button id="pubBtn" class="action-button lg oN" title="Publish">
                     {% include "common/svg/publish.html" %}
                     <span class="action-button__text">Publish</span>
                 </button>
-                <button id="editBtn" class="action-button oN" title="Edit to improve">
+                <button id="editBtn" class="action-button lg oN" title="Edit to improve">
                     {% include "common/svg/edit.html" %}
                     <span class="action-button__text">Edit</span>
                 </button>

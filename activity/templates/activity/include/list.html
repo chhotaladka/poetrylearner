@@ -1,14 +1,18 @@
 {% comment %} Display the activity list {% endcomment %}
 {% load common_tags %}
+<div class="bundle-list">
 {% regroup actions by timestamp.date as action_groups %}
 {% for action_group in action_groups %}
-	<div class="activity wide-card bCw mH-auto wFull bS-1">
-		<div class="pLR-16 pTB-8">
-			<span class="groupdate">{{ action_group.grouper|niceday }}</span>
-			<span class="light-txt fS10 pL-8">+ {{ action_group.list|length }}</span>
-		</div>
-	</div>
-	{% for action in action_group.list %}
-	{% include "activity/include/activity-card.html" with action=action %}
-	{% endfor %}
+    <div class="bundle pB-16">
+        <div class="card-xl wFull">
+            <div class="pLR-16 pTB-8">
+                <span class="groupdate">{{ action_group.grouper|niceday }}</span>
+                <span class="light-txt fS-12 pL-8">+ {{ action_group.list|length }}</span>
+            </div>
+        </div>
+        {% for action in action_group.list %}
+        {% include "activity/include/activity-card.html" with action=action %}
+        {% endfor %}
+    </div>
 {% endfor %}
+</div>

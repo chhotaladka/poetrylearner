@@ -3,27 +3,26 @@
 {% endcomment %}
 {% load common_tags %}
 {% load humanize %}
-<div class="wide-card bCw mH-auto wFull bS-1">
-	<div class="p-16 row fW-no fill">
+<div class="wide-card bCw wFull bS-1">
+	<div class="p-16 row fill">
 		<div class="row">
-			<div class="avatar xsm user">
+			<div class="avatar xsm user mR-16">
 			{% include "common/svg/user.html" %}
 			</div>
 			<div>
-				<div class="fS-12 title-text">
-					<span>{{ action.get_verb }}</span>
+				<div class="fS14 title-text">
 					<a class="h-link" href="{{ user.profile.get_absolute_url }}">{{ user.profile.get_first_name }}</a>
 				</div>
-				<div class="fS10 light-txt">
+				<div class="fS-12 light-txt">
 					<span>Last update:</span>
 					<span>{{ user.lastest_action_date|nicetime }}</span>
 				</div>
 			</div>
 		</div>
 		<div>
-			<div>
-				<span class="fS24">{{ user.num_actions|intcomma }}</span>
-				<span class="fS10 light-txt">contributions</span>
+			<div class="tAl">
+				<div class="fS14 b">{{ user.num_actions|intcomma }}</div>
+				<div class="fS-12 light-txt">contributions</div>
 			</div>
 		</div>
 	</div>

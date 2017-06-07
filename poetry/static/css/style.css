@@ -1317,9 +1317,9 @@ a.action-button:hover {
 }
 
 /* activity */
-.activity .groupdate {
-	font-size: 9px;
-	color: #222;
+.bundle .groupdate {
+	font-size: 12px;
+	color: #313131;
 	font-weight: bold;
 	text-transform: uppercase;
 }
@@ -2575,8 +2575,8 @@ ul.mdl-mini-footer__link-list {
     border-radius: 3px;
 }
 .bS-3 {
-    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-    margin-bottom: 32px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    margin-bottom: 8px;
     margin-top: 8px;
 }
 .bS-4 {

@@ -4,17 +4,17 @@
 {% load common_tags %}
 {% load humanize %}
 {% for user in contributors %}
-<div class="wide-card mH-auto wFull bS-1">
+<div class="wide-card bCw wFull bS-1">
 	<div class="p-8 row fill">
 		<div class="row">
-			<div class="avatar xsm user">
+			<div class="avatar xsm user mR-16">
 			{% include "common/svg/user.html" %}
 			</div>
 			<div>
-				<div class="fS-12 title-text">
+				<div class="fS14 title-text">
 					<a class="h-link" href="{{ user.profile.get_absolute_url }}">{{ user.profile.get_first_name }}</a>
 				</div>
-				<div class="fS10 light-txt">
+				<div class="fS-12 light-txt">
 					<span>Last update:</span>
 					<span>{{ user.lastest_action_date|nicetime }}</span>
 				</div>
@@ -22,15 +22,15 @@
 		</div>
 		<div>
 			<div>
-				<span class="fS24">{{ user.num_actions|intcomma }}</span>
-				<span class="fS10 light-txt">contributions</span>
+				<span class="fS14 b">{{ user.num_actions|intcomma }}</span>
+				<span class="fS-12 light-txt">contributions</span>
 			</div>
 		</div>
 	</div>
 </div>
 {% endfor %}
-<div class="wide-card mH-auto wFull bS-1">
-	<a class="action-button pTB-8 wFull oN" href="{% url 'activity:contributors' %}" title="Show more">							
+<div class="wide-card bCw wFull bS-1">
+	<a class="action-button pTB-8 wFull oN" href="{% url 'activity:contributors' %}" title="Show more">
 		Show more
 	</a>
 </div>

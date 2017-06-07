@@ -1,6 +1,17 @@
 {% comment %} Display the feedback list {% endcomment %}
-<div class="feedback-list">
-{% for feedback in feedbacks %}
-{% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}
+{% load common_tags %}
+<div class="bundle-list">
+{% regroup feedbacks by date_added.date as feedback_groups %}
+{% for feedback_group in feedback_groups %}
+    <div class="bundle pB-16">
+        <div class="card-xl wFull">
+            <div class="pLR-16 pTB-8">
+                <span class="groupdate">{{ feedback_group.grouper|niceday }}</span>
+            </div>
+        </div>
+        {% for feedback in feedback_group.list %}
+        {% include "feedback/include/feedback-card-sm.html" with feedback=feedback %}
+        {% endfor %}
+    </div>
 {% endfor %}
 </div>

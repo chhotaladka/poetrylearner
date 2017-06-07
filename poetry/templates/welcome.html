@@ -19,14 +19,14 @@
                     </div>
                     <div class="details tAc">
                         <div class="mB4">
-                            <a title="View the creator" href="{{ poetry.creator.get_absolute_url }}">
+                            <a title="View poet page" href="{{ poetry.creator.get_absolute_url }}">
                                 <span>{{ poetry.creator.popular_name }}</span>
                             </a>
                         </div>
                         <div class="pT-8 mB4">
-                            <button class="action-button--small" onclick="location.href=&#39;{{poetry.get_absolute_url}}&#39;" title="More info">
-                                {% include "common/svg/info_outline.html" %}
-                            </button>
+                            <a class="action-button" href="{{poetry.get_absolute_url}}" title="View poetry page">
+                                {% include "common/svg/book-open.html" %}
+                            </a>
                         </div>
                     </div>
                 </div>

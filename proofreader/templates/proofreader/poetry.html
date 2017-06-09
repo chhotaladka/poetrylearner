@@ -2,12 +2,16 @@
 {% load staticfiles %}
 
 {% block title %}Proofreading | {{ sitename }}{% endblock %}
-{% block search %}{% comment %} Don't show search box here {% endcomment %}{% endblock %}
+
+{% block header %}{% comment %} Don't show header here {% endcomment %}{% endblock %}
+{% block drawer %}{% comment %} Don't show drawer here {% endcomment %}{% endblock %}
 
 {% block navigation-header %}
 {% url 'proofreader:home' as nav_url %}
 {% include 'common/include/navigation-bar.html' with nav_url=nav_url nav_title=result_title nav_close='/' nav_css='repository' %}
 {% endblock %}
+
+{% block search %}{% comment %} Don't show search box here {% endcomment %}{% endblock %}
 
 {% block main %}
 {% comment %} PRIMARY POETRY {% endcomment %}

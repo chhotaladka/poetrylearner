@@ -7,23 +7,18 @@
 
 {% block title %}{{ obj.name }} | {{ sitename }}{% endblock %}
 
-{% block search-placeholder %}{{ item_type }}{% endblock %}
-{% block search-action %}/{% endblock %}
-
 {% block breadcrumbs %}
 {% include "repository/include/misc/breadcrumb_for_item.html" %}
 {% endblock %}
 
 {% block main %}
-
 	<section id="priSect" class="pT-8 pB-16">
-		<div class="_layout layout-L mdl-grid">			
-			<section class="__c mdl-cell mdl-cell--12-col pA-0">
+		<div class="_layout layout-L mdl-grid">
+			<div class="__c mdl-cell mdl-cell--12-col pA-0">
 			{% include "repository/include/cards/snippet.html" with snippet=obj %}
-			</section>			
-		</div>		
+			</div>
+		</div>
 	</section>
 
 	{% include "repository/include/misc/button-floating-add.html" with item_type=item_type %}
-
-{% endblock %}		    				    																
+{% endblock %}

@@ -3,14 +3,16 @@
 
 {% block title %}Add {{ item_type }} to repository | {{ sitename }}{% endblock %}
 
-{% block search-placeholder %}{{ item_type }}{% endblock %}
-{% block search-action %}/{% endblock %}
+{% block header %}{% comment %} Don't show header here {% endcomment %}{% endblock %}
+{% block drawer %}{% comment %} Don't show drawer here {% endcomment %}{% endblock %}
 
-{% block breadcrumbs %}
+{% block navigation-header %}
 {% with 'Add '|add:item_type as nav_title %}
 {% include 'common/include/navigation-bar.html' with nav_url=cancel_url nav_title=nav_title nav_css='repository' %}
 {% endwith %}
 {% endblock %}
+
+{% block search %}{% comment %} Don't show search box here {% endcomment %}{% endblock %}
 
 {% block extra-style %}
 {% comment %} Transliteration CSS {% endcomment %}
@@ -19,10 +21,8 @@
 
 {% block main %}
 <section class="pT-8 pB-48">
-    <div class="_layout layout-sLs mdl-grid">
-        <div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-        </div>
-        <div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--top pA-0">
+    <div class="_layout layout-L mdl-grid">
+        <div class="__c mdl-cell mdl-cell--12-col pA-0">
             <div class="mdl-card author-card--lg bS-1 wFull">
                 <div class="p-16">
                     <div class="title-text"></div>
@@ -34,8 +34,6 @@
                     </button>
                 </div>
             </div>
-        </div>
-        <div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
         </div>
     </div>
 </section>

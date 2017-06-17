@@ -11,7 +11,7 @@
         {% block meta %}{% comment %} Write down all meta here {% endcomment %}
         <meta name="description" content="Building towards an archive for the poetry of every language. Read your next favorite poetry.">
         {% endblock %}
-        <title>{% block title %}poetrylearner{% endblock title %}</title>
+        <title>{% block title %}{{ sitename }}{% endblock title %}</title>
          <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" sizes="32x32"> 
         {% comment %} Base CSS {% endcomment %}
         <link rel="stylesheet" href="{% static "css/material.min.css" %}">

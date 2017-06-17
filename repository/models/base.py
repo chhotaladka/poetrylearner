@@ -104,15 +104,15 @@ class Thing(models.Model):
         return slugify(self.name)
              
     def get_absolute_url(self):        
-        kwargs = {'pk': self.id, 'slug': self.get_slug(), 'type': self.item_type()}
+        kwargs = {'pk': self.id, 'slug': self.get_slug(), 'item_type': self.item_type()}
         return reverse('repository:item', kwargs=kwargs)
 
     def get_edit_url(self):        
-        kwargs = {'pk': self.id, 'type': self.item_type()}
+        kwargs = {'pk': self.id, 'item_type': self.item_type()}
         return reverse('repository:add-item', kwargs=kwargs)        
     
     def get_list_url(self):
-        kwargs = {'type': self.item_type()}
+        kwargs = {'item_type': self.item_type()}
         return reverse('repository:list', kwargs=kwargs)
 
     def headline(self):

@@ -1,5 +1,5 @@
 {% comment %} Suggestion list to review/edit {% endcomment %}
-{% load poetry_tags %}
+{% load creativework_tags %}
 {% load humanize %}
 <div class="content-wrapper">
     <a class="card" href="{% url 'proofreader:home' %}">
@@ -22,7 +22,7 @@
 {% include "repository/include/list/poetry.html" with items=poetries %}
 <div class="mdl-card__actions">
 {% if poetries %}	
-	<a class="action-button wFull oN" href="{% url 'repository:list' type='poetry' %}?tab=unpub&o=shuffle" title="Show more poetry">
+	<a class="action-button wFull oN" href="{% url 'repository:list' item_type='poetry' %}?tab=unpub&o=shuffle" title="Show more poetry">
 		Show more
 	</a>
 {% endif %}

@@ -72,7 +72,7 @@
                         
                         {% if obj %}
                         var fallback_url=encodeURIComponent('{{fallback_url}}'+'?'+getvars);
-                        var pub_url="{% url 'repository:publish' type=obj.item_type pk=obj.id slug=obj.get_slug %}?cancel="+fallback_url+"&next="+forward_url;
+                        var pub_url="{% url 'repository:publish' item_type=obj.item_type pk=obj.id slug=obj.get_slug %}?cancel="+fallback_url+"&next="+forward_url;
                         var edit_url="{{ obj.get_edit_url }}/?cancel="+fallback_url+"&next="+fallback_url;
                         
                         document.getElementById('pubBtn').onclick=function(){location.href=pub_url;};

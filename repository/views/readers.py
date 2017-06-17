@@ -16,7 +16,7 @@ from django.conf.global_settings import LANGUAGES
 import random
 from django.contrib.sites.shortcuts import get_current_site
 from repository.models import *
-from repository.views.search import search_person
+from repository.views.search import search_book, search_person
 
 from common.search import get_query
 from common.utils import user_has_group
@@ -60,50 +60,50 @@ def _create_query_tabs(request_path='/', q_tab=None, extra_get_queries=[]):
     return query_tabs
         
 
-def _resolve_item_type(type, list=False):
+def _resolve_item_type(item_type, list=False):
     '''
-    Check the type i.e. item_type and retunr the model class and template.
+    Check the item_type and retunr the model class and template.
     '''
     item_cls = None
     template = None
     list_template = None    
     
-    if type == Snippet.item_type():
+    if item_type == Snippet.item_type():
         item_cls = Snippet
         template = "repository/items/snippet.html" 
         list_template = "repository/include/list/snippet.html" 
         
-    elif type == Poetry.item_type():
+    elif item_type == Poetry.item_type():
         item_cls = Poetry
         template = "repository/items/poetry.html"
         list_template = "repository/include/list/poetry.html"
         
-    elif type == Person.item_type():
+    elif item_type == Person.item_type():
         item_cls = Person
         template = "repository/items/person.html"
         list_template = "repository/include/list/person.html"
         
-    elif type == Place.item_type():
+    elif item_type == Place.item_type():
         item_cls = Place
         template = "repository/items/place.html"
         list_template = "repository/include/list/place.html" 
                
-    elif type == Product.item_type():
+    elif item_type == Product.item_type():
         item_cls = Product
         template = "repository/items/product.html"
         list_template = "repository/include/list/product.html"
                   
-    elif type == Event.item_type():
+    elif item_type == Event.item_type():
         item_cls = Event
         template = "repository/items/event.html"
         list_template = "repository/include/list/event.html" 
                  
-    elif type == Organization.item_type():
+    elif item_type == Organization.item_type():
         item_cls = Organization
         template = "repository/items/organization.html"
         list_template = "repository/include/list/organization.html"  
 
-    elif type == Book.item_type():
+    elif item_type == Book.item_type():
         item_cls = Book
         template = "repository/items/book.html"
         list_template = "repository/include/list/book.html"
@@ -114,7 +114,7 @@ def _resolve_item_type(type, list=False):
     return item_cls, template    
 
 
-def item(request, type, pk, slug, src=None):
+def item(request, item_type, pk, slug, src=None):
     '''
     @summary: Details of an item
     
@@ -122,9 +122,9 @@ def item(request, type, pk, slug, src=None):
         eg. src='public_url' means this view is being accessed using some public url.
     '''
     
-    item_cls, template = _resolve_item_type(type)
+    item_cls, template = _resolve_item_type(item_type)
     if item_cls is None:
-        print "Error: content type is not found"
+        print "Error: content item_type is not found"
         raise Http404 
     
     # Get the object from the `pk`, raises a Http404 if not found
@@ -135,9 +135,15 @@ def item(request, type, pk, slug, src=None):
         # public users should not have access to repository urls '/r/data/...'
         # redirect to respective public url
         if user_has_group(request.user, ['Administrator', 'Editor']) is False:
-            return HttpResponseRedirect(obj.get_absolute_url())
+            if item_type == 'poetry' or item_type == 'snippet' or item_type == 'book':
+                # There are different URLs for above three for public users
+                # Redirect to those urls.
+                # ADD THE NEW ITEM TYPE ABOVE if there are public url available for that ITEM TYPE.
+                return HttpResponseRedirect(obj.get_absolute_url())
+            else:
+                raise PermissionDenied
     
-    if type == 'poetry' or type == 'snippet':
+    if item_type == 'poetry' or item_type == 'snippet':
         if user_has_group(request.user, ['Administrator', 'Editor']) is False:
             # Do not show unpublished `poetry`, `snippet` 
             if obj.is_published() is False:
@@ -153,16 +159,16 @@ def item(request, type, pk, slug, src=None):
             return HttpResponseRedirect(obj.get_list_url())
     
     # Instantiate the Meta class
-    if type == 'poetry':
+    if item_type == 'poetry':
         meta_image_url = obj.creator.get_image_url()
-    elif type == 'person':
+    elif item_type == 'person':
         meta_image_url = obj.get_image_url()
     else:
         meta_image_url = "img/poetrylearner_logo_120x120.png"
         
     meta = Meta(title = obj.title(), 
                 description = obj.meta_description(), 
-                section= type, 
+                section= item_type, 
                 url = obj.get_absolute_url(),
                 author = obj.get_author(), 
                 date_time = obj.get_last_edit_time(),
@@ -172,7 +178,7 @@ def item(request, type, pk, slug, src=None):
             )
     
     # Make the context and render  
-    context = {'obj': obj, 'meta': meta, 'item_type': type, 
+    context = {'obj': obj, 'meta': meta, 'item_type': item_type, 
                'src': src}    
     return render(request, template, context)
 
@@ -220,17 +226,17 @@ def items(request):
         return render(request, template, context)
 
 
-def list(request, type, src=None):
+def list(request, item_type, src=None):
     '''
-    @summary: List the data item of `type`
+    @summary: List the data item of `item_type`
     
     @src: Source of access. It may be used to manipulate the context/templates.
         eg. src='public_url' means this view is being accessed using some public url.    
     '''    
     
-    item_cls, list_template = _resolve_item_type(type, list=True)
+    item_cls, list_template = _resolve_item_type(item_type, list=True)
     if item_cls is None:
-        print "Error: content type is not found"
+        print "Error: content item_type is not found"
         raise Http404 
         
     q_objects = Q()
@@ -301,7 +307,7 @@ def list(request, type, src=None):
             result_title += ', #' + tmp[language]
 
     # Only for ``poetry`` and ``snippet``
-    if type == 'poetry' or type == 'snippet':
+    if item_type == 'poetry' or item_type == 'snippet':
         # Check for permissions
         if user_has_group(request.user, ['Administrator', 'Editor']):
             # Create ``query_tabs`` for user of Administrator and Editor groups
@@ -318,7 +324,7 @@ def list(request, type, src=None):
         # FIXME: It will slow down if table is large. Use some other options.
         obj_list = item_cls.objects.apply_filter(**kwargs).order_by('?')
     else:
-        if (q_tab == 'pub') and (type == 'poetry' or type == 'snippet'):
+        if (q_tab == 'pub') and (item_type == 'poetry' or item_type == 'snippet'):
             obj_list = item_cls.objects.apply_filter(**kwargs).order_by('-date_published')
         else:
             obj_list = item_cls.objects.apply_filter(**kwargs).order_by('-date_modified')
@@ -337,7 +343,7 @@ def list(request, type, src=None):
         objs = paginator.page(paginator.num_pages)
             
     context = {'items': objs, 'list_template': list_template, 
-               'item_type': type, 'result_title': result_title,
+               'item_type': item_type, 'result_title': result_title,
                'query_tabs': query_tabs, 'order': order,
                'src': src}
     template = 'repository/items/list.html'
@@ -394,7 +400,6 @@ def explore_poetry(request, poet=None, slug=None, src=None):
     # Instantiate the Meta class
     if creator:
         meta_image_url = creator.get_image_url()
-        print meta_image_url
         meta_description = "%s has %s poetry on %s."%(
             creator.full_name(), paginator.count, get_current_site(request).name)
     else:
@@ -416,6 +421,97 @@ def explore_poetry(request, poet=None, slug=None, src=None):
                'meta': meta,
                'src': src}
     template = 'repository/items/explore_poetry.html'
+    return render(request, template, context)
+
+
+def explore_books(request, poet=None, slug=None, src=None):
+    '''
+    @summary: Explore and list the books
+    
+    @scope: public
+    '''
+    if poet:
+        creator = get_object_or_404(Person, pk=poet)
+    else:
+        creator = None
+    ##
+    # Check the parameters passed in the URL and process accordingly
+    # Language
+    language = request.GET.get('lan', None)
+    # search query
+    query_string = ''
+    if ('q' in request.GET) and request.GET['q'].strip():
+        # Search Poets for the query `q`
+        query_string = request.GET['q']
+        result_title = '"' + query_string + '" in Books'
+        obj_list = search_book(query_string)
+        
+        # Pagination
+        paginator = Paginator(obj_list, 20) # Show 40 entries per page    
+        page = request.GET.get('page')
+        try:
+            objs = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            objs = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            objs = paginator.page(paginator.num_pages)
+        
+        template = 'repository/items/search_books.html'
+
+    # If creator(poet) is given
+    elif creator:
+        result_title = 'Books by ' + creator.popular_name()
+        
+        kwargs = {}
+        kwargs['creator'] = creator
+        obj_list = Book.objects.apply_filter(**kwargs).order_by('-date_modified')
+        
+        # Pagination
+        paginator = Paginator(obj_list, 40) # Show 40 entries per page    
+        page = request.GET.get('page')
+        try:
+            objs = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            objs = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            objs = paginator.page(paginator.num_pages)
+            
+        template = 'repository/items/explore_books.html'
+        
+    else:
+        query_string = ''
+        result_title = 'Books'
+        objs = []
+        template = 'repository/items/explore_books.html'
+    
+    # Instantiate the Meta class
+    if creator:
+        meta_image_url = creator.get_image_url()
+        print meta_image_url
+        meta_description = "%s has %s books on %s."%(
+            creator.full_name(), paginator.count, get_current_site(request).name)
+    else:
+        meta_image_url = "img/poetrylearner_logo_120x120.png"
+        meta_description = "Read and explore the poetry books on %s."%(
+            get_current_site(request).name)
+    
+    meta = Meta(title = result_title, 
+                description = meta_description,
+                section= 'Books',
+                object_type = 'article',
+                keywords = None,
+                image = meta_image_url,
+            )
+    
+    context = {'items': objs, 'creator': creator, 'language': language,
+               'item_type': 'book', 'result_title': result_title,
+               'query_string': query_string,
+               'meta': meta,
+               'src': src}
     return render(request, template, context)
 
 
@@ -484,7 +580,7 @@ def explore_tags(request, slug, src=None):
     pass
 
 
-def tagged_items(request, slug, type, src=None):
+def tagged_items(request, slug, item_type, src=None):
     """
     @summary: Views the list of Items tagged using 'slug'
         TODO:: Order the list using some criteria
@@ -493,7 +589,7 @@ def tagged_items(request, slug, type, src=None):
         eg. src='public_url' means this view is being accessed using some public url.        
     """
     
-    if type == Snippet.item_type():
+    if item_type == Snippet.item_type():
         item_cls = Snippet
         list_template = "repository/include/list/snippet.html"        
     else:
@@ -529,7 +625,7 @@ def tagged_items(request, slug, type, src=None):
         objs = paginator.page(paginator.num_pages)
             
     context = {'items': objs, 'tag': slug, 'list_template': list_template, 
-               'item_type': type, 'result_title': result_title, 
+               'item_type': item_type, 'result_title': result_title, 
                'src': src}
     template = 'repository/items/tagged-list.html'    
 

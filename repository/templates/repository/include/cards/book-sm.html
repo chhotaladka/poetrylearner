@@ -1,27 +1,38 @@
 {% comment %}
-	Info:       Book small Card
-	Requires:   css and js of static/mdl/*
-	Note:       xxx
+	Info: Book small Card
 {% endcomment %}
 {% load staticfiles %}
 {% load humanize %}
-
-<div class="mdl-card book author-card--sm bS-1 wFull">
-	<div class="mdl-card__title column">	
-		<div class="c-9e svg48 pB-16">
-		{% include "common/svg/book.html" %}
-		</div>
-		<div class="title-text">
-			<a href="{{book.get_absolute_url}}" title="View Book">
-				{{ book.name }}
-			</a>
-		</div>
-		<div class="extras">
-			<span>By</span>
-			<a title="View creator" href="{{ book.creator.get_absolute_url }}">{{ book.creator.name }}</a>
-		</div>
-		<div class="extras fS-12">
-			{{ book.get_language }}
-		</div>
-	</div>
+<div class="content-wrapper" itemscope itemtype="http://schema.org/Book">
+    <a class="card" href="{{book.get_absolute_url}}" itemprop="url">
+        <div class="card-l bCw author-card--sm bS-1 h-shadow">
+            <div class="">
+                {% with book_img_url=book.get_image_url %}
+                {% if book_img_url %}
+                <div class="avatar-sq" style="background: url('{{ book_img_url }}') center / cover;">
+                </div>
+                {% else %}
+                <div class="coverpage avatar-sq">
+                    {% include "common/svg/book.html" %}
+                </div>
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="title-box p-8 pT12">
+                <div class="title-text fS14" itemprop="name">
+                    {{ book.name }}
+                </div>
+                <div class="extras">
+                    <span class="text" itemprop="creator">{{ book.creator.popular_name }}</span>
+                </div>
+            </div>
+            <div class="pos-RB">
+                <div class="info-panel">
+                    <div class="op4 fS16">
+                        <span class="" itemprop="inLanguage">{{ book.get_language }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
 </div>

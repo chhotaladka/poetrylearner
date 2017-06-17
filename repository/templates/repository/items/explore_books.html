@@ -1,0 +1,97 @@
+{% extends "repository/base.html" %}
+{% comment %}
+    Info: Explore book page
+{% endcomment %}
+{% load repository_tags %}
+{% load humanize %}
+{% block title %}{{ result_title }} | {{ sitename }}{% endblock title %}
+{% block meta %}
+{% include "meta.html" with meta=meta only %}
+{% endblock %}
+
+{% comment %}  
+{% block search %}
+{% include "common/include/search-bar.html" with q_url="" q_str=query_string placeholder="Search for a Book (Title, Poet, or ISBN)" %}
+{% endblock %}{% endcomment %}
+
+{% block main %}
+{% if creator %} {% comment %} Display the books of creator {% endcomment %}
+<section class="pT-16 pB-8">
+    <div class="_layout layout-L mdl-grid">
+    {% load humanize %}
+        <div class="mdl-cell mdl-cell--12-col">
+            <div class="card-xl row fill">
+                <div class="">
+                    <div class="search-title">
+                        <div class="title">{{result_title}}</div>
+                    </div>
+                    <div class="search-stats mL-8">
+                    {% if creator %}
+                        <span>{{ items.paginator.count|intcomma }} result{{ items.paginator.count|pluralize }}</span>
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="">
+                    {% include "repository/include/cards/person-sm3.html" with person=creator %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="pT-8 pB-8">
+    <div class="_layout layout-L mdl-grid">
+        <div class="__c mdl-cell mdl-cell--12-col pA-0">
+    {% if items %} {% comment %} Display the list {% endcomment %}
+        {% include "repository/include/list/book.html" with items=items %}
+        {% include "repository/include/misc/pagination-bottom.html" with items=items %}
+    {% else %} {% comment %} Display the notification {% endcomment %}
+        {% comment %}  {% include "common/include/empty-result.html" %}{% endcomment %}
+    {% endif %}
+        </div>
+    </div>
+</section>
+
+{% else %} {% comment %} Display explore books page {% endcomment %}
+
+<section class="mT-32 pB-8">
+    <div class="_layout layout-L mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+            <div class="card-xl section-title">
+                <h3 class="c-grey1">Discover Books</h3>
+            </div>
+        </div>
+        {% get_item_random book 8 as random_books %}
+        {% include "repository/include/list/book.html" with items=random_books %}
+    </div>
+</section>
+{% comment %}
+<section class="pT-8 pB-16">
+    <div class="_layout layout-L mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+            <div class="card-xl section-title">
+                <h3 class="c-grey1">Recent Updates</h3>
+            </div>
+        </div>
+        {% get_item_recent book 8 as recent_books %}
+        {% include "repository/include/list/book.html" with items=recent_books %}
+    </div>
+</section>
+{% endcomment %}
+<section class="pT-16 pB-16">
+    <div class="_layout layout-L mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+            <div class="wide-card wFull">
+                {% get_items_count book as books_count %}
+                <div class="tAc">
+                    <div class="bignum">{{ books_count|intcomma }}</div>
+                    <div class="bignum-text">books</div>
+                    <div class="">@</div>
+                    <div class="sitename-bottom">poetrylearner.com</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endif %}
+{% endblock %}

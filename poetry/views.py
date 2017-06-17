@@ -32,11 +32,11 @@ def welcome(request):
     return render(request, template, context)
 
 
-def poetry(request, pk, slug):
+def book(request, pk, slug):
     '''
-    Returns the poetry from the repository
+    Returns the book from the repository
     '''    
-    return readers.item(request, 'poetry', pk, slug, src='public_url')
+    return readers.item(request, 'book', pk, slug, src='public_url')
 
 
 def poet(request, pk, slug):
@@ -46,6 +46,20 @@ def poet(request, pk, slug):
     return readers.item(request, 'person', pk, slug, src='public_url')
 
 
+def poetry(request, pk, slug):
+    '''
+    Returns the poetry from the repository
+    '''    
+    return readers.item(request, 'poetry', pk, slug, src='public_url')
+
+
+def explore_books_of(request, pk, slug):
+    '''
+    @summary: Returns the books by the person `pk` from the repository
+    '''
+    return readers.explore_books(request, poet=pk, slug=slug, src='public_url')
+
+
 def explore_poetry_of(request, pk, slug):
     '''
     @summary: Returns the poetry by the person `pk` from the repository
@@ -53,11 +67,11 @@ def explore_poetry_of(request, pk, slug):
     return readers.explore_poetry(request, poet=pk, slug=slug, src='public_url')
 
 
-def explore_poetry(request):
+def explore_books(request):
     '''
-    Returns the list of poetries from the repository
+    Returns the list of books from the repository
     '''
-    return readers.explore_poetry(request, src='public_url')
+    return readers.explore_books(request, src='public_url')
 
 
 def explore_poets(request):
@@ -65,6 +79,13 @@ def explore_poets(request):
     Returns the list of persons from the repository
     '''    
     return readers.explore_poets(request, src='public_url')
+
+
+def explore_poetry(request):
+    '''
+    Returns the list of poetries from the repository
+    '''
+    return readers.explore_poetry(request, src='public_url')
 
 
 def explore_tags(request, slug):

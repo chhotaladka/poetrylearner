@@ -625,8 +625,8 @@ h3 {
 }
 
 .poetry-card.small {
-	min-height: 128px;
-	cursor: pointer; 
+    min-height: 100px;
+    cursor: pointer; 
     background-color: rgba(255, 255, 255, 1);
     transition: background-color 0.3s ease-in-out;
     -moz-transition: background-color 0.3s ease-in-out;
@@ -849,6 +849,20 @@ h3 {
 	height: 250px;
 	width: 128px;
 }
+.author-card--xs .title-text {
+    color: #313131;
+}
+.author-card--xs:hover .title-text {
+    color: #167AC6;
+}
+.author-card--xs:hover .avatar {
+    box-shadow: 0 5px 10px rgba(0,0,0,.15);
+    -webkit-transition: box-shadow .2s ease-in-out;
+    -moz-transition: box-shadow .2s ease-in-out;
+    -ms-transition: box-shadow .2s ease-in-out;
+    -o-transition: box-shadow .2s ease-in-out;
+    transition: box-shadow .2s ease-in-out;
+}
 .author-card--sm {
 	height: 250px;
 	width: 128px;
@@ -913,6 +927,10 @@ h3 {
 	overflow: hidden;
 	margin-top: 32px;
 }
+.coverpage.avatar-sq svg {
+    margin-top: 8px;
+    fill: #F4B400 !important;
+}
 .avatar-sq img {
 	position: absolute;
 	display: block;
@@ -969,7 +987,8 @@ h3 {
 	font-size: 90px;
 	color: rgba(0, 0, 0, 0.34);
 }
-.author-card--sm svg {
+.author-card--sm svg,
+.author-card--xs svg {
 	fill: rgba(0, 0, 0, 0.14);
 }
 .author-card--lg {
@@ -1027,6 +1046,10 @@ h3 {
 	color: white;
 	background-color: rgba(219, 68, 55, 1); }
 
+.author-card--sm .title-box,
+.author-card--xs .title-box {
+    text-align: center;
+}
 @media (max-width: 479px) { /*phone*/
     .person-wrapper {
         display: inline-block;
@@ -1053,6 +1076,10 @@ h3 {
         width: 100px;
         height: 100px;
         margin-top: 0px;
+    }
+    .author-card--sm .title-box,
+    .author-card--xs .title-box {
+        text-align: left;
     }
 }
 
@@ -2406,7 +2433,7 @@ ul.mdl-mini-footer__link-list {
     font-weight: 300;
 }
 .fS14 {
-	font-size: 14px;
+	font-size: 14px !important;
 	line-height: 1.375;
 }
 .text-16px {

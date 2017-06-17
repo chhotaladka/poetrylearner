@@ -1,59 +1,65 @@
 {% comment %}
-	Info:       Book full detail Card
-	Requires:   css and js of static/mdl/*
-	Note:       xxx
+    Info: Book full detail Card
 {% endcomment %}
 {% load staticfiles %}
 {% load humanize %}
 
-<div class="mdl-card poetry-card bS-1 wFull">
-	<div class="mdl-card__title column bg-book">												
-		<h2 class="mdl-card__title-text mdl-color-text--grey-900">{{ book.name }}</h2>
-		<div class="mdl-card__subtitle-text title__extras">
-			<span>By
-				<a title="View the profile of {{book.creator.name}}" href="{{ book.creator.get_absolute_url }}">
-					<button class="mdl-button">{{ book.creator.name }}</button>
-				</a>
-			</span>
-		</div>		
-	</div>					
-	<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-		<div>
-			<span>Wrriten in <strong>{{ book.get_language }}</strong></span>
-		</div>
-		{% with contributors=book.contributor.all %}
-		{% if contributors %}
-		<div class="">
-			<span>Contributers {% for person in contributors %}
-	 		<a title="View {{person.name}}" href="{{ person.get_absolute_url }}"><b>{{ person.name }}</b></a>
-			{% if not forloop.last %}<span>, </span>{% endif %}{% endfor %}
-			</span>
-		</div>
-		{% endif %}
-		{% endwith %}				
-		{% if book.publisher %}
-		<div>		
-			<span>Published by <strong>{{ book.publisher }}</strong></span>			   			    			
-		</div>
-		{% endif %}
-		
-		{% if book.publisher or book.date_published %}
-		<div class="book-id">		
-			<span>ISBN</span>
-			<a title="View this book on openlibrary.org" target="_blank" href="http://openlibrary.org/isbn/{{ book.isbn|default_if_none:'' }}">
-				<strong>{{ book.isbn|default_if_none:"none" }}</strong>
-			</a>
-		</div>
-		{% endif %}
-	</div>	
-	{% comment %}  Include meta panel {% endcomment %}
-	{% include "repository/include/misc/meta-panel.html" with item=book %}
-	
-	<div class="mdl-card__menu">
-		<a href="{% url 'repository:add-item' type=book.item_type pk=book.id %}/?cancel={{request.path}}" title="Edit to improve.">
-		<button class="action-button action-button--icon oN c-F" id="btn1">
-		{% include "common/svg/edit.html" %}
-		</button>
-		</a>
-	</div>
+<div class="mdl-card card-l author-card--lg bS-1 wFull" itemscope itemtype="http://schema.org/Person">
+    <div class="p-16 tAl bg-book">
+        <div class="title-text mT-32" itemprop="name">
+            {{ book.name }}
+        </div>
+        <div class="mB-32 extras itemprop="creator" itemscope itemtype="http://schema.org/Person"">
+            <span>by </span>
+            <a title="View the creator" href="{{ book.creator.get_absolute_url }}" itemprop="url">
+                <span class="fS16" itemprop="name">{{ book.creator.popular_name }}</span>
+            </a>
+        </div>
+    </div>
+    <div class="p-16 fS14 c-31">
+        <div class="mT-8">
+            <span class="b">Language: </span>
+            <span>{{ book.get_language }}</span>
+        </div>
+        {% with contributors=book.contributor.all %}
+        {% if contributors %}
+        <div class="mT-8">
+            <span class="b">Contributers: </span>
+            {% for person in contributors %}
+            <a title="View {{person.popular_name}}" href="{{ person.get_absolute_url }}">{{ person.popular_name }}</a>
+            {% if not forloop.last %}<span>, </span>{% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% if book.publisher %}
+        <div class="mT-8">
+            <span class="b">Publisher: </span>
+            <span>{{ book.publisher }}<</span>
+        </div>
+        {% endif %}
+        
+        {% if book.isbn %}
+        <div class="mT-8">
+            <span class="b">ISBN: </span>
+            <span itemprop="isbn">{{ book.isbn }}</span>
+        </div>
+        <div class="mT-8">
+            <span>View this book on</span>
+            <a class="h-link" title="Open Library" target="_blank" href="http://openlibrary.org/isbn/{{ book.isbn|default_if_none:'' }}">
+                openlibrary.org
+            </a>
+        </div>
+        {% endif %}
+    </div>  
+    {% comment %}  Include meta panel {% endcomment %}
+    {% include "repository/include/misc/meta-panel.html" with item=book %}
+    
+    <div class="mdl-card__menu">
+        <a href="{% url 'repository:add-item' item_type=book.item_type pk=book.id %}/?cancel={{request.path}}" title="Edit to improve.">
+        <button class="action-button action-button--icon oN c-F" id="btn1">
+        {% include "common/svg/edit.html" %}
+        </button>
+        </a>
+    </div>
 </div> <!-- /mdl-card -->

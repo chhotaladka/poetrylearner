@@ -11,7 +11,7 @@
 		{% include "repository/include/fields/name.html" %}
 		{% include "repository/include/fields/isbn.html" %}
 		{% include "repository/include/fields/creator.html" %}
-		{% include "repository/include/fields/publisher.html" %}
+		{% include "repository/include/fields/language.html" %}
 		<div id="id-extra-btn" class="mB-16">
 			<div class="action-button wFull tAl" title="Add more fields">
 				{% include "common/svg/more_horiz.html" %}
@@ -20,9 +20,9 @@
 		</div>
 		<div id="id-extra-fields" class="hidden">
 		{#{% include "repository/include/fields/contributor.html" %}#}
-		{% include "repository/include/fields/language.html" %}
-		{% include "repository/include/fields/keywords.html" %}
 		{% include "repository/include/fields/same_as.html" %}
+		{% include "repository/include/fields/publisher.html" %}
+		{% include "repository/include/fields/keywords.html" %}
 		{% include "repository/include/fields/license.html" %}
 		{% include "repository/include/fields/description.html" %}
 		</div>

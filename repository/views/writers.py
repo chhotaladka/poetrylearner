@@ -166,60 +166,60 @@ class AddItem(CreateThingView):
             # In case `login_required` decorator is removed accidently
             raise PermissionDenied
         
-        type = kwargs.get('type', None)
-        self.item_type = type
+        item_type = kwargs.get('item_type', None)
+        self.item_type = item_type
         
-        # Check the type i.e. item_type and derive the data model etc.
-        if type == Snippet.item_type():
+        # Check the item_type and derive the data model etc.
+        if item_type == Snippet.item_type():
             self.model = Snippet
             self.form_class = SnippetForm
             self.template_name = 'repository/items/add-snippet.html'
             self.ajax_template_name = 'repository/include/forms/snippet.html' 
         
-        elif type == Poetry.item_type():
+        elif item_type == Poetry.item_type():
             self.model = Poetry
             self.form_class = PoetryForm
             self.template_name = 'repository/items/add-poetry.html'
             self.ajax_template_name = 'repository/include/forms/poetry.html'
         
-        elif type == Person.item_type():
+        elif item_type == Person.item_type():
             self.model = Person
             self.form_class = PersonForm
             self.template_name = 'repository/items/add-person.html'
             self.ajax_template_name = 'repository/include/forms/person.html'
         
-        elif type == Place.item_type():
+        elif item_type == Place.item_type():
             self.model = Place
             self.form_class = PlaceForm
             self.template_name = 'repository/items/add-place.html'
             self.ajax_template_name = 'repository/include/forms/place.html'
         
-        elif type == Product.item_type():
+        elif item_type == Product.item_type():
             self.model = Product
             self.form_class = ProductForm
             self.template_name = 'repository/items/add-product.html'
             self.ajax_template_name = 'repository/include/forms/product.html'
         
-        elif type == Event.item_type():
+        elif item_type == Event.item_type():
             self.model = Event
             self.form_class = EventForm
             self.template_name = 'repository/items/add-event.html'
             self.ajax_template_name = 'repository/include/forms/event.html'
         
-        elif type == Organization.item_type():
+        elif item_type == Organization.item_type():
             self.model = Organization
             self.form_class = OrganizationForm
             self.template_name = 'repository/items/add-organization.html'
             self.ajax_template_name = 'repository/include/forms/organization.html' 
         
-        elif type == Book.item_type():
+        elif item_type == Book.item_type():
             self.model = Book
             self.form_class = BookForm
             self.template_name = 'repository/items/add-book.html'
             self.ajax_template_name = 'repository/include/forms/book.html'
         
         else:
-            print "Error: content type is not found"
+            print "Error: content item_type is not found"
             raise Http404
         
         return super(self.__class__, self).dispatch(request, *args, **kwargs) 
@@ -240,24 +240,24 @@ def add(request):
 
 @login_required 
 @group_required('administrator', 'editor')
-def publish(request, type, pk, slug):
+def publish(request, item_type, pk, slug):
     """
-    Publish or unpublish a creative work type item
+    Publish or unpublish a creative work item_type item
     """
     ACTION_PUBLISH = 'Publish'
     ACTION_UNPUBLISH = 'Unpublish'
     
-    # Check the type i.e. item_type and derive the data model etc.
-    if type == Snippet.item_type():
+    # Check the item_type and derive the data model etc.
+    if item_type == Snippet.item_type():
         item_cls = Snippet
         template = "repository/items/publish.html"
     
-    elif type == Poetry.item_type():
+    elif item_type == Poetry.item_type():
         item_cls = Poetry
         template = "repository/items/publish.html"
     
     else:
-        print "Error: content type is not found"
+        print "Error: content item_type is not found"
         raise Http404
     
     # Check the parameters passed in the URL and process accordingly

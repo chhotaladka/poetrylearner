@@ -1,6 +1,6 @@
 {% extends "repository/base.html" %}
 {% comment %}
-	Info: Search results page for poets
+	Info: Search results page for books
 {% endcomment %}
 {% block title %}{{ result_title }} | {{ sitename }}{% endblock title %}
 {% block meta %}
@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block search %}
-{% include "common/include/search-bar.html" with q_url="" q_str=query_string placeholder="Search for a Poet" %}
+{% include "common/include/search-bar.html" with q_url="" q_str=query_string placeholder="Search for a Book (Title, Poet, or ISBN)" %}
 {% endblock %}
 
 {% block main %}
@@ -22,8 +22,8 @@
 							<span class="chip__text">"</span>
 							<span class="chip__text">{{ query_string }}</span>
 							<span class="chip__text">"</span>
-							<span class="chip__text">&nbsp;in Poets</span>
-							<button onclick="location.href='{% url 'explore-poets' %}'" class="chip__action">
+							<span class="chip__text">&nbsp;in Books</span>
+							<button onclick="location.href='{% url 'explore-books' %}'" class="chip__action">
 								{% include "common/svg/close-bold.html" %}
 							</button>
 						</span>
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 		{% if items %} {% comment %} Display the list {% endcomment %}
-			{% include "repository/include/list/person.html" with items=items %}
+			{% include "repository/include/list/book.html" with items=items %}
 			{% include "repository/include/misc/pagination-bottom.html" with items=items %}
 		{% else %} {% comment %} Display the notification {% endcomment %}
 			{% comment %}TODO: display some graphics here.{% include "common/include/empty-result.html" %}{% endcomment %}

@@ -1,72 +1,81 @@
 {% comment %}
-	Info:       Person full detail Card
-	Requires:   css and js of static/mdl/*
+    Info:       Person full detail Card
+    Requires:   css and js of static/mdl/*
 {% endcomment %}
 {% load staticfiles %}
 {% load humanize %}
 {% load common_tags %}
-{% load poetry_tags %}
+{% load creativework_tags %}
 
 <div class="mdl-card card-l author-card--lg bS-1 wFull" itemscope itemtype="http://schema.org/Person">
-	<div class="card__title tAc bg-person">
-		{% with person_img_url=person.get_image_url %}
-		{% if person_img_url %}
-		<div class="avatar lg border" style="background: url('{{ person_img_url }}') center / cover;">
-		</div>
-		{% else %}
-		<div class="avatar lg">
-			{% include "common/svg/person.html" %}
-		</div>
-		{% endif %}
-		{% endwith %}
-		<div class="title-text tAc" itemprop="name">
-			{{ person.name }}
-		</div>
-		<div class="extras">
-			<span class="fS16" itemprop="additionalName">{{person.additional_name}}</span>
-		</div>
-		{% if person.year_birth or person.year_death %}
-		<div class="extras fS-12">
-			<span>(</span>
-		{% if person.year_birth %}
-			<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span>
-		{% endif %}
-		{% if person.year_death %}
-			<span>- </span>
-			<span title="Death" itemprop="deathDate">{{ person.year_death }}</span>
-		{% endif %}
-			<span>)</span>
-		</div>
-		{% endif %}
-		<div class="pos-RB extras">
-		{% get_poetry_count by person published as poetry_count %}
-			<div class="op4 fS-28">
-				<span class="b">{{ poetry_count|intcomma }}</span>
-				<span class="fS-12"> poetry</span>
-			</div>
-		</div>
-	</div>
-	<div class="content p-16">
-		<p class="c-grey1 fS16"><span itemprop="description">{{ person.description }}</span>
-		{% if person.similar_item_url %}
-			<span class="info-txt"><a href="{{ person.similar_item_url }}" itemprop="sameAs">More</a></span>
-		{% endif %}
-		</p>
-	</div>
-	{% comment %}  Include meta panel {% endcomment %}
-	{% include "repository/include/misc/meta-panel.html" with item=person %}
-	{% if request.user|has_group:'administrator,editor' %}
-	<div class="mdl-card__menu">
-		<a href="{% url 'repository:add-item' type=person.item_type pk=person.id %}/?cancel={{request.path}}" title="Edit to improve.">
-			<button class="action-button action-button--icon oN c-F" id="btn1">
-			{% include "common/svg/edit.html" %}
-			</button>
-		</a>
-	</div>
-	{% endif %}
+    <div class="card__title tAc bg-person">
+        {% with person_img_url=person.get_image_url %}
+        {% if person_img_url %}
+        <div class="avatar lg border" style="background: url('{{ person_img_url }}') center / cover;">
+        </div>
+        {% else %}
+        <div class="avatar lg">
+            {% include "common/svg/person.html" %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <div class="title-text tAc" itemprop="name">
+            {{ person.name }}
+        </div>
+        <div class="extras">
+            <span class="fS16" itemprop="additionalName">{{person.additional_name}}</span>
+        </div>
+        {% if person.year_birth or person.year_death %}
+        <div class="extras fS-12">
+            <span>(</span>
+        {% if person.year_birth %}
+            <span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span>
+        {% endif %}
+        {% if person.year_death %}
+            <span>- </span>
+            <span title="Death" itemprop="deathDate">{{ person.year_death }}</span>
+        {% endif %}
+            <span>)</span>
+        </div>
+        {% endif %}
+    </div>
+    <div class="panel row fill">
+        <div class="fS-12">
+            {% get_poetry_count by person published as poetry_count %}
+            <a class="action-button" href="{% url 'explore-poetry-of' pk=person.id slug=person.get_slug %}">
+                <div class="b fS14">{{ poetry_count|intcomma }}</div>
+                <div>poetry</div>
+            </a> 
+        </div>
+        <div class="fS-12">
+            {% get_book_count by person as book_count %}
+            <a class="action-button" href="{% url 'explore-books-of' pk=person.id slug=person.get_slug %}">
+                <div class="b fS14">{{ book_count|intcomma }}</div>
+                <div>books</div>
+            </a>
+        </div>
+    </div>
+    <div class="content p-16 bT-1">
+        <p class="c-grey1 fS16"><span itemprop="description">{{ person.description }}</span>
+        {% if person.similar_item_url %}
+            <span class="info-txt"><a href="{{ person.similar_item_url }}" itemprop="sameAs">More</a></span>
+        {% endif %}
+        </p>
+    </div>
+    {% comment %}  Include meta panel {% endcomment %}
+    {% include "repository/include/misc/meta-panel.html" with item=person %}
+    {% if request.user|has_group:'administrator,editor' %}
+    <div class="mdl-card__menu">
+        <a href="{% url 'repository:add-item' item_type=person.item_type pk=person.id %}/?cancel={{request.path}}" title="Edit to improve.">
+            <button class="action-button action-button--icon oN c-F" id="btn1">
+            {% include "common/svg/edit.html" %}
+            </button>
+        </a>
+    </div>
+    {% endif %}
 </div>
 <div class="card-l">
-	<div class="feedback link tAr">
-		<a id="feedbackBtn" data-url="{% url 'feedback:add_for_content' ctype_id=person.get_content_type.id obj_id=person.id %}" href="#">Feedback</a>
-	</div>
+    <div class="feedback link tAr">
+        <a id="feedbackBtn" data-url="{% url 'feedback:add_for_content' ctype_id=person.get_content_type.id obj_id=person.id %}" href="#">Feedback</a>
+    </div>
 </div>

@@ -29,7 +29,7 @@
 			</a>
 			{% endfor %}
 			{% if request.user|has_group:"administrator,editor" %}
-			<a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">
+			<a class="hashtag pretty-link" href="{% url 'repository:list' item_type='poetry' %}?lan={{ poetry.language }}">
 				<s>#</s>
 				<b>{{ poetry.get_language }}</b>
 			</a>

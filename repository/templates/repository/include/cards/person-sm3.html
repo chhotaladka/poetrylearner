@@ -1,0 +1,45 @@
+{% comment %}
+    Info: Person small Card type 3
+{% endcomment %}
+{% load staticfiles %}
+<div class="content-wrapper" itemscope itemtype="http://schema.org/Person">
+    <div class="author-card--xs bC-none">
+        <a class="card" href="{{person.get_absolute_url}}" itemprop="url">
+            <div class="row">
+                <div class="m8">
+                    {% with person_img_url=person.get_image_url %}
+                    {% if person_img_url %}
+                    <div class="avatar sm border circle" style="background: url('{{ person_img_url }}') center / cover;">
+                    </div>
+                    {% else %}
+                    <div class="avatar sm border circle">
+                        {% include "common/svg/person.html" %}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="p-8 pT12">
+                    <div class="title-text fS14" itemprop="name">
+                        {{ person.name }}
+                    </div>
+                    <div class="extras">
+                        <span class="text" itemprop="additionalName">{{person.additional_name}}</span>
+                    </div>
+                    {% if person.year_birth or person.year_death %}
+                    <div class="extras fS-12">
+                        <span>(</span>
+                    {% if person.year_birth %}
+                        <span itemprop="birthDate">{{ person.year_birth }}</span> 
+                    {% endif %}
+                    {% if person.year_death %}
+                        <span>- </span>
+                        <span itemprop="deathDate">{{ person.year_death }}</span>
+                    {% endif %}
+                        <span>)</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

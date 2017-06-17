@@ -14,6 +14,21 @@ from common.search import get_query, normalize_query, get_query_for_nterms, stri
 
 # Create your views here.
 
+
+def search_book(query_string):
+    '''
+    Process the query_string and return the `Book` object list
+    '''
+    
+    terms = normalize_query(query_string)
+    
+    if len(terms) == 0:
+        # There are no terms
+        return []
+    
+    return []
+
+
 def search_person(query_string):
     '''
     Process the query_string and return the `Person` object list

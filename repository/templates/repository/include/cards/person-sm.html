@@ -3,7 +3,7 @@
 {% endcomment %}
 {% load staticfiles %}
 {% load common_tags %}
-{% load poetry_tags %}
+{% load creativework_tags %}
 {% load humanize %}
 {% get_poetry_count by person published as poetry_count_pub %}
 <div class="content-wrapper" itemscope itemtype="http://schema.org/Person">
@@ -21,28 +21,26 @@
 				{% endif %}
 				{% endwith %}
 			</div>
-			<div>
-				<div class="p-8 pT12 tAc">
-					<div class="title-text fS14 tAc" itemprop="name">
-						{{ person.name }}
-					</div>
-					<div class="extras">
-						<span class="text" itemprop="additionalName">{{person.additional_name}}</span>
-					</div>
-					{% if person.year_birth or person.year_death %}
-					<div class="extras fS-12">
-						<span>(</span>
-					{% if person.year_birth %}
-						<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span> 
-					{% endif %}
-					{% if person.year_death %}
-						<span>- </span>
-						<span title="Death" itemprop="deathDate">{{ person.year_death }}</span>
-					{% endif %}
-						<span>)</span>
-					</div>
-					{% endif %}
+			<div class="title-box p-8 pT12">
+				<div class="title-text fS14" itemprop="name">
+					{{ person.name }}
 				</div>
+				<div class="extras">
+					<span class="text" itemprop="additionalName">{{person.additional_name}}</span>
+				</div>
+				{% if person.year_birth or person.year_death %}
+				<div class="extras fS-12">
+					<span>(</span>
+				{% if person.year_birth %}
+					<span title="Birth" itemprop="birthDate">{{ person.year_birth }}</span> 
+				{% endif %}
+				{% if person.year_death %}
+					<span>- </span>
+					<span title="Death" itemprop="deathDate">{{ person.year_death }}</span>
+				{% endif %}
+					<span>)</span>
+				</div>
+				{% endif %}
 			</div>
 			<div class="pos-RB">
 				<div class="info-panel">

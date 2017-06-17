@@ -20,7 +20,7 @@
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='person' %}?cancel={{request.path}}" class="member">
+					<a href="{% url 'repository:add-item' item_type='person' %}?cancel={{request.path}}" class="member">
 						<div class="action-button c-61 svg48">
 						{% include "common/svg/person.html" %}
 						</div>
@@ -33,7 +33,7 @@
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='poetry' %}?cancel={{request.path}}" class="member">
+					<a href="{% url 'repository:add-item' item_type='poetry' %}?cancel={{request.path}}" class="member">
 						<div class="action-button c-61 svg48">
 						{% include "common/svg/local_library.html" %}
 						</div>
@@ -46,7 +46,7 @@
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='book' %}?cancel={{request.path}}" class="member">
+					<a href="{% url 'repository:add-item' item_type='book' %}?cancel={{request.path}}" class="member">
 						<div class="action-button c-61 svg48">
 						{% include "common/svg/book.html" %}
 						</div>
@@ -59,7 +59,7 @@
 {% if request.user|has_group:'administrator' %}{% comment %} Not in use {% endcomment %}
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='snippet' %}?cancel={{request.path}}" class="member">
+					<a href="{% url 'repository:add-item' item_type='snippet' %}?cancel={{request.path}}" class="member">
 						<div class="action-button c-61 svg48">
 						{% include "common/svg/style.html" %}
 						</div>
@@ -72,7 +72,7 @@
 			
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='organization' %}?cancel={{request.path}}" class="member">
+					<a href="{% url 'repository:add-item' item_type='organization' %}?cancel={{request.path}}" class="member">
 						<div class="action-button c-61 svg48">
 						{% include "common/svg/account_balance.html" %}
 						</div>
@@ -85,7 +85,7 @@
 			
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='event' %}?cancel={{request.path}}" class="member">
+					<a href="{% url 'repository:add-item' item_type='event' %}?cancel={{request.path}}" class="member">
 						<div class="action-button c-61 svg48">
 						{% include "common/svg/event.html" %}
 						</div>
@@ -98,7 +98,7 @@
 			
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='product' %}?cancel={{request.path}}" class="member">
+					<a href="{% url 'repository:add-item' item_type='product' %}?cancel={{request.path}}" class="member">
 						<div class="action-button c-61 svg48">
 						{% include "common/svg/shopping_cart.html" %}
 						</div>
@@ -111,7 +111,7 @@
 
 			<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
 				<div class="links-card">
-					<a href="{% url 'repository:add-item' type='place' %}?cancel={{request.path}}" class="member">
+					<a href="{% url 'repository:add-item' item_type='place' %}?cancel={{request.path}}" class="member">
 						<div class="action-button c-61 svg48">
 						{% include "common/svg/place.html" %}
 						</div>

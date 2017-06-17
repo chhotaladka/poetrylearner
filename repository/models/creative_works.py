@@ -88,7 +88,16 @@ class Book(CreativeWork):
                                          help_text=_('Secondary contributors to the creative work.')
                                          )    
     
-    objects = ArticleManager()    
+    objects = ArticleManager()
+    
+    def get_absolute_url(self):
+        # Overriding the base method
+        kwargs = {'pk': self.id, 'slug': self.get_slug(),}
+        return reverse('book', kwargs=kwargs)
+    
+    def get_list_url(self):
+        # Overriding the base method
+        return reverse('explore-books')
     
     def get_language(self):
         '''

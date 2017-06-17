@@ -23,7 +23,7 @@
 			</a>
 		</div>
 		<div class="mB4 fS14">
-			{% comment %}FIXME temporary disabled <a class="hashtag pretty-link" href="{% url 'repository:list' type='poetry' %}?lan={{ poetry.language }}">{% endcomment %}
+			{% comment %}FIXME temporary disabled <a class="hashtag pretty-link" href="{% url 'repository:list' item_type='poetry' %}?lan={{ poetry.language }}">{% endcomment %}
 			<a class="hashtag pretty-link" href="#">
 				<s>#</s>
 				<b>{{ poetry.get_language }}</b>
@@ -53,7 +53,7 @@
 		</button>
 		{% if request.user|has_group:'administrator,editor' %}
 		<button id="pubBtn" class="action-button oN" title="Publish or unpublish"
-			onclick="location.href=&#39;{% url 'repository:publish' type=poetry.item_type pk=poetry.id slug=poetry.get_slug %}&#39;">
+			onclick="location.href=&#39;{% url 'repository:publish' item_type=poetry.item_type pk=poetry.id slug=poetry.get_slug %}&#39;">
 			{% if poetry.is_published %}
 			{% include "common/svg/unpublish.html" %}
 			<span class="action-button__text">Unpublish</span>
@@ -84,7 +84,7 @@
 		{% include "common/svg/more_vert.html" %}
 		</button>
 		<ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">
-			<a class="mdl-menu__item" href="{% url 'repository:publish' type=poetry.item_type pk=poetry.id slug=poetry.get_slug %}">
+			<a class="mdl-menu__item" href="{% url 'repository:publish' item_type=poetry.item_type pk=poetry.id slug=poetry.get_slug %}">
 			{% if poetry.is_published %}Unpublish{% else %}Publish{% endif %}
 			</a>
 			<a class="mdl-menu__item" href="{{ poetry.get_edit_url }}/?cancel={{ request.path }}" title="Edit to improve the article" >Edit</a>

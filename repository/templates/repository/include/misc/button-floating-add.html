@@ -4,7 +4,7 @@
 {% if request.user.is_authenticated %}
 <div class="floating-btn btm">
 	<div class="jB">
-		<button class="y bg-{{item_type}} button-fab oN" onclick="location.href='{% url 'repository:add-item' type=item_type %}?cancel={{request.path}}'">
+		<button class="y bg-{{item_type}} button-fab oN" onclick="location.href='{% url 'repository:add-item' item_type=item_type %}?cancel={{request.path}}'">
 			{% include "common/svg/plus.html" %}
 		    <span class="visuallyhidden">Add</span>
 	    </button>

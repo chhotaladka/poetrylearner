@@ -58,7 +58,6 @@ class ArticleManager(CreativeWorkManager):
         if 'language' in kwargs:
             q_objects &= Q(language=kwargs['language']) 
         if 'contributors' in kwargs:
-            print contributors
             q_objects &= Q(contributors__in=kwargs['contributors'])            
         
         return super(ArticleManager, self).apply_filter(*args, **kwargs).filter(q_objects)    

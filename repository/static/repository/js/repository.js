@@ -114,8 +114,9 @@
 	Repository.prototype.clickPoetryCards = function(e) {
 		e.stopPropagation();
 		if( $(e.target).is('a') || $(e.target.parentNode).is('a')
-			|| $(e.target).is('button') ){
-			// clicked on `a` or `button` tag.
+			|| $(e.target).is('button')
+			|| $(e.target).hasClass('clickcard') || $(e.target).parents('.clickcard').length ){
+			// clicked on `a` or `button` tag or 'clickcard'
 			return;
 		}
 		window.document.location = $(this).data("href");

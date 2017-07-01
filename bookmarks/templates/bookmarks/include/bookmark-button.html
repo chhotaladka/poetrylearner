@@ -19,7 +19,10 @@
 	{% endif %}
 {% else %}
 	<button class="action-button bookmark-btn oN clickcard-js-button"
-		title="Send to my Bookmarks to read again later">
+		title="Send to my Bookmarks to read again later"
+		data-header="Want to read this again later?"
+		data-message="Log in to add this poetry to Bookmarks."
+		data-url="{% url 'account_login' %}?next={{ item.get_absolute_url }}">
 		{% include "common/svg/bookmark.html" %}
 		<span class="action-button__text">Read later</span>
 	</button>	

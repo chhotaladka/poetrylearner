@@ -14,6 +14,9 @@
 	
 	//var dismiss = '[data-dismiss="alert"]'
 	var selector = '.bookmark-btn'
+	var clickcard_is_active = false
+	var clickcard = undefined // Active clickcard div
+	var clickcard_origin = undefined //Origin from where the event was triggered
 	
 	var Bookmark = function (element, options) {
 		this.itemtype       = null
@@ -107,6 +110,15 @@
 		});
 	};
 	
+	/* Dismiss the clickcard */
+	Bookmark.prototype.clickcardDismiss = function() {
+		clickcard.addClass('hidden');
+		clickcard.remove();
+		
+		clickcard_is_active = false;
+		clickcard = undefined;
+		clickcard_origin = undefined;
+	}
 	
 	// BOOKMARK PLUGIN DEFINITION
 	// ==========================
@@ -142,18 +154,50 @@
 	var clickHandler = function (e) {
 		//console.log("bookmark: clickHandler: In");
 		e.preventDefault();
+		e.stopPropagation();
 		Plugin.call($(this), 'update');
 	};
-	var clickcardHandler = function (e) {
-		//console.log("bookmark: clickcardHandler: In");
+	var clickcardShowHandler = function (e) {
+		//console.log("bookmark: clickcardShowHandler: In");
 		e.preventDefault();
-
+		e.stopPropagation();
+		
+		if (clickcard_origin != undefined) {
+			if ($(this)[0] == clickcard_origin[0]) {
+				//clickcard for the same origin is already in display
+				return;
+			} else {
+				//clickcard origin has been changed. Dismiss previous clickcard
+				Plugin.call($(this), 'clickcardDismiss');
+			}
+		}
+		
+		clickcard_is_active = true;
+		clickcard_origin = $(this);
+		clickcard = $('#id-clickcard').clone().prop('id', '').insertAfter($(this).parent());
+		
+		var header = $(this).data('header');
+		var message = $(this).data('message');
+		var url = $(this).data('url');
+		
+		clickcard.find('.clickcard-header').text(header);
+		clickcard.find('.clickcard-message').text(message);
+		clickcard.find('.clickcard-action').attr('href', url);
+		clickcard.removeClass('hidden');
+		
+	};
+	var clickcardDismissHandler = function (e) {
+		//console.log("bookmark: clickcardDismissHandler: In");
+		e.preventDefault();
+		e.stopPropagation();
+		Plugin.call($(this), 'clickcardDismiss');
+		
 	};
 	
 	//$(document).on('click.bs.bookmark.data-api', ".bookmark-js-button", Bookmark.prototype.update);
 	$(document).on('click.bs.bookmark.data-api', ".bookmark-js-button", clickHandler);
-	$(document).on('click.bs.bookmark.data-api', ".clickcard-js-button", clickcardHandler);
-	
+	$(document).on('click.bs.bookmark.data-api', ".clickcard-js-button", clickcardShowHandler);
+	$(document).on('click.bs.bookmark.data-api', ".clickcard-close-js-button", clickcardDismissHandler);
 	
 }(jQuery);
 

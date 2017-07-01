@@ -41,20 +41,18 @@
 			{% endif %}
 		</div>
 	</div>
-	<div class="bottom-panel">
-		<div class="action-panel pB-8 row r2l">
-			{% comment %}  Include BOOKMARK button {% endcomment %}
-			{% if not bookmark %}
-				{% comment %} Sometimes 'bookmark' has been added to the context e.g. bookmark list view {% endcomment %}
-				{% load bookmark_tags %}
-				{% bookmark_by_user request.user on poetry as bookmark %}
-			{% endif %}
-			{% include "bookmarks/include/bookmark-button.html" with bookmark=bookmark item=poetry %}
-			
-			<a class="action-button oN" href="{{ poetry.get_absolute_url }}" title="Read full poetry" itemprop="url">
-				{% include "common/svg/book-open.html" %}
-				<span class="action-button__text">View</span>
-			</a>
-		</div>
+	<div class="action-panel p-16 pT-8 row r2l">
+		{% comment %}  Include BOOKMARK button {% endcomment %}
+		{% if not bookmark %}
+			{% comment %} Sometimes 'bookmark' has been added to the context e.g. bookmark list view {% endcomment %}
+			{% load bookmark_tags %}
+			{% bookmark_by_user request.user on poetry as bookmark %}
+		{% endif %}
+		{% include "bookmarks/include/bookmark-button.html" with bookmark=bookmark item=poetry %}
+		
+		<a class="action-button oN" href="{{ poetry.get_absolute_url }}" title="Read full poetry" itemprop="url">
+			{% include "common/svg/book-open.html" %}
+			<span class="action-button__text">View</span>
+		</a>
 	</div>
 </div>

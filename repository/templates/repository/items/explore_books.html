@@ -10,7 +10,9 @@
 {% endblock %}
 
 {% block search %}
-{% include "common/include/search-bar.html" with q_url="" q_str=query_string placeholder="Search for a Book" %}
+{% if not creator %}
+{% include "common/include/search-bar.html" with q_url="" q_str=query_string placeholder="Search for a Book (Title, Poet, or ISBN)" %}
+{% endif %}
 {% endblock %}
 
 {% block main %}

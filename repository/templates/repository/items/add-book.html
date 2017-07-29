@@ -14,6 +14,11 @@
 
 {% block search %}{% comment %} Don't show search box here {% endcomment %}{% endblock %}
 
+{% block extra-style %}
+{% comment %} Transliteration CSS {% endcomment %}
+    <link rel="stylesheet" href="{% static "js/ime/css/jquery.ime.css" %}"/>
+{% endblock %}
+
 {% block main %}
 <section class="pT-8 pB-48">
 	<div class="_layout layout-L mdl-grid">
@@ -34,3 +39,21 @@
 </section>
 {% endblock %}
 {% block footer %}{% endblock %}
+
+{% block scripts %}
+{% comment %} Requirements by repository/include/forms/poetry.html {% endcomment %}
+ {% include "repository/include/fields/creator-select2-js.html" %}
+{% comment %} Transliteration JS {% endcomment %}
+    <script type="text/javascript" src="{% static "js/ime/libs/rangy/rangy-core.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/ime/src/jquery.ime.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/ime/src/jquery.ime.selector.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/ime/src/jquery.ime.preferences.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/ime/src/jquery.ime.inputmethods.js" %}"></script> 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // All input fields having "translit" class require transliteration
+            $('.translit').ime();
+            /*$('#id_body, #id_title').ime();*/
+        } );
+    </script>
+{% endblock %}

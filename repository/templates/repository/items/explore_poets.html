@@ -14,41 +14,32 @@
 {% endblock %}
 
 {% block main %}
-	<section class="mT-32 pB-8">
-		<div class="_layout layout-L mdl-grid">
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="card-xl section-title">
-					<h3 class="c-grey1">Discover Poets</h3>
-				</div>
-			</div>
-			{% get_item_random person 8 as random_persons %}
-			{% include "repository/include/list/person.html" with items=random_persons %}
-		</div>
-	</section>
-	<section class="pT-8 pB-16">
-		<div class="_layout layout-L mdl-grid">
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="card-xl section-title">
-					<h3 class="c-grey1">Recent Updates</h3>
-				</div>
-			</div>
-			{% get_item_recent person 8 as recent_persons %}
-			{% include "repository/include/list/person.html" with items=recent_persons %}
-		</div>
-	</section>
-	<section class="pT-16 pB-16">
-		<div class="_layout layout-L mdl-grid">
-			<div class="mdl-cell mdl-cell--12-col">
-				<div class="wide-card wFull">
-					{% get_items_count person as poets_count %}
-					<div class="tAc">
-						<div class="bignum">{{ poets_count|intcomma }}</div>
-						<div class="bignum-text">poets</div>
-						<div class="">@</div>
-						<div class="sitename-bottom">poetrylearner.com</div>
-					</div>
-				</div>
+<section class="mT-32 pB-8">
+	<div class="_layout layout-L mdl-grid">
+		<div class="mdl-cell mdl-cell--12-col">
+			<div class="card-xl section-title">
+				<h3 class="c-grey1">Discover Poets</h3>
 			</div>
 		</div>
-	</section>
+		{% get_item_random person 8 as random_persons %}
+		{% include "repository/include/list/person.html" with items=random_persons %}
+	</div>
+</section>
+<section class="pT-8 pB-16">
+	<div class="_layout layout-L mdl-grid">
+		<div class="mdl-cell mdl-cell--12-col">
+			<div class="card-xl section-title">
+				<h3 class="c-grey1">Recent Updates</h3>
+			</div>
+		</div>
+		{% get_item_recent person 8 as recent_persons %}
+		{% include "repository/include/list/person.html" with items=recent_persons %}
+	</div>
+</section>
+<section class="pT-8 pB-16">
+    <div class="_layout layout-L mdl-grid">
+    {% include "repository/include/misc/stats.html" %}
+    </div>
+</section>
+
 {% endblock %}

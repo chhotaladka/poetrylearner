@@ -1,0 +1,30 @@
+{% comment %} Display statistics of repository {% endcomment %}
+{% load repository_tags %}
+{% load creativework_tags %}
+{% load humanize %}
+
+<div class="mdl-cell mdl-cell--12-col">
+    <div class="wide-card row fill wFull mT-32 mB-32">
+        {% get_items_count person as poets_count %}
+        <div class="tAc m8">
+            <a class="card" href="{% url 'explore-poets' %}">
+	            <div class="bignum">{{ poets_count|intcomma }}</div>
+	            <div class="bignum-text">poets</div>
+            </a>
+        </div>
+        {% get_poetry_count as poetry_count %}
+        <div class="tAc m8">
+            <a class="card" href="{% url 'explore-poetry' %}">
+	            <div class="bignum">{{ poetry_count|intcomma }}</div>
+	            <div class="bignum-text">poetry</div>
+            </a>
+        </div>
+        {% get_items_count book as books_count %}
+        <div class="tAc m8">
+            <a class="card" href="{% url 'explore-books' %}">
+	            <div class="bignum">{{ books_count|intcomma }}</div>
+	            <div class="bignum-text">books</div>
+	        </a>
+        </div>
+    </div>
+</div>

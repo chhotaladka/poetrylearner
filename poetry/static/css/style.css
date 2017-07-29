@@ -3011,7 +3011,7 @@ ol.default, ul.default {
 
 /* Misc design related */
 .bignum {
-	font-size: 100px;
+	font-size: 32px;
 	font-weight: 600;
 	line-height: 1;
 	font-family: "Roboto","Helvetica","Arial",sans-serif;
@@ -3025,15 +3025,17 @@ ol.default, ul.default {
 	margin: 8px 0px 8px;
 	color: #424242;
 	font-family: "Roboto","Helvetica","Arial",sans-serif;
-	font-size: 20px;
+	font-size: 18px;
 	line-height: 1;
-	letter-spacing: 0.6em;
+	letter-spacing: 0.1em;
 	text-transform: uppercase;
 }
 .sitename-bottom {
 	color: #424242;
 	letter-spacing: 0.2em;
-	margin-top: 8px;
+	margin: 8px;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 /* navigation footer */

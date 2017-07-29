@@ -107,16 +107,6 @@
                     </form>
                 </div>
             </nav>
-            <footer class="mdl-mini-footer">
-                <div class="mdl-mini-footer__left-section">
-                    <ul class="mdl-mini-footer__link-list">
-                        <!--<li><a href="#">About</a></li>
-                        <li><a href="#">Privacy & Terms</a></li>
-                        <li><a href="#">Help</a></li>-->
-                        <li><a id="feedbackBtn-site" data-url="{% url 'feedback:add' %}" href="#">Send feedback</a></li>
-                    </ul>
-                </div>
-            </footer>
         </div>
         {% endif %}
         {% endblock %}{% comment %} end of `drawer` block {% endcomment %}
@@ -126,6 +116,9 @@
         {% block breadcrumbs %}{% endblock %}
         {% block tabs %}{% comment %} Navigation tabs {% endcomment %}{% endblock %}
         {% block main %}{% comment %} Put the main content in this block {% endcomment %}{% endblock %}
+        {% block footer %}
+            {% include "common/include/footer.html" %}
+        {% endblock %}
         </main>
     </div>
     {% endblock %}{% comment %} end of body {% endcomment %}

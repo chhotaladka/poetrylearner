@@ -89,20 +89,10 @@
 		</div>
 	</div>
 </section>
-<section class="pT-16 pB-16">
-	<div class="_layout layout-L mdl-grid">
-		<div class="mdl-cell mdl-cell--12-col">
-			<div class="card-xl wFull">
-				{% get_poetry_count as poetry_count %}
-				<div class="tAc">
-					<div class="bignum">{{ poetry_count|intcomma }}</div>
-					<div class="bignum-text">poetry</div>
-					<div class="">@</div>
-					<div class="sitename-bottom">poetrylearner.com</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<section class="pT-8 pB-16">
+    <div class="_layout layout-L mdl-grid">
+    {% include "repository/include/misc/stats.html" %}
+    </div>
 </section>
 {% endif %}
 {% endblock %}

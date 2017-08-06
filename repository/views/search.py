@@ -41,7 +41,7 @@ def search_book(query_string):
         
         if len(term) > 2:
             # Search in name/additional_name fields of book.creator
-            or_query = Q(creator__name__icontains=term)
+            or_query |= Q(creator__name__icontains=term)
             or_query |= Q(creator__additional_name__icontains=term)
         
         if query is None:

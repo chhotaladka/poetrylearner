@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 import json
 from repository.models import *
 from common.search import get_query, normalize_query, get_query_for_nterms, strip_stopwords
-
+from common import isbnlib
 # Create your views here.
 
 
@@ -21,12 +21,38 @@ def search_book(query_string):
     '''
     
     terms = normalize_query(query_string)
+    query = None # Query to search for every search term
     
-    if len(terms) == 0:
-        # There are no terms
-        return []
+    if len(terms) == 1:
+        # There is only ONE term of any length
+        # Process the term to check for ISBN number
+        isbn10 = isbnlib.get_canonical_isbn(terms[0], output='isbn10')
+        isbn13 = isbnlib.get_canonical_isbn(terms[0], output='isbn13')
+        if isbn10 and isbn13:
+            # Run the query and return if isbn is valid
+            obj_list = Book.objects.filter(Q(isbn=isbn10) | Q(isbn=isbn13))
+            return obj_list
     
-    return []
+    for term in terms:
+        or_query = None # Query to search for a given term in each field
+        
+        # Search in name field of the Book
+        or_query = Q(name__icontains=term)
+        
+        if len(term) > 2:
+            # Search in name/additional_name fields of book.creator
+            or_query = Q(creator__name__icontains=term)
+            or_query |= Q(creator__additional_name__icontains=term)
+        
+        if query is None:
+            query = or_query
+        else:
+            query = query & or_query
+    
+    # Run the query
+    obj_list = Book.objects.filter(query)
+    
+    return obj_list
 
 
 def search_person(query_string):

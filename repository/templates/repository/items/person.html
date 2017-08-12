@@ -73,14 +73,16 @@
                         </div>
                     </div>
                     {% get_recent_poetries 10 by obj as poetries %}
+                    {% if poetries %}
                     {% include "repository/include/list/poetry.html" with items=poetries %}
                     <div class="mdl-card__actions">
-                    {% if poetries %}
                         <a class="action-button pTB-8 wFull oN" href="{% url 'explore-poetry-of' pk=obj.id slug=obj.get_slug %}" title="Show all poetry by {{ obj.title }}">                            
                             Show all
                         </a>
-                    {% else %}<span class="action-button wFull">Working on it...</span>{% endif %}
                     </div>
+                    {% else %}
+                        {% include "common/include/working-on-it.html" %}
+                    {% endif %}
                 </div>
             </div>
             <div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">

@@ -4,6 +4,7 @@
 	Requires:   1) css and js of static/mdl/*
 				2) bookmark.js(list/poetry.html)
 {% endcomment %}
+{% load common_tags %}
 {% load creativework_tags %}
 {% load humanize %}
 {% block title %}{{ result_title }} | {{ sitename }}{% endblock title %}
@@ -24,6 +25,9 @@
         <div class="mdl-cell mdl-cell--12-col">
             <div class="card-xl row fill">
                 <div class="">
+                    {% include "repository/include/cards/person-sm3.html" with person=creator %}
+                </div>
+                <div class="">
                     <div class="search-title">
                         <div class="title">Poetry</div>
                     </div>
@@ -32,9 +36,6 @@
                         <span>{{ items.paginator.count|intcomma }} result{{ items.paginator.count|pluralize }}</span>
                     {% endif %}
                     </div>
-                </div>
-                <div class="">
-                    {% include "repository/include/cards/person-sm3.html" with person=creator %}
                 </div>
             </div>
         </div>
@@ -47,7 +48,7 @@
         {% include "repository/include/list/poetry.html" with items=items %}
         {% include "repository/include/misc/pagination-bottom.html" with items=items %}
     {% else %} {% comment %} Display the notification {% endcomment %}
-        {% comment %}  {% include "common/include/empty-result.html" %}{% endcomment %}
+        {% include "common/include/working-on-it.html" %}
     {% endif %}
         </div>
     </div>
@@ -89,6 +90,28 @@
 		</div>
 	</div>
 </section>
+{% if request.user|has_group:'administrator,editor' %}
+<section class="pT-8 pB-8">
+    <div class="_layout layout-L mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+            <div class="card-l">
+                <a class="card" href="{% url 'repository:add-item' item_type='poetry' %}?cancel={{request.path}}">
+                    <div class="card-l m8 bCw bS-1 h-shadow">
+                        <div class="tAc">
+                            <div class="svg64 pT-8">
+                                {% include "common/svg/plus.html" %}
+                            </div>
+                            <div class="title-box p-8 pT12">
+                                <span class="title-text fS16">Add a new Poetry</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
 <section class="pT-8 pB-16">
     <div class="_layout layout-L mdl-grid">
     {% include "repository/include/misc/stats.html" %}

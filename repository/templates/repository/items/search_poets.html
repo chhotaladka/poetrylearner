@@ -37,7 +37,7 @@
 			{% include "repository/include/list/person.html" with items=items %}
 			{% include "repository/include/misc/pagination-bottom.html" with items=items %}
 		{% else %} {% comment %} Display the notification {% endcomment %}
-			{% comment %}TODO: display some graphics here.{% include "common/include/empty-result.html" %}{% endcomment %}
+			{% include "common/include/empty-result-graphics.html" %}
 		{% endif %}
 		</div>
 	</section>

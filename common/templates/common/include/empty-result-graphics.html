@@ -1,0 +1,13 @@
+{% comment %}  
+	Notification to be displayed if query returns no results.
+{% endcomment %}
+{% load staticfiles %}
+<div class="mdl-cell mdl-cell--12-col">
+    <div class="card-xl">
+        <div class="centered" style="background: url('{% static "img/not_found_sm.png" %}') center / cover no-repeat;
+        height: 240px; width: 240px;"></div>
+        <div class="tAc fS10 c-91">
+            <a href="http://www.incidentalcomics.com/" target="_blank" title="INCIDENTAL COMICS">© Grant Snider</a>
+        </div>
+    </div>
+</div>

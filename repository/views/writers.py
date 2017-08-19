@@ -56,7 +56,8 @@ class CreateThingView(View):
             
         if kwargs.get('pk', None) is None:
             # Create
-            form = self.form_class(initial=None)
+            get_params = dict([(key,value) for key,value in request.GET.iteritems()])
+            form = self.form_class(initial=get_params)
         else:
             # Update
             self.obj = get_object_or_404(self.model, pk=kwargs.get('pk', None))

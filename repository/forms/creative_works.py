@@ -1,27 +1,12 @@
 import os, sys, traceback
-from django.forms import ModelForm
-from django.forms.models import  ModelChoiceField
+from django.forms.models import ModelChoiceField
 from django.core.exceptions import ValidationError
 
+from repository.forms import BaseForm
 from repository.models import Poetry, Book, Person
 from taggit.forms import TagField
 from taggit.utils import split_strip
 
-class BookForm(ModelForm): 
-       
-    class Meta:
-        model = Book
-        fields = ['name', 'description', 'same_as', # Thing
-                  'creator', 'contributors', 'publisher', 'license', 'keywords', # CreativeWork
-                  'language', 'isbn'] # Book
-
-    def save(self, owner, commit=True, *args, **kwargs):
-        obj = super(BookForm, self).save(commit=False, *args, **kwargs)
-
-        if commit:
-            obj.save()
-        return obj
-    
 
 class Select2ChoiceField(ModelChoiceField):
     '''
@@ -42,6 +27,35 @@ class Select2ChoiceField(ModelChoiceField):
         return value
 
 
+class BookForm(BaseForm): 
+    
+    creator = Select2ChoiceField(queryset=Person.objects.filter())
+    
+    class Meta:
+        model = Book
+        fields = ['name', 'description', 'same_as', # Thing
+                  'creator', 'contributors', 'publisher', 'license', 'keywords', # CreativeWork
+                  'language', 'isbn'] # Book
+
+    def __init__(self, *args, **kwargs):
+        super(BookForm, self).__init__(*args, **kwargs)
+        ## Set the queryset for `creator` field.
+        # We will get the creator options later on using ajax request
+        if self.instance.id:
+            self.fields['creator'].queryset = Person.objects.filter(id__exact=self.instance.creator.id)
+        elif 'creator' in kwargs.get('initial', None):
+            self.fields['creator'].queryset = Person.objects.filter(id__exact=kwargs.get('initial')['creator'])
+        else:
+            self.fields['creator'].queryset = Person.objects.none()
+    
+    def save(self, owner, commit=True, *args, **kwargs):
+        obj = super(BookForm, self).save(commit=False, *args, **kwargs)
+
+        if commit:
+            obj.save()
+        return obj
+
+
 class TaggitTagField(TagField):
     '''
     Added has_changed method in TagField
@@ -57,7 +71,7 @@ class TaggitTagField(TagField):
         return data_set != initial_set
 
 
-class PoetryForm(ModelForm): 
+class PoetryForm(BaseForm):
     
     creator = Select2ChoiceField(queryset=Person.objects.filter())
     keywords = TaggitTagField(required=False)
@@ -71,16 +85,19 @@ class PoetryForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
-        ## Set the queryset as Empty Query Set. We will get the creator options later on using ajax request
-        # NOTE: Comment following line, if you are not using ajax request to select creator
-        if self.instance.id is None:
-            self.fields['creator'].queryset = Person.objects.none()
-        else:
+        ## Set the queryset for `creator` field.
+        # We will get the creator options later on using ajax request
+        if self.instance.id:
             self.fields['creator'].queryset = Person.objects.filter(id__exact=self.instance.creator.id)
-                
+        elif 'creator' in kwargs.get('initial', None):
+            self.fields['creator'].queryset = Person.objects.filter(id__exact=kwargs.get('initial')['creator'])
+        else:
+            self.fields['creator'].queryset = Person.objects.none()
+        
     def save(self, owner, commit=True, *args, **kwargs):
         obj = super(self.__class__, self).save(commit=False, *args, **kwargs)
 
         if commit:
             obj.save()
-        return obj    
+        return obj
+    

@@ -1,12 +1,12 @@
 import os, sys, traceback
-from django.forms import ModelForm
+from repository.forms import BaseForm
 from django.forms.models import  ModelChoiceField
 from django.core.exceptions import ValidationError
 
 from repository.models import Snippet
 
 
-class SnippetForm(ModelForm): 
+class SnippetForm(BaseForm): 
        
     class Meta:
         model = Snippet
@@ -20,5 +20,5 @@ class SnippetForm(ModelForm):
 
         if commit:
             obj.save()
-        return obj    
-      
+        return obj
+    

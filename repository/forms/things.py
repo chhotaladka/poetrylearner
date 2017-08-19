@@ -1,10 +1,10 @@
 import os, sys, traceback
-from django.forms import ModelForm
+from repository.forms import BaseForm
 
 from repository.models import Organization, Product, Person, Place, Event
 
 
-class ProductForm(ModelForm):
+class ProductForm(BaseForm):
     
     class Meta:
         model = Product
@@ -27,7 +27,7 @@ class ProductForm(ModelForm):
         return obj        
 
         
-class EventForm(ModelForm):
+class EventForm(BaseForm):
     
     class Meta:
         model = Event
@@ -48,7 +48,7 @@ class EventForm(ModelForm):
         return obj        
 
 
-class OrganizationForm(ModelForm):
+class OrganizationForm(BaseForm):
     
     class Meta:
         model = Organization
@@ -68,7 +68,7 @@ class OrganizationForm(ModelForm):
             obj.save()
         return obj
 
-class PlaceForm(ModelForm):
+class PlaceForm(BaseForm):
     
     class Meta:
         model = Place
@@ -81,8 +81,8 @@ class PlaceForm(ModelForm):
         if commit:
             obj.save()
         return obj
-                
-class PersonForm(ModelForm):
+
+class PersonForm(BaseForm):
     
     class Meta:
         model = Person

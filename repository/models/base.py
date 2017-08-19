@@ -3,7 +3,6 @@ from django.contrib import auth
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.utils import timezone
-from django.conf.global_settings import LANGUAGES
 from django.template.defaultfilters import default
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings

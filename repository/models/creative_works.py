@@ -1,17 +1,14 @@
 from django.db import models
-from django.contrib import auth
 from django.core.urlresolvers import reverse
-from django.utils import timezone
-from django.conf.global_settings import LANGUAGES
-from django.template.defaultfilters import default
+#from django.conf.global_settings import LANGUAGES
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 from django.utils.html import strip_tags
 from django.db.models import Q
 import random
 from common.utils import truncatelines
 
 from things import CreativeWork, CreativeWorkManager, Person
+from repository.const import REPOSITORY_LANGUAGES
 
 # Create your models here.
 
@@ -24,7 +21,7 @@ class PoetryManager(CreativeWorkManager):
         q_objects = Q()
         
         if 'language' in kwargs:
-            q_objects &= Q(language=kwargs['language'])           
+            q_objects &= Q(language=kwargs['language'])
         
         return super(PoetryManager, self).apply_filter(*args, **kwargs).filter(q_objects)
     
@@ -72,7 +69,7 @@ class Book(CreativeWork):
     '''
 
     language = models.CharField(max_length=8, 
-                                choices=LANGUAGES, default='en',
+                                choices=REPOSITORY_LANGUAGES, default='hi',
                                 help_text=_('The language of the book.')
                                 )
         
@@ -102,8 +99,8 @@ class Book(CreativeWork):
         '''
         Returns the language full name
         '''
-        tmp = dict(LANGUAGES)
-        return tmp[self.language]    
+        tmp = dict(REPOSITORY_LANGUAGES)
+        return tmp[self.language]
     
 
 class Article(CreativeWork):
@@ -116,7 +113,7 @@ class Article(CreativeWork):
     '''
 
     language = models.CharField(max_length=8, 
-                                choices=LANGUAGES, default='en',
+                                choices=REPOSITORY_LANGUAGES, default='hi',
                                 help_text=_('The language of the content.')
                                 )
         
@@ -145,14 +142,14 @@ class Article(CreativeWork):
         '''
         Returns the language full name
         '''
-        tmp = dict(LANGUAGES)
+        tmp = dict(REPOSITORY_LANGUAGES)
         return tmp[self.language]
     
     def summary(self):
         if self.description:
             return self.description
         else:
-            return strip_tags(self.body)[:200] + '...'          
+            return strip_tags(self.body)[:200] + '...'
                
  
 class Poetry(CreativeWork):
@@ -162,7 +159,7 @@ class Poetry(CreativeWork):
     '''
     
     language = models.CharField(max_length=8, 
-                                choices=LANGUAGES, default='en',
+                                choices=REPOSITORY_LANGUAGES, default='hi',
                                 help_text=_('The language of the content.')
                                 )
         
@@ -189,7 +186,7 @@ class Poetry(CreativeWork):
         '''
         Returns the language full name
         '''
-        tmp = dict(LANGUAGES)
+        tmp = dict(REPOSITORY_LANGUAGES)
         return tmp[self.language]
 
     def summary(self):

@@ -1,151 +1,24 @@
-"""
-All constants could be used in other modules
-"""
-"""
+#
+# All constants could be used in other modules
+#
 
-    Airline
-    Corporation
-    EducationalOrganization
-        CollegeOrUniversity
-        ElementarySchool
-        HighSchool
-        MiddleSchool
-        Preschool
-        School
-    GovernmentOrganization
-    LocalBusiness
-        AnimalShelter
-        AutomotiveBusiness
-            AutoBodyShop
-            AutoDealer
-            AutoPartsStore
-            AutoRental
-            AutoRepair
-            AutoWash
-            GasStation
-            MotorcycleDealer
-            MotorcycleRepair
-        ChildCare
-        DryCleaningOrLaundry
-        EmergencyService
-            FireStation
-            Hospital
-            PoliceStation
-        EmploymentAgency
-        EntertainmentBusiness
-            AdultEntertainment
-            AmusementPark
-            ArtGallery
-            Casino
-            ComedyClub
-            MovieTheater
-            NightClub
-        FinancialService
-            AccountingService
-            AutomatedTeller
-            BankOrCreditUnion
-            InsuranceAgency
-        FoodEstablishment
-            Bakery
-            BarOrPub
-            Brewery
-            CafeOrCoffeeShop
-            FastFoodRestaurant
-            IceCreamShop
-            Restaurant
-            Winery
-        GovernmentOffice
-            PostOffice
-        HealthAndBeautyBusiness
-            BeautySalon
-            DaySpa
-            HairSalon
-            HealthClub
-            NailSalon
-            TattooParlor
-        HomeAndConstructionBusiness
-            Electrician
-            GeneralContractor
-            HVACBusiness
-            HousePainter
-            Locksmith
-            MovingCompany
-            Plumber
-            RoofingContractor
-        InternetCafe
-        LegalService
-            Attorney
-            Notary
-        Library
-        LodgingBusiness
-            BedAndBreakfast
-            Hostel
-            Hotel
-            Motel
-        MedicalOrganization
-            Dentist
-            DiagnosticLab
-            Hospital
-            MedicalClinic
-            Optician
-            Pharmacy
-            Physician
-            VeterinaryCare
-        ProfessionalService
-        RadioStation
-        RealEstateAgent
-        RecyclingCenter
-        SelfStorage
-        ShoppingCenter
-        SportsActivityLocation
-            BowlingAlley
-            ExerciseGym
-            GolfCourse
-            HealthClub
-            PublicSwimmingPool
-            SkiResort
-            SportsClub
-            StadiumOrArena
-            TennisComplex
-        Store
-            AutoPartsStore
-            BikeStore
-            BookStore
-            ClothingStore
-            ComputerStore
-            ConvenienceStore
-            DepartmentStore
-            ElectronicsStore
-            Florist
-            FurnitureStore
-            GardenStore
-            GroceryStore
-            HardwareStore
-            HobbyShop
-            HomeGoodsStore
-            JewelryStore
-            LiquorStore
-            MensClothingStore
-            MobilePhoneStore
-            MovieRentalStore
-            MusicStore
-            OfficeEquipmentStore
-            OutletStore
-            PawnShop
-            PetStore
-            ShoeStore
-            SportingGoodsStore
-            TireShop
-            ToyStore
-            WholesaleStore
-        TelevisionStation
-        TouristInformationCenter
-        TravelAgency
-    NGO
-    PerformingGroup
-        DanceGroup
-        MusicGroup
-        TheaterGroup
-    SportsOrganization
-        SportsTeam
-"""
+
+# This is defined here as a do-nothing function because we can't import
+# django.utils.translation -- that module depends on the settings.
+gettext_noop = lambda s: s
+
+# Supported Languages for the contents of the Repository
+# It is derived from django.conf.global_settings.LANGUAGES
+REPOSITORY_LANGUAGES = [
+    ('bn', gettext_noop('Bengali')),
+    ('en', gettext_noop('English')),
+    ('hi', gettext_noop('Hindi')),
+    ('kn', gettext_noop('Kannada')),
+    ('ml', gettext_noop('Malayalam')),
+    ('mr', gettext_noop('Marathi')),
+    ('ne', gettext_noop('Nepali')),
+    ('pa', gettext_noop('Punjabi')),
+    ('ta', gettext_noop('Tamil')),
+    ('te', gettext_noop('Telugu')),
+    ('ur', gettext_noop('Urdu')),
+]

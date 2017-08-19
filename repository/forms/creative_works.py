@@ -41,12 +41,14 @@ class BookForm(BaseForm):
         super(BookForm, self).__init__(*args, **kwargs)
         ## Set the queryset for `creator` field.
         # We will get the creator options later on using ajax request
+        person_queryset = Person.objects.none()
         if self.instance.id:
-            self.fields['creator'].queryset = Person.objects.filter(id__exact=self.instance.creator.id)
-        elif 'creator' in kwargs.get('initial', None):
-            self.fields['creator'].queryset = Person.objects.filter(id__exact=kwargs.get('initial')['creator'])
+            person_queryset = Person.objects.filter(id__exact=self.instance.creator.id)
         else:
-            self.fields['creator'].queryset = Person.objects.none()
+            if kwargs.get('initial', None):
+                if 'creator' in kwargs.get('initial'):
+                    person_queryset = Person.objects.filter(id__exact=kwargs.get('initial')['creator'])
+        self.fields['creator'].queryset = person_queryset
     
     def save(self, owner, commit=True, *args, **kwargs):
         obj = super(BookForm, self).save(commit=False, *args, **kwargs)
@@ -87,12 +89,14 @@ class PoetryForm(BaseForm):
         super(self.__class__, self).__init__(*args, **kwargs)
         ## Set the queryset for `creator` field.
         # We will get the creator options later on using ajax request
+        person_queryset = Person.objects.none()
         if self.instance.id:
-            self.fields['creator'].queryset = Person.objects.filter(id__exact=self.instance.creator.id)
-        elif 'creator' in kwargs.get('initial', None):
-            self.fields['creator'].queryset = Person.objects.filter(id__exact=kwargs.get('initial')['creator'])
+            person_queryset = Person.objects.filter(id__exact=self.instance.creator.id)
         else:
-            self.fields['creator'].queryset = Person.objects.none()
+            if kwargs.get('initial', None):
+                if 'creator' in kwargs.get('initial'):
+                    person_queryset = Person.objects.filter(id__exact=kwargs.get('initial')['creator'])
+        self.fields['creator'].queryset = person_queryset
         
     def save(self, owner, commit=True, *args, **kwargs):
         obj = super(self.__class__, self).save(commit=False, *args, **kwargs)

@@ -2445,7 +2445,7 @@ ul.mdl-mini-footer__link-list {
 	line-height: 22px !important;
 	font-weight: 400 !important;
 }
-.fS16.b {font-weight: 600;}
+.fS16.b {font-weight: 600 !important;}
 .fS18 {
 	font-size: 18px;
 	/*line-height: 22px;*/

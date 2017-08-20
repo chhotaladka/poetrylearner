@@ -38,36 +38,53 @@
             </div>
         </div>
     </section>
-    {% comment %} ADD POETRY AND BOOK OF THE PERSON {% endcomment %}
+    {% comment %} ACTION ITEMS FOR EDITORS {% endcomment %}
     {% if request.user|has_group:'administrator,editor' %}
     <section class="pB-16">
         <div class="_layout layout-L mdl-grid">
             <div class="__c mdl-cell mdl-cell--12-col pA-0">
-                <div class="card-l row">
-                    <a class="card" href="{% url 'repository:add-item' item_type='poetry' %}?creator={{obj.id}}&cancel={{request.path}}">
-                        <div class="m8" style="width:120px;">
+                <div class="card-l row fill">
+                    {% comment %} ADD POETRY FOR THIS POET {% endcomment %}
+                    <div class="m8" style="width:90px;">
+                        <a class="card" href="{% url 'repository:add-item' item_type='poetry' %}?creator={{obj.id}}&cancel={{request.path}}">
                             <div class="tAc">
-                                <button class="svg32 button-fab bS-1 h-shadow bg-person">
+                                <button class="svg32 button-fab bS-1 h-shadow bg-person" title="Add a poetry of {{ obj.popular_name }}">
                                     {% include "common/svg/local_library.html" %}
                                 </button>
-                                <div class="title-box p-8 pT12">
-                                    <span class="title-text fS16 b">Add poetry</span>
+                                <div class="title-box pT12">
+                                    <span class="title-text fS14 b">Add poetry</span>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                    <a class="card" href="{% url 'repository:add-item' item_type='book' %}?creator={{obj.id}}&cancel={{request.path}}">
-                        <div class="m8" style="width:120px;">
+                        </a>
+                    </div>
+                    {% comment %} ADD BOOK FOR THIS POET {% endcomment %}
+                    <div class="m8" style="width:90px;">
+                        <a class="card" href="{% url 'repository:add-item' item_type='book' %}?creator={{obj.id}}&cancel={{request.path}}">
                             <div class="tAc">
-                                <button class="svg32 button-fab bS-1 h-shadow bg-person">
+                                <button class="svg32 button-fab bS-1 h-shadow bg-person" title="Add a book of {{ obj.popular_name }}">
                                     {% include "common/svg/book.html" %}
                                 </button>
-                                <div class="title-box p-8 pT12">
-                                    <span class="title-text fS16 b">Add book</span>
+                                <div class="title-box pT12">
+                                    <span class="title-text fS14 b">Add book</span>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                    {% comment %} PROOFREAD POETRY BY THIS POET {% endcomment %}
+                    <div class="m8" style="width:90px;">
+                        <a class="card" href="{% url 'proofreader:poetry' %}?poet={{ obj.id }}">
+                            <div class="tAc">
+                                <button class="svg32 button-fab bS-1 h-shadow bg-person" title="Proofread the poetry of {{ obj.popular_name }}">
+                                    {% include "common/svg/content_paste.html" %}
+                                </button>
+                                <div class="title-box pT12">
+                                    <span class="title-text fS14 b">Review</span>
+                                    {% get_poetry_count by obj unpublished as upub_poetry_count %}
+                                    <div class="light-txt">{{ upub_poetry_count }} poetry</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,22 +106,7 @@
                                 </a>
                             </h3>
                         </div>
-                        <div class="row r2l">{% if request.user|has_group:'administrator,editor' %}
-                            {% get_poetry_count by obj unpublished as upub_poetry_count %}
-                            <div class="mL-8">
-                                <div class="c-y svg32">
-                                {% include "common/svg/content_paste.html" %}
-                                </div>
-                            </div>
-                            <div class="tAr">
-                                <h3 class="c-grey1">
-                                    <a title="Review the poetry of {{ obj.popular_name }}" href="{% url 'proofreader:poetry' %}?poet={{ obj.id }}">
-                                        <span>Review</span>
-                                    </a>
-                                </h3>
-                                <span class="light-txt">{{ upub_poetry_count }} poetry</span>
-                            </div>
-                            {% endif %}
+                        <div class="">
                         </div>
                     </div>
                     {% get_recent_poetries 10 by obj as poetries %}
@@ -124,5 +126,4 @@
             </div>
         </div>
     </section>
-
 {% endblock %}

@@ -43,18 +43,18 @@
     <div class="_layout layout-L mdl-grid">
         <div class="mdl-cell mdl-cell--12-col pA-0">
             <div class="card-l row center">
-                <a class="card" href="{% url 'repository:add-item' item_type='person' %}?cancel={{request.path}}">
-                    <div class="m8" style="width:120px;">
+                <div class="m8" style="width:120px;">
+                    <a class="card" href="{% url 'repository:add-item' item_type='person' %}?cancel={{request.path}}">
                         <div class="tAc">
-                            <button class="svg32 button-fab bS-1 h-shadow bg-person">
+                            <button class="svg32 button-fab bS-1 h-shadow bg-person" title="Add a person to repository">
                                 {% include "common/svg/person_add.html" %}
                             </button>
-                            <div class="title-box p-8 pT12">
-                                <span class="title-text fS16 b">Add a poet</span>
+                            <div class="title-box pT12">
+                                <span class="title-text fS14 b">Add a poet</span>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

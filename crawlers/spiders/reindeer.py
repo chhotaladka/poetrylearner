@@ -79,7 +79,7 @@ class ReindeerBot(scrapy.Spider):
         
         # Start main crawler
         ABCD = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u',
-                'v','x','y','z',]
+                'v','w', 'x','y','z',]
         
         for alphabet in ABCD:#FIXME TESTING: change back to ABCD after testing
             self.logger.debug('Listing poets %s', alphabet)

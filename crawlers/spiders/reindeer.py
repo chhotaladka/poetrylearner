@@ -38,6 +38,8 @@ class ReindeerBot(scrapy.Spider):
     # DON'T CHANGE THE start_urls, all rules depend upon this url
     start_urls = ["https://rekhta.org"]
     domain_name = "https://rekhta.org/"
+    # Home Page
+    home_url = "https://rekhta.org/"
     
     BASE_URL_POETS = "https://rekhta.org/poets/"
     
@@ -58,9 +60,11 @@ class ReindeerBot(scrapy.Spider):
     
     LOGFILE = 'log_err_reindeer.txt'
     
+    # Testcase number. Change here to run a testcase.
+    TESTCASE = 0
+    
     def parse(self, response):
-        #print response.
-        self.logger.info('ReindeerTamingBot got first response from %s', response.url)
+        self.logger.info('ReindeerBot got first response from %s', response.url)
         
         with open(self.LOGFILE, "a") as outfile:
             outfile.write("\n--------------------------------------------------\n")
@@ -68,36 +72,65 @@ class ReindeerBot(scrapy.Spider):
             outfile.write("Start time: %s\n"%(time.asctime( time.localtime(time.time()) )))
             outfile.write("--------------------------------------------------\n")
         
+        # Run testcase, if there is a `TESTCASE`
+        if self.TESTCASE != 0:
+            yield scrapy.Request(self.home_url, callback=self.run_testcase)
+            return
         
+        # Start main crawler
         ABCD = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u',
                 'v','x','y','z',]
         
-        #test only
-        #url = 'https://rekhta.org/nazms/dhartii-kaa-bojh-baqar-mehdi-nazms?lang=en'
-        #url = 'https://rekhta.org/nazms/ghataa-chhaaii-to-kyaa-josh-malihabadi-nazms?lang=Hi'
-        #yield scrapy.Request(url, callback=self.l4_parse_poetry)
-        #return
-	
         for alphabet in ABCD:#FIXME TESTING: change back to ABCD after testing
             self.logger.debug('Listing poets %s', alphabet)
             url = self.domain_name + self.API_POETS_READ + '?' + '&sort=SortName-asc' + '&page=1' + '&lang=1' + '&pageSize=10000' + '&startsWith=' + alphabet
             
-            yield scrapy.Request(url, callback=self.l2_parse_poets_list)
-    
-    
-    def l2_parse_poets_list(self, response):
+            yield scrapy.Request(url, callback=self.parse_poets_list)
+            
+    def run_testcase(self, response):
         '''
-        Level 2: parse poets list and crawl to next level i.e. individual poet's page and its subsections
+        @summary: Run `TESTCASE` number
+        '''
+        testcase = self.TESTCASE
+        self.logger.info('running testcase %s.' % testcase)
+        
+        if testcase == 1:
+            self.logger.info('testcase <Nazm by Mehdi Hassan>.')
+            url = 'https://rekhta.org/nazms/dhartii-kaa-bojh-baqar-mehdi-nazms?lang=en'
+            yield scrapy.Request(url, callback=self.parse_poetry)
+            
+        elif testcase == 2:
+            self.logger.info('testcase <Big Nazm of Josh Malihabadi>.')
+            url = 'https://rekhta.org/nazms/ghataa-chhaaii-to-kyaa-josh-malihabadi-nazms?lang=Hi'
+            yield scrapy.Request(url, callback=self.parse_poet_page)
+            
+        elif testcase == 3:
+            self.logger.info('testcase <bikhar jaegi sham aahista bolo... by SHAANUL HAQ HAQQI>.')
+            url = 'https://rekhta.org/ghazals/bikhar-jaaegii-shaam-aahista-bolo-shaanul-haq-haqqi-ghazals'
+            yield scrapy.Request(url, callback=self.parse_poet_page)
+            
+        elif testcase == 4:
+            self.logger.info('testcase <bikhar jaegi sham aahista bolo...in Hindi... by SHAANUL HAQ HAQQI>.')
+            url = 'https://rekhta.org/ghazals/bikhar-jaaegii-shaam-aahista-bolo-shaanul-haq-haqqi-ghazals?lang=hi'
+            yield scrapy.Request(url, callback=self.parse_poet_page)
+            
+        else:
+            self.logger.info('invalid testcase discarded.')
+            return
+    
+    def parse_poets_list(self, response):
+        '''
+        Parse poets list and crawl to next level i.e. individual poet's page and its subsections
         '''
         i = response.url.find('&startsWith=')
-        self.logger.debug('l2_parse_poets_list: %s', response.url[i+12])
+        self.logger.debug('parse_poets_list: %s', response.url[i+12])
         
         data = json.loads(response.body)
         poets = data['Data']
         total = data['Total']
         errors = data['Errors']
         count = len(poets)
-        self.logger.info('l2_parse_poets_list: result has %d of %d poets', count, total)
+        self.logger.info('parse_poets_list: result has %d of %d poets', count, total)
         
         for poet in poets:
             # extract info of a poet and save
@@ -115,17 +148,17 @@ class ReindeerBot(scrapy.Spider):
             url_base = self.domain_name + self.API_POET_READ + '?' + '&sort=SortTitle-asc' + '&page=1' + '&lang=1' + '&pageSize=10000' + '&id=' + poet['SEOSlug']
             for info in ['ghazals', 'couplets', 'nazms',]:
                 url = url_base + '&info=' + info
-                yield scrapy.Request(url, callback=self.l3_parse_poetry_list)
+                yield scrapy.Request(url, callback=self.parse_poetry_list)
             
             #break #FIXME TESTING parse only one poet: remove this line after testing: 
     
     
-    def l3_parse_poetry_list(self, response):
+    def parse_poetry_list(self, response):
         '''
-        Level 3: parse poet's poetry list
+        Parse poet's poetry list
         '''
         i = response.url.find('&id=')
-        self.logger.debug('l3_parse_poetry_list: %s', response.url[i+4:])
+        self.logger.debug('parse_poetry_list: %s', response.url[i+4:])
         
         data = json.loads(response.body)
         
@@ -133,7 +166,7 @@ class ReindeerBot(scrapy.Spider):
         total = data['Total']
         errors = data['Errors']
         count = len(poetries)
-        self.logger.info('l3_parse_poetry_list: result has %d of %d poetries', count, total)
+        self.logger.info('parse_poetry_list: result has %d of %d poetries', count, total)
         
         for poetry in poetries:
             # extract info of the poetry, and crawl poetry page
@@ -151,22 +184,20 @@ class ReindeerBot(scrapy.Spider):
             # Now crawl poetry page only for remaining langauge
             for lang in (x for x in self.LANGUAGES if x not in lang_list):
                     url_t = url + '?lang=' + lang
-                    yield scrapy.Request(url_t, callback=self.l4_parse_poetry)
+                    yield scrapy.Request(url_t, callback=self.parse_poetry)
     
     
-    def l4_parse_poetry(self, response):
+    def parse_poetry(self, response):
         '''
-        Level 4: parse poetry page, extract poetry, and save.
+        Parse poetry page, extract poetry, and save.
         '''
-        #print response.url
-        
+        self.logger.debug("parse_poetry: IN.")
         try:
             # extract poem
-            #stanza_selectors = response.xpath("//div[@class='poemContainer']/div[@class='PoemTextHost  ']/div[@class='PoemDisplay OrgTextDisplay ']/div")
-            stanza_selectors = response.xpath("//div[contains(@class,'poemContainer')]/div[contains(@class,'PoemTextHost')]/div[contains(@class,'PoemDisplay') and contains(@class,'OrgTextDisplay')]/div")
+            stanza_selectors = response.xpath("//div[contains(@class,'mainContentBody')]/div[contains(@class,'poemPageContentBody')]/div/div")
             poem = ''
             for s in stanza_selectors:
-                line_selectors = s.xpath("./p")
+                line_selectors = s.xpath(".//p")
                 for l in line_selectors:
                     line = l.xpath(".//text()").extract()
                     line = ''.join(line)
@@ -178,12 +209,11 @@ class ReindeerBot(scrapy.Spider):
             #print poem
             
             # extract title of the poem
-            title = response.xpath("//div[@class='shayariContainerDiv']/div[@class='left_pan_shayari']/div[@class='shayari_first']/h1/text()").extract()[0]
+            title = response.xpath("//div[contains(@class,'mainContentBody')]/div[contains(@class,'poemPageContentHeader')]/h1/text()").extract()[0]
             
             # extract poet name
-            #poet = response.xpath("//div[@class='artist_img_descrpt']/div[@class='about_artist']/h2/text()").extract()[0]
-            # poet name must be in english, that is why we have to discard the previous one. 
-            poet_href = response.xpath("//div[@class='artist_img']//a/@href").extract()[0]
+            # poet name must be in english. 
+            poet_href = response.xpath("//div[contains(@class,'mainContentBody')]/div[contains(@class,'poemPageContentHeader')]//a[contains(@class,'ghazalAuthor')]/@href").extract()[0]
             p = re.compile(ur'poets/(.+)/') #href="/poets/anjum-tarazi/?lang=Hi"
             poet = p.search(poet_href).group(1)
             poet = poet.replace('-', ' ')
@@ -205,15 +235,15 @@ class ReindeerBot(scrapy.Spider):
             save_to_db_poem(data)
             
         except:
-            print("ERROR: l4_parse_poetry: Unexpected error:", sys.exc_info()[0])
+            self.logger.error("parse_poetry: %s", sys.exc_info()[0])
             _trace = ''
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
-                print ("DBG:: Error in %s on line %d" % (fname, lineno))
-                _trace = _trace + "Error in %s on line %d" % (fname, lineno)
+                self.logger.error("error in %s on line %d" % (fname, lineno))
+                _trace = _trace + "error in %s on line %d" % (fname, lineno)
             with open(self.LOGFILE, "a") as outfile:
                 t = time.asctime( time.localtime(time.time()) )
-                json.dump({'link': response.url, 'error': 'parsing failed', 'trace': _trace, 'time': t}, outfile, indent=4)
+                json.dump({'link': response.url, 'error': 'parsing poetry failed', 'trace': _trace, 'time': t}, outfile, indent=4)
 
 
 class SpiderReindeer(BaseSpider):

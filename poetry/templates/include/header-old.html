@@ -1,0 +1,33 @@
+<header class="mdl-layout__header page-header mdl-layout__header--scroll">
+    {% if request.user.is_authenticated %} {% comment %} SHow drawer after login {% endcomment %}
+    <div class="mdl-layout__drawer-button">
+        {% include "common/svg/menu.html" %}
+    </div>
+    {% endif %}
+    <div class="mdl-layout__header-row page-header--row">
+        <div class="mdl-layout-title logo sm">
+            <a href="/" class="logo-img"></a>
+        </div>
+        <div class="mdl-layout-title site-name hm mL-8">
+            <a href="/">poetry learner</a>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation page-header--nav">
+        {% block header-nav-links %}{% comment %}  Modify the links as per the current Section (App) {% endcomment %}
+            <div class="mdl-navigation__link wS-nw">
+                <a class="oN" href="{% url 'explore-poetry' %}">Poetry</a>
+            </div>
+            <div class="mdl-navigation__link wS-nw">
+                <a class="oN" href="{% url 'explore-poets' %}">Poets</a>
+            </div>
+        {% if not request.user.is_authenticated %}
+            <div class="mdl-navigation__link wS-nw">
+                <a class="oN" href="{% url 'account_login' %}?next={% block header-login-redirect %}{{ request.path }}{% endblock %}">
+                    Log in
+                </a>
+            </div>
+        {% endif %}
+        {% endblock %}{% comment %} end of header-nav-links block {% endcomment %}
+        </nav>
+    </div>
+</header>

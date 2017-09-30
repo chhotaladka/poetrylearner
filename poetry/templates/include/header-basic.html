@@ -1,0 +1,129 @@
+<header class="metabar js-metabar">
+    <div class="metabar-inner u-height56">
+        <div class="metabar-block u-flex1">
+            <div class="u-xs-show d-ib mL-16">
+                <a class="siteNav-logo" href="/">
+                    <span class="site-name u-xs-show">poetry learner</span>
+                </a>
+            </div>
+        </div>
+        <div class="metabar-block u-flex0">
+            <div class="buttonSet">
+            {% if not request.user.is_authenticated %}
+                <a class="action-button" href="{% url 'account_login' %}?next={% block header-login-redirect %}{{ request.path }}{% endblock %}">
+                    Log in
+                </a>
+            {% endif %}
+            </div>
+        </div>
+        <div class="position-abs wFull tAc u-top0 u-right0 u-xs-hide">
+            <a class="siteNav-logo" href="/">
+                <span class="site-name u-xs-hide">poetry learner</span>
+            </a>
+        </div>
+    </div>
+    <div class="metabar-inner">
+        <nav role="navigation" class="metabar-block metabar-block--below u-height42">
+            <div class="buttonSet mT4">
+            {% if request.user.is_authenticated %}
+                <div id="id-drawer-open-btn" class="js-drawer-button mR-16">
+                    {% include "common/svg/menu.html" %}
+                </div>
+                <div id="id-drawer-close-btn" class="js-drawer-button mR-16 hidden">
+                    {% include "common/svg/close.html" %}
+                </div>
+            {% endif %}
+            </div>
+            <ul class="buttonSet tAl u-overflowX">
+                <li class="d-ib">
+                    <a class="action-button" href="{% url 'explore-poets' %}">Poets</a>
+                </li>
+                <li class="d-ib">
+                    <a class="action-button" href="{% url 'explore-poetry' %}">Poetry</a>
+                </li>
+                <li class="d-ib">
+                    <a class="action-button" href="{% url 'explore-books' %}">Books</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<script>
+{% comment %} jquery independent script?? {% endcomment %}
+    var locked = false;
+    var previousScroll = 0;
+    var affixed_max = false;
+    var affixed_min = false;
+    var scrolled = false;
+    
+    var runOnScroll = function(e){
+        e.stopPropagation();
+        if(locked) return;
+        locked = true;
+        
+        var currentScroll = $(this).scrollTop();
+        var metabar = document.getElementsByClassName('metabar js-metabar')[0];
+        //console.log(currentScroll, previousScroll);
+        
+        if (currentScroll >= (previousScroll + 80)){ /*downscroll*/
+            if (!affixed_min) {
+                //console.log("downscroll: adding class");
+                metabar.classList.add('is-transitioning');
+                metabar.classList.add('metabar--affixed');
+                
+                metabar.classList.remove('is-maximized');
+                metabar.classList.add('is-minimized');
+                
+                affixed_max = false;
+                affixed_min = true;
+            }
+            scrolled = true;
+            
+        } else if (currentScroll <= (previousScroll - 60)) { /*upscroll*/
+            if (!affixed_max) {
+                //console.log("upscroll: adding class");
+                metabar.classList.add('is-transitioning');
+                metabar.classList.add('metabar--affixed');
+                
+                metabar.classList.remove('is-minimized');
+                metabar.classList.add('is-maximized');
+                
+                affixed_min = false;
+                affixed_max = true;
+            }
+            scrolled = true;
+        }
+        
+        if (previousScroll && !currentScroll) {/*Reached top*/
+            //console.log("Reached on TOP, removing affix");
+            metabar.classList.remove('is-minimized', 'is-maximized', 'metabar--affixed', 'is-transitioning');
+            affixed_min = false;
+            affixed_max = false;
+        }
+        if (scrolled) {
+            previousScroll = currentScroll;
+        }
+        metabar.classList.remove('is-transitioning');
+        scrolled = false;
+        locked = false;
+    };
+    
+    var drawerOpen = function(e){
+        document.getElementById('id-drawer').classList.add('is-visible');
+        document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.add('is-visible');
+        document.getElementById('id-drawer-open-btn').classList.add('hidden');
+        document.getElementById('id-drawer-close-btn').classList.remove('hidden');
+    };
+    var drawerClose = function(e){
+        document.getElementById('id-drawer').classList.remove('is-visible');
+        document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove('is-visible');
+        document.getElementById('id-drawer-close-btn').classList.add('hidden');
+        document.getElementById('id-drawer-open-btn').classList.remove('hidden');
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementsByClassName('mdl-layout__content')[0].addEventListener('scroll',runOnScroll);
+        document.getElementById('id-drawer-open-btn').addEventListener('click',drawerOpen);
+        document.getElementById('id-drawer-close-btn').addEventListener('click',drawerClose);
+        document.getElementsByClassName('mdl-layout__obfuscator')[0].addEventListener('click',drawerClose);
+    });
+</script>

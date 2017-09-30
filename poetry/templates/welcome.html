@@ -6,6 +6,10 @@
 {% include "meta.html" with meta=meta only %}
 {% endblock %}
 
+{% block header %}
+{% include "include/header-basic.html" %}
+{% endblock %}
+
 {% block main %}
 <section class="pT-8 pB-32">
     <div class="_layout layout-L mdl-grid">
@@ -14,7 +18,7 @@
                 {% if poetry %}
                 <div class="card-xl tAc wFull">
                     <div class="content p-16">
-                        <div lang="{{ poetry.language }}" class="poetry-stanza {{ poetry.language }} fS18">{{ poetry.body }}</div>
+                        <div lang="{{ poetry.language }}" class="poetry-stanza {{ poetry.language }}">{{ poetry.body }}</div>
                     </div>
                     <div class="details tAc">
                         <div class="mB4">
@@ -43,7 +47,7 @@
     <div class="bT-1">
         <div class="card-m tAc">
 	        <a href="/" class="card">
-	           <div class="fS14 b" style="height:36px; line-height: 36px;">Surprise me!</div>
+	           <div class="fS14 b" style="height:42px; line-height: 42px;">Surprise me!</div>
 	        </a>
         </div>
     </div>

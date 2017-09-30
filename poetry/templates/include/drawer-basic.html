@@ -1,0 +1,80 @@
+{% load common_tags %}
+<div id="id-drawer" class="mdl-layout__drawer1 mdl-color--white mdl-color-text--grey-700">
+    <nav class="mdl-navigation dashboard-navigation mB-32 mdl-color-text--grey-800">
+        {% if request.user.is_authenticated %}
+        <a class="mdl-navigation__link mB-32" href="{% url 'dashboard:private-profile' %}" title="{{ request.user|title }} : {{ profile.get_contact }}">
+            <div class="row">
+                <div class="pR-8">
+                {% if profile.get_avatar_url %}
+                    <img class="circle" width="36" height="36" src="{{ profile.get_avatar_url }}"></img>
+                {% else %}
+                    {% include "common/svg/user.html" %}
+                {% endif %}
+                </div>
+                <div>
+                    <div>{% if profile %}{{ profile.get_first_name }}{% else %}{{ request.user|title }}{% endif %}</div>
+                    <div class="light-txt">View Profile</div>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+        <a class="mdl-navigation__link" href="{% url 'bookmark:list-bookmarks' %}">
+            <div class="">
+                <span class="mR-46"></span>
+                <span>Bookmarks</span>
+            </div>
+        </a>
+        {% if request.user|has_group:'administrator,editor' %}
+        <a class="mdl-navigation__link" href="{% url 'feedback:list' %}">
+            <div class="">
+                <span class="mR-46"></span>
+                <span>Feedbacks</span>
+            </div>
+        </a>
+        <a class="mdl-navigation__link" href="{% url 'activity:list' %}">
+            <div class="">
+                <span class="mR-46"></span>
+                <span>Activity Log</span>
+            </div>
+        </a>
+        <a class="mdl-navigation__link" href="{% url 'proofreader:home' %}">
+            <div class="">
+                <span class="mR-46"></span>
+                <span>Proofreader</span>
+            </div>
+        </a>
+        <a class="mdl-navigation__link" href="{% url 'repository:home' %}">
+            <div class="">
+                <span class="mR-46"></span>
+                <span>Repository</span>
+            </div>
+        </a>
+        {% endif %}
+        {% if request.user|has_group:'administrator' %}
+        <a class="mdl-navigation__link" href="{% url 'crawlers:home' %}">
+            <div class="">
+                <span class="mR-46"></span>
+                <span>Crawlers</span>
+            </div>
+        </a>
+        {% endif %}
+        {% if request.user.is_staff %}
+        <a class="mdl-navigation__link" href="{% url 'admin:index' %}">
+            <div class="">
+                <span class="mR-46"></span>
+                <span>Admin</span>
+            </div>
+        </a>
+        {% endif %}
+        <div class="mdl-navigation__link">
+            <div class="row">
+                <span class="mR-46"></span>
+                <form method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="/"/>
+                    <button class="d-ib oN" type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>

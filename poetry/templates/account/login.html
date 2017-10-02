@@ -80,6 +80,16 @@
             <span class="fS14">All Log in options</span>
         </div>
     </div>
-
+{% if form.errors %}{% comment %} Show login page2 {% endcomment %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var showLoginPage2 = function(){
+        document.getElementById('id-login-page1').classList.add('hidden');
+        document.getElementById('id-login-page2').classList.remove('hidden');
+    };
+    showLoginPage2();
+});
+</script>
+{% endif %}
 </div>
 {% endblock %}

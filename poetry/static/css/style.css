@@ -434,7 +434,7 @@ h3 {
 	left: 0;
 	z-index: -1;
 }
-.banner h1 {
+h1.banner {
 	font-family: "Open Sans",arial;
 	color: #555;
 	font-size: 32px;
@@ -442,7 +442,7 @@ h3 {
 	margin-top: 0px;
 	margin-bottom: 20px;
 }
-.banner h2 {
+h2.banner {
 	font-family: "Open Sans",arial;
 	color: #444;
 	font-size: 18px;
@@ -462,6 +462,7 @@ h3 {
 .login-card {
 	background: #FFF none repeat scroll 0% 0%;
 	max-width: 354px;
+	min-height: 360px;
 }
 @media (max-width: 479px) {
 	.login-card {
@@ -492,6 +493,7 @@ h3 {
 .login-btn {
 	background-color: #4285F4 !important;
 	color: white !important;
+	text-transform: uppercase;
 }
 .red-btn {
     background-color: #DB4437 !important;
@@ -531,6 +533,10 @@ h3 {
     -ms-transition: box-shadow .2s ease-in-out;
     -o-transition: box-shadow .2s ease-in-out;
     transition: box-shadow .2s ease-in-out;
+}
+.h-border:hover {
+    color: rgba(0,0,0,.68);
+    border-color: rgba(0,0,0,.54);
 }
 .poetry-card {
 	max-width: 512px;
@@ -1118,7 +1124,29 @@ h3 {
     -moz-transition: opacity .55s ease-in-out;
     -webkit-transition: opacity .55s ease-in-out;
 }
-
+.button-rounded {
+	display: inline-block;
+    position: relative;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 999em;
+    letter-spacing: 0;
+    font-weight: 400;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -moz-font-feature-settings: "liga" on;
+    height: 37px;
+    line-height: 35px;
+    font-size: 14px;
+    padding: 0 16px;
+}
+.button-rounded.border {
+    border: 1px solid rgba(0,0,0,.15);
+}
 .action-button {
     background: none repeat scroll 0px 0px transparent;
     border: medium none;
@@ -1318,6 +1346,12 @@ a.action-button:hover {
     width: 32px;
     height: 32px;
 	display: inline-block;
+}
+.social-icon {
+	text-decoration: none;
+}
+a.social-icon:hover {
+    text-decoration: none;
 }
 
 .feedback.link {
@@ -2909,6 +2943,13 @@ ul.mdl-mini-footer__link-list {
 .c-red svg {fill: #DB4437 !important}
 .bc-red {background-color: #DB4437;}
 .c-green svg {fill: #4CAF50 !important;}
+.c-greenNormal {
+	color: #03a87c !important;
+	fill: #03a87c !important;
+}
+.bc-greenNormal {
+    background-color: #03a87c !important;
+}
 .c-y {color: #F6DB00 !important;}
 .c-y svg {fill: #F6DB00 !important;}
 .bc-y {background-color: #F6DB00 !important;}

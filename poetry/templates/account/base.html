@@ -7,27 +7,17 @@
 {% endblock %}
 
 {% block body %}
-{% block messages %}
-{% include "common/include/message-panel.html" with messages=messages only %}
-{% endblock %}
-<div class="centered">
-    <div class="head__banner small">
-        <div class="mdl-layout-title logo site-name">
-            <a href="/">poetry learner</a>
+<div class="mdl-layout mdl-js-layout dashboard-layout">
+    {% block header %}{% comment %} header of a section/app. Modify in the base template of the app {% endcomment %}
+        {% include "include/header-minimal.html" %}
+    {% endblock %}{% comment %} end of `header` block {% endcomment %}
+    <main class="mdl-layout__content">
+        <div class="pT-16">
+    {% block main %}{% comment %} Put the main content in this block {% endcomment %}{% endblock %}
         </div>
-    </div>
+    {% block footer %}
+        {% include "common/include/footer.html" %}
+    {% endblock %}
+    </main>
 </div>
-
-<div class="pT-48 pB-16">
-    <div class="_layout layout-L mdl-grid">
-        <div class="__c mdl-cell mdl-cell--12-col pA-0">
-            <div class="banner">
-            {% block main %}{% endblock %}
-            </div>
-            {% block footer %}
-                {% include "common/include/footer.html" %}
-            {% endblock %}
-        </div>
-    </div>
-</div>
-{% endblock %}
+{% endblock %}{% comment %} end of body {% endcomment %}

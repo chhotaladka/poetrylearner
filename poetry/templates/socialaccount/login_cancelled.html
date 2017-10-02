@@ -3,9 +3,9 @@
 {% block title %}Login Cancelled - {{ sitename }}{% endblock %}
 
 {% block main %}
-<div class="notice-card tAc">
-	<h1 class="col-err">Login Cancelled</h1>
+<div class="login-card bS-2 wFull">
+	<h1 class="banner tAc col-err">Login Cancelled</h1>
 	{% url 'account_login' as login_url %}
-	<p>You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href="{{login_url}}">sign in</a>.</p>
+	<p>You decided to cancel log in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href="{{login_url}}">Log In</a>.</p>
 </div>
 {% endblock %}

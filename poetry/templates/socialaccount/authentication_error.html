@@ -3,11 +3,11 @@
 {% block title %}Social Network Login Failure - {{ sitename }}{% endblock %}
 
 {% block main %}
-<div class="notice-card tAc wFull">
-	<h1 class="col-err">Social Network Login Failure</h1>
-	<p>
-		<span>An error occurred while attempting to login via your social network account.</span>
-		<a href={% url 'account_login' %}>Retry.</a>	
-	</p>
-</div>		
+<div class="login-card bS-2 wFull">
+    <h1 class="banner tAc col-err">Social Network Login Failure</h1>
+    <p>
+        <span>An error occurred while attempting to login via your social network account.</span>
+        <a href={% url 'account_login' %}>Retry.</a>
+    </p>
+</div>
 {% endblock %}

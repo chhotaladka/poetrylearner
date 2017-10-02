@@ -4,17 +4,19 @@
 {% block title %}Log Out from {{ sitename }}{% endblock %}
 
 {% block main %}
-	<div class="login-card transp wFull">
-		<div class="tAc">
-			<h1>Log Out</h1>
-			<p>Are you sure you want to log out?</p>
-		</div>
-		<form class="a-mdl-form" method="post" action="{% url 'account_logout' %}">
-		  {% csrf_token %}
-		  {% if redirect_field_value %}
-		  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-		  {% endif %}
-		  <button class="wFull mdl-button mdl-button--raised login-btn" type="submit">Log Out</button>
-		</form>
-	</div>
+<div class="login-card bS-2 wFull">
+    <div class="tAc">
+        <h1 class="banner tAc">Log out.</h1>
+        <p>Are you sure you want to log out?</p>
+    </div>
+    <form class="a-mdl-form" method="post" action="{% url 'account_logout' %}">
+      {% csrf_token %}
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+      {% endif %}
+      <button class="button-rounded border wFull h-shadow bc-greenNormal login-btn" type="submit">
+            <span>Log Out</span>
+      </button>
+    </form>
+</div>
 {% endblock %}

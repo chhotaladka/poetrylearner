@@ -24,6 +24,7 @@ from django.contrib.sitemaps.views import sitemap
 from repository.sitemaps import PersonSitemap, PoetrySitemap
 from .sitemaps import StaticViewSitemap 
 from . import views
+from . import urls_allauth_blocked
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -34,6 +35,7 @@ sitemaps = {
 
 urlpatterns = [
     url(r'^$', views.welcome, name='welcome'),
+    url(r'^accounts/', include('poetry.urls_allauth_blocked')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^activity/', include('activity.urls', namespace='activity')),

@@ -3,8 +3,8 @@
 {% block title %}Account Connections - {{ sitename }}{% endblock %}
 
 {% block main %}
-<div class="login-card transp tAc wFull">
-	<h1>Connections</h1>
+<div class="login-card bS-2 wFull">
+	<h1 class="banner tAc">Connections</h1>
 
 	{% if form.accounts %}
 	<div class="info-txt">You can sign in to your account using any of the following third party accounts:</div>
@@ -29,16 +29,15 @@
 			{% endfor %}
 		</fieldset>
 		<div class="mT-16">
-			<button class="wFull mdl-button mdl-button--raised red-btn" type="submit">Remove</button> 
+			<button class="button-rounded border wFull h-shadow login-btn red-btn" type="submit">Remove</button> 
 		</div>
 	</form>
 	{% else %}
 	<div class="info-txt">You currently have no social network accounts connected to this account.</div>
 	{% endif %}
 
-	<h2>Add a third Party Account</h2>
+	<h1 class="banner fS16 tAc">Add a third Party Account</h1>
 	{% include "socialaccount/snippets/provider_list.html" with process="connect" %}
 	{% include "socialaccount/snippets/login_extra.html" %}
-	
 </div>
 {% endblock %}

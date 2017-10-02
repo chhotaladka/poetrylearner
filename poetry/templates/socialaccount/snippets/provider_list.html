@@ -1,7 +1,7 @@
 {% load socialaccount %}
 
 {% get_providers as socialaccount_providers %}
-<div class="row center">
+<div>
 {% for provider in socialaccount_providers %}
 	{% if provider.id == "openid" %}
 		{% for brand in provider.get_brands %}
@@ -15,22 +15,37 @@
 	{% endif %}
 	
 	{% if provider.name = 'Facebook' %}
-	<a class="action-button social-icon facebook" title="{{provider.name}}"
-		href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
-		{% include "common/svg/fb_circle_color.html" %}
-	</a>
+	<div>
+		<a class="button-rounded border wFull mB-16 h-shadow social-icon facebook" title="{{provider.name}}"
+			href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+			<span class="d-ib mR-8">
+			{% include "common/svg/fb_color.html" %}
+			</span>
+			<span class="fS14">Log in with Facebook</span>
+		</a>
+	</div>
 	{% endif %}
 	{% if provider.name == 'Google' %}
-	<a class="action-button social-icon google" title="{{provider.name}}"
-		href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
-		{% include "common/svg/google_circle_color.html" %}	
-	</a>
+	<div>
+		<a class="button-rounded border wFull mB-16 h-shadow social-icon google" title="{{provider.name}}"
+			href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+			<span class="d-ib mR-8">
+			{% include "common/svg/google_color.html" %}
+			</span>
+			<span class="fS14">Log in with Google</span>
+		</a>
+	</div>
 	{% endif %}
 	{% if provider.name == 'Twitter' %}
-	<a class="action-button social-icon twitter" title="{{provider.name}}"
-		href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
-		{% include "common/svg/twitter_circle_color.html" %}
-	</a>
+	<div>
+		<a class="button-rounded border wFull mB-16 h-shadow social-icon twitter" title="{{provider.name}}"
+			href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+			<span class="d-ib mR-8">
+			{% include "common/svg/twitter_color.html" %}
+			</span>
+			<span class="fS14">Log in with Twitter</span>
+		</a>
+	</div>
 	{% endif %}	
 
 {% endfor %}

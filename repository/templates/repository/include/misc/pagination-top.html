@@ -1,15 +1,15 @@
 {% comment %}  
-	Pagination information to be displayed at the top of the results.
-	Requirement: list of results as `items` in context	
+    Pagination information to be displayed at the top of the results.
+    Requirement: list of results as `items` in context  
 {% endcomment %}
 {% load humanize %}
-	<div class="mdl-cell mdl-cell--12-col">
-		<div class="p-card">
-			<div class="search-title">
-				<div class="title">{{result_title}}</div>
-			</div>
-			<div class="search-stats mL-8">
-				<span>{{ items.paginator.count|intcomma }} results</span>
-			</div>
-		</div>
-	</div>
+<div class="mdl-cell mdl-cell--12-col">
+    <div class="card-l row fill">
+        <div class="search-stats mL-8">
+            <span>{{ items.paginator.count|intcomma }} results</span>
+        </div>
+        <div class="search-stats mR-8">
+            <span>Page {{ items.number }} of {{ items.paginator.num_pages }}</span>
+        </div>
+    </div>
+</div>

@@ -53,6 +53,7 @@
     {% block feedback %}{% comment %} Feedback modal {% endcomment %}
         {% include "feedback/modal.html" %}
     {% endblock %}
+    {% include "include/snackbar.html" %}
     {% include "common/include/login-clickcard.html" %}
     {% if not request.user|has_group:'administrator,editor' %}
     {% include "google-analytics.html" %}

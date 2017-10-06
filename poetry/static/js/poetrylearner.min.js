@@ -642,14 +642,23 @@ if (typeof jQuery === 'undefined') {
 				$(this).addClass("true");
 				$(this).attr('data-bid', data.bid);
 				$(this).prop('title', 'Remove from my Bookmarks');
+				var msg = "Added to my Bookmarks";
 			} else {
 				$(this).removeClass("true");
 				$(this).attr('data-bid', data.bid);
 				$(this).prop('title', 'Send to my Bookmarks to read later');
+				var msg = "Removed from my Bookmarks";
 			}
 		} else {
 			$(this).prop('title', 'Try again');
+			var msg = "Oops! something went wrong.";
 		}
+		var notification = document.querySelector('.mdl-js-snackbar');
+		var data = {
+		  message: msg,
+		  timeout: 5000
+		};
+		notification.MaterialSnackbar.showSnackbar(data);
 	};
 	
 	Bookmark.prototype.responseError = function (xhRequest, ErrorText, thrownError) {

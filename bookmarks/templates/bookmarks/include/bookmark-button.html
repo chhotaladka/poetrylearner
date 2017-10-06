@@ -7,13 +7,13 @@
 	{% if bookmark %}
 	<button class="action-button bookmark-btn bookmark-js-button oN true" title="Remove from my Bookmarks"
 		data-id="{{ bookmark.object_id }}" data-type="{{ bookmark.content_type.id }}" data-bid="{{ bookmark.id }}">
-		{% include "common/svg/bookmark.html" %}
+		{% include "common/svg/bookmark-border.html" %}
 		<span class="action-button__text">Read later</span>
 	</button>
 	{% elif item %}
 	<button class="action-button bookmark-btn bookmark-js-button oN" title="Send to my Bookmarks to read again later"
 		data-id="{{ item.id }}" data-type="{{ item.get_content_type.id }}" data-bid="0">
-		{% include "common/svg/bookmark.html" %}
+		{% include "common/svg/bookmark-border.html" %}
 		<span class="action-button__text">Read later</span>
 	</button>
 	{% endif %}
@@ -23,7 +23,7 @@
 		data-header="Want to read this again later?"
 		data-message="Log in to add this poetry to Bookmarks."
 		data-url="{% url 'account_login' %}?next={{ item.get_absolute_url }}">
-		{% include "common/svg/bookmark.html" %}
+		{% include "common/svg/bookmark-border.html" %}
 		<span class="action-button__text">Read later</span>
 	</button>	
 {% endif %}

@@ -1274,23 +1274,6 @@ a.action-button:hover {
 	color: rgba(237, 66, 85, 0.9) !important;
 	fill: rgba(237, 66, 85, 0.9) !important;
 }
-.bookmark-btn.true:hover .icon,
-.bookmark-btn.true:hover svg,
-.bookmark-btn:hover svg { 
-	color: rgba(237, 66, 85, 1) !important;
-	fill: rgba(237, 66, 85, 1) !important;
-}
-.random-btn {
-	position: fixed;
-	top: 0px;
-	left: 50%;
-	margin-left: -64px;
-}
-.random-btn .action-button {
-	min-width: auto;
-	width: 64px;
-	padding: 0px;
-}
 @media (max-width: 839px) {
 	.action-button__text {
 		display: none !important; }
@@ -3075,10 +3058,6 @@ a.md-tabs__tab:hover {
 /*
  * Pagination
  */
-.p-card {
-	max-width: 512px;
-	margin: 0px auto;
-}
 .pagination {
 	padding-left: 0px;
 }
@@ -3109,7 +3088,7 @@ a.md-tabs__tab:hover {
     color: #fff;
 }
 .pagination li.active {
-    background-color: #ee6e73;
+    background-color: #03a87c;
 }
 .pagination li.disabled a,
 .pagination li.disabled svg {

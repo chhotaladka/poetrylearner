@@ -111,6 +111,11 @@ h3 {
   .mdl-cell--12-col-phone.mdl-cell--12-col-phone {
     width: 100%; }
 }
+.mdl-dialog.xl {
+	width: auto;
+	top: 2px;
+	max-width: 700px;
+}
 
 /* calligraphy */
 .kallos1 {

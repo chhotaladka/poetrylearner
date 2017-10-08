@@ -15,7 +15,7 @@
 
 {% block main %}
 {% comment %} PRIMARY POETRY {% endcomment %}
-<section id="priSect" class="pT-8 pB-16">
+<section class="pT-8 pB-16">
     <div class="_layout layout-L mdl-grid">
         <div class="__c mdl-cell mdl-cell--12-col pA-0 mB-32">
         {% if poetry_count %}
@@ -45,6 +45,11 @@
                     <span class="action-button__text">Next</span>
                 </button>
                 {% if obj %}
+                <button id="id-fetch-url" data-url="{% url 'crawlers:readable' %}" data-fetch="{{ obj.same_as }}"
+                    class="action-button lg oN js-readability" title="View Source">
+                    {% include "common/svg/open_in_new.html" %}
+                    <span class="action-button__text">View Source</span>
+                </button>
                 {% url 'proofreader:poetry' pk=obj.id as fallback_url %}
                 <button id="pubBtn" class="action-button lg oN" title="Publish">
                     {% include "common/svg/publish.html" %}
@@ -85,4 +90,10 @@
         </div>
     </div>
 </section>
+{% include "crawlers/include/readability-dialog.html" %}
+{% endblock %}
+
+{% block scripts %}{% comment %} extra scripts {% endcomment %}
+    <script type="text/javascript" src="{% static 'js/shared.js' %}"></script>
+    <script type="text/javascript" src="{% static 'crawlers/js/readability.js' %}"></script>
 {% endblock %}

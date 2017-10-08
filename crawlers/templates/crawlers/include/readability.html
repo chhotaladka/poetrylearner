@@ -1,0 +1,36 @@
+<div class="card-xl wFull {% if readable.dir %}dir="{{readable.dir}}"{% endif %}">
+    <div class="">
+        <h3>{{readable.title}}</h3>
+        <div class="light-txt row fill">
+            {% if readable.byline %}
+            <div class="">{{readable.byline}}</div>
+            {% endif %}
+            <div>{{ readable.uri|urlizetrunc:40 }}</div>
+        </div>
+        <div class="mT-8">{{readable.excerpt}}</div>
+    </div>
+    <div class="mB-16 row r2l">
+        <div class="mR-8">
+            <a id="id-readable-html-btn" href="#" class="md-tabs__tab is-active" title="Render HTML content" 
+                onclick="document.getElementById('id-readable-text-btn').classList.remove('is-active');
+                document.getElementById('id-readable-html-btn').classList.add('is-active');
+                document.getElementById('id-readable-text').classList.add('hidden');
+                document.getElementById('id-readable-html').classList.remove('hidden');">
+                <span class="tab-label">HTML</span>
+            </a>
+            <a id="id-readable-text-btn" href="#" class="md-tabs__tab" title="View text content"
+                onclick="document.getElementById('id-readable-text-btn').classList.add('is-active');
+                document.getElementById('id-readable-html-btn').classList.remove('is-active');
+                document.getElementById('id-readable-text').classList.remove('hidden');
+                document.getElementById('id-readable-html').classList.add('hidden');">
+                <span class="tab-label bL">Text</span>
+            </a>
+        </div>
+    </div>
+    <div id="id-readable-text" class="article-content wSpw hidden">{{readable.textContent}}</div>
+    <div id="id-readable-html" class="">
+       {% autoescape off %}
+       {{readable.content}}
+       {% endautoescape %}
+    </div>
+</div>

@@ -12,5 +12,7 @@ urlpatterns = [
     url(r'^author/(?P<pk>\d+)$', views.raw_author_details, name='author-details'),    
     url(r'^author/?$', views.raw_author_list, name='author-list'),
     
+    url(r'^ajax/readable/?$', views.fetch_readable, name='readable'),
+    
     url(r'^$', views.home, name='home'),
 ]

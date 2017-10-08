@@ -1,22 +1,24 @@
 from django.shortcuts import render, get_object_or_404
 import os, sys, traceback
-from django.views.generic import *
-import json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from crawlers.models import RawArticle, RawAuthor
-from django.utils.http import urlencode
 from django.http import JsonResponse
 from django.http.response import HttpResponseForbidden
-from django.contrib.auth.decorators import login_required
 from common.utils import html_to_plain_text
 from common.decorators import group_required
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
+from django.core.exceptions import PermissionDenied
+from django.template.loader import render_to_string
+
+from crawlers.readability import Readability
+from crawlers.utils import validate_source_url
 
 from activity.signals import sig_action
 from activity.models import VERBS
 from repository.models import Poetry, Person 
+from lxml.doctestcompare import strip
 
 # Create your views here.
 
@@ -426,3 +428,33 @@ def home(request):
     template = "crawlers/home.html"
 
     return render(request, template, context)
+
+
+def fetch_readable(request):
+    '''
+    @summary: Cluter free readable view of article of a given url.
+    '''
+    if request.is_ajax() is False:
+        raise PermissionDenied
+    
+    template = "crawlers/include/readability.html"
+    
+    ##
+    # Check the parameters passed in the URL and process accordingly
+    url = request.GET.get('url', None)
+    if validate_source_url(strip(url)) is False:
+        print "ERR:: readable_view: invalid url", url
+        data = {}
+        data['status'] = 404
+        data['contenthtml'] = ''
+        return JsonResponse(data)
+    
+    obj = Readability(url)
+    readable = obj.parse()
+    
+    data = {}
+    data['status'] = 200
+    data['contenthtml'] = render_to_string(template,
+                                           {'request': request, 'readable': readable})
+    return JsonResponse(data)
+

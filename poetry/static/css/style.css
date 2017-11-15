@@ -1433,9 +1433,23 @@ a.social-icon:hover {
 .breadcrumbs a:hover {
 	color: #3F51B5;
 }
-.summary-txt {
-	font-size: 14px;
-	white-space: pre-line;
+.description {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 14px;
+    font-style: italic;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    border-left: 2px solid #03a87c;
+    margin-top: 16px;
+    padding-left: 32px !important;
+    background-color: rgba(234, 241, 255, 1);
+}
+.description a {
+	color: #365899 !important;
+}
+.highlight1 {
+	background-color: rgba(234, 241, 255, 1);
 }
 
 .article-content,

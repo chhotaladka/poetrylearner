@@ -1,8 +1,6 @@
 {% extends "repository/base.html" %}
 {% comment %}
-	Info:       List of items
-	Requires:   1) css and js of static/mdl/*
-				2) bookmark.js(list/poetry.html)
+    Info: Explore poetry page
 {% endcomment %}
 {% load common_tags %}
 {% load creativework_tags %}
@@ -21,20 +19,25 @@
 {% if creator %} {% comment %} Display the poetry of creator {% endcomment %}
 <section class="pT-16 pB-8">
     <div class="_layout layout-L mdl-grid">
-    {% load humanize %}
         <div class="mdl-cell mdl-cell--12-col">
             <div class="card-xl row fill">
                 <div class="">
                     {% include "repository/include/cards/person-sm3.html" with person=creator %}
                 </div>
-                <div class="">
-                    <div class="search-title">
-                        <div class="title">Poetry</div>
+                <div class="pTB-8 row fill">
+                    <div class="fS-12">
+                        {% get_poetry_count by creator published as poetry_count %}
+                        <a class="action-button is-active" href="{% url 'explore-poetry-of' pk=creator.id slug=creator.get_slug %}">
+                            <div class="b fS14">{{ poetry_count|intcomma }}</div>
+                            <div>poetry</div>
+                        </a> 
                     </div>
-                    <div class="search-stats mL-8">
-                    {% if creator %}
-                        <span>{{ items.paginator.count|intcomma }} result{{ items.paginator.count|pluralize }}</span>
-                    {% endif %}
+                    <div class="fS-12">
+                        {% get_book_count by creator as book_count %}
+                        <a class="action-button" href="{% url 'explore-books-of' pk=creator.id slug=creator.get_slug %}">
+                            <div class="b fS14">{{ book_count|intcomma }}</div>
+                            <div>books</div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -45,6 +48,11 @@
     <div class="_layout layout-L mdl-grid">
         <div class="__c mdl-cell mdl-cell--12-col pA-0">
     {% if items %} {% comment %} Display the list {% endcomment %}
+        <div class="card-l row r2l">
+            <div class="search-stats mR-8 mB-8">
+                <span>Page {{ items.number }} of {{ items.paginator.num_pages }}</span>
+            </div>
+        </div>
         {% include "repository/include/list/poetry.html" with items=items %}
         {% include "repository/include/misc/pagination-bottom.html" with items=items %}
     {% else %} {% comment %} Display the notification {% endcomment %}
@@ -53,42 +61,42 @@
         </div>
     </div>
 </section>
-	
+    
 {% else %} {% comment %} Display explore poetry page {% endcomment %}
 
 <section class="pT-16 pB-8">
-	<div class="_layout layout-sLs mdl-grid">
-		<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-		</div>
-		<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
-			<div class="section-cards">
-				<div class="section-title">
-					<h3 class="c-grey1">Discover Poetry</h3>
-				</div>
-				{% get_poetry_pub_rand 10 as random_poetry %}
-				{% include "repository/include/list/poetry.html" with items=random_poetry %}
-			</div>
-		</div>
-		<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-		</div>
-	</div>
+    <div class="_layout layout-sLs mdl-grid">
+        <div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+        </div>
+        <div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
+            <div class="section-cards">
+                <div class="section-title">
+                    <h3 class="c-grey1">Discover Poetry</h3>
+                </div>
+                {% get_poetry_pub_rand 10 as random_poetry %}
+                {% include "repository/include/list/poetry.html" with items=random_poetry %}
+            </div>
+        </div>
+        <div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+        </div>
+    </div>
 </section>
 <section class="pT-8 pB-16">
-	<div class="_layout layout-sLs mdl-grid">
-		<div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-		</div>
-		<div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
-			<div class="section-cards">
-				<div class="section-title">
-					<h3 class="c-grey1">Recent Updates</h3>
-				</div>
-				{% get_recent_poetries 10 as recent_poetry %}
-				{% include "repository/include/list/poetry.html" with items=recent_poetry %}
-			</div>
-		</div>
-		<div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
-		</div>
-	</div>
+    <div class="_layout layout-sLs mdl-grid">
+        <div class="__l mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+        </div>
+        <div class="__c mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet pA-0">
+            <div class="section-cards">
+                <div class="section-title">
+                    <h3 class="c-grey1">Recent Updates</h3>
+                </div>
+                {% get_recent_poetries 10 as recent_poetry %}
+                {% include "repository/include/list/poetry.html" with items=recent_poetry %}
+            </div>
+        </div>
+        <div class="__r mdl-cell mdl-cell--3-col mdl-cell--top pA-0">
+        </div>
+    </div>
 </section>
 {% comment %} ADD POETRY BUTTON {% endcomment %}
 {% if request.user|has_group:'administrator,editor' %}

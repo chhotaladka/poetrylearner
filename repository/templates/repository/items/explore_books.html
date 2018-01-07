@@ -3,6 +3,7 @@
     Info: Explore book page
 {% endcomment %}
 {% load common_tags %}
+{% load creativework_tags %}
 {% load repository_tags %}
 {% load humanize %}
 {% block title %}{{ result_title }} | {{ sitename }}{% endblock title %}
@@ -20,20 +21,27 @@
 {% if creator %} {% comment %} Display the books of creator {% endcomment %}
 <section class="pT-16 pB-8">
     <div class="_layout layout-L mdl-grid">
-    {% load humanize %}
         <div class="mdl-cell mdl-cell--12-col">
             <div class="card-xl row fill">
                 <div class="">
                     {% include "repository/include/cards/person-sm3.html" with person=creator %}
                 </div>
-                <div class="">
-                    <div class="search-title">
-                        <div class="title">Books</div>
+                <div class="pTB-8 row fill">
+                    <div class="fS-12">
+                        {% get_poetry_count by creator published as poetry_count %}
+                        <a class="action-button" href="{% url 'explore-poetry-of' pk=creator.id slug=creator.get_slug %}"
+                            title="Poetry by {{ creator.popular_name }}">
+                            <div class="b fS14">{{ poetry_count|intcomma }}</div>
+                            <div>poetry</div>
+                        </a> 
                     </div>
-                    <div class="search-stats mL-8">
-                    {% if creator %}
-                        <span>{{ items.paginator.count|intcomma }} result{{ items.paginator.count|pluralize }}</span>
-                    {% endif %}
+                    <div class="fS-12">
+                        {% get_book_count by creator as book_count %}
+                        <a class="action-button is-active" href="{% url 'explore-books-of' pk=creator.id slug=creator.get_slug %}"
+                            title="Books by {{ creator.popular_name }}">
+                            <div class="b fS14">{{ book_count|intcomma }}</div>
+                            <div>books</div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -44,6 +52,11 @@
     <div class="_layout layout-L mdl-grid">
         <div class="__c mdl-cell mdl-cell--12-col pA-0">
     {% if items %} {% comment %} Display the list {% endcomment %}
+        <div class="card-l row r2l">
+            <div class="search-stats mR-8 mB-8">
+                <span>Page {{ items.number }} of {{ items.paginator.num_pages }}</span>
+            </div>
+        </div>
         {% include "repository/include/list/book.html" with items=items %}
         {% include "repository/include/misc/pagination-bottom.html" with items=items %}
     {% else %} {% comment %} Display the notification {% endcomment %}

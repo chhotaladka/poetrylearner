@@ -230,9 +230,12 @@ def list(request, item_type, src=None):
     '''
     @summary: List the data item of `item_type`
     
-    @src: Source of access. It may be used to manipulate the context/templates.
-        eg. src='public_url' means this view is being accessed using some public url.    
+    @note: Only Administrator & Editor have access (redirect others to home page).
     '''    
+    
+    if user_has_group(request.user, ['Administrator', 'Editor']) is False:
+        # Redirect to home page
+        return redirect('/')
     
     item_cls, list_template = _resolve_item_type(item_type, list=True)
     if item_cls is None:

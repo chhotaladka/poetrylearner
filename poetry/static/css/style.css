@@ -1178,6 +1178,10 @@ h2.banner {
 .bottom-panel {
 	padding: 8px 16px;
 }
+.action-button.is-active {
+	color: #424242 !important;
+	font-weight: bold;
+}
 .action-button svg {
 	fill: #919191 !important;
 }
@@ -1191,7 +1195,7 @@ h2.banner {
 	fill: #616161 !important;
 }
 .action-button:active {
-	
+
 }
 a.action-button:hover {
 	text-decoration: none;

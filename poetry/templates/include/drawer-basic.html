@@ -1,5 +1,5 @@
 {% load common_tags %}
-<div id="id-drawer" class="mdl-layout__drawer1 mdl-color--white mdl-color-text--grey-700">
+<div id="id-drawer" class="mdl-layout__drawer1 right mdl-color--white mdl-color-text--grey-700">
     <nav class="mdl-navigation dashboard-navigation mB-32 mdl-color-text--grey-800">
         {% if request.user.is_authenticated %}
         <a class="mdl-navigation__link mB-16" href="{% url 'dashboard:private-profile' %}" title="{{ request.user|title }} : {{ profile.get_contact }}">

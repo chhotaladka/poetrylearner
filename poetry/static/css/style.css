@@ -1960,11 +1960,10 @@ p.poetry-stanza,
       -ms-flex-wrap: nowrap;
           flex-wrap: nowrap;
   width: 240px;
-  height: calc(100% - 98px);
+  height: calc(100% - 56px);
   max-height: 100%;
   position: absolute;
-  top: 98px;
-  left: 0;
+  top: 56px;
   /*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);*/
   box-shadow: none;
   box-sizing: border-box;
@@ -1985,8 +1984,15 @@ p.poetry-stanza,
   overflow-y: auto;
   z-index: 5;
   padding: 0px;
-  transform: translateX(-250px);
 }
+  .mdl-layout__drawer1.left {
+    transform: translateX(-250px);
+    left: 0px;
+  }
+  .mdl-layout__drawer1.right {
+    transform: translateX(+250px);
+    right: 0px;
+  }
   .mdl-layout__drawer1.is-visible {
     -webkit-transform: translateX(0);
             transform: translateX(0); }
@@ -2128,13 +2134,16 @@ p.poetry-stanza,
     font-size: 14px;
     background: #fff;
     color: rgba(0,0,0,.44);
-    /*font-family: medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;*/
     letter-spacing: 0;
     font-weight: 400;
     font-style: normal;
     box-sizing: border-box;
     box-shadow: 0 1px 6px -2px rgba(0,0,0,0.35);
     top: 0;
+}
+.metabar.loginpage {
+	background: transparent;
+	box-shadow: none;
 }
 .metabar:after {
     bottom: -5px;
@@ -2182,9 +2191,8 @@ p.poetry-stanza,
 .siteNav-logo {
     position: relative;
     display: inline-block;
-    padding-top: 19px;
     padding-left: 12px;
-    padding-right: 14px;
+    padding-right: 12px;
     z-index: 700;
     border: 0;
 }
@@ -2224,7 +2232,6 @@ p.poetry-stanza,
 }
 @media screen and (max-width: 767px) {
 	.siteNav-logo {
-	    padding-top: 5px;
 	    padding-left: 12px;
 	}
 }

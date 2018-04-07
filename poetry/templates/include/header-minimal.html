@@ -1,21 +1,13 @@
 {% comment %} Minimal header for login pages {% endcomment %}
-<header class="metabar js-metabar">
+{% load staticfiles %}
+<header class="metabar loginpage">
     <div class="metabar-inner u-height56">
-        <div class="metabar-block u-flex1">
-            <div class="u-xs-show d-ib mL-16">
-                <a class="siteNav-logo" href="/">
-                    <span class="site-name u-xs-show">poetry learner</span>
+        <div class="metabar-block u-flex0">
+            <div class="d-ib">
+                <a class="siteNav-logo" href="/" title="Go to poetry learner Home">
+                    <img class="site-name" src="{% static "img/logo_poetry_bw_154x56dp.png" %}" alt="poetry learner" height="36" width="auto">
                 </a>
             </div>
-        </div>
-        <div class="metabar-block u-flex0">
-            <div class="buttonSet">
-            </div>
-        </div>
-        <div class="position-abs wFull tAc u-top0 u-right0 u-xs-hide">
-            <a class="siteNav-logo" href="/">
-                <span class="site-name u-xs-hide">poetry learner</span>
-            </a>
         </div>
     </div>
 </header>

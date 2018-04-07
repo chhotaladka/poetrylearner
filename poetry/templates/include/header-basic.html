@@ -1,50 +1,46 @@
+{% load staticfiles %}
 <header class="metabar js-metabar">
     <div class="metabar-inner u-height56">
-        <div class="metabar-block u-flex1">
-            <div class="u-xs-show d-ib mL-16">
-                <a class="siteNav-logo" href="/">
-                    <span class="site-name u-xs-show">poetry learner</span>
-                </a>
-            </div>
-        </div>
         <div class="metabar-block u-flex0">
-            <div class="buttonSet">
-            {% if not request.user.is_authenticated %}
-                <a class="action-button" href="{% url 'account_login' %}?next={% block header-login-redirect %}{{ request.path }}{% endblock %}">
-                    Log in
+            <div class="d-ib">
+                <a class="siteNav-logo oN" href="/" title="Go to poetry learner Home">
+                    <img class="site-name" src="{% static "img/logo_poetry_bw_154x56dp.png" %}" alt="poetry learner" height="36" width="auto">
                 </a>
-            {% endif %}
             </div>
         </div>
-        <div class="position-abs wFull tAc u-top0 u-right0 u-xs-hide">
-            <a class="siteNav-logo" href="/">
-                <span class="site-name u-xs-hide">poetry learner</span>
-            </a>
-        </div>
-    </div>
-    <div class="metabar-inner">
-        <nav role="navigation" class="metabar-block metabar-block--below u-height42">
-            <div class="buttonSet mT4">
-            {% if request.user.is_authenticated %}
-                <div id="id-drawer-open-btn" class="js-drawer-button mR-16">
-                    {% include "common/svg/menu.html" %}
-                </div>
-                <div id="id-drawer-close-btn" class="js-drawer-button mR-16 hidden">
-                    {% include "common/svg/close.html" %}
-                </div>
-            {% endif %}
+        <nav role="navigation" class="metabar-block metabar-block--below u-height42 u-flex1 row r2l">
+            <div class="buttonSet">
+	            <ul class="u-overflowX">
+	                <li class="d-ib">
+	                    <a class="action-button" style="min-width: 32px;" href="{% url 'explore-poets' %}">Poets</a>
+	                </li>
+	                <li class="d-ib">
+	                    <a class="action-button" style="min-width: 32px;" href="{% url 'explore-poetry' %}">Poetry</a>
+	                </li>
+	                <li class="d-ib">
+	                    <a class="action-button" style="min-width: 32px;" href="{% url 'explore-books' %}">Books</a>
+	                </li>
+		            {% if request.user.is_authenticated %}
+		            <li class="d-ib">
+		                <div id="id-drawer-open-btn" class="js-drawer-button pLR-8 mR-16">
+		                    {% include "common/svg/menu.html" %}
+		                </div>
+		                <div id="id-drawer-close-btn" class="js-drawer-button pLR-8 mR-16 hidden">
+		                    {% include "common/svg/close.html" %}
+		                </div>
+		            </li>
+		            {% else %}
+                    <li class="d-ib">
+                       <div class="fS18 op3"> | </div>
+                    </li>
+                    <li class="d-ib">
+                        <a class="action-button" style="min-width: 32px;" href="{% url 'account_login' %}?next={% block header-login-redirect %}{{ request.path }}{% endblock %}">
+                            Log in
+                        </a>
+                    </li>
+		            {% endif %}
+	            </ul>
             </div>
-            <ul class="buttonSet tAl u-overflowX">
-                <li class="d-ib">
-                    <a class="action-button" href="{% url 'explore-poets' %}">Poets</a>
-                </li>
-                <li class="d-ib">
-                    <a class="action-button" href="{% url 'explore-poetry' %}">Poetry</a>
-                </li>
-                <li class="d-ib">
-                    <a class="action-button" href="{% url 'explore-books' %}">Books</a>
-                </li>
-            </ul>
         </nav>
     </div>
 </header>

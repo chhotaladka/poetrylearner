@@ -59,10 +59,6 @@ class FeedbackForm(forms.ModelForm):
 #                     )
             return obj
 
-    class Media:
-        css = {'all': ('feedback/css/feedback.css'), }
-        js = ('feedback/js/feedback.js', )
-
     class Meta:
         model = Feedback
         fields = ('email', 'text')

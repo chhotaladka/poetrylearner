@@ -2,62 +2,59 @@
 	Info:       Feedback details and response Card
 	Requires:   1.``feedback`` context
 {% endcomment %}
-<div class="card-xl bCw bS-1">
-	<div class="table-card">
-		<table cellpadding="0">
-			<tbody>
-				{% if feedback.is_responded == True %}
-				<tr id="id-action1">
-					<td id="id-td1" class="name" colspan="2">
-						<span class="gI">We responded</span>
-					</td>
-					<td id="id-td2" class="data" colspan="2">
-						<div class="gI">
-							<div>{{ feedback.get_action_taken }}</div>
-							<span class="light-txt">[{{ feedback.date_responded }} IST]</span>
-							<span>
-								<a href="#" class="h-link" title="Edit response" onclick="document.getElementById('id-action2').classList.toggle('hidden');document.getElementById('id-action1').classList.toggle('hidden');return false;">
-								 	Edit
-								</a>
-							</span>
+<div class="card-xl bC-f7 bS-1">
+	<div class="p-16">
+		{% if feedback.is_responded == True %}
+		<div id="id-action1">
+			<div class="light-txt">
+				<span class="">Action taken</span>
+			</div>
+			<div class="pTB-8" >
+				<div class="">
+					<div class="fS16 c-31">{{ feedback.get_action_taken }}</div>
+					<span class="light-txt">[{{ feedback.date_responded }} IST]</span>
+					<span>
+						<a href="#" class="h-link" title="Edit response"
+						    onclick="document.getElementById('id-action2').classList.toggle('hidden');document.getElementById('id-action1').classList.toggle('hidden');return false;">
+						 	Edit
+						</a>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div id="id-action2" class="hidden">
+		{% else %}
+		<div id="id-action2">
+		{% endif %}
+			<div class="light-txt" >
+				<span class="">Action taken</span>
+			</div>
+			<div class="pTB-8">
+				<div class="">
+					<form id="id-action-form" method="post">
+					{% csrf_token %}
+						<div class="form-element">
+							<textarea class="form-input" name="action" rows="3" maxlength=900 required>{{ feedback.get_action_taken|default_if_none:'' }}</textarea>
+							<!--<span class="help-text">Write the action taken by you for this feedback.</span>-->											
 						</div>
-					</td>
-				</tr>
-				<tr id="id-action2" class="hidden">
-				{% else %}
-				<tr id="id-action2">
-				{% endif %}
-					<td class="name" colspan="2">
-						<span class="gI">Write response</span>
-					</td>
-					<td class="data" colspan="2">
-						<div class="gI">
-							<form id="id-action-form" method="post">
-							{% csrf_token %}
-								<div class="form-element">
-									<textarea class="form-input" name="action" rows="3" maxlength=900 required>{{ feedback.get_action_taken|default_if_none:'' }}</textarea>
-									<!--<span class="help-text">Write the action taken by you for this feedback.</span>-->											
-								</div>
-								<div class="form-element">
-									<input class="mdl-slider mdl-js-slider" type="range" min="0" max="10" name="rating" value="{{ feedback.get_rating }}" step="1" tabindex="0">
-									<span class="help-text">Give rating to the feedback. Lowest (negative feedback) to highest (positive feedback).</span>
-								</div>
-								<div class="form-element">
-									<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="id-notify">
-  										<input id="id-notify" type="checkbox" class="mdl-checkbox__input" name="notify" value="1"/>
-  										<span>Send notification to user</span>
-									</label>
-								</div>
-								<div class="tAr">
-									<input class="mdl-button" type="button" name="cancel" value="Cancel"
-									onclick="location.href=&#39;{% url 'feedback:list' %}&#39;"/>							
-									<input class="mdl-button mdl-button--colored" type="submit" name="submit" value="submit response" id="id-form-submit"/>
-								</div>
-							</form>
+						<div class="form-element">
+							<input class="mdl-slider mdl-js-slider" type="range" min="0" max="10" name="rating" value="{{ feedback.get_rating }}" step="1" tabindex="0">
+							<span class="help-text">Give rating to the feedback. Lowest (negative feedback) to highest (positive feedback).</span>
 						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+						<div class="form-element">
+							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="id-notify">
+										<input id="id-notify" type="checkbox" class="mdl-checkbox__input" name="notify" value="1"/>
+										<span>Send notification to user</span>
+							</label>
+						</div>
+						<div class="tAr">
+							<input class="mdl-button" type="button" name="cancel" value="Cancel"
+							onclick="location.href=&#39;{% url 'feedback:list' %}&#39;"/>							
+							<input class="mdl-button mdl-button--colored" type="submit" name="submit" value="submit response" id="id-form-submit"/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

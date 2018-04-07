@@ -2751,7 +2751,7 @@ ul.mdl-mini-footer__link-list {
 	letter-spacing: 0.01em;
 }
 .fS-28 {
-	font-size: 28px !important;;
+	font-size: 28px !important;
 	line-height: 34px;
 	font-weight: 300;
 	letter-spacing: 0.01em;
@@ -2841,6 +2841,7 @@ ul.mdl-mini-footer__link-list {
 .bCw {background-color: #FFF;}
 .bC-grey { background-color: #EEE; }
 .bC-inherit { background-color: inherit; }
+.bC-f7 {background-color: #f7f7f7;}
 
 .mH-auto { min-height: auto; }
 .mxH-36 { max-height: 36px; }

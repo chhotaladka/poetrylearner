@@ -1,4 +1,4 @@
-import urlparse
+import urllib.parse
 from django.conf import settings
 from django.contrib.sites.models import Site, RequestSite
 from django.apps import apps
@@ -41,7 +41,7 @@ def redirect(request, prefix, tiny, converter=default_converter):
     # actually returns a domain-relative URL -- into a fully qualified one.
     
     # If we got a fully-qualified URL, sweet.
-    if urlparse.urlsplit(url)[0]:
+    if urllib.parse.urlsplit(url)[0]:
         return HttpResponsePermanentRedirect(url)
     
     # Otherwise, we need to make a full URL by prepending a base URL.
@@ -57,5 +57,5 @@ def redirect(request, prefix, tiny, converter=default_converter):
     else:
         base = 'http://%s/' % RequestSite(request).domain
         
-    return HttpResponsePermanentRedirect(urlparse.urljoin(base, url))
+    return HttpResponsePermanentRedirect(urllib.parse.urljoin(base, url))
 

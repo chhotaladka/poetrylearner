@@ -7,7 +7,7 @@ from django.db.models import Q
 import random
 from common.utils import truncatelines
 
-from things import CreativeWork, CreativeWorkManager, Person
+from .things import CreativeWork, CreativeWorkManager, Person
 from repository.const import REPOSITORY_LANGUAGES
 
 # Create your models here.

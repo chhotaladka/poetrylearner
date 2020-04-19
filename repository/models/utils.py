@@ -70,7 +70,7 @@ def image_upload_path(instance, filename):
     new_name = instance.name.split(' ')[0]
     new_name = new_name.lower() + '.' + file_type
     
-    print( "saving item image " + filename + " as " + new_name)
+    print(( "saving item image " + filename + " as " + new_name))
     path = 'repository/images/' + type(instance).__name__.lower() + '_' + new_name
     return path
 

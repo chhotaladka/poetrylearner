@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from common.utils import truncatelines
 
-from creative_works import Article
+from .creative_works import Article
 
 # Create your models here.
 

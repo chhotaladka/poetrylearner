@@ -11,7 +11,7 @@ register = template.Library()
 @register.inclusion_tag('feedback/form.html', takes_context=True)
 def feedback_form(context):
     """Template tag to render a feedback form."""
-    print "DBG:: feedback_tags."
+    print("DBG:: feedback_tags.")
     user = None
     url = None
     if context.get('request'):

@@ -269,7 +269,7 @@ class UserProfile(models.Model):
         if len(names) > 1:
             return names[-1].encode('utf-8')
         else:
-            return u''
+            return ''
 
     def _get_tw_username(self,profile):
         return profile.extra_data['screen_name'].encode('utf-8')

@@ -45,7 +45,7 @@ def poetry_related(request, src=None):
     try:
         ref_poetry = Poetry.objects.get(pk=id)
     except:
-        print "ERR:: Poetry.DoesNotExist or ValueError for id", id
+        print("ERR:: Poetry.DoesNotExist or ValueError for id", id)
         data = {}
         data['status'] = 404
         data['contenthtml'] = ''
@@ -66,7 +66,7 @@ def poetry_related(request, src=None):
         id_list = Poetry.objects.filter(q_objects).exclude(pk__in=exclude_ids).values_list('id', flat=True)
     except:
         # Chances of exceptions.ValueError, in case if exclude_ids has non integer values
-        print("ERROR: ajax.poetry_related: unexpected error 1:", sys.exc_info()[0])
+        print(("ERROR: ajax.poetry_related: unexpected error 1:", sys.exc_info()[0]))
         id_list = []
     count = len(id_list)
     mix1_count = mix1_count if count > mix1_count else count

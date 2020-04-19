@@ -56,7 +56,7 @@ class CreateThingView(View):
             
         if kwargs.get('pk', None) is None:
             # Create
-            get_params = dict([(key,value) for key,value in request.GET.iteritems()])
+            get_params = dict([(key,value) for key,value in request.GET.items()])
             form = self.form_class(initial=get_params)
         else:
             # Update
@@ -131,10 +131,10 @@ class CreateThingView(View):
                 return HttpResponseRedirect(self.next_url)
                 
             except:
-                print ("Error: Unexpected error:", sys.exc_info()[0])
+                print(("Error: Unexpected error:", sys.exc_info()[0]))
                 for frame in traceback.extract_tb(sys.exc_info()[2]):
                     fname,lineno,fn,text = frame
-                    print ("DBG:: Error in %s on line %d" % (fname, lineno))
+                    print(("DBG:: Error in %s on line %d" % (fname, lineno)))
                 
                 # Add non_field_errors to the form to convey the message    
                 form.add_error(None, "Unexpected error occured! Checking the fields may help.")
@@ -220,7 +220,7 @@ class AddItem(CreateThingView):
             self.ajax_template_name = 'repository/include/forms/book.html'
         
         else:
-            print "Error: content item_type is not found"
+            print("Error: content item_type is not found")
             raise Http404
         
         return super(self.__class__, self).dispatch(request, *args, **kwargs) 
@@ -258,7 +258,7 @@ def publish(request, item_type, pk, slug):
         template = "repository/items/publish.html"
     
     else:
-        print "Error: content item_type is not found"
+        print("Error: content item_type is not found")
         raise Http404
     
     # Check the parameters passed in the URL and process accordingly

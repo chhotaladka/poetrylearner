@@ -105,7 +105,7 @@ class FeedbackCreateView(CreateView):
         xx = request.POST.get('xx', None)
         yy = request.POST.get('yy', None)
         if xx or yy:
-            print "WARN:: spam detected."
+            print("WARN:: spam detected.")
             if request.is_ajax():
                 # Create JSON response and send
                 data = {}
@@ -200,7 +200,7 @@ def feedback_response(request, pk):
                 user_email = obj.get_user_email()
                 if user_email:
                     # Send email to the user
-                    print 'DBG:: in response to feedback %s, sending email to %s'% (obj.id, user_email)
+                    print('DBG:: in response to feedback %s, sending email to %s'% (obj.id, user_email))
                     message += ' Notification sent to user.'
             
         messages.success(request, message)
@@ -304,14 +304,14 @@ def feedback_list(request):
         # Feedbacks to which we have not responded
         obj_list = Feedback.objects.all().filter(
                                                   Q(action__isnull=True) |
-                                                  Q(action=u'')
+                                                  Q(action='')
                                                   )
 
     elif q_tab == 'closed':
         # Feedbacks to which we have responded
         obj_list = Feedback.objects.all().exclude(
                                                   Q(action__isnull=True) |
-                                                  Q(action=u'')
+                                                  Q(action='')
                                                   ).order_by('-date_responded')
             
     elif q_tab == 'known':
@@ -319,14 +319,14 @@ def feedback_list(request):
         obj_list = Feedback.objects.all().filter(
                                                  Q(added_by__isnull=False) |
                                                  Q(email__isnull=False)
-                                                 ).exclude(email=u'')
+                                                 ).exclude(email='')
         
     elif q_tab == 'anonymous':
         # Feedbacks by anonymous users (haven't given email id)        
         obj_list = Feedback.objects.all().filter(
                                                  Q(added_by__isnull=True),
                                                  Q(email__isnull=True) |
-                                                 Q(email=u'')
+                                                 Q(email='')
                                                  )        
     elif q_tab == 'me':
         # Feedbacks by me i.e. request.user        
@@ -342,7 +342,7 @@ def feedback_list(request):
         q_tab = 'pending'
         obj_list = Feedback.objects.all().filter(
                                                   Q(action__isnull=True) |
-                                                  Q(action=u'')
+                                                  Q(action='')
                                                   )
 
     # Create query list and its title

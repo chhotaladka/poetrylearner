@@ -1,4 +1,4 @@
-import urlparse
+import urllib.parse
 from django import template
 from django.conf import settings
 from django.core import urlresolvers
@@ -36,7 +36,7 @@ class ShortURL(template.Node):
         tinyid = converter.from_decimal(obj.pk)
         
         if hasattr(settings, 'SHORT_BASE_URL') and settings.SHORT_BASE_URL:
-            short_url = urlparse.urljoin(settings.SHORT_BASE_URL, prefix+tinyid)
+            short_url = urllib.parse.urljoin(settings.SHORT_BASE_URL, prefix+tinyid)
             if self.varname:
                 context[self.varname] = short_url
                 return ''
@@ -58,7 +58,7 @@ class ShortURL(template.Node):
             
     def get_prefix(self, model):
         if not hasattr(self.__class__, '_prefixmap'):
-            self.__class__._prefixmap = dict((m,p) for p,m in settings.SHORTEN_MODELS.items())
+            self.__class__._prefixmap = dict((m,p) for p,m in list(settings.SHORTEN_MODELS.items()))
         key = '%s.%s' % (model._meta.app_label, model.__class__.__name__.lower())
         return self.__class__._prefixmap[key]
         

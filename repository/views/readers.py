@@ -124,7 +124,7 @@ def item(request, item_type, pk, slug, src=None):
     
     item_cls, template = _resolve_item_type(item_type)
     if item_cls is None:
-        print "Error: content item_type is not found"
+        print("Error: content item_type is not found")
         raise Http404 
     
     # Get the object from the `pk`, raises a Http404 if not found
@@ -239,7 +239,7 @@ def list(request, item_type, src=None):
     
     item_cls, list_template = _resolve_item_type(item_type, list=True)
     if item_cls is None:
-        print "Error: content item_type is not found"
+        print("Error: content item_type is not found")
         raise Http404 
         
     q_objects = Q()
@@ -298,7 +298,7 @@ def list(request, item_type, src=None):
             kwargs['creator'] = creator
 
         except (TypeError, ValueError):
-            print 'Error: That creator_id is not an integer, pass silently'
+            print('Error: That creator_id is not an integer, pass silently')
             pass
 
     if language:
@@ -494,7 +494,7 @@ def explore_books(request, poet=None, slug=None, src=None):
     # Instantiate the Meta class
     if creator:
         meta_image_url = creator.get_image_url()
-        print meta_image_url
+        print(meta_image_url)
         meta_description = "%s has %s books on %s."%(
             creator.full_name(), paginator.count, get_current_site(request).name)
     else:
@@ -607,10 +607,10 @@ def tagged_items(request, slug, item_type, src=None):
             # Show only published `poetry`, `snippet`
             obj_list = item_cls.published.filter(keywords__slug=slug)
     except:
-        print ("Error: Unexpected error:", sys.exc_info()[0])
+        print(("Error: Unexpected error:", sys.exc_info()[0]))
         for frame in traceback.extract_tb(sys.exc_info()[2]):
             fname,lineno,fn,text = frame
-            print ("DBG:: Error in %s on line %d" % (fname, lineno))
+            print(("DBG:: Error in %s on line %d" % (fname, lineno)))
         obj_list = []
     
     result_title = '#' + slug
@@ -647,11 +647,11 @@ def get_a_poetry():
             index = random.randint(0, count-1)
             obj = obj_list[index]
         except:
-            print ("count", count)
-            print ("Error: Unexpected error:", sys.exc_info()[0])
+            print(("count", count))
+            print(("Error: Unexpected error:", sys.exc_info()[0]))
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
-                print ("DBG:: Error in %s on line %d" % (fname, lineno))
+                print(("DBG:: Error in %s on line %d" % (fname, lineno)))
             obj = {}
     else:
         obj = {}

@@ -9,7 +9,7 @@ from django.conf import settings
 #from django.utils.text import slugify
 from django.utils.http import urlquote  as django_urlquote
 from django.utils.http import urlencode as django_urlencode
-from urlparse import urlparse
+from urllib.parse import urlparse
 import random
 from common.slugify import slugify 
 

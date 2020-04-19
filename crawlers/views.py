@@ -208,7 +208,7 @@ def article_to_poetry(request):
     if request.is_ajax() and request.method == "POST":
         if creator_id is None or article_ids is None:
             # Return failure
-            print "Error: article_to_poetry: No parameter(s) passed."
+            print("Error: article_to_poetry: No parameter(s) passed.")
             res = {}
             res['result'] = 'failure'
             res['count'] = 0
@@ -219,7 +219,7 @@ def article_to_poetry(request):
         if not article_ids[-1]:
             article_ids = article_ids[:-1]
         creator_id = creator_id.strip()
-        print "article_to_poetry: creator=", creator_id, "articles=", article_ids
+        print("article_to_poetry: creator=", creator_id, "articles=", article_ids)
         
         count = 0
         
@@ -230,7 +230,7 @@ def article_to_poetry(request):
             
             if person:
                 # Add all 'articles' to Poetry with 'person' as 'creator' field
-                print "article_to_poetry: found ", person.name, " in person@repository"
+                print("article_to_poetry: found ", person.name, " in person@repository")
                 ct = ContentType.objects.get(app_label="repository", model="poetry")
                 
                 for article_id in article_ids:
@@ -249,7 +249,7 @@ def article_to_poetry(request):
                         poetry.modified_by = request.user
                         poetry.date_modified = timezone.now()
                         poetry.save()
-                        print "article_to_poetry: RawArticle ", article_id, "-> Poetry ", poetry.id
+                        print("article_to_poetry: RawArticle ", article_id, "-> Poetry ", poetry.id)
                         
                         # Make the raw_article valid
                         article.valid = True
@@ -268,7 +268,7 @@ def article_to_poetry(request):
                             public=True)
                     
                 # Return success with number of poetry made
-                print "article_to_poetry: Total", count
+                print("article_to_poetry: Total", count)
                 res = {}
                 res['result'] = 'success'
                 res['count'] = count  
@@ -276,7 +276,7 @@ def article_to_poetry(request):
             
             else:
                 # Return failure, means You have to add the entry of Person first
-                print "No such creator/person found in person@repository"
+                print("No such creator/person found in person@repository")
                 
                 res = {}
                 res['result'] = 'failure'
@@ -284,10 +284,10 @@ def article_to_poetry(request):
                 return JsonResponse(res)
             
         except:
-            print ("Error: Unexpected error:", sys.exc_info()[0])
+            print(("Error: Unexpected error:", sys.exc_info()[0]))
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
-                print ("DBG:: Error in %s on line %d" % (fname, lineno))
+                print(("DBG:: Error in %s on line %d" % (fname, lineno)))
             res = {}
             res['result'] = 'error'
             res['count'] = 0
@@ -325,11 +325,11 @@ def raw_author_list(request):
     elif q_tab == 'birth':
         # get the authors whom birth info is known
         q_objects &= ~Q(birth=None)
-        q_objects &= ~Q(birth=u'')
+        q_objects &= ~Q(birth='')
     elif q_tab == 'death':
         # get the authors whom death info is known
         q_objects &= ~Q(death=None)
-        q_objects &= ~Q(death=u'')          
+        q_objects &= ~Q(death='')          
 
     if source:
         source = source.strip()  
@@ -443,7 +443,7 @@ def fetch_readable(request):
     # Check the parameters passed in the URL and process accordingly
     url = request.GET.get('url', None)
     if validate_source_url(strip(url)) is False:
-        print "ERR:: readable_view: invalid url", url
+        print("ERR:: readable_view: invalid url", url)
         data = {}
         data['status'] = 404
         data['contenthtml'] = ''

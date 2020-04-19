@@ -18,7 +18,7 @@ def truncatewords(str, limit=30):
         return str
 
     # Make sure it's unicode
-    str = unicode(str)
+    str = str(str)
 
     # Return the string itself if length is smaller or equal to the limit
     if len(str) <= limit:
@@ -50,7 +50,7 @@ def truncatelines(str, limit=4, seperator='\n'):
     
     try:
         # Make sure it's unicode
-        str = unicode(str)
+        str = str(str)
     
         str.replace("<[\s]*\/?br[\s]*\/?>","\n")
         str = strip_tags(str)
@@ -61,10 +61,10 @@ def truncatelines(str, limit=4, seperator='\n'):
         str = str[:limit]
         str = seperator.join(str)
     except:
-        print ("Error: Unexpected error:", sys.exc_info()[0])
+        print(("Error: Unexpected error:", sys.exc_info()[0]))
         for frame in traceback.extract_tb(sys.exc_info()[2]):
             fname,lineno,fn,text = frame
-            print ("DBG:: Error in %s on line %d" % (fname, lineno))
+            print(("DBG:: Error in %s on line %d" % (fname, lineno)))
 
     # Join the words and return
     return str
@@ -78,13 +78,13 @@ def html_to_plain_text(str):
 
     try:
         # Make sure it's unicode
-        str = unicode(str)
+        str = str(str)
         ## Replace html break line tags with newline '\n'
         # (?i)<br[^>]*> FOR br tags
         # (\n)? FOR newline(if any) following br tag also needs to be taken care of
-        str = re.sub(r"(?i)<br[^>]*>(\n)?", u"\n", str)
+        str = re.sub(r"(?i)<br[^>]*>(\n)?", "\n", str)
         # Add two new lines '\n\n' just after </p> tag: to make the outpur looks like end of paragraph
-        str = re.sub(r"</p>", u"</p>\n\n", str)
+        str = re.sub(r"</p>", "</p>\n\n", str)
         # Strip remaining html
         str = strip_tags(str)
         # Remove leading and ending white spaces
@@ -92,10 +92,10 @@ def html_to_plain_text(str):
         ##str = linebreaks(str, autoescape=False)
         
     except:
-        print ("Error: Unexpected error:", sys.exc_info()[0])
+        print(("Error: Unexpected error:", sys.exc_info()[0]))
         for frame in traceback.extract_tb(sys.exc_info()[2]):
             fname,lineno,fn,text = frame
-            print ("DBG:: Error in %s on line %d" % (fname, lineno))
+            print(("DBG:: Error in %s on line %d" % (fname, lineno)))
                  
     return str
 

@@ -49,14 +49,14 @@ class BookmarkManager(models.Manager):
         # If it does, then just update the previous one
         try:
             bookmark_obj = self.get(user=user, content_type=content_type, object_id=obj._get_pk_val())
-            print "WARNING:: bookmark already exist."
+            print("WARNING:: bookmark already exist.")
                 
         except ObjectDoesNotExist:
             #This is the first time we're creating it
             try:
                 bookmark_obj = self.create(user=user, content_type=content_type, object_id=obj._get_pk_val())                        
             except:
-                print 'ERR:: something went wrong in creating a bookmark object. {file}:{line}'.format(file=str('__FILE__'), line=str('__LINE__'))
+                print('ERR:: something went wrong in creating a bookmark object. {file}:{line}'.format(file=str('__FILE__'), line=str('__LINE__')))
                 bookmark_obj = None
         
         return bookmark_obj
@@ -75,7 +75,7 @@ class BookmarkManager(models.Manager):
             bookmark_obj.delete()
                 
         except ObjectDoesNotExist:
-            print 'WARNING:: Bookmark does not exist.'
+            print('WARNING:: Bookmark does not exist.')
             raise ObjectDoesNotExist  
         
         return bookmark_id 

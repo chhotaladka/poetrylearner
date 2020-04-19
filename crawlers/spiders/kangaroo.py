@@ -13,11 +13,11 @@ try:
     from crawlers.utils import save_to_db_poem, save_to_db_author, get_language_list_for_url
 except ImportError:
     def save_to_db_poem(data):
-        print data['title']
+        print(data['title'])
         pass
     
     def save_to_db_author(data):
-        print data
+        print(data)
         pass
     
     def get_language_list_for_url(url):
@@ -147,11 +147,11 @@ class KangarooBot(scrapy.Spider):
             self.logger.debug("parse_url_list: %s urls found."%len(urls))
             
         except:
-            print("ERROR: parse_url_list: ", sys.exc_info()[0])
+            print(("ERROR: parse_url_list: ", sys.exc_info()[0]))
             _trace = ''
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
-                print ("ERROR: error in %s on line %d" % (fname, lineno))
+                print(("ERROR: error in %s on line %d" % (fname, lineno)))
                 _trace = _trace + "error in %s on line %d" % (fname, lineno)
             with open(self.LOGFILE, "a") as outfile:
                 t = time.asctime( time.localtime(time.time()) )

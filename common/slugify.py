@@ -125,14 +125,14 @@ import types
 import sys
 
 try:
-    from htmlentitydefs import name2codepoint
-    _unicode = unicode
-    _unicode_type = types.UnicodeType
+    from html.entities import name2codepoint
+    _unicode = str
+    _unicode_type = str
 except ImportError:
     from html.entities import name2codepoint
     _unicode = str
     _unicode_type = str
-    unichr = chr
+    chr = chr
 
 #import unidecode
 
@@ -225,19 +225,19 @@ def slugify(text, entities=True, decimal=True, hexadecimal=True, max_length=0, w
 
     # character entity reference
     if entities:
-        text = CHAR_ENTITY_PATTERN.sub(lambda m: unichr(name2codepoint[m.group(1)]), text)
+        text = CHAR_ENTITY_PATTERN.sub(lambda m: chr(name2codepoint[m.group(1)]), text)
     
     # decimal character reference
     if decimal:
         try:
-            text = DECIMAL_PATTERN.sub(lambda m: unichr(int(m.group(1))), text)
+            text = DECIMAL_PATTERN.sub(lambda m: chr(int(m.group(1))), text)
         except:
             pass
 
     # hexadecimal character reference
     if hexadecimal:
         try:
-            text = HEX_PATTERN.sub(lambda m: unichr(int(m.group(1), 16)), text)
+            text = HEX_PATTERN.sub(lambda m: chr(int(m.group(1), 16)), text)
         except:
             pass
     
@@ -278,7 +278,7 @@ def slugify(text, entities=True, decimal=True, hexadecimal=True, max_length=0, w
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage %s TEXT TO SLUGIFY" % sys.argv[0])
+        print(("Usage %s TEXT TO SLUGIFY" % sys.argv[0]))
     else:
         text = ' '.join(sys.argv[1:])
-        print(slugify(text))
+        print((slugify(text)))

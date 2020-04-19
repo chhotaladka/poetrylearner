@@ -8,10 +8,10 @@ try:
     from crawlers.utils import save_to_db_poem, save_to_db_author, get_language_list_for_url
 except ImportError:
     def save_to_db_poem(data):
-        print data
+        print(data)
     
     def save_to_db_author(data):
-        print data
+        print(data)
     
     def get_language_list_for_url(url):
         return []
@@ -214,7 +214,7 @@ class ReindeerBot(scrapy.Spider):
             # extract poet name
             # poet name must be in english. 
             poet_href = response.xpath("//div[contains(@class,'mainContentBody')]/div[contains(@class,'poemPageContentHeader')]//a[contains(@class,'ghazalAuthor')]/@href").extract()[0]
-            p = re.compile(ur'poets/(.+)/') #href="/poets/anjum-tarazi/?lang=Hi"
+            p = re.compile(r'poets/(.+)/') #href="/poets/anjum-tarazi/?lang=Hi"
             poet = p.search(poet_href).group(1)
             poet = poet.replace('-', ' ')
             

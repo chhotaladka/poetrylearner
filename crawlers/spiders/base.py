@@ -35,15 +35,15 @@ class BaseSpider(object):
         '''
         @summary: Tests for spider. Derived class would override this function.
         '''
-        print '============= testing %s =============='%(self.spider_name)
-        print '============== end of testing ==============='
+        print('============= testing %s =============='%(self.spider_name))
+        print('============== end of testing ===============')
     
     def resume(self):
         '''
         @summary: Resume/Run spider
         '''
-        print '============= running %s =============='%(self.spider_name)
+        print('============= running %s =============='%(self.spider_name))
         
         self.process.start()
         
-        print '================ end of run ================='
+        print('================ end of run =================')

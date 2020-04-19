@@ -9,9 +9,9 @@
 import re
 from bs4 import BeautifulSoup, Comment
 from bs4 import element as bs_element
-from __builtin__ import str
+from builtins import str
 import math
-from urlparse import urlparse
+from urllib.parse import urlparse
 import requests
 import collections
 import copy
@@ -59,7 +59,7 @@ class Readability():
                 self._flags = self.FLAG_STRIP_UNLIKELYS | self.FLAG_WEIGHT_CLASSES | self.FLAG_CLEAN_CONDITIONALLY;
             else:
                 self._status = "Http Exception code " + str(r.status_code)
-                print("Unable to fetch the article status ", r.status_code);
+                print(("Unable to fetch the article status ", r.status_code));
         except requests.exceptions.Timeout:
             # Maybe set up for a retry, or continue in a retry loop
             self._status = "Request timeout!!!"
@@ -71,7 +71,7 @@ class Readability():
         except requests.exceptions.RequestException as e:
             # catastrophic error. bail.
             self._status = "Not able to fetch, SSL Error!!!"
-            print e
+            print(e)
 
     def _flagIsActive(self,flag):
             return (self._flags & flag) > 0;
@@ -428,7 +428,7 @@ class Readability():
                 
                 ## reached here it means remove it
                 nodestring = " ".join(node.get('class', [])) + " " + node.get('id', " ");
-                print('cleaning node ', nodestring, ' as no embed info found')
+                print(('cleaning node ', nodestring, ' as no embed info found'))
                 node.extract()
 
 
@@ -512,7 +512,7 @@ class Readability():
                weight = self._getClassWeight(node);
 
                if (weight  < 0):
-                   print("Cleaning Conditionally as weight is negative ", matchString );
+                   print(("Cleaning Conditionally as weight is negative ", matchString ));
                    node.extract()
                    continue
     
@@ -542,7 +542,7 @@ class Readability():
                                     (weight >= 25 and linkDensity > 0.5) or \
                                     ((embedCount == 1 and contentLength < 75) or embedCount > 1);
                    if(haveToRemove):
-                       print("Cleaning Conditionally as this doesn't seem like valid content ", matchString );
+                       print(("Cleaning Conditionally as this doesn't seem like valid content ", matchString ));
                        node.extract()
                        continue
        except:
@@ -839,7 +839,7 @@ class Readability():
 
                 contentScore = 1
                 contentScore += innerText.count(',')
-                contentScore += innerText.count(u'，')
+                contentScore += innerText.count('，')
                 contentScore +=  min(math.floor(len(innerText) / 100), 3)
 
                 def scoreNode(ance, level):
@@ -1023,10 +1023,10 @@ class Readability():
                         topCandidate = self._initializeNode(topCandidate['node']);
                         
                 except:
-                    print "Exception in finding alternate top candidate:"
-                    print '-'*60
+                    print("Exception in finding alternate top candidate:")
+                    print('-'*60)
                     traceback.print_exc(file=sys.stdout)
-                    print '-'*60
+                    print('-'*60)
                     sys.exc_clear()
                     
 
@@ -1084,7 +1084,7 @@ class Readability():
                             print('Sibling is p with valid data appending it')
                             append = True
                 if (append):
-                    print("Appending node:", self._nodeString(sibling), " score ", self._getScore(sibling, candidates));
+                    print(("Appending node:", self._nodeString(sibling), " score ", self._getScore(sibling, candidates)));
                     if ( sibling.name not in self.ALTER_TO_DIV_EXCEPTIONS):
                         ## We have a node that isn't a common block level element, like a form or td tag.
                         ## Turn it into a div so it doesn't get filtered out later by accident.
@@ -1167,7 +1167,7 @@ class Readability():
             else:
                 return None
         except:
-            print "Error in get_imageurl_from_data"
+            print("Error in get_imageurl_from_data")
             pass
         
         return None
@@ -1324,7 +1324,7 @@ class Readability():
            remove_cond =  totalCount == 0 and self._getInnerText(paragraph, False) is None;
            if(remove_cond):
                nodestring = " ".join(paragraph.get('class', [])) + " " + paragraph.get('id', " ");
-               print('Removing the paragraph ', nodestring, ' as no images or text')
+               print(('Removing the paragraph ', nodestring, ' as no images or text'))
                paragraph.extract()
        
        for br in self._getAllNodesWithTag(articleContent, ["br"]):
@@ -1361,17 +1361,17 @@ class Readability():
         metadata = self._getArticleMetadata();
         self._articleTitle = metadata['title'];
          
-        print('************Title ', self._articleTitle, ' ***************')
+        print(('************Title ', self._articleTitle, ' ***************'))
         ## Grab the article content
         try:
             articleContent = self._grabArticle(self._doc.body);
             if articleContent is None:
                 return {'message': self._status, 'content': None}
         except:
-            print "Exception in user code:"
-            print '-'*60
+            print("Exception in user code:")
+            print('-'*60)
             traceback.print_exc(file=sys.stdout)
-            print '-'*60
+            print('-'*60)
             return {'message': "Parsing Error", 'content': None}
         
         

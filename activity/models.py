@@ -7,11 +7,11 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 
 VERBS = {
-    'ADDITION': u'added',
-    'CHANGE': u'updated',
-    'DELETION': u'deleted',
-    'PUBLISH': u'published',
-    'UNPUBLISH': u'unpublished',
+    'ADDITION': 'added',
+    'CHANGE': 'updated',
+    'DELETION': 'deleted',
+    'PUBLISH': 'published',
+    'UNPUBLISH': 'unpublished',
 }
 
 

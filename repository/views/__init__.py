@@ -1,4 +1,4 @@
-import readers
-import writers
-import search
-import ajax
+from . import readers
+from . import writers
+from . import search
+from . import ajax

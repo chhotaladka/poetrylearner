@@ -1,5 +1,4 @@
-from functools import wraps
-from django.utils.decorators import available_attrs
+from functools import wraps, WRAPPER_ASSIGNMENTS
 from django.core.exceptions import PermissionDenied
 
 
@@ -11,7 +10,7 @@ def user_has_group(test_func):
     """
 
     def decorator(view_func):
-        @wraps(view_func, assigned=available_attrs(view_func))
+        @wraps(view_func, assigned=WRAPPER_ASSIGNMENTS)
         def _wrapped_view(request, *args, **kwargs):
             if test_func(request.user):
                 return view_func(request, *args, **kwargs)

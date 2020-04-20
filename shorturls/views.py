@@ -1,6 +1,7 @@
 import urllib.parse
 from django.conf import settings
-from django.contrib.sites.models import Site, RequestSite
+from django.contrib.sites.models import Site
+from django.contrib.sites.requests import RequestSite
 from django.apps import apps
 from django.http import HttpResponsePermanentRedirect, Http404
 from django.shortcuts import get_object_or_404

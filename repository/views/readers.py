@@ -6,7 +6,7 @@ from django.http import (
 from django.core.exceptions import PermissionDenied
 from django.template.context_processors import request
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.template.loader import render_to_string

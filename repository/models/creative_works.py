@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 #from django.conf.global_settings import LANGUAGES
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import strip_tags

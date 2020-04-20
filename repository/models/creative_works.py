@@ -40,7 +40,8 @@ class PoetryManager(CreativeWorkManager):
         id_list = self.filter(q_objects).values_list('id', flat=True)
         total = len(id_list)
         count = count if total > count else total
-        mix_ids = random.sample(id_list, count)
+        # id_list is of type <class 'django.db.models.query.QuerySet'>
+        mix_ids = random.sample(list(id_list), count)
         return super(PoetryManager, self).get_queryset().filter(pk__in=mix_ids)
 
     

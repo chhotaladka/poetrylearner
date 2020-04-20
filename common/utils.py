@@ -48,10 +48,7 @@ def truncatelines(str, limit=4, seperator='\n'):
         # Fail silently.
         return str
     
-    try:
-        # Make sure it's unicode
-        str = str(str)
-    
+    try:   
         str.replace("<[\s]*\/?br[\s]*\/?>","\n")
         str = strip_tags(str)
         ## Split the string by lines and remove blank elements if any 
@@ -105,7 +102,7 @@ def user_has_group(user, groups):
     @summary: returns True if user is in given ``groups`` list
         like ['Administrator', 'Editor']
     '''
-    if user.is_authenticated():       
+    if user.is_authenticated:       
         if bool(user.groups.filter(name__in=groups)) | user.is_superuser:
             return True
     return False        

@@ -12,8 +12,8 @@ class BookmarkByUserNode(template.Node):
 
     def render(self, context):
         try:
-            user = template.resolve_variable(self.user, context)
-            object = template.resolve_variable(self.object, context)
+            user = template.Variable(self.user).resolve(context)
+            object = template.Variable(self.object).resolve(context)
         except template.VariableDoesNotExist:
             return ''
         context[self.context_var] = Bookmark.objects.get_for_user(object, user)
@@ -28,7 +28,7 @@ class BookmarksByUserNode(template.Node):
 
     def render(self, context):
         try:
-            user = template.resolve_variable(self.user, context)
+            user = template.Variable(self.user).resolve(context)
         except template.VariableDoesNotExist:
             return ''
         context[self.context_var] = Bookmark.objects.get_all_for_user(user)[:self.count]
@@ -42,7 +42,7 @@ class BookmarksCountByUserNode(template.Node):
 
     def render(self, context):
         try:
-            user = template.resolve_variable(self.user, context)
+            user = template.Variable(self.user).resolve(context)
         except template.VariableDoesNotExist:
             return ''
         context[self.context_var] = Bookmark.objects.get_all_for_user(user).count()

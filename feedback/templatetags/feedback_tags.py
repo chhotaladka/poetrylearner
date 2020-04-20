@@ -16,7 +16,7 @@ def feedback_form(context):
     url = None
     if context.get('request'):
         url = context['request'].path
-        if context['request'].user.is_authenticated():
+        if context['request'].user.is_authenticated:
             user = context['request'].user
     return {
         'form': FeedbackForm(url=url, user=user),

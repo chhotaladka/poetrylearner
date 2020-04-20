@@ -70,7 +70,7 @@ class FeedbackCreateView(CreateView):
         #print "FeedbackCreateView get_form_kwargss."
         kwargs = super(FeedbackCreateView, self).get_form_kwargs()
         
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             kwargs.update({'user': self.request.user})
         
         kwargs.update({

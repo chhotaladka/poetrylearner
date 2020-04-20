@@ -70,7 +70,8 @@ def poetry_related(request, src=None):
         id_list = []
     count = len(id_list)
     mix1_count = mix1_count if count > mix1_count else count
-    mix1_ids = random.sample(id_list, mix1_count)
+    # id_list is of type <class 'django.db.models.query.QuerySet'>
+    mix1_ids = random.sample(list(id_list), mix1_count)
     
     # Select `mix2_count` random poetry by other creators
     q_objects = Q()
@@ -79,7 +80,7 @@ def poetry_related(request, src=None):
     id_list = Poetry.objects.filter(q_objects).values_list('id', flat=True)
     count = len(id_list)
     mix2_count = mix2_count if count > mix2_count else count
-    mix2_ids = random.sample(id_list, mix2_count)
+    mix2_ids = random.sample(list(id_list), mix2_count)
     
     ids = mix1_ids + mix2_ids
     obj_list = Poetry.objects.filter(pk__in=ids)

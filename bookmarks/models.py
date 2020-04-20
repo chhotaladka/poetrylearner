@@ -19,7 +19,7 @@ class BookmarkManager(models.Manager):
         Get the Bookmark made on the given object by the given user, or
         ``None`` if no matching bookmark exists.
         """
-        if not user.is_authenticated():
+        if not user.is_authenticated:
             return None
         content_object = ContentType.objects.get_for_model(obj)
         try:

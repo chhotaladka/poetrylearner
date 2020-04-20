@@ -158,7 +158,7 @@ class AddItem(CreateThingView):
         ##
         # Check for permission
         allowed_groups = ['administrator', 'editor']
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             if bool(request.user.groups.filter(name__in=allowed_groups)) | request.user.is_superuser:
                 pass
             else:

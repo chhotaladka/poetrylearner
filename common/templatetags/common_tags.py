@@ -60,7 +60,7 @@ def has_group(user, groups):
     '''
     if user:       
         group_list = [s for s in groups.split(',')]
-        if user.is_authenticated():
+        if user.is_authenticated:
             if bool(user.groups.filter(name__in=group_list)) | user.is_superuser:
                 return True
     return False

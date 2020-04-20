@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from . import views
 
+app_name = 'crawlers'
 urlpatterns = [
     
     url(r'^article/add-poetry$', views.article_to_poetry, name='article-to-poetry'),

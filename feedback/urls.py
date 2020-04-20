@@ -2,7 +2,7 @@ from django.conf.urls import include, url, patterns
 
 from . import views
 
-
+app_name = 'feedback'
 urlpatterns = [
 
     url(r'^(?P<pk>\d+)$', views.feedback_response, name='response'),

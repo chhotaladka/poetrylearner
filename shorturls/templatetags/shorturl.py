@@ -1,7 +1,7 @@
 import urllib.parse
 from django import template
 from django.conf import settings
-from django.core import urlresolvers
+from django.urls import reverse, NoReverseMatch
 from django.utils.safestring import mark_safe
 from shorturls import default_converter as converter
 
@@ -44,7 +44,7 @@ class ShortURL(template.Node):
                 return short_url
             
         try:
-            short_url = urlresolvers.reverse('shorturls:redirect', kwargs = {
+            short_url = reverse('shorturls:redirect', kwargs = {
                 'prefix': prefix,
                 'tiny': tinyid
             })
@@ -53,7 +53,7 @@ class ShortURL(template.Node):
                 return ''
             else:
                 return short_url
-        except urlresolvers.NoReverseMatch:
+        except NoReverseMatch:
             return ''
             
     def get_prefix(self, model):

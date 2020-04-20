@@ -64,7 +64,8 @@ class Thing(models.Model):
                               For example, the URL of the item's Wikipedia page or official website or the URL from where the crawler has collected the data.")
                             )
 
-    added_by = models.ForeignKey(auth.models.User, 
+    added_by = models.ForeignKey(auth.models.User,
+                                on_delete=models.SET_NULL,
                                  related_name="%(app_label)s_%(class)s_added")
     
     date_added = models.DateTimeField(auto_now_add=True,
@@ -72,6 +73,7 @@ class Thing(models.Model):
                                       )
     
     modified_by = models.ForeignKey(auth.models.User,
+                                    on_delete=models.SET_NULL,
                                     related_name="%(app_label)s_%(class)s_modified")
     
     date_modified = models.DateTimeField(blank=True,

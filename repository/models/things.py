@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib import auth
-from django.urlrs import reverse
+from django.urls import reverse
 from django.utils import timezone
 from django.template.defaultfilters import default
 from django.utils.translation import ugettext_lazy as _

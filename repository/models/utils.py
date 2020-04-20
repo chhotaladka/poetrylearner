@@ -5,7 +5,6 @@ from django.conf import settings
 
 from taggit.managers import TaggableManager
 from taggit.models import TagBase, GenericTaggedItemBase
-from mhlib import PATH
 
 # Create your models here.
        
@@ -55,6 +54,7 @@ class TaggedItem(GenericTaggedItemBase):
 
     # Here is where you provide your custom Tag class.
     tag = models.ForeignKey(Tag,
+                            on_delete=models.SET_NULL,
                             related_name="%(app_label)s_%(class)s_items")
     
     

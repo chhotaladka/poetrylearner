@@ -1,6 +1,5 @@
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
-from django.utils.six import text_type
 from django.dispatch import receiver
 
 from activity import signals

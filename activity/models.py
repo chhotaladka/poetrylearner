@@ -96,12 +96,14 @@ class Action(models.Model):
                                      db_index=True)
 
     actor = models.ForeignKey(User,
-                              related_name='action',
-                              db_index=True)
+                            on_delete=models.SET_NULL,
+                            related_name='action',
+                            db_index=True)
 
     target_content_type = models.ForeignKey(ContentType,
-                                     blank=True, null=True,
-                                     db_index=True)
+                                    on_delete=models.SET_NULL,
+                                    blank=True, null=True,
+                                    db_index=True)
     target_object_id = models.PositiveIntegerField(blank=True, null=True,
                                  db_index=True)
     target_object_repr = models.CharField(max_length=200,

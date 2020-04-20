@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     '''
     User profile populated using social account from Facebook, Google and Twitter respectively.
     '''
-    user = models.OneToOneField(User, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     date_birth = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=20, blank=True, null=True)
     signup_date = models.DateTimeField(auto_now_add=True)

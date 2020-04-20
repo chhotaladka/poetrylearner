@@ -94,7 +94,8 @@ class Bookmark(models.Model):
     @summary: Model for Bookmarks by user
     '''
     
-    user = models.ForeignKey(User, 
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
                              related_name="saved_bookmarks",
                              verbose_name=_("user")
                             )
@@ -105,7 +106,8 @@ class Bookmark(models.Model):
     
     # Generic Foreign Key to the object this bookmark is about
     content_type = models.ForeignKey(ContentType,
-                                     related_name="bookmark_content_objects",
+                                    on_delete=models.CASCADE,
+                                    related_name="bookmark_content_objects",
                                     )
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')

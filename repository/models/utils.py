@@ -54,7 +54,7 @@ class TaggedItem(GenericTaggedItemBase):
 
     # Here is where you provide your custom Tag class.
     tag = models.ForeignKey(Tag,
-                            on_delete=models.SET_NULL,
+                            on_delete=models.CASCADE,
                             related_name="%(app_label)s_%(class)s_items")
     
     

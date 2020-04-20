@@ -65,15 +65,15 @@ class Thing(models.Model):
                             )
 
     added_by = models.ForeignKey(auth.models.User,
-                                on_delete=models.SET_NULL,
-                                 related_name="%(app_label)s_%(class)s_added")
+                                on_delete=models.PROTECT,
+                                related_name="%(app_label)s_%(class)s_added")
     
     date_added = models.DateTimeField(auto_now_add=True,
                                       help_text=_("The date time on which the item was created or the item was added to a DataFeed.")
                                       )
     
     modified_by = models.ForeignKey(auth.models.User,
-                                    on_delete=models.SET_NULL,
+                                    on_delete=models.PROTECT,
                                     related_name="%(app_label)s_%(class)s_modified")
     
     date_modified = models.DateTimeField(blank=True,

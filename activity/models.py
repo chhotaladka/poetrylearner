@@ -96,7 +96,7 @@ class Action(models.Model):
                                      db_index=True)
 
     actor = models.ForeignKey(User,
-                            on_delete=models.SET_NULL,
+                            on_delete=models.PROTECT,
                             related_name='action',
                             db_index=True)
 

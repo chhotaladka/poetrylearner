@@ -64,19 +64,15 @@ def CreateProfile(sender, request, user,**kwargs):
         try:
             sociallogin = SocialAccount.objects.get(user=user)
             if('google' == sociallogin.provider ):
-                user.first_name = sociallogin.extra_data['given_name']
-                user.last_name = sociallogin.extra_data['family_name']
+                user.first_name = sociallogin.extra_data.get('given_name', '')
+                user.last_name = sociallogin.extra_data.get('family_name', '')
                 user.save()
             elif ('facebook' == sociallogin.provider ):
-                user.first_name = sociallogin.extra_data['first_name']
-                user.last_name = sociallogin.extra_data['last_name']
+                user.first_name = sociallogin.extra_data.get('first_name', '')
+                user.last_name = sociallogin.extra_data.get('last_name', '')
                 user.save()
-            try:                
-                profile.gender = sociallogin.extra_data['gender']
-            except:
-                print("DBG:: Gender does not exist in social account")
-                profile.gender = GENDER_UNSPECIFIED
-                
+               
+            profile.gender = sociallogin.extra_data.get('gender', GENDER_UNSPECIFIED)                
         except:
             print(("Error:: Unexpected error:", sys.exc_info()[0]))
             for frame in traceback.extract_tb(sys.exc_info()[2]):

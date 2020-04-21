@@ -158,12 +158,7 @@ class UserProfile(models.Model):
             if self.get_provider_name(profile.provider) == 'twitter':
                 # Twitter do not provide gender information
                 return GENDER_UNSPECIFIED
-            try:
-                # extra_data may not have gender information
-                gender = profile.extra_data['gender']
-            except:
-                gender = GENDER_UNSPECIFIED
-            return gender
+            return profile.extra_data.get('gender', GENDER_UNSPECIFIED)
         else:
             return GENDER_UNSPECIFIED
 
@@ -176,7 +171,7 @@ class UserProfile(models.Model):
         if profile != None:
             if self.get_provider_name(profile.provider) == 'twitter':
                 return self.user.email
-            return profile.extra_data['email']
+            return profile.extra_data.get('email', '')
         else:
             return self.user.email
         
@@ -187,8 +182,8 @@ class UserProfile(models.Model):
         profile = self._get_social_account(provider)
         if profile != None:
             if self.get_provider_name(profile.provider) == 'twitter':
-                return "@{0}".format(profile.extra_data['screen_name'].encode('utf-8'))
-            return profile.extra_data['email']
+                return "@{0}".format(profile.extra_data.get('screen_name', ''))
+            return profile.extra_data.get('email', '')
         else:
             return self.user.email        
 
@@ -232,50 +227,50 @@ class UserProfile(models.Model):
     # Private functions for retrieving the fname, lname, email etc. from GooGle, Facebook and twitter
         
     def _get_google_fname(self,profile):
-        return str(profile.extra_data['name']).split(' ')[0].encode('utf-8')
+        return profile.extra_data.get('name', '').split()[0]
     
     def _get_google_lname(self,profile):
-        return profile.extra_data['family_name'].encode('utf-8')
+        return profile.extra_data.get('family_name', '')
 
     def _get_google_email(self,profile):
-        return profile.extra_data['email'].encode('utf-8')
+        return profile.extra_data.get('email', '')
 
     def _get_google_username(self,profile):
-        return profile.extra_data['given_name'].encode('utf-8')
+        return profile.extra_data.get('given_name', '')
 
     def _get_google_link(self,profile):
-        return profile.extra_data['link']
+        return profile.extra_data.get('link', '')
 
     def _get_fb_fname(self,profile):
-        return profile.extra_data['first_name'].encode('utf-8')
+        return profile.extra_data.get('first_name', '')
     
     def _get_fb_lname(self,profile):
-        return profile.extra_data['last_name'].encode('utf-8')
+        return profile.extra_data.get('last_name', '')
 
     def _get_fb_email(self,profile):
-        return profile.extra_data['email'].encode('utf-8')
+        return profile.extra_data.get('email', '')
 
     def _get_fb_username(self,profile):
-        return profile.extra_data['name'].encode('utf-8')
+        return profile.extra_data.get('name', '')
 
     def _get_fb_link(self,profile):
-        return profile.extra_data['link']
+        return profile.extra_data.get('link', '')
     
     def _get_tw_fname(self,profile):
-        return str(profile.extra_data['name']).split(' ')[0].encode('utf-8')
+        return profile.extra_data.get('name', '').split()[0]
 
     def _get_tw_lname(self,profile):
-        names = str(profile.extra_data['name']).split(' ')
+        names = profile.extra_data.get('name', '').split()
         if len(names) > 1:
-            return names[-1].encode('utf-8')
+            return names[-1]
         else:
             return ''
 
     def _get_tw_username(self,profile):
-        return profile.extra_data['screen_name'].encode('utf-8')
+        return profile.extra_data.get('screen_name', '')
 
     def _get_tw_link(self,profile):
-        return  "//twitter.com/" + str(profile.extra_data['screen_name'])
+        return  "//twitter.com/" + profile.extra_data.get('screen_name', '')
 
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

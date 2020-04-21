@@ -14,7 +14,7 @@
 		{% endfor %}
 	{% endif %}
 	
-	{% if provider.name = 'Facebook' %}
+	{% if provider.name == 'Facebook' %}
 	<div>
 		<a class="button-rounded border wFull mB-16 h-shadow social-icon facebook" title="{{provider.name}}"
 			href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">

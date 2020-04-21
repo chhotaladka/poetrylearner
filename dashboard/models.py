@@ -37,7 +37,7 @@ class UserProfile(models.Model):
         
     def _get_social_account(self, provider=None):
         '''
-        Return the social account object of Facebook, Google and Twitter in that order if provier is None else return the provider account.
+        Return the social account object of Google, Facebook, and Twitter in that order if provier is None else return the provider account.
         '''
         if provider != None:
             account_uid = SocialAccount.objects.filter(user_id=self.user.id, provider=provider)
@@ -47,11 +47,11 @@ class UserProfile(models.Model):
                 return None
             
         try:
-            account_uid = SocialAccount.objects.filter(user_id=self.user.id, provider='facebook')
+            account_uid = SocialAccount.objects.filter(user_id=self.user.id, provider='google')
             if len(account_uid):
                 return account_uid[0]
-    
-            account_uid = SocialAccount.objects.filter(user_id=self.user.id, provider='google')
+
+            account_uid = SocialAccount.objects.filter(user_id=self.user.id, provider='facebook')
             if len(account_uid):
                 return account_uid[0]
     
@@ -71,7 +71,7 @@ class UserProfile(models.Model):
     
     def get_avatar_url(self, provider=None):
         '''
-        If provider is None, return the avatar of social account Facebook, Google and Twitter in that order.
+        If provider is None, return the avatar of preferred social account.
         TODO: return default avatar if no social account is found.
         '''
         profile = self._get_social_account(provider)
@@ -82,7 +82,7 @@ class UserProfile(models.Model):
     
     def get_username(self, provider=None):
         '''
-        If provider is None, return the username of social account Facebook, Google and Twitter in that order.
+        If provider is None, return the username of preferred social account.
         '''
         profile = self._get_social_account(provider)
         if profile != None:
@@ -102,7 +102,7 @@ class UserProfile(models.Model):
 
     def get_first_name(self, provider=None):
         '''
-        Return the first name from social account Facebook, Google and Twitter in that order, if provider is None.
+        Return the first name from preferred social account, if provider is None.
         TODO: return default first name from User model if no social account is found.
         '''
         profile = self._get_social_account(provider)
@@ -120,7 +120,7 @@ class UserProfile(models.Model):
     
     def get_last_name(self, provider=None):
         '''
-        Return the last name from social account Facebook, Google and Twitter in that order, if provider is None.
+        Return the last name from preferred social account, if provider is None.
         TODO: return default last name from User model if no social account is found.
         '''
         profile = self._get_social_account(provider)
@@ -151,7 +151,7 @@ class UserProfile(models.Model):
 
     def get_gender(self, provider=None):
         '''
-        Return the gender from social account Facebook, Google and Twitter in that order.
+        Return the gender from preferred social account, if provider is None.
         '''
         profile = self._get_social_account(provider)
         if profile != None:
@@ -164,7 +164,7 @@ class UserProfile(models.Model):
 
     def get_email(self, provider=None):
         '''
-        Return the email of social account Facebook, Google and Twitter in that order, if provider is None.
+        Return the email of preferred social account, if provider is None.
         TODO: return default email if no social account is found.
         '''
         profile = self._get_social_account(provider)
@@ -189,7 +189,7 @@ class UserProfile(models.Model):
 
     def get_social_url(self, provider=None):
         '''
-        Return the social url of social account Facebook, Google and Twitter in that order, if provider is None.
+        Return the social url of preferred social account, if provider is None.
         todo: return default blank  if no social account is found.
         '''
         profile = self._get_social_account(provider)
@@ -208,7 +208,7 @@ class UserProfile(models.Model):
        
     def get_provider_name(self,provider=None):
         '''
-        Return the provider name of social account Facebook, Google and Twitter in that order, if provider is None.
+        Return the provider name of preferred social account, if provider is None.
         TODO: return default blank  if no social account is found.
         '''
         profile = self._get_social_account(provider)
@@ -225,7 +225,6 @@ class UserProfile(models.Model):
 
     ##
     # Private functions for retrieving the fname, lname, email etc. from GooGle, Facebook and twitter
-        
     def _get_google_fname(self,profile):
         return profile.extra_data.get('name', '').split()[0]
     

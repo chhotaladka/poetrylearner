@@ -63,27 +63,31 @@ def poetry_related(request, src=None):
     q_objects &= Q(date_published__isnull=False)
     q_objects &= Q(creator_id=ref_poetry.creator_id)
     try:
-        id_list = Poetry.objects.filter(q_objects).exclude(pk__in=exclude_ids).values_list('id', flat=True)
+        q_ids = Poetry.objects.filter(q_objects).exclude(pk__in=exclude_ids).values_list('id', flat=True)
     except:
         # Chances of exceptions.ValueError, in case if exclude_ids has non integer values
         print(("ERROR: ajax.poetry_related: unexpected error 1:", sys.exc_info()[0]))
         id_list = []
-    count = len(id_list)
-    mix1_count = mix1_count if count > mix1_count else count
-    # id_list is of type <class 'django.db.models.query.QuerySet'>
-    mix1_ids = random.sample(list(id_list), mix1_count)
+    id_list = list(q_ids) # evaluate queryset
+    mix1_ids = random.sample(id_list, min(mix1_count, len(id_list)))
     
     # Select `mix2_count` random poetry by other creators
     q_objects = Q()
     q_objects &= Q(date_published__isnull=False)
     q_objects &= ~Q(creator_id=ref_poetry.creator_id)
-    id_list = Poetry.objects.filter(q_objects).values_list('id', flat=True)
-    count = len(id_list)
-    mix2_count = mix2_count if count > mix2_count else count
-    mix2_ids = random.sample(list(id_list), mix2_count)
+    q_ids = Poetry.objects.filter(q_objects).values_list('id', flat=True)
+    id_list = list(q_ids) # evaluate queryset
+    mix2_ids = random.sample(id_list, min(mix2_count, len(id_list)))
     
     ids = mix1_ids + mix2_ids
-    obj_list = Poetry.objects.filter(pk__in=ids)
+    q_objs = Poetry.objects.filter(pk__in=ids)
+    # Above queryset gives the result sorted by pk, but we dont want this.
+    # We want same ordering as in `ids` list
+    obj_list = []
+    for id in ids:
+        for obj in q_objs:
+            if id == obj.id:
+                obj_list.append(obj)
 
     # Encode the values into the `continuation`
     if not continuation:

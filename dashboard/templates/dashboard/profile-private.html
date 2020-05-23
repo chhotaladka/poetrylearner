@@ -5,6 +5,7 @@
 {% block title %}{{ profile.get_name }} - {{ sitename }}{% endblock %}
 
 {% block main %}
+{# USER INFO #}
 <section class="pT-8">
     <div class="_layout layout-mL mdl-grid">
         <div class="mdl-cell mdl-cell--12-col">
@@ -12,21 +13,20 @@
         </div>
     </div>
 </section>
-<section class="bB1"></section>
 <section class="pT-16 pB-16">
     <div class="_layout layout-mL mdl-grid">
-        <div class="__l mdl-cell mdl-cell--6-col pA-0 centered">
-            <div class="mT-32">
-	            {% include 'dashboard/include/bookmarks-app.html' %}
-            </div>
-        </div>
-        <div class="__c mdl-cell mdl-cell--6-col pA-0 centered">
+        <div class="__r mdl-cell mdl-cell--12-col pA-0 centered">
             <div class="mT-32">
         {% if request.user|has_group:"administrator,editor" %}
             {% include 'dashboard/include/suggestion-review-list.html' %}
         {% else %}
             {% include 'dashboard/include/suggestion-read-list.html' %}
         {% endif %}
+            </div>
+        </div>
+        <div class="__l mdl-cell mdl-cell--12-col pA-0 centered">
+            <div class="mT-32">
+	            {% include 'dashboard/include/bookmarks-app.html' %}
             </div>
         </div>
     </div>

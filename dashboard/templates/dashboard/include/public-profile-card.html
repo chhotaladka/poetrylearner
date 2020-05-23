@@ -1,23 +1,32 @@
 {% comment %}
     Info: User's Public Profile Card
 {% endcomment %}
-<div class="card-xl wFull">
-    <div class="p-16">
-        <div class="tAc">
-            <div class="avatar circle md user bC-none centered">
-                {% include "common/svg/user.html" %}
-            </div>
-            <div class="title-text dark">
-                {{ public_profile.get_first_name|title }}
-            </div>
-             <div class="mT4">
-                <span>Role . </span>
-                {% for group in groups %}
-                <button class="curve mdl-button c-reader">{{ group|title }}</button>
-                {% endfor %}
+<div class="card-xl wFull bS-1 mB-32 bCw">
+    <div class="p-16 bg-org">
+        <div class="row center">
+            <div style="margin-bottom: -32px;" class="mT-32">
+                <div class="avatar circle md user bC-none centered">
+                    {% include "common/svg/user.html" %}
+                </div>
             </div>
         </div>
-        <div class="row">
+    </div>
+    <div class="p-16 tAc">
+        <div class="fullname title-text dark mT-8">{{ profile.get_name|title }}</div>
+        <div class="fS16 dark">@{{ profile.get_username }}</div>
+    </div>
+    <div class="pLR-16 pB-16">
+        <div class="row fill fS14">
+            <div class="mR-8">
+                <span>Joined</span>
+                <span>{{ request.user.date_joined|date:"d M, Y" }}</span>
+            </div>
+            <div class="mR-8">
+                <span>Role . </span>
+                {% for group in groups %}
+                <span class="">{{ group|title }}</span>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

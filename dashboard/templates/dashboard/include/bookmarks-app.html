@@ -5,15 +5,15 @@
 <div class="content-wrapper">
     <a class="card" href="{% url 'bookmark:list-bookmarks' %}">
         <div class="card-l">
-            <div class="p-16 row r2l">
+            <div class="p-16 row">
+                <div class="tAr">
+                    <div class="fS26 b c-91">{% bookmarks_count_by_user user as bcount %}{{ bcount }}</div>
+                    <div class="fullname fS16" style="margin-top: -4px;">bookmarks</div>
+                </div>
                 <div class="mL-8">
                     <div class="c-red svg48">
                     {% include "common/svg/bookmark-border.html" %}
                     </div>
-                </div>
-                <div class="tAr">
-                    <div class="fS26 b c-91">{% bookmarks_count_by_user user as bcount %}{{ bcount }}</div>
-                    <div class="fullname fS16" style="margin-top: -4px;">bookmarks</div>
                 </div>
             </div>
         </div>

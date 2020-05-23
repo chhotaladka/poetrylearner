@@ -74,9 +74,10 @@ class UserProfile(models.Model):
         If provider is None, return the avatar of preferred social account.
         TODO: return default avatar if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            return profile.get_avatar_url()
+        social_account = self._get_social_account(provider)
+        print(dir(social_account))
+        if social_account != None:
+            return social_account.get_avatar_url()
         else:
             return None
     
@@ -84,14 +85,14 @@ class UserProfile(models.Model):
         '''
         If provider is None, return the username of preferred social account.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'facebook':
-                return self._get_fb_username(profile)
-            elif self.get_provider_name(profile.provider) == 'google':
-                return self._get_google_username(profile)
-            elif self.get_provider_name(profile.provider) == 'twitter':
-                return self._get_tw_username(profile)
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'facebook':
+                return self._get_fb_username(social_account)
+            elif self.get_provider_name(social_account.provider) == 'google':
+                return self._get_google_username(social_account)
+            elif self.get_provider_name(social_account.provider) == 'twitter':
+                return self._get_tw_username(social_account)
             else:
                 return self.user.username
         else:
@@ -105,14 +106,14 @@ class UserProfile(models.Model):
         Return the first name from preferred social account, if provider is None.
         TODO: return default first name from User model if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'facebook':
-                return self._get_fb_fname(profile)
-            elif self.get_provider_name(profile.provider) == 'google':
-                return self._get_google_fname(profile)
-            elif self.get_provider_name(profile.provider) == 'twitter':
-                return self._get_tw_fname(profile)
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'facebook':
+                return self._get_fb_fname(social_account)
+            elif self.get_provider_name(social_account.provider) == 'google':
+                return self._get_google_fname(social_account)
+            elif self.get_provider_name(social_account.provider) == 'twitter':
+                return self._get_tw_fname(social_account)
             else:
                 return self.user.first_name
         else:
@@ -123,14 +124,14 @@ class UserProfile(models.Model):
         Return the last name from preferred social account, if provider is None.
         TODO: return default last name from User model if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'facebook':
-                return self._get_fb_lname(profile)
-            elif self.get_provider_name(profile.provider) == 'google':
-                return self._get_google_lname(profile)
-            elif self.get_provider_name(profile.provider) == 'twitter':
-                return self._get_tw_lname(profile)
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'facebook':
+                return self._get_fb_lname(social_account)
+            elif self.get_provider_name(social_account.provider) == 'google':
+                return self._get_google_lname(social_account)
+            elif self.get_provider_name(social_account.provider) == 'twitter':
+                return self._get_tw_lname(social_account)
             else:
                 return self.user.last_name
 
@@ -153,12 +154,12 @@ class UserProfile(models.Model):
         '''
         Return the gender from preferred social account, if provider is None.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'twitter':
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'twitter':
                 # Twitter do not provide gender information
                 return GENDER_UNSPECIFIED
-            return profile.extra_data.get('gender', GENDER_UNSPECIFIED)
+            return social_account.extra_data.get('gender', GENDER_UNSPECIFIED)
         else:
             return GENDER_UNSPECIFIED
 
@@ -167,11 +168,11 @@ class UserProfile(models.Model):
         Return the email of preferred social account, if provider is None.
         TODO: return default email if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'twitter':
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'twitter':
                 return self.user.email
-            return profile.extra_data.get('email', '')
+            return social_account.extra_data.get('email', '')
         else:
             return self.user.email
         
@@ -179,11 +180,11 @@ class UserProfile(models.Model):
         '''
         Returns Email address. In case of Twitter, returns screen name e.g. @chhotaladka
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'twitter':
-                return "@{0}".format(profile.extra_data.get('screen_name', ''))
-            return profile.extra_data.get('email', '')
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'twitter':
+                return "@{0}".format(social_account.extra_data.get('screen_name', ''))
+            return social_account.extra_data.get('email', '')
         else:
             return self.user.email        
 
@@ -192,15 +193,15 @@ class UserProfile(models.Model):
         Return the social url of preferred social account, if provider is None.
         todo: return default blank  if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            #print profile.extra_data
-            if self.get_provider_name(profile.provider) == 'facebook':
-                return self._get_fb_link(profile)
-            elif self.get_provider_name(profile.provider) == 'google':
-                return self._get_google_link(profile)
-            elif self.get_provider_name(profile.provider) == 'twitter':
-                return self._get_tw_link(profile)
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            #print social_account.extra_data
+            if self.get_provider_name(social_account.provider) == 'facebook':
+                return self._get_fb_link(social_account)
+            elif self.get_provider_name(social_account.provider) == 'google':
+                return self._get_google_link(social_account)
+            elif self.get_provider_name(social_account.provider) == 'twitter':
+                return self._get_tw_link(social_account)
             else:
                 return ""
         else:
@@ -211,9 +212,9 @@ class UserProfile(models.Model):
         Return the provider name of preferred social account, if provider is None.
         TODO: return default blank  if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            return profile.provider
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            return social_account.provider
         else:
             return provider    
 

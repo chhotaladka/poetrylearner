@@ -2,53 +2,65 @@
     Info: User's Private Profile Card
 {% endcomment %}
 {% load common_tags %}
-<div class="card-xl wFull">
-    <div class="p-16">
-        <div class="tAc">
-            {% with profile_img_url=profile.get_avatar_url %}
-            {% if profile_img_url %}
-            <div class="avatar circle md border centered" style="background: url('{{ profile_img_url }}') center / cover;">
+<div class="card-xl wFull bS-1 mB-32 bCw">
+    <div class="p-16 bg-org" style="position: relative;">
+        <div class="row center">
+            <div style="margin-bottom: -32px;" class="mT-32">
+                {% with profile_img_url=profile.get_avatar_url %}
+                {% if profile_img_url %}
+                <div class="avatar circle md border" style="background: url('{{ profile_img_url }}') center / cover;">
+                </div>
+                {% else %}
+                <div class="avatar circle md user bC-none centered">
+                    {% include "common/svg/user.html" %}
+                </div>
+                {% endif %}
+                {% endwith %}
             </div>
-            {% else %}
-            <div class="avatar circle md user bC-none centered">
-                {% include "common/svg/user.html" %}
-            </div>
-            {% endif %}
-            {% endwith %}
-            <div class="title-text dark">
-                {{ profile.get_name|title }}
-            </div>
-            <div class="extras">
+        </div>
+        <div class="" style="position: absolute;right: 16px;">
+            {% for account in social_accounts %}
+            <a class="mR-8 d-ib" title="Linked {{ account.provider_name }} account" href="{{ account.profile_url }}">
+                <span class="circle border icon {{ account.provider_name|lower }}"></span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="p-16 tAc">
+        <div class="fullname title-text dark mT-8">{{ profile.get_name|title }}</div>
+        <div class="fS16 dark">@{{ profile.get_username }}</div>
+    </div>
+    <div class="pLR-16 pB-16">
+        <div class="row fill fS14">
+            <div class="mR-8">
                 <span>Joined</span>
                 <span>{{ request.user.date_joined|date:"d M, Y" }}</span>
             </div>
-             <div class="mT4">
+            <div class="mR-8">
+                <span>{{ profile.get_email }}</span>
+            </div>
+            <div class="mR-8">
                 <span>Role . </span>
                 {% for group in groups %}
-                <button class="curve mdl-button c-reader">{{ group|title }}</button>
+                <span class="">{{ group|title }}</span>
                 {% endfor %}
             </div>
         </div>
-        <div class="row fill mT-16">
-            <div class="mR-8">
-                <a href="{{ profile.get_absolute_url }}" title="View your public profile">
-                    <div class="curve mdl-button c-3">View Public Profile</div>
-                </a>
-            </div>
-            <div class="mR-8">
-               {% for account in social_accounts %}
-                <a class="mR-8 d-ib" title="View linked {{ account.provider_name }} profile" href="{{ account.profile_url }}">
-                    <span class="circle icon {{ account.provider_name|lower }}"></span>
-                </a>
-               {% endfor %}
-            </div>
-            {% if request.user|has_group:"administrator,editor" %}
-            <div class="mR-8">
-                <a href="{% url 'activity:list' %}" title="See what has been done">
-                    <div class="curve mdl-button c-3">View Activity Log</div>
-                </a>
-            </div>
-            {% endif %}
+    </div>
+</div>
+<div class="card-xl wFull">
+    <div class="row fill mT-16">
+        <div class="mR-8">
+            <a href="{{ profile.get_absolute_url }}" title="View your public profile">
+                <div class="curve mdl-button c-3">View Public Profile</div>
+            </a>
         </div>
+        {% if request.user|has_group:"administrator,editor" %}
+        <div class="mR-8">
+            <a href="{% url 'activity:list' %}" title="See what has been done">
+                <div class="curve mdl-button c-3">View Activity Log</div>
+            </a>
+        </div>
+        {% endif %}
     </div>
 </div>

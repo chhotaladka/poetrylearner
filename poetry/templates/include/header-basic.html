@@ -31,10 +31,7 @@
 		            </li>
 		            {% else %}
                     <li class="d-ib">
-                       <div class="fS18 op3"> | </div>
-                    </li>
-                    <li class="d-ib">
-                        <a class="action-button" style="min-width: 32px;" href="{% url 'account_login' %}?next={% block header-login-redirect %}{{ request.path }}{% endblock %}">
+                        <a class="action-button bL-1" style="min-width: 32px;" href="{% url 'account_login' %}?next={% block header-login-redirect %}{{ request.path }}{% endblock %}">
                             Log in
                         </a>
                     </li>
@@ -51,7 +48,7 @@
     var affixed_max = false;
     var affixed_min = false;
     var scrolled = false;
-    
+ {% comment "header scroll feature" %}   
     var runOnScroll = function(e){
         e.stopPropagation();
         if(locked) return;
@@ -103,7 +100,7 @@
         scrolled = false;
         locked = false;
     };
-    
+{% endcomment %}
     var drawerOpen = function(e){
         document.getElementById('id-drawer').classList.add('is-visible');
         document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.add('is-visible');
@@ -117,7 +114,9 @@
         document.getElementById('id-drawer-open-btn').classList.remove('hidden');
     };
     document.addEventListener('DOMContentLoaded', function () {
+{% comment "header scroll feature" %}
         document.getElementsByClassName('mdl-layout__content')[0].addEventListener('scroll',runOnScroll);
+{% endcomment %}
         document.getElementById('id-drawer-open-btn').addEventListener('click',drawerOpen);
         document.getElementById('id-drawer-close-btn').addEventListener('click',drawerClose);
         document.getElementsByClassName('mdl-layout__obfuscator')[0].addEventListener('click',drawerClose);

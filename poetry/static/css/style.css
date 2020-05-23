@@ -2903,6 +2903,12 @@ ul.mdl-mini-footer__link-list {
 .bB-1 {
     border-bottom: 1px solid rgba(0,0,0,.1);
 }
+.bL-1 {
+    border-left: 1px solid rgba(0,0,0,.1) !important; 
+}
+.bR-1 {
+    border-right: 1px solid rgba(0,0,0,.1) !important;
+}
 .lH-46 {line-height: 46px !important;}
 .lH-72 {line-height: 72px !important;}
 .lH-i {line-height: inherit !important;}

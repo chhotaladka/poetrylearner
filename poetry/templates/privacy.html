@@ -1,0 +1,27 @@
+{% extends "dashboard-base.html" %}
+{% load static %}
+{% load common_tags %}
+
+{% block meta %}
+{% include "meta.html" with meta=meta only %}
+{% endblock %}
+
+{% block title %}Privacy & Terms | {{ sitename }}{% endblock %}
+
+{% block header %}
+{% include "include/header-info-pages.html" %}
+{% endblock %}
+
+{% block main %}
+<section class="pT-8 pB-32">
+    <div class="_layout layout-L mdl-grid">
+        <div class="__c mdl-cell mdl-cell--12-col pA-0">
+            <div class="pB-32">
+                <div class="card-xl tAc wFull">
+                </div>
+            </div>
+        </div>
+        {% include "common/include/empty-result-graphics.html" %}
+    </div>
+</section>
+{% endblock %}

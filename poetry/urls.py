@@ -35,6 +35,8 @@ app_name = 'core'
 
 urlpatterns = [
     url(r'^$', views.welcome, name='welcome'),
+    url(r'^about/?$', views.about, name='about'),
+    url(r'^privacy/?$', views.privacy, name='privacy'),
     url(r'^accounts/', include('poetry.urls_allauth_blocked')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', admin.site.urls),

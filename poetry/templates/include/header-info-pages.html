@@ -12,13 +12,10 @@
             <div class="buttonSet">
 	            <ul class="u-overflowX">
 	                <li class="d-ib">
-	                    <a class="action-button" style="min-width: 32px;" href="{% url 'explore-poets' %}">Poets</a>
+	                    <a class="action-button {% if 'about' in request.path %}is-active{% endif %}" style="min-width: 32px;" href="{% url 'about' %}">Our story</a>
 	                </li>
 	                <li class="d-ib">
-	                    <a class="action-button" style="min-width: 32px;" href="{% url 'explore-poetry' %}">Poetry</a>
-	                </li>
-	                <li class="d-ib">
-	                    <a class="action-button" style="min-width: 32px;" href="{% url 'explore-books' %}">Books</a>
+	                    <a class="action-button {% if 'privacy' in request.path %}is-active{% endif %}" style="min-width: 32px;" href="{% url 'privacy' %}">Privacy & Terms</a>
 	                </li>
 		            {% if request.user.is_authenticated %}
 		            <li class="d-ib">
@@ -41,7 +38,6 @@
         </nav>
     </div>
 </header>
-
 {% if request.user.is_authenticated %}
 <script>
     var drawerOpen = function(e){
@@ -63,68 +59,3 @@
     });
 </script>
 {% endif %}
-{% comment "Donot hide header while scrolling" %}
-<script>
-{# jquery independent script?? TODO #}
-    var locked = false;
-    var previousScroll = 0;
-    var affixed_max = false;
-    var affixed_min = false;
-    var scrolled = false;
- 
-    var runOnScroll = function(e){
-        e.stopPropagation();
-        if(locked) return;
-        locked = true;
-        
-        var currentScroll = $(this).scrollTop();
-        var metabar = document.getElementsByClassName('metabar js-metabar')[0];
-        //console.log(currentScroll, previousScroll);
-        
-        if (currentScroll >= (previousScroll + 80)){ /*downscroll*/
-            if (!affixed_min) {
-                //console.log("downscroll: adding class");
-                metabar.classList.add('is-transitioning');
-                metabar.classList.add('metabar--affixed');
-                
-                metabar.classList.remove('is-maximized');
-                metabar.classList.add('is-minimized');
-                
-                affixed_max = false;
-                affixed_min = true;
-            }
-            scrolled = true;
-            
-        } else if (currentScroll <= (previousScroll - 60)) { /*upscroll*/
-            if (!affixed_max) {
-                //console.log("upscroll: adding class");
-                metabar.classList.add('is-transitioning');
-                metabar.classList.add('metabar--affixed');
-                
-                metabar.classList.remove('is-minimized');
-                metabar.classList.add('is-maximized');
-                
-                affixed_min = false;
-                affixed_max = true;
-            }
-            scrolled = true;
-        }
-        
-        if (previousScroll && !currentScroll) {/*Reached top*/
-            //console.log("Reached on TOP, removing affix");
-            metabar.classList.remove('is-minimized', 'is-maximized', 'metabar--affixed', 'is-transitioning');
-            affixed_min = false;
-            affixed_max = false;
-        }
-        if (scrolled) {
-            previousScroll = currentScroll;
-        }
-        metabar.classList.remove('is-transitioning');
-        scrolled = false;
-        locked = false;
-    };
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementsByClassName('mdl-layout__content')[0].addEventListener('scroll',runOnScroll);
-    });
-</script>
-{% endcomment %}

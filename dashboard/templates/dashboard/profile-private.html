@@ -13,10 +13,10 @@
         </div>
     </div>
 </section>
-<section class="pT-16 pB-16">
+<section class="pB-16">
     <div class="_layout layout-mL mdl-grid">
         <div class="__r mdl-cell mdl-cell--12-col pA-0 centered">
-            <div class="mT-32">
+            <div class="mT-16">
         {% if request.user|has_group:"administrator,editor" %}
             {% include 'dashboard/include/suggestion-review-list.html' %}
         {% else %}
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="__l mdl-cell mdl-cell--12-col pA-0 centered">
-            <div class="mT-32">
+            <div class="mT-16">
 	            {% include 'dashboard/include/bookmarks-app.html' %}
             </div>
         </div>

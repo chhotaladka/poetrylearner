@@ -75,7 +75,6 @@ class UserProfile(models.Model):
         TODO: return default avatar if no social account is found.
         '''
         social_account = self._get_social_account(provider)
-        print(dir(social_account))
         if social_account != None:
             return social_account.get_avatar_url()
         else:

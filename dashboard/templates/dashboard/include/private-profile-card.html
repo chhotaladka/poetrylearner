@@ -3,7 +3,7 @@
 {% endcomment %}
 {% load common_tags %}
 <div class="card-xl wFull bS-1 mB-32 bCw">
-    <div class="p-16 bg-org" style="position: relative;">
+    <div class="p-16 bc-greenNormal position-rel">
         <div class="row center">
             <div style="margin-bottom: -32px;" class="mT-32">
                 {% with profile_img_url=profile.get_avatar_url %}
@@ -11,14 +11,14 @@
                 <div class="avatar circle md border" style="background: url('{{ profile_img_url }}') center / cover;">
                 </div>
                 {% else %}
-                <div class="avatar circle md user bC-none centered">
+                <div class="avatar circle md border of-hid c-white">
                     {% include "common/svg/user.html" %}
                 </div>
                 {% endif %}
                 {% endwith %}
             </div>
         </div>
-        <div class="" style="position: absolute;right: 16px;">
+        <div class="position-abs" style="right: 16px;">
             {% for account in social_accounts %}
             <a class="mR-8 d-ib" title="Linked {{ account.provider_name }} account" href="{{ account.profile_url }}">
                 <span class="circle border icon {{ account.provider_name|lower }}"></span>
@@ -29,6 +29,12 @@
     <div class="p-16 tAc">
         <div class="fullname title-text dark mT-8">{{ profile.get_name|title }}</div>
         <div class="fS16 dark">@{{ profile.get_username }}</div>
+        <div class="fS14">
+            <span>Role . </span>
+            {% for group in groups %}
+            <span class="">{{ group|title }}</span>
+            {% endfor %}
+        </div>
     </div>
     <div class="pLR-16 pB-16">
         <div class="row fill fS14">
@@ -40,14 +46,14 @@
                 <span>{{ profile.get_email }}</span>
             </div>
             <div class="mR-8">
-                <span>Role . </span>
-                {% for group in groups %}
-                <span class="">{{ group|title }}</span>
-                {% endfor %}
+                <a class="action-button oN" href="{{ profile.get_absolute_url }}" title="View your public profile">
+                    {% include "common/svg/visibility-black.html" %}
+                </a>
             </div>
         </div>
     </div>
 </div>
+{% comment "Preserving the button code for future use" %}
 <div class="card-xl wFull">
     <div class="row fill mT-16">
         <div class="mR-8">
@@ -64,3 +70,4 @@
         {% endif %}
     </div>
 </div>
+{% endcomment %}

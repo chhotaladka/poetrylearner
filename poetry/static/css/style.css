@@ -2859,6 +2859,8 @@ ul.mdl-mini-footer__link-list {
 .op5 {opacity: 0.5 !important;}
 .op6 {opacity: 0.6 !important;}
 
+.of-hid {overflow: hidden;}
+
 .position-rel { position: relative;}
 .position-abs { position: absolute !important;}
 .pos-RB {
@@ -2967,7 +2969,8 @@ ul.mdl-mini-footer__link-list {
 	color: #03a87c !important;
 	fill: #03a87c !important;
 }
-.bc-greenNormal {
+.bc-greenNormal,
+.bc-greenNormal svg {
     background-color: #03a87c !important;
 }
 .c-y {color: #F6DB00 !important;}

@@ -5,78 +5,97 @@
 {% load humanize %}
 {% load common_tags %}
 
-<div class="mdl-card card-l author-card--lg bS-1 wFull" itemscope itemtype="http://schema.org/Person">
-    <div class="p-16 tAl bg-book">
-        <div class="title-text mT-32" itemprop="name">
-            {{ book.name }}
+<div class="mdl-card card-xl bS-1 wFull" itemscope itemtype="http://schema.org/Book">
+    <div class="row">
+        <div class="book-cover-l bg-book-b">
+            <div class="book-cover-in">
+                <div class="fullname title-text mT-32 m16">
+                    {{ book.name }}
+                </div>
+                <div class="mB-32 extras">
+                    <a title="View creator {{ book.creator.full_name }}" href="{{ book.creator.get_absolute_url }}" itemprop="url">
+                        <span class="fullname fS16" itemprop="name">{{ book.creator.popular_name }}</span>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="mB-32 extras itemprop="creator" itemscope itemtype="http://schema.org/Person"">
-            <span>by </span>
-            <a title="View the creator" href="{{ book.creator.get_absolute_url }}" itemprop="url">
-                <span class="fS16" itemprop="name">{{ book.creator.popular_name }}</span>
-            </a>
-        </div>
-    </div>
-    <div class="p-16">
-        <div class="fS14 c-31 mB-16">
-            <div class="mT-8">
-                <span class="b">Language: </span>
-                <span>{{ book.get_language }}</span>
+        <div class="mT-32 book-cover-r">
+            <div class="table-card fS16">
+                <table cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td class="name" colspan="2">
+                                <span class="gI">Title</span>
+                            </td>
+                            <td class="data" colspan="2">
+                                <span class="gI" itemprop="name">{{ book.name }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="name" colspan="2">
+                                <span class="gI">Creator</span>
+                            </td>
+                            <td class="data" colspan="2">
+                                <span class="gI" itemprop="creator" itemscope itemtype="http://schema.org/Person">
+                                    <a title="View {{ book.creator.full_name }}" href="{{ book.creator.get_absolute_url }}" itemprop="url">
+                                        <span class="" itemprop="name">{{ book.creator.full_name }}</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="name" colspan="2">
+                                <span class="gI">Language</span>
+                            </td>
+                            <td class="data" colspan="2">
+                                <span class="gI" itemprop="inLanguage">{{ book.get_language }}</span>
+                            </td>
+                        </tr>
+                        {% with contributors=book.contributors.all %}
+                        {% if contributors %}
+                        <tr>
+                            <td class="name" colspan="2">
+                                <span class="gI">Contributors</span>
+                            </td>
+                            <td class="data" colspan="2">
+                                {% for person in contributors %}
+                                <div class="gI mB4" itemprop="contributor" itemscope itemtype="http://schema.org/Person">
+                                    <a title="View {{person.full_name}}" href="{{ person.get_absolute_url }}">
+                                        <span itemprop="name">{{ person.popular_name }}</span>
+                                    </a>
+                                </div>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endwith %}
+                        {% if book.publisher %}
+                        <tr>
+                            <td class="name" colspan="2">
+                                <span class="gI">Publisher</span>
+                            </td>
+                            <td class="data" colspan="2">
+                                <div class="gI" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+                                    <span itemprop="name">{{ book.publisher }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% if book.isbn %}
+                        <tr>
+                            <td class="name" colspan="2">
+                                <span class="gI">ISBN</span>
+                            </td>
+                            <td class="data" colspan="2">
+                                <span class="gI" itemprop="isbn">{{ book.isbn }}</span>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
             </div>
-            {% with contributors=book.contributor.all %}
-            {% if contributors %}
-            <div class="mT-8">
-                <span class="b">Contributers: </span>
-                {% for person in contributors %}
-                <a title="View {{person.popular_name}}" href="{{ person.get_absolute_url }}">{{ person.popular_name }}</a>
-                {% if not forloop.last %}<span>, </span>{% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
-            {% endwith %}
-            {% if book.publisher %}
-            <div class="mT-8">
-                <span class="b">Publisher: </span>
-                <span>{{ book.publisher }}<</span>
-            </div>
-            {% endif %}
-            
-            {% if book.isbn %}
-            <div class="mT-8">
-                <span class="b">ISBN: </span>
-                <span itemprop="isbn">{{ book.isbn }}</span>
-            </div>
-            {% endif %}
-        </div>
-        <div class="pT-16 pB-8">
-            <span class="fS14 c-31">View this book on</span>
-        </div>
-        <div class="row mB-16">
-            <div class="fS-12">
-                {% if book.isbn %}
-                <a class="action-button" target="_blank"
-                href="http://openlibrary.org/isbn/{{ book.isbn }}">
-                {% else %}
-                <a class="action-button" target="_blank"
-                href="https://openlibrary.org/search?q={{ book.name }}">
-                {% endif %}
-                    <div class="" style="background: url('{% static "img/logo_openlibrary.png" %}') center / cover no-repeat;
-                    height: 70px; width: 110px;"></div>
-                    <div class="b">openlibrary.org</div>
-                </a> 
-            </div>
-            <div class="fS-12">
-                {% if book.isbn %}
-                <a class="action-button" target="_blank"
-                href="https://www.goodreads.com/search?utf8=%E2%9C%93&query={{ book.isbn }}&search_type=books">
-                {% else %}
-                <a class="action-button" target="_blank"
-                href="https://www.goodreads.com/search?utf8=%E2%9C%93&query={{ book.name }}&search_type=books">
-                {% endif %}
-                    <div class="" style="background: url('{% static "img/logo_goodreads.png" %}') center center / 40% no-repeat;
-                    height: 70px; width: 110px;"></div>
-                    <div class="b">goodreads.com</div>
-                </a>
+            <div class="content pLR-16">
+                <p class="article-content"><span itemprop="description">{{ book.description }}</span></p>
             </div>
         </div>
     </div>
@@ -85,7 +104,7 @@
     {% if request.user|has_group:'administrator,editor' %}
     <div class="mdl-card__menu">
         <a href="{% url 'repository:add-item' item_type=book.item_type pk=book.id %}/?cancel={{request.path}}" title="Edit to improve.">
-        <button class="action-button action-button--icon oN c-F" id="btn1">
+        <button class="action-button action-button--icon oN" id="btn1">
         {% include "common/svg/edit.html" %}
         </button>
         </a>

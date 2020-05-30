@@ -37,11 +37,9 @@ class PoetryManager(CreativeWorkManager):
             # unpublished items
             q_objects &= Q(date_published__isnull=True)
             
-        id_list = self.filter(q_objects).values_list('id', flat=True)
-        total = len(id_list)
-        count = count if total > count else total
-        # id_list is of type <class 'django.db.models.query.QuerySet'>
-        mix_ids = random.sample(list(id_list), count)
+        q_ids = self.filter(q_objects).values_list('id', flat=True)
+        id_list = list(q_ids)
+        mix_ids = random.sample(id_list, min(count, len(id_list)))
         return super(PoetryManager, self).get_queryset().filter(pk__in=mix_ids)
 
     

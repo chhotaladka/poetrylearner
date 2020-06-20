@@ -12,8 +12,8 @@
         </div>
     </div>
     <div class="p-16 tAc">
-        <div class="fullname title-text dark mT-8">{{ profile.get_name|title }}</div>
-        <div class="fS16 dark">@{{ profile.get_username }}</div>
+        <div class="fullname title-text dark mT-8">{{ public_profile.get_name|title }}</div>
+        <div class="fS16 dark">@{{ public_profile.get_username }}</div>
         <div class="fS14">
             <span>Role . </span>
             {% for group in groups %}

@@ -1,38 +1,23 @@
-{% comment %}
-    Info: Bookmark App dashboard
-{% endcomment %}
+{% comment %} Bookmark App dashboard ribbon {% endcomment %}
 {% load bookmark_tags %}
-<div class="content-wrapper">
-    <a class="card" href="{% url 'bookmark:list-bookmarks' %}">
-        <div class="card-l">
-            <div class="p-16 row">
-                <div class="tAr">
-                    <div class="fS26 b c-91">{% bookmarks_count_by_user user as bcount %}{{ bcount }}</div>
-                    <div class="fullname fS16" style="margin-top: -4px;">bookmarks</div>
-                </div>
-                <div class="mL-8">
-                    <div class="c-red svg48">
+{% load humanize %}
+<div class="card-l wFull">
+    <div class="content-wrapper">
+        <a class="card" href="{% url 'bookmark:list-bookmarks' %}">
+            <div class="ribbon bCw bS-1 row fill">
+                <div class="row">
+                    <div class="c-r svg32 mR-8">
                     {% include "common/svg/bookmark-border.html" %}
                     </div>
+                    <div class="b c-91 mR-4">{% bookmarks_count_by_user user as bcount %}{{ bcount|intcomma }}</div>
+                    <div class="fullname">bookmarks</div>
+                </div>
+                <div class="">
+                    <button class="action-button--small" title="Cancel" onclick="location.href=&#39;{{ cancel_url }}&#39;">
+                        {% include "common/svg/close.html" %}
+                    </button>
                 </div>
             </div>
-        </div>
-    </a>
-</div>
-{% bookmarks_by_user request.user as bookmarks_poetry %}
-{% if bookmarks_poetry %} {% comment %} Display the list {% endcomment %}
-    {% for bookmark in bookmarks_poetry %}
-        {% if bookmark.content_object %}{% comment %} Display only if content_object is not deleted {% endcomment %}
-        {% include "repository/include/cards/poetry-sm.html" with poetry=bookmark.content_object %}
-        {% endif %}
-    {% endfor %}
-    <div class="mdl-card__actions"> 
-        <a class="action-button wFull oN" href="{% url 'bookmark:list-bookmarks' %}" title="Show My bookmarks">
-            Show more
         </a>
     </div>
-{% else %}{% comment %} Display the notification {% endcomment %}
-    <div class="mdl-cell mdl-cell--12-col mT0 mB0">
-    {% include "bookmarks/include/empty-result.html" %}
-    </div>
-{% endif %}
+</div>

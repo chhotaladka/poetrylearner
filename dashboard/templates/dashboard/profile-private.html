@@ -13,20 +13,22 @@
         </div>
     </div>
 </section>
+{# NOTIFICATIONS #}
+{% if request.user|has_group:"administrator,editor" %}
 <section class="pB-16">
     <div class="_layout layout-mL mdl-grid">
         <div class="__r mdl-cell mdl-cell--12-col pA-0 centered">
-            <div class="mT-16">
-        {% if request.user|has_group:"administrator,editor" %}
-            {% include 'dashboard/include/suggestion-review-list.html' %}
-        {% else %}
-            {% include 'dashboard/include/suggestion-read-list.html' %}
-        {% endif %}
-            </div>
+        {% include 'dashboard/include/suggestion-review-list.html' %}
         </div>
-        <div class="__l mdl-cell mdl-cell--12-col pA-0 centered">
-            <div class="mT-16">
-	            {% include 'dashboard/include/bookmarks-app.html' %}
+    </div>
+</section>
+{% endif %}
+{# RANDOM POETRIES #}
+<section class="pT-16">
+    <div class="_layout layout-mL mdl-grid">
+        <div class="__r mdl-cell mdl-cell--12-col pA-0 centered">
+            <div class="section-cards">
+                {% include 'dashboard/include/suggestion-read-list.html' %}
             </div>
         </div>
     </div>

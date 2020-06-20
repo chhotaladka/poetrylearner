@@ -1,23 +1,27 @@
 {% comment %} Suggestion list to read {% endcomment %}
 {% load creativework_tags %}
+{% comment %}
 {% load humanize %}
+<div class="card-xl wFull">
 <div class="content-wrapper">
     <a class="card" href="{% url 'explore-poetry' %}">
-        <div class="card-l">
+        <div class="">
             <div class="p-16 row">
-                <div class="tAr">
-                    <div class="fS26 b c-91">{% get_poetry_count published as pcount %}{{ pcount|intcomma }}</div>
-                    <div class="fullname fS16" style="margin-top: -4px;">Poetry for you</div>
-                </div>
-                <div class="mL-8">
-                    <div class="c-y svg48">
+                <div class="">
+                    <div class="c-r svg48">
                     {% include "common/svg/book-open.html" %}
                     </div>
+                </div>
+                <div class="tAl">
+                    <div class="fS26 b c-91">{% get_poetry_count published as pcount %}{{ pcount|intcomma }}</div>
+                    <div class="fullname fS16" style="margin-top: -4px;">Poetry for you</div>
                 </div>
             </div>
         </div>
     </a>
 </div>
+</div>
+{% endcomment %}
 {% get_poetry_pub_rand 10 as poetries %}
 {% include "repository/include/list/poetry.html" with items=poetries %}
 <div class="mdl-card__actions">

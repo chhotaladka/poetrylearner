@@ -27,9 +27,7 @@
             {% include "include/header-basic.html" %}
         {% endblock %}{% comment %} end of `header` block {% endcomment %}
         {% block drawer %}{% comment %} Drawer of the site. Modify in the base template of the app if required {% endcomment %}
-        {% if request.user.is_authenticated %} {% comment %} SHow drawer after login {% endcomment %}
-            {% include "include/drawer-basic.html" %}
-        {% endif %}
+        {% include "include/drawer-basic.html" %}
         {% endblock %}{% comment %} end of `drawer` block {% endcomment %}
         <main class="mdl-layout__content">
         {% block navigation-header %}{% endblock %}

@@ -2215,7 +2215,7 @@ p.poetry-stanza,
     -ms-flex-align: center;
     align-items: center;
     justify-content: space-between;
-    max-width: 1200px;
+    /*max-width: 1200px;*/
 }
 .siteNav-logo {
     position: relative;
@@ -2342,7 +2342,17 @@ p.poetry-stanza,
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
 }
-
+.u-flex33 { flex: .33;}
+.u-flex50 { flex: .50;}
+.u-flex100 { flex: 1;}
+.divider {
+	display: inline-block;
+}
+.divider::after {
+	content: '•';
+	position: absolute;
+	margin-top: -14px;
+}
 /* End - New Header */
 
 .separator {
@@ -2855,6 +2865,7 @@ ul.mdl-mini-footer__link-list {
 .wSpw { white-space: pre-wrap; }
 .wS-nw { white-space: nowrap; }
 
+.m0 {margin:0px !important;}
 .m8 {margin:8px !important;}
 .m16 {margin:16px !important;}
 .mT0 {margin-top:0px !important;}
@@ -2947,7 +2958,7 @@ ul.mdl-mini-footer__link-list {
 .lH-1 {line-height: 1 !important;}
 
 .dB {display:block;}
-.d-ib {display:inline-block !important;}
+.d-ib {display:inline-block;}
 .fD-c {flex-direction: column;}
 .fD-r {flex-direction: row;}
 .aI-c {align-items: center;}

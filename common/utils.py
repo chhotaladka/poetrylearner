@@ -74,8 +74,6 @@ def html_to_plain_text(str):
     """
 
     try:
-        # Make sure it's unicode
-        str = str(str)
         ## Replace html break line tags with newline '\n'
         # (?i)<br[^>]*> FOR br tags
         # (\n)? FOR newline(if any) following br tag also needs to be taken care of

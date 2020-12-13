@@ -42,7 +42,11 @@
 			</button>
 		</div>
 		<div class="mB-8 form-element">
-			<input class="share-panel-url" type="text" title="Share link" value="{{ share_url }}" onclick="this.focus();this.select();"></input>
+			<input id="shortUrlText" class="share-panel-url" readonly value="{{ share_url }}" onclick="this.focus();this.select();document.execCommand('copy');"></input>
+			<button class="action-button oN" title="Copy link" onclick="var su = document.getElementById('shortUrlText');su.focus();su.select();document.execCommand('copy');">
+				{% include "common/svg/content_copy.html" %}
+				<span class="action-button__text">Copy</span>
+			</button>
 		</div>
 	</div>
 </div>

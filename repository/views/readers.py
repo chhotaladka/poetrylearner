@@ -3,7 +3,7 @@ import sys, traceback
 from django.http import (
     Http404, HttpResponseRedirect
 )
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.template.context_processors import request
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -226,7 +226,7 @@ def items(request):
         return render(request, template, context)
 
 
-def list(request, item_type, src=None):
+def item_list(request, item_type, src=None):
     '''
     @summary: List the data item of `item_type`
     
@@ -639,21 +639,15 @@ def get_a_poetry():
     '''
     Get a random poetry
     '''
-    obj_list = Poetry.published.all()
-    count = len(obj_list)    
+    obj = {}
+    obj_list = Poetry.published.values_list('id', flat=True)
+    ids = list(obj_list)
     
-    if count:  
+    if ids:
+        index = random.choice(ids)
         try:
-            index = random.randint(0, count-1)
-            obj = obj_list[index]
-        except:
-            print(("count", count))
-            print(("Error: Unexpected error:", sys.exc_info()[0]))
-            for frame in traceback.extract_tb(sys.exc_info()[2]):
-                fname,lineno,fn,text = frame
-                print(("DBG:: Error in %s on line %d" % (fname, lineno)))
-            obj = {}
-    else:
-        obj = {}
+            obj = Poetry.objects.get(pk=index)
+        except ObjectDoesNotExist:
+            print(f"Error: id {index} not found in Poetry")
            
     return obj

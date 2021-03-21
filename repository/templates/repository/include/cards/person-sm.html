@@ -26,7 +26,7 @@
 					{{ person.name }}
 				</div>
 				<div class="extras">
-					<span class="text" itemprop="additionalName">{{person.additional_name}}</span>
+					<span class="text" itemprop="additionalName">{{person.additional_name|default:""}}</span>
 				</div>
 				{% if person.year_birth or person.year_death %}
 				<div class="extras fS-12">

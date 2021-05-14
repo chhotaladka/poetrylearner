@@ -25,8 +25,8 @@ class FeedbackCreateView(CreateView):
     
     model = Feedback
     form_class = FeedbackForm
-    #template_name = 'feedback/feedback_form.html'
-    ajax_template = 'feedback/form.html'
+    template_name = 'feedback/add-feedback.html'
+    ajax_template = 'feedback/include/form.html'
     thanks_template = 'feedback/include/thanks.html'
     error_template = 'feedback/include/error.html'
 

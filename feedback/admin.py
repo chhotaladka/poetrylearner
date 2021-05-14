@@ -19,7 +19,7 @@ class FeedbackAdmin(admin.ModelAdmin):
     def text_excerpt(self, obj):
         return truncatechars(obj.text, 80)
     
-    text_excerpt.short_description = _('Text excerpt')
+    text_excerpt.short_description = 'Text excerpt'
 
     def content(self, obj):
         return mark_safe(f'<a href="{obj.get_content_url()}">{truncatechars(obj.content_object, 40)}</a>')
@@ -32,7 +32,7 @@ class FeedbackAdmin(admin.ModelAdmin):
             return obj.added_by.email
         return obj.email
     
-    user_email.short_description = _('Email')
+    user_email.short_description = 'Email'
 
 
 admin.site.register(Feedback, FeedbackAdmin)

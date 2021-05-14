@@ -117,6 +117,10 @@ h3 {
 	max-width: 700px;
 }
 
+.mdl-snackbar__action {
+	color: #4285f4;
+}
+
 /* calligraphy */
 .kallos1 {
 	font-family: "adobe-caslon-pro","Georgia","Times New Roman",serif;

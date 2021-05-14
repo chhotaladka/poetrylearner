@@ -66,9 +66,6 @@ class BookmarkManager(models.Manager):
         Remove a user's bookmark on a given object, if it exist.
         '''
         content_type = ContentType.objects.get_for_model(obj)
-        # First, try to fetch the instance of this row from DB
-        # If that does not exist, then it is the first time we're creating it
-        # If it does, then just update the previous one
         try:
             bookmark_obj = self.get(user=user, content_type=content_type, object_id=obj._get_pk_val())
             bookmark_id = bookmark_obj.id
@@ -84,6 +81,10 @@ class BookmarkManager(models.Manager):
         '''
         Get total number of current bookmarks by different users on a given object.
         '''
+        if not obj:
+            # Deleted object
+            return 0
+
         content_type = ContentType.objects.get_for_model(obj)
         count = self.filter(content_type=content_type, object_id=obj._get_pk_val()).count()
         return count

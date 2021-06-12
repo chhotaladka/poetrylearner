@@ -1,4 +1,4 @@
-from base import BaseForm
-from articles import SnippetForm
-from creative_works import BookForm, PoetryForm
-from things import OrganizationForm, ProductForm, PersonForm, PlaceForm, EventForm
+from .base import BaseForm
+from .articles import SnippetForm
+from .creative_works import BookForm, PoetryForm
+from .things import OrganizationForm, ProductForm, PersonForm, PlaceForm, EventForm

@@ -1,8 +1,8 @@
-from django.conf.urls import include, url, patterns
+from django.conf.urls import url
 
 from . import views
 
-
+app_name = 'dashboard'
 urlpatterns = [
 
     url(r'^$', views.private_profile, name='private-profile'),

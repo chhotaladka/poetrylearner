@@ -20,19 +20,19 @@ def download_image(image_url):
 
     @summary: Returns image (full path name) downloaded from `image_url`
     '''
-    print 'Downloading image from', image_url
+    print('Downloading image from', image_url)
     # Steam the image from the url
     try:
         request = requests.get(image_url, stream=True)
     except Exception as e:
-        print 'ERR:: Exception occurred.'
-        print e
+        print('ERR:: Exception occurred.')
+        print(e)
         return False
 
     # Was the request OK?
     if request.status_code != requests.codes.ok:
         # Nope, error handling, skip file etc etc etc
-        print 'ERR: response is', request.status_code
+        print('ERR: response is', request.status_code)
         return False
 
     # Get the filename from the url, used for saving later
@@ -105,7 +105,7 @@ def correct_poetry_lines_order(shuffled_lines, ocr_lines):
 
     len_suffled = len(shuffled_lines)
     len_ocr = len(ocr_lines)
-    print 'Correcting poetry lines ordering... (shuffled %d <-> ocr %d)'%(len_suffled, len_ocr)
+    print('Correcting poetry lines ordering... (shuffled %d <-> ocr %d)'%(len_suffled, len_ocr))
 
     mapping = {}
     matched_ocr_lines = []
@@ -142,7 +142,7 @@ def correct_poetry_lines_order(shuffled_lines, ocr_lines):
                     mapping[j]['final'] = -1
 
     #print mapping
-    for key, val in mapping.items():
+    for key, val in list(mapping.items()):
         if mapping[key]['final'] == -1:
             dup_lines.append(shuffled_lines[key])
         else:
@@ -161,13 +161,13 @@ def refine_poetry(crawled_poetry, url, language):
     # Get image of the poetry
     f_image = download_image(get_poetry_img_url(url, language))
     if f_image is False:
-        print 'ERR:: failed to download image'
+        print('ERR:: failed to download image')
         return False
 
     # Get text from poetry image : ocr_text
     ret = image_to_text_for_reindeer(f_image, language)
     if ret is False:
-        print 'ERR: falied to convert image to text'
+        print('ERR: falied to convert image to text')
         return False
 
     ocr_text = ret.strip()
@@ -176,7 +176,7 @@ def refine_poetry(crawled_poetry, url, language):
     try:
         os.remove(f_image)
     except:
-        print 'ERR:: failed to delete f_image'
+        print('ERR:: failed to delete f_image')
         pass
 
     # Make list of lines from ``crawled_poetry`` and ``ocr_text``
@@ -210,9 +210,9 @@ class processArticleThread(Thread):
         self.articles = articles
         
     def run(self):
-        print ">> Starting thread " + self.name
+        print(">> Starting thread " + self.name)
         process_articles(self.name, self.articles)
-        print ">> Ending thread " + self.name
+        print(">> Ending thread " + self.name)
 
 
 def process_articles(name=None, articles=None):
@@ -236,7 +236,7 @@ def process_articles(name=None, articles=None):
 
             # print stats
             if count_total % 100 == 0:
-                print "> thread %s: saved %d out of %d processed"%(name, count_saved, count_total)    
+                print("> thread %s: saved %d out of %d processed"%(name, count_saved, count_total))    
     
     
 def process_all_articles(num_thread=1):
@@ -254,8 +254,8 @@ def process_all_articles(num_thread=1):
 
     total_articles = RawArticle.objects.all().filter(source_url__icontains='rekhta.org').filter(valid=False, language__in=language_list)
     num_total = total_articles.count()
-    print 'Total articles to be proccessed : %d'%(num_total)
-    print 'Number of threads to be created : %d'%(num_thread)
+    print('Total articles to be proccessed : %d'%(num_total))
+    print('Number of threads to be created : %d'%(num_thread))
     q = num_total / num_thread
     r = num_total - (q * num_thread)
         
@@ -268,7 +268,7 @@ def process_all_articles(num_thread=1):
         num_end = num_start + q + extra
         thread_name = 'Thread-'+str(i)
         
-        print 'Starting thread for total_articles[%d : %d]'%(num_start, num_end)
+        print('Starting thread for total_articles[%d : %d]'%(num_start, num_end))
         
         t = processArticleThread(i, thread_name, total_articles[num_start : num_end])
         t.start()
@@ -277,43 +277,43 @@ def process_all_articles(num_thread=1):
     # Wait for all threads to complete
     for t in threads:
         t.join()
-    print "Exiting Main Thread"            
+    print("Exiting Main Thread")            
 
     # print stats
-    print "> THE END"
+    print("> THE END")
 
 
 def set_all_invalid():
-    print 'Setting all articles of rekhta.org as invalid...'
+    print('Setting all articles of rekhta.org as invalid...')
     articles = RawArticle.objects.all().filter(valid=True).filter(source_url__icontains='rekhta.org')
     if articles is not None:
         for a in articles:
             a.valid = False
             a.save()
-    print 'Done!'
+    print('Done!')
 
 
 def cmd_init_reindeer():
-    print '============= Initializing reindeer =============='
+    print('============= Initializing reindeer ==============')
     # Check for 'tesseract' and 'imagemagick' packages
     if check_packages() is False:
         return False
     set_all_invalid()
-    print '================ init finished ==================='
+    print('================ init finished ===================')
 
 def cmd_resume_reindeer(num_thread=1):
-    print '=========== Resuming/running reindeer ============'
+    print('=========== Resuming/running reindeer ============')
     process_all_articles(num_thread)
-    print '=============== resume finished =================='
+    print('=============== resume finished ==================')
 
 def cmd_exit_reindeer():
-    print '=============== Exiting reindeer ================='
+    print('=============== Exiting reindeer =================')
     set_all_invalid()
-    print '================= exit finished =================='
+    print('================= exit finished ==================')
 
 def cmd_test_reindeer():
-    print '=============== Testing reindeer ================='
+    print('=============== Testing reindeer =================')
     obj = get_object_or_404(RawArticle, pk=130831)
     poetry = refine_poetry(obj.content, obj.source_url, obj.language)
-    print '================= test finished =================='
-    print poetry
+    print('================= test finished ==================')
+    print(poetry)

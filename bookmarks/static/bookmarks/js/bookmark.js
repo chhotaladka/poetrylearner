@@ -43,22 +43,31 @@
 				$(this).addClass("true");
 				$(this).attr('data-bid', data.bid);
 				$(this).prop('title', 'Remove from my Bookmarks');
-				var msg = "Added to my Bookmarks";
+
+				var data = {
+					message: "Added to my Bookmarks",
+					actionHandler: function(event) { window.location.href = window.location.origin + '/bookmark/';},
+					actionText: "VIEW",
+					timeout: 5000
+				};
 			} else {
 				$(this).removeClass("true");
 				$(this).attr('data-bid', data.bid);
 				$(this).prop('title', 'Send to my Bookmarks to read later');
-				var msg = "Removed from my Bookmarks";
+
+				var data = {
+					message: "Removed from my Bookmarks",
+					timeout: 5000
+				};
 			}
 		} else {
 			$(this).prop('title', 'Try again');
-			var msg = "Oops! something went wrong.";
+			var data = {
+				message: "Oops! something went wrong.",
+				timeout: 5000
+			};
 		}
 		var notification = document.querySelector('.mdl-js-snackbar');
-		var data = {
-		  message: msg,
-		  timeout: 5000
-		};
 		notification.MaterialSnackbar.showSnackbar(data);
 	};
 	

@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 
 # Create your models here.
@@ -19,7 +19,7 @@ class BookmarkManager(models.Manager):
         Get the Bookmark made on the given object by the given user, or
         ``None`` if no matching bookmark exists.
         """
-        if not user.is_authenticated():
+        if not user.is_authenticated:
             return None
         content_object = ContentType.objects.get_for_model(obj)
         try:
@@ -49,14 +49,14 @@ class BookmarkManager(models.Manager):
         # If it does, then just update the previous one
         try:
             bookmark_obj = self.get(user=user, content_type=content_type, object_id=obj._get_pk_val())
-            print "WARNING:: bookmark already exist."
+            print("WARNING:: bookmark already exist.")
                 
         except ObjectDoesNotExist:
             #This is the first time we're creating it
             try:
                 bookmark_obj = self.create(user=user, content_type=content_type, object_id=obj._get_pk_val())                        
             except:
-                print 'ERR:: something went wrong in creating a bookmark object. {file}:{line}'.format(file=str('__FILE__'), line=str('__LINE__'))
+                print('ERR:: something went wrong in creating a bookmark object. {file}:{line}'.format(file=str('__FILE__'), line=str('__LINE__')))
                 bookmark_obj = None
         
         return bookmark_obj
@@ -66,16 +66,13 @@ class BookmarkManager(models.Manager):
         Remove a user's bookmark on a given object, if it exist.
         '''
         content_type = ContentType.objects.get_for_model(obj)
-        # First, try to fetch the instance of this row from DB
-        # If that does not exist, then it is the first time we're creating it
-        # If it does, then just update the previous one
         try:
             bookmark_obj = self.get(user=user, content_type=content_type, object_id=obj._get_pk_val())
             bookmark_id = bookmark_obj.id
             bookmark_obj.delete()
                 
         except ObjectDoesNotExist:
-            print 'WARNING:: Bookmark does not exist.'
+            print('WARNING:: Bookmark does not exist.')
             raise ObjectDoesNotExist  
         
         return bookmark_id 
@@ -84,6 +81,10 @@ class BookmarkManager(models.Manager):
         '''
         Get total number of current bookmarks by different users on a given object.
         '''
+        if not obj:
+            # Deleted object
+            return 0
+
         content_type = ContentType.objects.get_for_model(obj)
         count = self.filter(content_type=content_type, object_id=obj._get_pk_val()).count()
         return count
@@ -94,7 +95,8 @@ class Bookmark(models.Model):
     @summary: Model for Bookmarks by user
     '''
     
-    user = models.ForeignKey(User, 
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
                              related_name="saved_bookmarks",
                              verbose_name=_("user")
                             )
@@ -105,7 +107,8 @@ class Bookmark(models.Model):
     
     # Generic Foreign Key to the object this bookmark is about
     content_type = models.ForeignKey(ContentType,
-                                     related_name="bookmark_content_objects",
+                                    on_delete=models.CASCADE,
+                                    related_name="bookmark_content_objects",
                                     )
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')

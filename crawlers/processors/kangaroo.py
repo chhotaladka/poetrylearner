@@ -21,8 +21,8 @@ def refine_title(article_title):
         else:
             t = None
     except Exception as e:
-        print 'ERR:: Exception occurred.'
-        print e
+        print('ERR:: Exception occurred.')
+        print(e)
         return None
         
     return t
@@ -39,9 +39,9 @@ class processArticleThread(Thread):
         self.articles = articles
         
     def run(self):
-        print ">> Starting thread " + self.name
+        print(">> Starting thread " + self.name)
         process_articles(self.name, self.articles)
-        print ">> Ending thread " + self.name
+        print(">> Ending thread " + self.name)
 
 
 def process_articles(name=None, articles=None):
@@ -62,7 +62,7 @@ def process_articles(name=None, articles=None):
 
             # print stats
             if count_total % 100 == 0:
-                print "> thread %s: saved %d out of %d processed"%(name, count_saved, count_total)    
+                print("> thread %s: saved %d out of %d processed"%(name, count_saved, count_total))    
     
     
 def process_all_articles(num_thread=1):
@@ -74,8 +74,8 @@ def process_all_articles(num_thread=1):
 
     total_articles = RawArticle.objects.all().filter(source_url__icontains='kavitakosh.org')
     num_total = total_articles.count()
-    print 'Total articles to be proccessed : %d'%(num_total)
-    print 'Number of threads to be created : %d'%(num_thread)
+    print('Total articles to be proccessed : %d'%(num_total))
+    print('Number of threads to be created : %d'%(num_thread))
     q = num_total / num_thread
     r = num_total - (q * num_thread)
         
@@ -88,7 +88,7 @@ def process_all_articles(num_thread=1):
         num_end = num_start + q + extra
         thread_name = 'Thread-'+str(i)
         
-        print 'Starting thread for total_articles[%d : %d]'%(num_start, num_end)
+        print('Starting thread for total_articles[%d : %d]'%(num_start, num_end))
         
         t = processArticleThread(i, thread_name, total_articles[num_start : num_end])
         t.start()
@@ -97,29 +97,29 @@ def process_all_articles(num_thread=1):
     # Wait for all threads to complete
     for t in threads:
         t.join()
-    print "Exiting Main Thread"            
+    print("Exiting Main Thread")            
 
     # print stats
-    print "> THE END"
+    print("> THE END")
 
 
 def cmd_init_kangaroo():
-    print '============= Initializing reindeer =============='
-    print '================ init finished ==================='
+    print('============= Initializing reindeer ==============')
+    print('================ init finished ===================')
 
 def cmd_resume_kangaroo(num_thread=1):
-    print '=========== Resuming/running reindeer ============'
+    print('=========== Resuming/running reindeer ============')
     process_all_articles(num_thread)
-    print '=============== resume finished =================='
+    print('=============== resume finished ==================')
 
 def cmd_exit_kangaroo():
-    print '============= Exiting reindeer =============='
-    print '================ exit finished ==================='
+    print('============= Exiting reindeer ==============')
+    print('================ exit finished ===================')
     
 def cmd_test_kangaroo():
-    print '=============== Testing reindeer ================='
+    print('=============== Testing reindeer =================')
     obj = get_object_or_404(RawArticle, pk=167888)
-    print obj.title
+    print(obj.title)
     title = refine_title(obj.title)
-    print '================= test finished =================='
-    print title
+    print('================= test finished ==================')
+    print(title)

@@ -2,7 +2,7 @@
     Info:       Person full detail Card
     Requires:   css and js of static/mdl/*
 {% endcomment %}
-{% load staticfiles %}
+{% load static %}
 {% load humanize %}
 {% load common_tags %}
 {% load creativework_tags %}
@@ -23,7 +23,7 @@
             {{ person.name }}
         </div>
         <div class="extras">
-            <span class="fS16" itemprop="additionalName">{{person.additional_name}}</span>
+            <span class="fS16" itemprop="additionalName">{{person.additional_name|default:""}}</span>
         </div>
         {% if person.year_birth or person.year_death %}
         <div class="extras fS-12">

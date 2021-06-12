@@ -41,7 +41,7 @@ class WikiBot(scrapy.Spider):
             'infobox': infobox,
             'link': response.url,
         }
-        print ret
+        print(ret)
         yield ret
         
 """

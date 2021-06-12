@@ -49,7 +49,7 @@ def CreateProfile(sender, request, user,**kwargs):
     try:        
         profile = UserProfile.objects.get(user=user)
     except UserProfile.DoesNotExist:
-        print "DBG:: User profile does not exist, create a new one"
+        print("DBG:: User profile does not exist, create a new one")
   
         profile = UserProfile()
         profile.user = user
@@ -64,24 +64,20 @@ def CreateProfile(sender, request, user,**kwargs):
         try:
             sociallogin = SocialAccount.objects.get(user=user)
             if('google' == sociallogin.provider ):
-                user.first_name = sociallogin.extra_data['given_name']
-                user.last_name = sociallogin.extra_data['family_name']
+                user.first_name = sociallogin.extra_data.get('given_name', '')
+                user.last_name = sociallogin.extra_data.get('family_name', '')
                 user.save()
             elif ('facebook' == sociallogin.provider ):
-                user.first_name = sociallogin.extra_data['first_name']
-                user.last_name = sociallogin.extra_data['last_name']
+                user.first_name = sociallogin.extra_data.get('first_name', '')
+                user.last_name = sociallogin.extra_data.get('last_name', '')
                 user.save()
-            try:                
-                profile.gender = sociallogin.extra_data['gender']
-            except:
-                print "DBG:: Gender does not exist in social account"
-                profile.gender = GENDER_UNSPECIFIED
-                
+               
+            profile.gender = sociallogin.extra_data.get('gender', GENDER_UNSPECIFIED)                
         except:
-            print ("Error:: Unexpected error:", sys.exc_info()[0])
+            print(("Error:: Unexpected error:", sys.exc_info()[0]))
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
-                print ("DBG:: Error in %s on line %d" % (fname, lineno))            
+                print(("DBG:: Error in %s on line %d" % (fname, lineno)))            
             
         profile.save()
 
@@ -91,7 +87,7 @@ def private_profile(request):
     '''
     Private profile of the user
     '''
-    print "DBG:: private profile"
+    print("DBG:: private profile")
     profile = UserProfile.objects.get(user=request.user.id)
 
     social_accounts = []
@@ -110,7 +106,7 @@ def private_profile(request):
     # Get groups name
     groups = list(request.user.groups.values_list('name',flat=True))
     if request.user.is_staff:
-        groups.append(u'editor')
+        groups.append('editor')
                 
     ## Make the context and render     
     context = {'social_accounts': social_accounts,
@@ -125,13 +121,13 @@ def public_profile(request, user_id, slug):
     '''
     Public profile of the user
     '''
-    print "DBG:: public profile"
+    print("DBG:: public profile")
     user = get_object_or_404(User, pk=user_id)
     try:
         profile = UserProfile.objects.get(user=user)
     
     except ObjectDoesNotExist:
-        print "ERR:: No profile entry found for user", user, user_id
+        print("ERR:: No profile entry found for user", user, user_id)
         profile = None
         raise Http404
     
@@ -141,7 +137,7 @@ def public_profile(request, user_id, slug):
     # Get groups name
     groups = list(user.groups.values_list('name',flat=True))
     if user.is_staff:
-        groups.append(u'editor')
+        groups.append('editor')
     
     ## Make the context and render     
     context = {'public_profile': profile,

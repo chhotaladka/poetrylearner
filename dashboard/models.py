@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from allauth.socialaccount.models import SocialAccount
 
 from common.slugify import slugify
@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     '''
     User profile populated using social account from Facebook, Google and Twitter respectively.
     '''
-    user = models.OneToOneField(User, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     date_birth = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=20, blank=True, null=True)
     signup_date = models.DateTimeField(auto_now_add=True)
@@ -37,7 +37,7 @@ class UserProfile(models.Model):
         
     def _get_social_account(self, provider=None):
         '''
-        Return the social account object of Facebook, Google and Twitter in that order if provier is None else return the provider account.
+        Return the social account object of Google, Facebook, and Twitter in that order if provier is None else return the provider account.
         '''
         if provider != None:
             account_uid = SocialAccount.objects.filter(user_id=self.user.id, provider=provider)
@@ -47,11 +47,11 @@ class UserProfile(models.Model):
                 return None
             
         try:
-            account_uid = SocialAccount.objects.filter(user_id=self.user.id, provider='facebook')
+            account_uid = SocialAccount.objects.filter(user_id=self.user.id, provider='google')
             if len(account_uid):
                 return account_uid[0]
-    
-            account_uid = SocialAccount.objects.filter(user_id=self.user.id, provider='google')
+
+            account_uid = SocialAccount.objects.filter(user_id=self.user.id, provider='facebook')
             if len(account_uid):
                 return account_uid[0]
     
@@ -71,27 +71,27 @@ class UserProfile(models.Model):
     
     def get_avatar_url(self, provider=None):
         '''
-        If provider is None, return the avatar of social account Facebook, Google and Twitter in that order.
+        If provider is None, return the avatar of preferred social account.
         TODO: return default avatar if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            return profile.get_avatar_url()
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            return social_account.get_avatar_url()
         else:
             return None
     
     def get_username(self, provider=None):
         '''
-        If provider is None, return the username of social account Facebook, Google and Twitter in that order.
+        If provider is None, return the username of preferred social account.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'facebook':
-                return self._get_fb_username(profile)
-            elif self.get_provider_name(profile.provider) == 'google':
-                return self._get_google_username(profile)
-            elif self.get_provider_name(profile.provider) == 'twitter':
-                return self._get_tw_username(profile)
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'facebook':
+                return self._get_fb_username(social_account)
+            elif self.get_provider_name(social_account.provider) == 'google':
+                return self._get_google_username(social_account)
+            elif self.get_provider_name(social_account.provider) == 'twitter':
+                return self._get_tw_username(social_account)
             else:
                 return self.user.username
         else:
@@ -102,17 +102,17 @@ class UserProfile(models.Model):
 
     def get_first_name(self, provider=None):
         '''
-        Return the first name from social account Facebook, Google and Twitter in that order, if provider is None.
+        Return the first name from preferred social account, if provider is None.
         TODO: return default first name from User model if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'facebook':
-                return self._get_fb_fname(profile)
-            elif self.get_provider_name(profile.provider) == 'google':
-                return self._get_google_fname(profile)
-            elif self.get_provider_name(profile.provider) == 'twitter':
-                return self._get_tw_fname(profile)
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'facebook':
+                return self._get_fb_fname(social_account)
+            elif self.get_provider_name(social_account.provider) == 'google':
+                return self._get_google_fname(social_account)
+            elif self.get_provider_name(social_account.provider) == 'twitter':
+                return self._get_tw_fname(social_account)
             else:
                 return self.user.first_name
         else:
@@ -120,17 +120,17 @@ class UserProfile(models.Model):
     
     def get_last_name(self, provider=None):
         '''
-        Return the last name from social account Facebook, Google and Twitter in that order, if provider is None.
+        Return the last name from preferred social account, if provider is None.
         TODO: return default last name from User model if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'facebook':
-                return self._get_fb_lname(profile)
-            elif self.get_provider_name(profile.provider) == 'google':
-                return self._get_google_lname(profile)
-            elif self.get_provider_name(profile.provider) == 'twitter':
-                return self._get_tw_lname(profile)
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'facebook':
+                return self._get_fb_lname(social_account)
+            elif self.get_provider_name(social_account.provider) == 'google':
+                return self._get_google_lname(social_account)
+            elif self.get_provider_name(social_account.provider) == 'twitter':
+                return self._get_tw_lname(social_account)
             else:
                 return self.user.last_name
 
@@ -151,32 +151,27 @@ class UserProfile(models.Model):
 
     def get_gender(self, provider=None):
         '''
-        Return the gender from social account Facebook, Google and Twitter in that order.
+        Return the gender from preferred social account, if provider is None.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'twitter':
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'twitter':
                 # Twitter do not provide gender information
                 return GENDER_UNSPECIFIED
-            try:
-                # extra_data may not have gender information
-                gender = profile.extra_data['gender']
-            except:
-                gender = GENDER_UNSPECIFIED
-            return gender
+            return social_account.extra_data.get('gender', GENDER_UNSPECIFIED)
         else:
             return GENDER_UNSPECIFIED
 
     def get_email(self, provider=None):
         '''
-        Return the email of social account Facebook, Google and Twitter in that order, if provider is None.
+        Return the email of preferred social account, if provider is None.
         TODO: return default email if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'twitter':
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'twitter':
                 return self.user.email
-            return profile.extra_data['email']
+            return social_account.extra_data.get('email', '')
         else:
             return self.user.email
         
@@ -184,28 +179,28 @@ class UserProfile(models.Model):
         '''
         Returns Email address. In case of Twitter, returns screen name e.g. @chhotaladka
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            if self.get_provider_name(profile.provider) == 'twitter':
-                return "@{0}".format(profile.extra_data['screen_name'].encode('utf-8'))
-            return profile.extra_data['email']
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            if self.get_provider_name(social_account.provider) == 'twitter':
+                return "@{0}".format(social_account.extra_data.get('screen_name', ''))
+            return social_account.extra_data.get('email', '')
         else:
             return self.user.email        
 
     def get_social_url(self, provider=None):
         '''
-        Return the social url of social account Facebook, Google and Twitter in that order, if provider is None.
+        Return the social url of preferred social account, if provider is None.
         todo: return default blank  if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            #print profile.extra_data
-            if self.get_provider_name(profile.provider) == 'facebook':
-                return self._get_fb_link(profile)
-            elif self.get_provider_name(profile.provider) == 'google':
-                return self._get_google_link(profile)
-            elif self.get_provider_name(profile.provider) == 'twitter':
-                return self._get_tw_link(profile)
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            #print social_account.extra_data
+            if self.get_provider_name(social_account.provider) == 'facebook':
+                return self._get_fb_link(social_account)
+            elif self.get_provider_name(social_account.provider) == 'google':
+                return self._get_google_link(social_account)
+            elif self.get_provider_name(social_account.provider) == 'twitter':
+                return self._get_tw_link(social_account)
             else:
                 return ""
         else:
@@ -213,12 +208,12 @@ class UserProfile(models.Model):
        
     def get_provider_name(self,provider=None):
         '''
-        Return the provider name of social account Facebook, Google and Twitter in that order, if provider is None.
+        Return the provider name of preferred social account, if provider is None.
         TODO: return default blank  if no social account is found.
         '''
-        profile = self._get_social_account(provider)
-        if profile != None:
-            return profile.provider
+        social_account = self._get_social_account(provider)
+        if social_account != None:
+            return social_account.provider
         else:
             return provider    
 
@@ -230,52 +225,51 @@ class UserProfile(models.Model):
 
     ##
     # Private functions for retrieving the fname, lname, email etc. from GooGle, Facebook and twitter
-        
     def _get_google_fname(self,profile):
-        return str(profile.extra_data['name']).split(' ')[0].encode('utf-8')
+        return profile.extra_data.get('name', '').split()[0]
     
     def _get_google_lname(self,profile):
-        return profile.extra_data['family_name'].encode('utf-8')
+        return profile.extra_data.get('family_name', '')
 
     def _get_google_email(self,profile):
-        return profile.extra_data['email'].encode('utf-8')
+        return profile.extra_data.get('email', '')
 
     def _get_google_username(self,profile):
-        return profile.extra_data['given_name'].encode('utf-8')
+        return profile.extra_data.get('given_name', '')
 
     def _get_google_link(self,profile):
-        return profile.extra_data['link']
+        return profile.extra_data.get('link', '')
 
     def _get_fb_fname(self,profile):
-        return profile.extra_data['first_name'].encode('utf-8')
+        return profile.extra_data.get('first_name', '')
     
     def _get_fb_lname(self,profile):
-        return profile.extra_data['last_name'].encode('utf-8')
+        return profile.extra_data.get('last_name', '')
 
     def _get_fb_email(self,profile):
-        return profile.extra_data['email'].encode('utf-8')
+        return profile.extra_data.get('email', '')
 
     def _get_fb_username(self,profile):
-        return profile.extra_data['name'].encode('utf-8')
+        return profile.extra_data.get('name', '')
 
     def _get_fb_link(self,profile):
-        return profile.extra_data['link']
+        return profile.extra_data.get('link', '')
     
     def _get_tw_fname(self,profile):
-        return str(profile.extra_data['name']).split(' ')[0].encode('utf-8')
+        return profile.extra_data.get('name', '').split()[0]
 
     def _get_tw_lname(self,profile):
-        names = str(profile.extra_data['name']).split(' ')
+        names = profile.extra_data.get('name', '').split()
         if len(names) > 1:
-            return names[-1].encode('utf-8')
+            return names[-1]
         else:
-            return u''
+            return ''
 
     def _get_tw_username(self,profile):
-        return profile.extra_data['screen_name'].encode('utf-8')
+        return profile.extra_data.get('screen_name', '')
 
     def _get_tw_link(self,profile):
-        return  "//twitter.com/" + str(profile.extra_data['screen_name'])
+        return  "//twitter.com/" + profile.extra_data.get('screen_name', '')
 
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

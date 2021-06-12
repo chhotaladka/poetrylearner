@@ -1,0 +1,40 @@
+{% comment %}
+    Info: Book extra detail Card
+{% endcomment %}
+{% load static %}
+
+<div class="mdl-card card-xl bC-none wFull">
+    <div class="p-16">
+        <div class="mB-16">
+            <span class="fS14 c-31">Find more about this book</span>
+        </div>
+        <div class="row">
+            <div class="fS-12">
+                {% if book.isbn %}
+                <a class="action-button" target="_blank"
+                href="http://openlibrary.org/isbn/{{ book.isbn }}">
+                {% else %}
+                <a class="action-button" target="_blank"
+                href="https://openlibrary.org/search?q={{ book.name }}">
+                {% endif %}
+                    <div class="" style="background: url('{% static "img/logo_openlibrary.png" %}') center / cover no-repeat;
+                    height: 70px; width: 110px;"></div>
+                    <div class="b">openlibrary.org</div>
+                </a> 
+            </div>
+            <div class="fS-12">
+                {% if book.isbn %}
+                <a class="action-button" target="_blank"
+                href="https://www.goodreads.com/search?utf8=%E2%9C%93&query={{ book.isbn }}&search_type=books">
+                {% else %}
+                <a class="action-button" target="_blank"
+                href="https://www.goodreads.com/search?utf8=%E2%9C%93&query={{ book.name }}&search_type=books">
+                {% endif %}
+                    <div class="" style="background: url('{% static "img/logo_goodreads.png" %}') center center / 40% no-repeat;
+                    height: 70px; width: 110px;"></div>
+                    <div class="b">goodreads.com</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

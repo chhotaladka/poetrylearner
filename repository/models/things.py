@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib import auth
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils import timezone
 from django.template.defaultfilters import default
 from django.utils.translation import ugettext_lazy as _
@@ -10,8 +10,8 @@ from django.db.models import Q
 
 from taggit.managers import TaggableManager
 
-from base import Thing, ThingManager
-from utils import Reference, TaggedItem, image_upload_path
+from .base import Thing, ThingManager
+from .utils import Reference, TaggedItem, image_upload_path
 
 
 # Create your models here.
@@ -184,7 +184,7 @@ class Person(Thing):
         return self.popular_name() + ' and ' + p + ' poetry.'
 
     def clean(self):
-        print "DBG:: Model Person clean called"
+        print("DBG:: Model Person clean called")
         # year_death must be greater than year_birth
         if self.year_birth is not None and self.year_death is not None:
             if self.year_death <= self.year_birth:
@@ -194,7 +194,7 @@ class Person(Thing):
                         
     def save(self, *args, **kwargs):                
         super(self.__class__, self).save(*args, **kwargs)
-        print "DBG:: Model Person save called"        
+        print("DBG:: Model Person save called")        
 
 
 class Place(Thing):
@@ -274,7 +274,7 @@ class CreativeWorkManager(ThingManager):
         if 'creator' in kwargs:
             q_objects &= Q(creator_id=kwargs['creator'])
         if 'publisher' in kwargs:
-            print publisher
+            print(publisher)
             q_objects &= Q(publisher_id=kwargs['publisher'])
             
         if 'published' in kwargs:

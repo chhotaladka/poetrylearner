@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib import auth
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.conf import settings
@@ -46,6 +46,7 @@ class Feedback(models.Model):
                             )
     
     added_by = models.ForeignKey(auth.models.User, 
+                                 on_delete=models.SET_NULL,
                                  related_name="%(app_label)s_%(class)s_added",
                                  null=True, blank=True,
                                 )
@@ -56,6 +57,7 @@ class Feedback(models.Model):
 
     # Generic Foreign Key to the object this feedback is about
     content_type = models.ForeignKey(ContentType,
+                                     on_delete=models.SET_NULL,
                                      related_name='feedback_content_objects',
                                      null=True, blank=True,
                                     )

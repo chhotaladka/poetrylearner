@@ -1,29 +1,23 @@
 {% comment %} Suggestion list to review/edit {% endcomment %}
 {% load creativework_tags %}
 {% load humanize %}
-<div class="content-wrapper">
-    <a class="card" href="{% url 'proofreader:home' %}">
-        <div class="card-l">
-            <div class="p-16 row r2l">
-                <div class="mL-8">
-                    <div class="c-y svg48">
+<div class="card-l wFull">
+    <div class="content-wrapper">
+        <a class="card" href="{% url 'proofreader:home' %}">
+            <div class="ribbon bCw bS-1 row fill">
+                <div class="row">
+                    <div class="c-r svg32 mR-8">
                     {% include "common/svg/content_paste.html" %}
                     </div>
+                    <div class="b c-91 mR-4">{% get_poetry_count unpublished as pcount %}{{ pcount|intcomma }}</div>
+                    <div class="fullname">Poetry to proofread</div>
                 </div>
-                <div class="tAr">
-                    <div class="fS26 b c-91">{% get_poetry_count unpublished as pcount %}{{ pcount|intcomma }}</div>
-                    <div class="fullname fS16" style="margin-top: -4px;">Poetry to Proofread</div>
+                <div class="">
+                    <button class="action-button--small">
+                        {% include "common/svg/arrow_forward.html" %}
+                    </button>
                 </div>
             </div>
-        </div>
-    </a>
-</div>
-{% get_poetry_unpub_rand 10 as poetries %}
-{% include "repository/include/list/poetry.html" with items=poetries %}
-<div class="mdl-card__actions">
-{% if poetries %}	
-	<a class="action-button wFull oN" href="{% url 'repository:list' item_type='poetry' %}?tab=unpub&o=shuffle" title="Show more poetry">
-		Show more
-	</a>
-{% endif %}
+        </a>
+    </div>
 </div>

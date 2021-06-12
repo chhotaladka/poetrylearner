@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 #from django.conf.global_settings import LANGUAGES
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import strip_tags
@@ -7,7 +7,7 @@ from django.db.models import Q
 import random
 from common.utils import truncatelines
 
-from things import CreativeWork, CreativeWorkManager, Person
+from .things import CreativeWork, CreativeWorkManager, Person
 from repository.const import REPOSITORY_LANGUAGES
 
 # Create your models here.
@@ -37,10 +37,9 @@ class PoetryManager(CreativeWorkManager):
             # unpublished items
             q_objects &= Q(date_published__isnull=True)
             
-        id_list = self.filter(q_objects).values_list('id', flat=True)
-        total = len(id_list)
-        count = count if total > count else total
-        mix_ids = random.sample(id_list, count)
+        q_ids = self.filter(q_objects).values_list('id', flat=True)
+        id_list = list(q_ids)
+        mix_ids = random.sample(id_list, min(count, len(id_list)))
         return super(PoetryManager, self).get_queryset().filter(pk__in=mix_ids)
 
     

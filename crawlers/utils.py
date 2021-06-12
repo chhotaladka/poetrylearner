@@ -15,8 +15,8 @@ def validate_source_url(url):
     try:
         validate(url)
         return True
-    except ValidationError, e:
-        print e
+    except ValidationError as e:
+        print(e)
         return False
 
 def validate_language(language):
@@ -49,11 +49,11 @@ def save_to_db_poem(data):
     try:
         # validate fields
         if validate_source_url(data['url']) is False:
-            print "ERROR: save_to_db_poem: URL IS NOT VALID ", data['url']
+            print("ERROR: save_to_db_poem: URL IS NOT VALID ", data['url'])
             return False
         
         if validate_language(data['language']):
-            print "ERROR: save_to_db_poem: language is NOT VALID ", data['language']
+            print("ERROR: save_to_db_poem: language is NOT VALID ", data['language'])
             return False
                 
         # Insert Raw Article information        
@@ -66,10 +66,10 @@ def save_to_db_poem(data):
         raw.save()
         
     except:
-        print "Unexpected error:", sys.exc_info()[0]
+        print("Unexpected error:", sys.exc_info()[0])
         for frame in traceback.extract_tb(sys.exc_info()[2]):
             fname,lineno,fn,text = frame
-            print "Error in %s on line %d" % (fname, lineno)
+            print("Error in %s on line %d" % (fname, lineno))
   
     
 def save_to_db_author(data):
@@ -84,13 +84,13 @@ def save_to_db_author(data):
     try:
         # validate fields
         if validate_source_url(data['url']) is False:
-            print "ERROR: save_to_db_author: URL IS NOT VALID ", data['url']
+            print("ERROR: save_to_db_author: URL IS NOT VALID ", data['url'])
             return False
         
         # Check if entry for ``url`` already exists
         list = RawAuthor.objects.source_url(data['url'])
         if list:
-            print "WARNING:: save_to_db_author: url already exists", data['url']
+            print("WARNING:: save_to_db_author: url already exists", data['url'])
             return False
                       
         # Create a new entry        
@@ -102,7 +102,7 @@ def save_to_db_author(data):
         raw.save()
         
     except:
-        print "Unexpected error:", sys.exc_info()[0]
+        print("Unexpected error:", sys.exc_info()[0])
         for frame in traceback.extract_tb(sys.exc_info()[2]):
             fname,lineno,fn,text = frame
-            print "Error in %s on line %d" % (fname, lineno)    
+            print("Error in %s on line %d" % (fname, lineno))    

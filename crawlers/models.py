@@ -1,11 +1,11 @@
 from django.db import models
 from datetime import datetime
 from django.contrib import auth
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf.global_settings import LANGUAGES
 from django.contrib.contenttypes.models import ContentType
 import json
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 # Create your models here.
 

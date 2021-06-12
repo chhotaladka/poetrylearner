@@ -33,15 +33,15 @@ class RecentCwNode(Node):
         tokens = token.split_contents()
         
         if len(tokens) < 4:
-            raise template.TemplateSyntaxError, "%s tag takes at least three arguments" % tokens[0]
+            raise template.TemplateSyntaxError("%s tag takes at least three arguments" % tokens[0])
 
         # Check the 1st argument
         try:
             count = int(tokens[1])
             if count < 1:
-                raise template.TemplateSyntaxError, "First argument of %s tag must be a positive integer" % tokens[0]
+                raise template.TemplateSyntaxError("First argument of %s tag must be a positive integer" % tokens[0])
         except:
-            raise template.TemplateSyntaxError, "First argument of %s tag must be a positive integer" % tokens[0]
+            raise template.TemplateSyntaxError("First argument of %s tag must be a positive integer" % tokens[0])
         
         # Check the 2nd argument
         if tokens[2] == 'as':
@@ -56,10 +56,10 @@ class RecentCwNode(Node):
         elif tokens[2] == 'by':
             correct_syntax = "'%s [count] by [Person object] as [varname]'" % tokens[0]
             if len(tokens) < 6:
-                raise template.TemplateSyntaxError, "Number of arguments are less. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Number of arguments are less. Correct syntax is " + correct_syntax)
             
             if tokens[4] != 'as':
-                raise template.TemplateSyntaxError, "Forth argument must be 'as'. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Forth argument must be 'as'. Correct syntax is " + correct_syntax)
 
             return cls(
                 item_class = item_class,
@@ -71,10 +71,10 @@ class RecentCwNode(Node):
         elif tokens[2] == 'in':
             correct_syntax = "'%s [count] in [language] as [varname]'" % tokens[0]
             if len(tokens) < 6:
-                raise template.TemplateSyntaxError, "Number of arguments are less. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Number of arguments are less. Correct syntax is " + correct_syntax)
             
             if tokens[4] != 'as':
-                raise template.TemplateSyntaxError, "Forth argument must be 'as'. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Forth argument must be 'as'. Correct syntax is " + correct_syntax)
 
             return cls(
                 item_class = item_class,
@@ -86,10 +86,10 @@ class RecentCwNode(Node):
         elif tokens[2] == 'has':
             correct_syntax = "'%s [count] has [tag] as [varname]'" % tokens[0]
             if len(tokens) < 6:
-                raise template.TemplateSyntaxError, "Number of arguments are less. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Number of arguments are less. Correct syntax is " + correct_syntax)
             
             if tokens[4] != 'as':
-                raise template.TemplateSyntaxError, "Forth argument must be 'as'. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Forth argument must be 'as'. Correct syntax is " + correct_syntax)
   
             return cls(
                 item_class = item_class,
@@ -98,7 +98,7 @@ class RecentCwNode(Node):
                 tag = tokens[3]
                 )
         else:
-            raise template.TemplateSyntaxError, "Wrong syntax."
+            raise template.TemplateSyntaxError("Wrong syntax.")
         
 
     def render(self, context):
@@ -124,7 +124,7 @@ class RecentCwNode(Node):
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
                 print ("DBG:: Error in %s on line %d" % (fname, lineno)) 
-            raise template.TemplateSyntaxError, "Something went wrong. Check the queryset to resolve the error"            
+            raise template.TemplateSyntaxError("Something went wrong. Check the queryset to resolve the error")         
             
         return ''
 
@@ -151,7 +151,7 @@ class CwCountNode(Node):
         tokens = token.split_contents()
         
         if len(tokens) < 3:
-            raise template.TemplateSyntaxError, "%s tag takes at least two arguments" % tokens[0]
+            raise template.TemplateSyntaxError("%s tag takes at least two arguments" % tokens[0])
 
         # Check the 1st argument
         if tokens[1] == 'as':
@@ -165,11 +165,11 @@ class CwCountNode(Node):
         elif tokens[1] == 'by':
             correct_syntax = "'%s by [Person object] as [varname]'" % tokens[0]
             if len(tokens) < 5:
-                raise template.TemplateSyntaxError, "Number of arguments are less. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Number of arguments are less. Correct syntax is " + correct_syntax)
             
             if len(tokens) == 5:
                 if tokens[3] != 'as':
-                    raise template.TemplateSyntaxError, "Third argument must be 'as'. Correct syntax is " + correct_syntax
+                    raise template.TemplateSyntaxError("Third argument must be 'as'. Correct syntax is " + correct_syntax)
                 return cls(
                     item_class = item_class,
                     varname = tokens[4],
@@ -179,7 +179,7 @@ class CwCountNode(Node):
             elif len(tokens) == 6:
                 if tokens[4] != 'as':
                     correct_syntax = "'%s by [Person object] published/unpublished as [varname]'" % tokens[0]
-                    raise template.TemplateSyntaxError, "Fourth argument must be 'as'. Correct syntax is " + correct_syntax
+                    raise template.TemplateSyntaxError("Fourth argument must be 'as'. Correct syntax is " + correct_syntax)
                 if tokens[3] == 'published':
                     return cls(
                         item_class = item_class,
@@ -198,10 +198,10 @@ class CwCountNode(Node):
         elif tokens[1] == 'in':
             correct_syntax = "'%s in [language] as [varname]'" % tokens[0]
             if len(tokens) < 5:
-                raise template.TemplateSyntaxError, "Number of arguments are less. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Number of arguments are less. Correct syntax is " + correct_syntax)
             
             if tokens[3] != 'as':
-                raise template.TemplateSyntaxError, "Third argument must be 'as'. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Third argument must be 'as'. Correct syntax is " + correct_syntax)
 
             return cls(
                 item_class = item_class,
@@ -212,10 +212,10 @@ class CwCountNode(Node):
         elif tokens[1] == 'has':
             correct_syntax = "'%s has [tag] as [varname]'" % tokens[0]
             if len(tokens) < 5:
-                raise template.TemplateSyntaxError, "Number of arguments are less. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Number of arguments are less. Correct syntax is " + correct_syntax)
             
             if tokens[3] != 'as':
-                raise template.TemplateSyntaxError, "Third argument must be 'as'. Correct syntax is " + correct_syntax
+                raise template.TemplateSyntaxError("Third argument must be 'as'. Correct syntax is " + correct_syntax)
   
             return cls(
                 item_class = item_class,
@@ -251,7 +251,7 @@ class CwCountNode(Node):
                 published = _UNPUBLISHED
                 )
         else:
-            raise template.TemplateSyntaxError, "Wrong syntax."
+            raise template.TemplateSyntaxError("Wrong syntax.")
         
 
     def render(self, context):
@@ -304,15 +304,15 @@ class CwRandomNode(Node):
         tokens = token.split_contents()
         
         if len(tokens) < 4:
-            raise template.TemplateSyntaxError, "%s tag takes at least three arguments" % tokens[0]
+            raise template.TemplateSyntaxError("%s tag takes at least three arguments" % tokens[0])
 
         # Check the 1st argument
         try:
             count = int(tokens[1])
             if count < 1:
-                raise template.TemplateSyntaxError, "First argument of %s tag must be a positive integer" % tokens[0]
+                raise template.TemplateSyntaxError("First argument of %s tag must be a positive integer" % tokens[0])
         except:
-            raise template.TemplateSyntaxError, "First argument of %s tag must be a positive integer" % tokens[0]
+            raise template.TemplateSyntaxError("First argument of %s tag must be a positive integer" % tokens[0])
         
         # Check the 2nd argument
         if tokens[2] == 'as':
@@ -323,7 +323,7 @@ class CwRandomNode(Node):
                 varname = tokens[3]
                 )
         else:
-            raise template.TemplateSyntaxError, "Wrong syntax."
+            raise template.TemplateSyntaxError("Wrong syntax.")
         
 
     def render(self, context):
@@ -339,7 +339,7 @@ class CwRandomNode(Node):
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
                 print ("DBG:: Error in %s on line %d" % (fname, lineno)) 
-            raise template.TemplateSyntaxError, "Something went wrong. Check the queryset to resolve the error"            
+            raise template.TemplateSyntaxError("Something went wrong. Check the queryset to resolve the error")            
             
         return ''
 

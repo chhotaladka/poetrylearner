@@ -13,11 +13,10 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url, patterns
+from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf import settings
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib.sitemaps.views import sitemap
 
@@ -32,12 +31,15 @@ sitemaps = {
     'poetry': PoetrySitemap
 }
 
+app_name = 'core'
 
 urlpatterns = [
     url(r'^$', views.welcome, name='welcome'),
+    url(r'^about/?$', views.about, name='about'),
+    url(r'^privacy/?$', views.privacy, name='privacy'),
     url(r'^accounts/', include('poetry.urls_allauth_blocked')),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^activity/', include('activity.urls', namespace='activity')),
     url(r'^bookmark/', include('bookmarks.urls', namespace='bookmark')),
     url(r'^c/', include('crawlers.urls', namespace='crawlers')),
@@ -66,7 +68,5 @@ urlpatterns = [
 
 # This is only needed when using runserver.
 if settings.DEBUG:
-    urlpatterns += patterns('',
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

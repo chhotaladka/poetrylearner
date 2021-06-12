@@ -1,12 +1,10 @@
 from django.db import models
 from django.contrib import auth
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 from taggit.managers import TaggableManager
 from taggit.models import TagBase, GenericTaggedItemBase
-from mhlib import PATH
 
 # Create your models here.
        
@@ -56,6 +54,7 @@ class TaggedItem(GenericTaggedItemBase):
 
     # Here is where you provide your custom Tag class.
     tag = models.ForeignKey(Tag,
+                            on_delete=models.CASCADE,
                             related_name="%(app_label)s_%(class)s_items")
     
     
@@ -70,7 +69,7 @@ def image_upload_path(instance, filename):
     new_name = instance.name.split(' ')[0]
     new_name = new_name.lower() + '.' + file_type
     
-    print( "saving item image " + filename + " as " + new_name)
+    print(( "saving item image " + filename + " as " + new_name))
     path = 'repository/images/' + type(instance).__name__.lower() + '_' + new_name
     return path
 

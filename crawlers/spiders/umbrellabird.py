@@ -6,13 +6,13 @@ try:
     from crawlers.utils import save_to_db_poem, save_to_db_author, get_language_list_for_url
 except ImportError:    
     def save_to_db_poem(data):
-        print data
+        print(data)
         
     def save_to_db_author(data):
-        print data
+        print(data)
         
     def get_language_list_for_url(url):
-        print url
+        print(url)
 
 
 class UmbrellabirdBot(scrapy.Spider):
@@ -51,7 +51,7 @@ class UmbrellabirdBot(scrapy.Spider):
         author_links = [self.domain_name + x for x in links]
         
         for url in author_links:
-            print "Visiting URL ", url
+            print("Visiting URL ", url)
             yield scrapy.Request(url, callback=self.parse_author_contents)
 
 
@@ -60,20 +60,20 @@ class UmbrellabirdBot(scrapy.Spider):
 
         author_link = response.url
         
-        print "Parsing author No. ", self.count_visit_author
+        print("Parsing author No. ", self.count_visit_author)
 	
         # Parse the page, find out the articles list, generate request for each article          
         try:
-            print "Extracting poem links from Author page"
+            print("Extracting poem links from Author page")
             articles = response.xpath("/html/body/table//tr[3]/td/table//tr/td/a/@href").extract()
 
             articles_links = [self.domain_name + x for x in articles]
             
             for url in articles_links:
-                print "Visiting ARTICLE ", url
+                print("Visiting ARTICLE ", url)
                 yield scrapy.Request(url, callback=self.parse_article_page)
         except:
-            print "Nothing found in Author page!!!"
+            print("Nothing found in Author page!!!")
             with open("up_exception_author.txt", "a") as outfile:
                 json.dump({'index': self.count_visit_author, 'link': response.url}, outfile, indent=4)
                    
@@ -85,7 +85,7 @@ class UmbrellabirdBot(scrapy.Spider):
     def parse_article_page(self, response):
         self.count_visit_article = self.count_visit_article + 1
         try:
-            print "Extracting poem ", self.count_visit_article, " from Article page"
+            print("Extracting poem ", self.count_visit_article, " from Article page")
             p = response.xpath("/html/body/table//tr[2]/td/table//tr/td/pre").extract()
             poem = " ".join(x.encode('utf-8') for x in p)
             
@@ -105,7 +105,7 @@ class UmbrellabirdBot(scrapy.Spider):
                 save_to_db_poem(data)
                 
             else:
-                print "First method failed trying another xpath"
+                print("First method failed trying another xpath")
                 p = response.xpath("/html/body/center/p").extract()
                 poem = " ".join(x.encode('utf-8') for x in p)
                 
@@ -125,8 +125,8 @@ class UmbrellabirdBot(scrapy.Spider):
                     save_to_db_poem(data)
                 
                 else:
-                    print "Both method failed write it in file for further processing"
+                    print("Both method failed write it in file for further processing")
         except:
-            print "Error Article page!!!"
+            print("Error Article page!!!")
             with open("up_exception_article.txt", "a") as outfile:
                 json.dump({'index': self.count_visit_article, 'link': response.url}, outfile, indent=4)

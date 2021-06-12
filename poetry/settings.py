@@ -84,13 +84,13 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.eggs.Loader'
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    #'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -111,7 +111,7 @@ TEMPLATES = [
                 "django.template.context_processors.i18n",
                 "django.template.context_processors.media",
                 "django.template.context_processors.static",
-                'django.core.context_processors.csrf',
+                #'django.core.context_processors.csrf',
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",               
                 'common.context_processors.getvars',
@@ -150,7 +150,7 @@ WSGI_APPLICATION = 'poetry.wsgi.application'
 
 DATABASES = {
     'default':
-        {'ENGINE': 'django.db.backends.mysql', 'NAME': 'poetrydb', 'HOST': '127.0.0.1', 'USER': 'root', 'PASSWORD': 'root', 'PORT': '3306'}
+        {'ENGINE': 'django.db.backends.mysql', 'NAME': 'poetrydb', 'HOST': '127.0.0.1', 'USER': 'root', 'PORT': '3306'}
 }
 
 

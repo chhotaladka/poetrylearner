@@ -26,7 +26,7 @@ def add_bookmark(request):
             content_type_id = int(content_type_id)
             object_id = int(object_id)
         except ValueError:
-            print "ERR:: Invalid content_type_id, object_id :", content_type_id, object_id
+            print("ERR:: Invalid content_type_id, object_id :", content_type_id, object_id)
             data = {}
             data['status'] = 404
             data['bid'] = bookmark_id
@@ -37,7 +37,7 @@ def add_bookmark(request):
             content_type = ContentType.objects.get_for_id(content_type_id)
             content_object = content_type.get_object_for_this_type(pk=object_id)
         except ObjectDoesNotExist:
-            print "ERR:: The content of object doesn't exist"
+            print("ERR:: The content of object doesn't exist")
             data = {}
             data['status'] = 404
             data['bid'] = bookmark_id
@@ -49,7 +49,7 @@ def add_bookmark(request):
             status = 200 # OK
             bookmark_id = obj.id
         else:
-            print "ERR:: add bookmark, content_type_id", content_type_id, "obj", object_id
+            print("ERR:: add bookmark, content_type_id", content_type_id, "obj", object_id)
             status = 500 # Internal server error
             
         data = {}
@@ -77,7 +77,7 @@ def remove_bookmark(request):
             content_type_id = int(content_type_id)
             object_id = int(object_id)
         except:
-            print "ERR:: Invalid content_type_id, object_id"
+            print("ERR:: Invalid content_type_id, object_id")
             data = {}
             data['status'] = 404
             data['bid'] = 0
@@ -95,7 +95,7 @@ def remove_bookmark(request):
             status = 200 # Ok
             
         except ObjectDoesNotExist:
-            print "ERR:: Requested bookmark does not exist."
+            print("ERR:: Requested bookmark does not exist.")
             status = 404
             
         data = {}
@@ -117,7 +117,7 @@ def list_bookmarks(request):
         poetry_ctype = ContentType.objects.get(app_label="repository", model="poetry")
         bookmarks_poetry = request.user.saved_bookmarks.filter(content_type=poetry_ctype)
     except ContentType.DoesNotExist:
-        print "ERR: Requested content type does not exist."
+        print("ERR: Requested content type does not exist.")
         bookmarks_poetry = []
     
     # Pagination

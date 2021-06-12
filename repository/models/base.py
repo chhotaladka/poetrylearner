@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib import auth
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils import timezone
 from django.template.defaultfilters import default
 from django.utils.translation import ugettext_lazy as _
@@ -9,7 +9,7 @@ from django.conf import settings
 #from django.utils.text import slugify
 from django.utils.http import urlquote  as django_urlquote
 from django.utils.http import urlencode as django_urlencode
-from urlparse import urlparse
+from urllib.parse import urlparse
 import random
 from common.slugify import slugify 
 
@@ -36,7 +36,8 @@ class ThingManager(models.Manager):
         id_list = self.all().values_list('id', flat=True)
         total = len(id_list)
         count = count if total > count else total
-        mix_ids = random.sample(id_list, count)
+        # id_list is of type <class 'django.db.models.query.QuerySet'>
+        mix_ids = random.sample(list(id_list), count)
         return super(ThingManager, self).get_queryset().filter(pk__in=mix_ids)
 
 
@@ -64,14 +65,16 @@ class Thing(models.Model):
                               For example, the URL of the item's Wikipedia page or official website or the URL from where the crawler has collected the data.")
                             )
 
-    added_by = models.ForeignKey(auth.models.User, 
-                                 related_name="%(app_label)s_%(class)s_added")
+    added_by = models.ForeignKey(auth.models.User,
+                                on_delete=models.PROTECT,
+                                related_name="%(app_label)s_%(class)s_added")
     
     date_added = models.DateTimeField(auto_now_add=True,
                                       help_text=_("The date time on which the item was created or the item was added to a DataFeed.")
                                       )
     
     modified_by = models.ForeignKey(auth.models.User,
+                                    on_delete=models.PROTECT,
                                     related_name="%(app_label)s_%(class)s_modified")
     
     date_modified = models.DateTimeField(blank=True,

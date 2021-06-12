@@ -97,7 +97,7 @@ class ItemNode(Node):
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
                 print ("DBG:: Error in %s on line %d" % (fname, lineno)) 
-            raise template.TemplateSyntaxError, "Something went wrong. Check the queryset to resolve the error"
+            raise template.TemplateSyntaxError("Something went wrong. Check the queryset to resolve the error")
         
         return ''
 

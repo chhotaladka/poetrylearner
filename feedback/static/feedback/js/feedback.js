@@ -44,7 +44,7 @@
 		
 		var $this = this.element
 		
-		var body = $("#id-feedback-form-body");
+		var body = $("#id-feedback-form-modal");
 		body.children().remove();
 
 		if (data.status == '200') {
@@ -102,8 +102,8 @@
 		
 		var $this = this.element
 		
-		// Update the html inside #id-feedback-form-body
-		var body = $("#id-feedback-form-body");
+		// Update the html inside #id-feedback-form-modal
+		var body = $("#id-feedback-form-modal");
 		body.html(data);
 		componentHandler.upgradeDom();// Register new mdl elements
 		
@@ -202,7 +202,7 @@
 	};
 	
 	$(document).on('click.bs.feedback.data-api', '*[id^="feedbackBtn"]', clickFeedbackBtn);
-	$(document).on('submit.bs.feedback.data-api', '#id-feedback-form', clickFeedbackSend);
+	$(document).on('submit.bs.feedback.data-api', '#id-feedback-form-modal #id-feedback-form', clickFeedbackSend);
 	
 	
 }(jQuery);

@@ -1,17 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.timesince import timesince as djtimesince
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 
 VERBS = {
-    'ADDITION': u'added',
-    'CHANGE': u'updated',
-    'DELETION': u'deleted',
-    'PUBLISH': u'published',
-    'UNPUBLISH': u'unpublished',
+    'ADDITION': 'added',
+    'CHANGE': 'updated',
+    'DELETION': 'deleted',
+    'PUBLISH': 'published',
+    'UNPUBLISH': 'unpublished',
 }
 
 
@@ -96,12 +96,14 @@ class Action(models.Model):
                                      db_index=True)
 
     actor = models.ForeignKey(User,
-                              related_name='action',
-                              db_index=True)
+                            on_delete=models.PROTECT,
+                            related_name='action',
+                            db_index=True)
 
     target_content_type = models.ForeignKey(ContentType,
-                                     blank=True, null=True,
-                                     db_index=True)
+                                    on_delete=models.SET_NULL,
+                                    blank=True, null=True,
+                                    db_index=True)
     target_object_id = models.PositiveIntegerField(blank=True, null=True,
                                  db_index=True)
     target_object_repr = models.CharField(max_length=200,

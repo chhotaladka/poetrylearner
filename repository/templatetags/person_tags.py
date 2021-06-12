@@ -24,7 +24,7 @@ class PersonCountNode(Node):
         tokens = token.split_contents()        
         
         if len(tokens) < 3:
-            raise template.TemplateSyntaxError, "%s tag takes at least two arguments" % tokens[0]
+            raise template.TemplateSyntaxError("%s tag takes at least two arguments" % tokens[0])
 
         # Check the 1st argument
         if tokens[1] == 'as':
@@ -34,7 +34,7 @@ class PersonCountNode(Node):
                        varname = tokens[2]
                     )
         else:
-            raise template.TemplateSyntaxError, "Wrong syntax."
+            raise template.TemplateSyntaxError("Wrong syntax.")
         
 
     def render(self, context):
@@ -47,7 +47,7 @@ class PersonCountNode(Node):
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
                 print ("DBG:: Error in %s on line %d" % (fname, lineno)) 
-            raise template.TemplateSyntaxError, "Something went wrong. Check the queryset to resolve the error"            
+            raise template.TemplateSyntaxError("Something went wrong. Check the queryset to resolve the error")        
             
         return ''
 
@@ -112,7 +112,7 @@ class PersonNode(Node):
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
                 print ("DBG:: Error in %s on line %d" % (fname, lineno)) 
-            raise template.TemplateSyntaxError, "Something went wrong. Check the queryset to resolve the error"            
+            raise template.TemplateSyntaxError("Something went wrong. Check the queryset to resolve the error")           
             
         return ''
 

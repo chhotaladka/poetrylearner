@@ -3,8 +3,8 @@
     <div class="mdl-mini-footer__left-section">
         <div class="sitename-bottom tAc">poetrylearner.com</div>
         <ul class="mdl-mini-footer__link-list">
-            <li><a href="#">About</a></li>
-            <li><a href="#">Privacy & Terms</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'privacy' %}">Privacy & Terms</a></li>
             <li><a id="feedbackBtn-site" data-url="{% url 'feedback:add' %}" href="#">Send feedback</a></li>
         </ul>
     </div>

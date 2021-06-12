@@ -29,11 +29,11 @@ def get_random_poetry(creator_id=None, published=False):
             index = random.randint(0, count-1)
             obj = Poetry.objects.apply_filter(**kwargs)[index]
         except:
-            print ("Error: get_random_poetry: count", count)
-            print ("Error: Unexpected error:", sys.exc_info()[0])
+            print(("Error: get_random_poetry: count", count))
+            print(("Error: Unexpected error:", sys.exc_info()[0]))
             for frame in traceback.extract_tb(sys.exc_info()[2]):
                 fname,lineno,fn,text = frame
-                print ("DBG:: Error in %s on line %d" % (fname, lineno))
+                print(("DBG:: Error in %s on line %d" % (fname, lineno)))
             obj = {}
     else:
         obj = {}
@@ -76,7 +76,7 @@ def proofread_poetry(request, pk=None, src=None):
                 result_title = 'Proofreading poetry of ' + creator.popular_name()
                 creator_id = creator.id
             except (TypeError, ValueError):
-                print 'Error: proofread: poet is not an integer, pass silently'
+                print('Error: proofread: poet is not an integer, pass silently')
         
         obj, poetry_count = get_random_poetry(creator_id=creator_id, published=False)
     

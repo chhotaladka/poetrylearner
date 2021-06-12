@@ -32,6 +32,44 @@ def welcome(request):
     return render(request, template, context)
 
 
+def about(request):
+    '''
+    About us page
+    '''
+    # Instantiate the Meta class
+    meta_image_url = "img/poetrylearner_logo_120x120.png"
+    meta_description = "Building towards an archive for the poetry of every language. Read your next favorite poetry."
+    
+    meta = Meta(title = "About %s"%(get_current_site(request).name), 
+                description = meta_description,
+                keywords = None,
+                image = meta_image_url,
+            )
+    context = {'meta': meta,}
+    template = 'about.html'
+
+    return render(request, template, context)
+
+
+def privacy(request):
+    '''
+    About us page
+    '''
+    # Instantiate the Meta class
+    meta_image_url = "img/poetrylearner_logo_120x120.png"
+    meta_description = "Building towards an archive for the poetry of every language. Read your next favorite poetry."
+    
+    meta = Meta(title = "Privacy & Terms of using %s"%(get_current_site(request).name), 
+                description = meta_description,
+                keywords = None,
+                image = meta_image_url,
+            )
+    context = {'meta': meta,}
+    template = 'privacy.html'
+
+    return render(request, template, context)
+
+
 def book(request, pk, slug):
     '''
     Returns the book from the repository

@@ -20,15 +20,15 @@ def update_action_from_repository(code):
     
     # Just to avoid the calling of this function accidently
     if code != ACCESS_CODE:
-        print 'WARNING: wrong access code!'
-        print 'WARNING: Call only one time i.e. after running migrations for ``activity`` app'
-        print 'If you understand the risk, use', ACCESS_CODE, 'as access code.'
+        print('WARNING: wrong access code!')
+        print('WARNING: Call only one time i.e. after running migrations for ``activity`` app')
+        print('If you understand the risk, use', ACCESS_CODE, 'as access code.')
         return False
     
     item_classes = [Person, Poetry, Book]
     # Do for all item types
     for item_cls in item_classes:
-        print 'Updating actions for', item_cls.item_type()
+        print('Updating actions for', item_cls.item_type())
         obj_list = item_cls.objects.order_by('-date_added', '-date_modified')
         for obj in obj_list:
             # Create action for date_added
@@ -42,7 +42,7 @@ def update_action_from_repository(code):
             act.change_message = None
             act.public = True
             act.save()
-            print obj.date_added, 'added'
+            print(obj.date_added, 'added')
             
             # Create action for date_modified, if it is different
             if obj.date_modified != obj.date_added:
@@ -56,4 +56,4 @@ def update_action_from_repository(code):
                 act.change_message = None
                 act.public = True
                 act.save()
-                print obj.date_modified, 'updated'
+                print(obj.date_modified, 'updated')

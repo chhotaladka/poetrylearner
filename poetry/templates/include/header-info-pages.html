@@ -1,0 +1,61 @@
+{% load static %}
+<header class="metabar js-metabar">
+    <div class="metabar-inner u-height56">
+        <div class="metabar-block u-flex0">
+            <div class="d-ib">
+                <a class="siteNav-logo oN" href="/" title="Go to poetry learner Home">
+                    <img class="site-name" src="{% static "img/logo_poetry_bw_154x56dp.png" %}" alt="poetry learner" height="36" width="auto">
+                </a>
+            </div>
+        </div>
+        <nav role="navigation" class="metabar-block metabar-block--below u-height42 u-flex1 row r2l">
+            <div class="buttonSet">
+	            <ul class="u-overflowX">
+	                <li class="d-ib">
+	                    <a class="action-button {% if 'about' in request.path %}is-active{% endif %}" style="min-width: 32px;" href="{% url 'about' %}">Our story</a>
+	                </li>
+	                <li class="d-ib">
+	                    <a class="action-button {% if 'privacy' in request.path %}is-active{% endif %}" style="min-width: 32px;" href="{% url 'privacy' %}">Privacy & Terms</a>
+	                </li>
+		            {% if request.user.is_authenticated %}
+		            <li class="d-ib">
+		                <div id="id-drawer-open-btn" class="js-drawer-button pLR-8 mR-16">
+		                    {% include "common/svg/menu.html" %}
+		                </div>
+		                <div id="id-drawer-close-btn" class="js-drawer-button pLR-8 mR-16 hidden">
+		                    {% include "common/svg/close.html" %}
+		                </div>
+		            </li>
+		            {% else %}
+                    <li class="d-ib">
+                        <a class="action-button bL-1" style="min-width: 32px;" href="{% url 'account_login' %}?next={% block header-login-redirect %}{{ request.path }}{% endblock %}">
+                            Log in
+                        </a>
+                    </li>
+		            {% endif %}
+	            </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+{% if request.user.is_authenticated %}
+<script>
+    var drawerOpen = function(e){
+        document.getElementById('id-drawer').classList.add('is-visible');
+        document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.add('is-visible');
+        document.getElementById('id-drawer-open-btn').classList.add('hidden');
+        document.getElementById('id-drawer-close-btn').classList.remove('hidden');
+    };
+    var drawerClose = function(e){
+        document.getElementById('id-drawer').classList.remove('is-visible');
+        document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove('is-visible');
+        document.getElementById('id-drawer-close-btn').classList.add('hidden');
+        document.getElementById('id-drawer-open-btn').classList.remove('hidden');
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('id-drawer-open-btn').addEventListener('click',drawerOpen);
+        document.getElementById('id-drawer-close-btn').addEventListener('click',drawerClose);
+        document.getElementsByClassName('mdl-layout__obfuscator')[0].addEventListener('click',drawerClose);
+    });
+</script>
+{% endif %}

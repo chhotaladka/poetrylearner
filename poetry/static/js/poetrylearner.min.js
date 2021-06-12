@@ -436,7 +436,7 @@ if (typeof jQuery === 'undefined') {
 		
 		var $this = this.element
 		
-		var body = $("#id-feedback-form-body");
+		var body = $("#id-feedback-form-modal");
 		body.children().remove();
 
 		if (data.status == '200') {
@@ -494,8 +494,8 @@ if (typeof jQuery === 'undefined') {
 		
 		var $this = this.element
 		
-		// Update the html inside #id-feedback-form-body
-		var body = $("#id-feedback-form-body");
+		// Update the html inside #id-feedback-form-modal
+		var body = $("#id-feedback-form-modal");
 		body.html(data);
 		componentHandler.upgradeDom();// Register new mdl elements
 		
@@ -594,7 +594,7 @@ if (typeof jQuery === 'undefined') {
 	};
 	
 	$(document).on('click.bs.feedback.data-api', '*[id^="feedbackBtn"]', clickFeedbackBtn);
-	$(document).on('submit.bs.feedback.data-api', '#id-feedback-form', clickFeedbackSend);
+	$(document).on('submit.bs.feedback.data-api', '#id-feedback-form-modal #id-feedback-form', clickFeedbackSend);
 	
 	
 }(jQuery);/* ========================================================================
@@ -642,22 +642,31 @@ if (typeof jQuery === 'undefined') {
 				$(this).addClass("true");
 				$(this).attr('data-bid', data.bid);
 				$(this).prop('title', 'Remove from my Bookmarks');
-				var msg = "Added to my Bookmarks";
+
+				var data = {
+					message: "Added to my Bookmarks",
+					actionHandler: function(event) { window.location.href = window.location.origin + '/bookmark/';},
+					actionText: "VIEW",
+					timeout: 5000
+				};
 			} else {
 				$(this).removeClass("true");
 				$(this).attr('data-bid', data.bid);
 				$(this).prop('title', 'Send to my Bookmarks to read later');
-				var msg = "Removed from my Bookmarks";
+
+				var data = {
+					message: "Removed from my Bookmarks",
+					timeout: 5000
+				};
 			}
 		} else {
 			$(this).prop('title', 'Try again');
-			var msg = "Oops! something went wrong.";
+			var data = {
+				message: "Oops! something went wrong.",
+				timeout: 5000
+			};
 		}
 		var notification = document.querySelector('.mdl-js-snackbar');
-		var data = {
-		  message: msg,
-		  timeout: 5000
-		};
 		notification.MaterialSnackbar.showSnackbar(data);
 	};
 	

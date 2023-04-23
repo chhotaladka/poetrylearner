@@ -1,11 +1,11 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 app_name = 'proofreader'
 urlpatterns = [
     
-    url(r'^$', views.home, name='home'),
-    url(r'^poetry/(?P<pk>\d+)?$', views.proofread_poetry, name='poetry'),
+    re_path(r'^$', views.home, name='home'),
+    re_path(r'^poetry/(?P<pk>\d+)?$', views.proofread_poetry, name='poetry'),
     
 ]

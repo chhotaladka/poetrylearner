@@ -1,11 +1,11 @@
-from django.conf.urls import url
+from django.conf.urls import re_path
 
 from . import views
 
 urlpatterns = [
 
     # Dashboard
-    url(r'^search/?$', views.site_search, name='site-search'),
-    url(r'^advancesearch/?$', views.site_advance_search, name='site-advance-search'),    
+    re_path(r'^search/?$', views.site_search, name='site-search'),
+    re_path(r'^advancesearch/?$', views.site_advance_search, name='site-advance-search'),
        
 ]

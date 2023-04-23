@@ -3,7 +3,7 @@
 from django import template
 from datetime import date, datetime
 from django.utils.timezone import is_aware, utc
-from django.utils.translation import pgettext, ugettext as _, ungettext
+from django.utils.translation import gettext as _, ngettext
 
 register = template.Library()
 
@@ -119,21 +119,21 @@ def nicetime(value):
         elif delta.seconds == 0:
             return _('now')
         elif delta.seconds < 60:
-            return ungettext(
+            return ngettext(
                 # Translators: please keep a non-breaking space (U+00A0)
                 # between count and time unit.
                 'a second ago', '%(count)s seconds ago', delta.seconds
             ) % {'count': delta.seconds}
         elif delta.seconds // 60 < 60:
             count = delta.seconds // 60
-            return ungettext(
+            return ngettext(
                 # Translators: please keep a non-breaking space (U+00A0)
                 # between count and time unit.
                 'a minute ago', '%(count)s minutes ago', count
                 ) % {'count': count}
         else:
             count = delta.seconds // 60 // 60
-            return ungettext(
+            return ngettext(
                 # Translators: please keep a non-breaking space (U+00A0)
                 # between count and time unit.
                 'an hour ago', '%(count)s hours ago', count
@@ -150,21 +150,21 @@ def nicetime(value):
         elif delta.seconds == 0:
             return _('now')
         elif delta.seconds < 60:
-            return ungettext(
+            return ngettext(
                 # Translators: please keep a non-breaking space (U+00A0)
                 # between count and time unit.
                 'a second from now', '%(count)s seconds from now', delta.seconds
             ) % {'count': delta.seconds}
         elif delta.seconds // 60 < 60:
             count = delta.seconds // 60
-            return ungettext(
+            return ngettext(
                 # Translators: please keep a non-breaking space (U+00A0)
                 # between count and time unit.
                 'a minute from now', '%(count)s minutes from now', count
             ) % {'count': count}
         else:
             count = delta.seconds // 60 // 60
-            return ungettext(
+            return ngettext(
                 # Translators: please keep a non-breaking space (U+00A0)
                 # between count and time unit.
                 'an hour from now', '%(count)s hours from now', count

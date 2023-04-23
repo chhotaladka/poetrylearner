@@ -13,7 +13,7 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
+from django.urls import include, re_path
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf import settings
@@ -34,35 +34,35 @@ sitemaps = {
 app_name = 'core'
 
 urlpatterns = [
-    url(r'^$', views.welcome, name='welcome'),
-    url(r'^about/?$', views.about, name='about'),
-    url(r'^privacy/?$', views.privacy, name='privacy'),
-    url(r'^accounts/', include('poetry.urls_allauth_blocked')),
-    url(r'^accounts/', include('allauth.urls')),
-    url(r'^admin/', admin.site.urls),
-    url(r'^activity/', include('activity.urls', namespace='activity')),
-    url(r'^bookmark/', include('bookmarks.urls', namespace='bookmark')),
-    url(r'^c/', include('crawlers.urls', namespace='crawlers')),
-    url(r'^feedback/', include('feedback.urls', namespace='feedback')),
-    url(r'^r/', include('repository.urls', namespace='repository')),
-    url(r'^u/', include('dashboard.urls', namespace='dashboard')),
-    url(r'^proofreader/', include('proofreader.urls', namespace='proofreader')),
+    re_path(r'^$', views.welcome, name='welcome'),
+    re_path(r'^about/?$', views.about, name='about'),
+    re_path(r'^privacy/?$', views.privacy, name='privacy'),
+    re_path(r'^accounts/', include('poetry.urls_allauth_blocked')),
+    re_path(r'^accounts/', include('allauth.urls')),
+    re_path(r'^admin/', admin.site.urls),
+    re_path(r'^activity/', include('activity.urls', namespace='activity')),
+    re_path(r'^bookmark/', include('bookmarks.urls', namespace='bookmark')),
+    re_path(r'^c/', include('crawlers.urls', namespace='crawlers')),
+    re_path(r'^feedback/', include('feedback.urls', namespace='feedback')),
+    re_path(r'^r/', include('repository.urls', namespace='repository')),
+    re_path(r'^u/', include('dashboard.urls', namespace='dashboard')),
+    re_path(r'^proofreader/', include('proofreader.urls', namespace='proofreader')),
     
-    url(r'^books/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.book, name='book'),
-    url(r'^books/?$', views.explore_books, name='explore-books'),
+    re_path(r'^books/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.book, name='book'),
+    re_path(r'^books/?$', views.explore_books, name='explore-books'),
     
-    url(r'^poetry/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.poetry, name='poetry'),
-    url(r'^poetry/?$', views.explore_poetry, name='explore-poetry'),
+    re_path(r'^poetry/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.poetry, name='poetry'),
+    re_path(r'^poetry/?$', views.explore_poetry, name='explore-poetry'),
     
-    url(r'^poets/(?P<pk>\d+)/(?P<slug>.+)?/books/?$', views.explore_books_of, name='explore-books-of'),
-    url(r'^poets/(?P<pk>\d+)/(?P<slug>.+)?/poetry/?$', views.explore_poetry_of, name='explore-poetry-of'),
-    url(r'^poets/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.poet, name='poet'),
-    url(r'^poets/?$', views.explore_poets, name='explore-poets'),
+    re_path(r'^poets/(?P<pk>\d+)/(?P<slug>.+)?/books/?$', views.explore_books_of, name='explore-books-of'),
+    re_path(r'^poets/(?P<pk>\d+)/(?P<slug>.+)?/poetry/?$', views.explore_poetry_of, name='explore-poetry-of'),
+    re_path(r'^poets/(?P<pk>\d+)/(?P<slug>.+)?/?$', views.poet, name='poet'),
+    re_path(r'^poets/?$', views.explore_poets, name='explore-poets'),
     
-    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+    re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
         name='django.contrib.sitemaps.views.sitemap'),
     
-    url(r'^', include('shorturls.urls', namespace='shorturls')),
+    re_path(r'^', include('shorturls.urls', namespace='shorturls')),
     
 ]
 

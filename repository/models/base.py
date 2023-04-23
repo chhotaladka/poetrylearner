@@ -4,11 +4,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.utils import timezone
 from django.template.defaultfilters import default
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 #from django.utils.text import slugify
-from django.utils.http import urlquote  as django_urlquote
-from django.utils.http import urlencode as django_urlencode
 from urllib.parse import urlparse
 import random
 from common.slugify import slugify 

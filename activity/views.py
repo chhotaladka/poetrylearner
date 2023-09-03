@@ -220,9 +220,6 @@ def ajax_contributors(request):
     '''
     @summary: AJAX only: List contributors(users/actors) having activities recently (in last fortnight).
     '''
-    if request.is_ajax() is False:
-        raise PermissionDenied
-    
     RESULT_COUNT = 5
     num_days = 15
     query_list_title = "Recent contributors"

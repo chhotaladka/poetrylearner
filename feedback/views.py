@@ -37,7 +37,7 @@ class FeedbackCreateView(CreateView):
                 content_type = ContentType.objects.get_for_id(kwargs['ctype_id'])
             
             except ContentType.DoesNotExist:
-                if request.is_ajax():
+                if True: #request.is_ajax():
                     # Create JSON response and send
                     data = {}
                     data['status'] = '404'
@@ -53,7 +53,7 @@ class FeedbackCreateView(CreateView):
                 self.ctype_id = kwargs['ctype_id']
 
             except ObjectDoesNotExist:
-                if request.is_ajax():
+                if True: #request.is_ajax():
                     # Create JSON response and send
                     data = {}
                     data['status'] = '404'
@@ -81,7 +81,7 @@ class FeedbackCreateView(CreateView):
 
     def get_template_names(self):
         #print "FeedbackCreateView get_template_names."
-        if self.request.is_ajax():
+        if True: #self.request.is_ajax():
             return self.ajax_template
         
         return super(FeedbackCreateView, self).get_template_names()
@@ -106,7 +106,7 @@ class FeedbackCreateView(CreateView):
         yy = request.POST.get('yy', None)
         if xx or yy:
             print("WARN:: spam detected.")
-            if request.is_ajax():
+            if True: #request.is_ajax():
                 # Create JSON response and send
                 data = {}
                 data['status'] = '400'
@@ -127,7 +127,7 @@ class FeedbackCreateView(CreateView):
         """
         self.object = form.save()
         
-        if self.request.is_ajax():
+        if True: #self.request.is_ajax():
             # Create JSON response and send
             data = {}
             data['status'] = '200'
@@ -140,7 +140,7 @@ class FeedbackCreateView(CreateView):
         If the form is invalid, re-render the context data with the
         data-filled form and errors.
         """
-        if self.request.is_ajax():
+        if True: #self.request.is_ajax():
             # Create JSON response and send
             data = {}
             data['status'] = '422' # Unprocessable Entity

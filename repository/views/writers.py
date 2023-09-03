@@ -51,8 +51,8 @@ class CreateThingView(View):
         # Prepare the cancel_url for 'Cancel button' to be passed with the context    
         self.cancel_url = request.GET.get('cancel', '/')
         
-        if request.is_ajax():
-            self.template_name = self.ajax_template_name
+        #if request.is_ajax():
+        #    self.template_name = self.ajax_template_name
             
         if kwargs.get('pk', None) is None:
             # Create
@@ -72,8 +72,8 @@ class CreateThingView(View):
         # Prepare the next_url for redirection after successful operation
         self.next_url = request.GET.get('next', None)
         
-        if request.is_ajax():
-            self.template_name = self.ajax_template_name
+        #if request.is_ajax():
+        #    self.template_name = self.ajax_template_name
         
         if kwargs.get('pk', None) is None:
             # Create
@@ -119,7 +119,7 @@ class CreateThingView(View):
                             public=True)
                 
                 # Response for AJAX request
-                if request.is_ajax():
+                if False: #request.is_ajax():
                     # Create JSON response and send
                     res = {}
                     res['result'] = 'success'
@@ -139,7 +139,7 @@ class CreateThingView(View):
                 # Add non_field_errors to the form to convey the message    
                 form.add_error(None, "Unexpected error occured! Checking the fields may help.")
         
-        if request.is_ajax():
+        if False: #request.is_ajax():
             # Create JSON response alongwith the rendered form and send
             res = {}
             res['result'] = 'failure'

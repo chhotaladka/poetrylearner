@@ -173,7 +173,7 @@ def raw_author_details(request, pk):
     articles['total'] = RawArticle.objects.all().filter(author__icontains=obj.name).count()
     articles['new'] = RawArticle.objects.all().filter(author__icontains=obj.name).filter(valid=False).count()
     
-    if request.is_ajax():
+    if True: #request.is_ajax():
         # To set the validity
         valid = request.GET.get('valid', None)
         if valid is not None:
@@ -205,7 +205,8 @@ def article_to_poetry(request):
     article_ids = request.GET.get('articles', None)
             
     # Only AJAX POST request is allowed  
-    if request.is_ajax() and request.method == "POST":
+    #if request.is_ajax() and request.method == "POST":
+    if request.method == "POST":
         if creator_id is None or article_ids is None:
             # Return failure
             print("Error: article_to_poetry: No parameter(s) passed.")
@@ -434,9 +435,6 @@ def fetch_readable(request):
     '''
     @summary: Cluter free readable view of article of a given url.
     '''
-    if request.is_ajax() is False:
-        raise PermissionDenied
-    
     template = "crawlers/include/readability.html"
     
     ##

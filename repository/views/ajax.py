@@ -27,8 +27,8 @@ def poetry_related(request, src=None):
     @src: Source of access. It is being used to manipulate the context/templates.
         eg. src='public_url' means this view is being accessed using some public url.
     '''
-    if request.is_ajax() is False:
-        raise PermissionDenied
+    #if request.is_ajax() is False:
+    #    raise PermissionDenied
     
     template = "repository/include/list/poetry.html"
     
